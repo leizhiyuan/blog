@@ -5,11 +5,11 @@ categories: 学习笔记
 ---
 
 最近博客越来越慢了.然后一直也有markdown写文章的想法.于是花了点时间把博客迁到了hexo+github+gitcafe的组合上.
-#安装Git#
+##安装Git##
 下载 msysgit 并执行即可完成安装。
-#安装Node.js#
+##安装Node.js##
 在 Windows 环境下安装 Node.js 非常简单，仅须下载安装文件并执行即可完成安装。
-#安装hexo#
+##安装hexo##
 利用 npm 命令即可安装。（在任意位置点击鼠标右键，选择Git bash）
 
 `npm install -g hexo`
@@ -44,7 +44,7 @@ deploy:
 `hexo s` == `hexo server`
 `hexo n` == `hexo new`
 
-#网站主题配置#
+##网站主题配置##
 同样的,在d:/blog下面执行
 `git clone https://github.com/wuchong/jacman.git themes/jacman`
 即可复制主题.
@@ -52,7 +52,7 @@ deploy:
 `theme: jacman`
 注意冒号后面有空格
 
-#wordpress迁移#
+##wordpress迁移##
 1. 导出文章
  登录wordpress管理控制台，选择工具->导出，再选择文章。点击下载导出的文件，就可以得到一个名称类似wordpress.2015-01-12.xml的文件。
 2. 安装迁移插件
@@ -62,7 +62,7 @@ deploy:
 4. 导入图片
  经过上面的步骤,会发现图片还是原来的连接.这里看这个[导入图片插件](http://catx.me/2014/03/07/hexo-migrator-image/ "导入图片")使用
 
-#其他问题#
+##其他问题##
 [github连接出现Bad file number问题](http://rangercyh.blog.51cto.com/1444712/749490)
 [使用GitHub来管理博客源文件](http://wuchong.me/blog/2014/01/17/use-github-to-manage-hexo-source/)
 [Hexo免输入密码部署到github](http://www.foreverpx.cn/2014/09/25/Hexo%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0github/)
