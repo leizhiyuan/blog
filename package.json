@@ -3,15 +3,9 @@
   "version": "2.8.3",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "hexo-migrator-wordpress": "^0.1.1",
     "hexo-renderer-ejs": "*",
-    "hexo-renderer-marked": "*",
-    "hexo-renderer-stylus": "*"
-=======
-    "hexo-renderer-ejs": "*",
-    "hexo-renderer-stylus": "0.1",
-    "hexo-renderer-marked": "0.1"
->>>>>>> 换电脑之后重新备份
+    "hexo-renderer-marked": "0.1",
+    "hexo-renderer-stylus": "0.1"
   }
 }
