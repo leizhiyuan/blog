@@ -20,7 +20,11 @@ Specify the kind of objects to create using a prototypical instance, and create 
 
 看一下类图
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/e7e0d35a2192ac4360d169e4e1cb8fdb6a1113da.jpg "1")](http://leaverimage.b0.upaiyun.com/28239_o.jpg)
+=======
+[![](/images/e7e0d35a2192ac4360d169e4e1cb8fdb6a1113da.jpg "1")](http://leaverimage.b0.upaiyun.com/28239_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 主要的参与者有
 • Prototype: 抽象类或接口，定义了方法来拷贝自己
@@ -96,7 +100,11 @@ Specify the kind of objects to create using a prototypical instance, and create 
         playerToSave.Felony.ToString(), 
         playerToSave.Money.ToString());
 }</pre>
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/ab28ca0c722912c55072bc471d50cb94d9ee8bb8.jpg "2")](http://leaverimage.b0.upaiyun.com/28245_o.jpg)
+=======
+[![](/images/ab28ca0c722912c55072bc471d50cb94d9ee8bb8.jpg "2")](http://leaverimage.b0.upaiyun.com/28245_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 **理解深浅拷贝**
 
@@ -195,11 +203,19 @@ Specify the kind of objects to create using a prototypical instance, and create 
         shallowClonedPlayer.Details.Charisma.ToString(),
         shallowClonedPlayer.Details.Fitness.ToString());
 }</pre>
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/863b924dcc5e05338a089ed0832503ba3ace600f.jpeg "3")](http://leaverimage.b0.upaiyun.com/28244_o.jpeg)
 
 画个图。看得清楚些
 
 [![]({{BASE_PATH}}/images/21512f67bcb7bcfcc7c220a3732d98feb4d4ed89.jpg "2")](http://leaverimage.b0.upaiyun.com/28240_o.jpg)
+=======
+[![](/images/863b924dcc5e05338a089ed0832503ba3ace600f.jpeg "3")](http://leaverimage.b0.upaiyun.com/28244_o.jpeg)
+
+画个图。看得清楚些
+
+[![](/images/21512f67bcb7bcfcc7c220a3732d98feb4d4ed89.jpg "2")](http://leaverimage.b0.upaiyun.com/28240_o.jpg)
+>>>>>>> 换电脑之后重新备份
 为了避免这种期刊。我们需要在堆上创建引用类型的拷贝，然后对应赋值
 <pre class="lang:default decode:true">class CJEx : AProtagonistEx
 {
@@ -217,7 +233,11 @@ Specify the kind of objects to create using a prototypical instance, and create 
 
 这样就可以了
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/5a1c4910991230f8d746cc39e1f427c29e247164.jpg "5")](http://leaverimage.b0.upaiyun.com/28242_o.jpg)
+=======
+[![](/images/5a1c4910991230f8d746cc39e1f427c29e247164.jpg "5")](http://leaverimage.b0.upaiyun.com/28242_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 注意。当执行深拷贝的时候，可能引用类型来包括引用类型，因此好的做法是用反射。并且递归的拷贝。直到没有引用类型，具体可参考另一文
 
@@ -306,7 +326,11 @@ ICloneable接口提供了定义拷贝方法的接口。我们可以使用IClonea
         clonedPlayer.Details.Charisma.ToString(),
         clonedPlayer.Details.Fitness.ToString());
 }</pre>
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/be282d2800c83c0aa1fa411f51dc3ac55e442f35.jpg "6")](http://leaverimage.b0.upaiyun.com/28243_o.jpg)
+=======
+[![](/images/be282d2800c83c0aa1fa411f51dc3ac55e442f35.jpg "6")](http://leaverimage.b0.upaiyun.com/28243_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 **Demo下载**
 [downloadicon href=http://pan.baidu.com/share/link?shareid=86332&amp;uk=1493685990]PrototypeDemo.zip[/downloadicon]

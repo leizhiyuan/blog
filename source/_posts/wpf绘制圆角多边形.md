@@ -21,16 +21,28 @@ date: 2012-10-13 09:45:40
 
 1\. 通过XAML绘制圆角多边形
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/83dd3b37c81d0d4e1a82e80ba69d00411930ce52.png "1")](http://leaverimage.b0.upaiyun.com/28036_o.png)
 
 2\. 运行时创建圆角多边形
 
 [![]({{BASE_PATH}}/images/864fccf9677ea6ce52dad56c85cf7389108c6874.png "2")](http://leaverimage.b0.upaiyun.com/28037_o.png)
+=======
+[![](/images/83dd3b37c81d0d4e1a82e80ba69d00411930ce52.png "1")](http://leaverimage.b0.upaiyun.com/28036_o.png)
+
+2\. 运行时创建圆角多边形
+
+[![](/images/864fccf9677ea6ce52dad56c85cf7389108c6874.png "2")](http://leaverimage.b0.upaiyun.com/28037_o.png)
+>>>>>>> 换电脑之后重新备份
 
 **背景**
 多边形可以被认为是沿着一个给定半径的圆的边缘和一些指定点/边。所构成的点的集合。
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/82969618833250386b07a5177dc8c454da0530e1.gif "3")](http://leaverimage.b0.upaiyun.com/28038_o.gif)
+=======
+[![](/images/82969618833250386b07a5177dc8c454da0530e1.gif "3")](http://leaverimage.b0.upaiyun.com/28038_o.gif)
+>>>>>>> 换电脑之后重新备份
 在WPF中。你可以给Polygon对象的Points属性添加一系列的点来制作多边形。
 
 XAML方式
@@ -51,7 +63,11 @@ this.Content = cnv;</pre>
 
 上面两个例子会输出下面的矩形
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/787268128d45598cff769b9209e41652a66775ae.png "4")](http://leaverimage.b0.upaiyun.com/28039_o.png)
+=======
+[![](/images/787268128d45598cff769b9209e41652a66775ae.png "4")](http://leaverimage.b0.upaiyun.com/28039_o.png)
+>>>>>>> 换电脑之后重新备份
 
 **使用代码**
 我写的RoundedCornersPolygon 类和普通的多边形类很相似。但是有更多的属性来控制圆角。首先。看一个例子。展示一下圆角矩形类的使用
@@ -77,7 +93,11 @@ cnv.Children.Add(roundedPolygon);
 this.Content = cnv;</pre>
 输出如下：
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/fb11bced67d29f74ff4e539a8008871934d74c04.png "5")](http://leaverimage.b0.upaiyun.com/28040_o.png)
+=======
+[![](/images/fb11bced67d29f74ff4e539a8008871934d74c04.png "5")](http://leaverimage.b0.upaiyun.com/28040_o.png)
+>>>>>>> 换电脑之后重新备份
 
 多边形有四个主要属性
 ArcRoundness 属性指定了从距离LineSegment终点多远的距离开始弯曲，通常和UseRoundnessPercentage 一起使用。UseRoundnessPercentage属性指定了ArcRoundness 值是百分比还是一个固定的值。

@@ -175,6 +175,10 @@ int _tmain(int argc, _TCHAR* argv[])
 }</pre>
 运行结果如下：
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/9b3722c45b95afd3637b0726db13912e2f203ff3.png)](http://leaverimage.b0.upaiyun.com/36055_o.png)
+=======
+[![](/images/9b3722c45b95afd3637b0726db13912e2f203ff3.png)](http://leaverimage.b0.upaiyun.com/36055_o.png)
+>>>>>>> 换电脑之后重新备份
 
 关于如何求最少的步数来求解这个问题，希望有朋友能够留言指教。

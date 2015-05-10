@@ -13,7 +13,11 @@ categories:
 date: 2012-10-12 09:31:00
 ---
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/491dd2dbc974b8c78aee2f36006e65ad3e5533f2.jpg "1")](http://leaverimage.b0.upaiyun.com/28015_o.jpg)
+=======
+[![](/images/491dd2dbc974b8c78aee2f36006e65ad3e5533f2.jpg "1")](http://leaverimage.b0.upaiyun.com/28015_o.jpg)
+>>>>>>> 换电脑之后重新备份
 **1.介绍**
 
 从我开始使用vista的时候，我就非常喜欢它的圆形玻璃按钮。WPF最好的一个方面就是允许自定义任何控件的样式。用了一段时间的Microsoft Expression Blend后。我做出了这个样式。我觉得做的还行。因为。我决定分享。如我所说。我使用Microsoft Expression Blend来做。但是。我也是用XAML编辑器--Kaxaml。
@@ -35,14 +39,22 @@ date: 2012-10-12 09:31:00
 下面是Blend中的截图
 
 图2
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/2443ed6bf6b648418ee018a527c9a76eaf277716.png "2")](http://leaverimage.b0.upaiyun.com/28012_o.png)
+=======
+[![](/images/2443ed6bf6b648418ee018a527c9a76eaf277716.png "2")](http://leaverimage.b0.upaiyun.com/28012_o.png)
+>>>>>>> 换电脑之后重新备份
 <pre class="lang:default decode:true">&lt;!-- Background Layer --&gt;
 &lt;Ellipse Fill="{TemplateBinding Background}"/&gt;</pre>
 <!-- Background Layer -->
 **3.1.1折射层**
 
 第二层模拟了光从上到下的折射。被放在反射层之前是因为，要达到反光玻璃的效果，反射层必须在按钮的中间某处有一个硬边缘。这一层实际上是另一个椭圆。但是这次。我们使用一个径向渐变（白色-透明）的填充。来模拟光的折射。渐变开始于第一层底部的中央。结束于上面的中间。然而。为了降低折射光的强度。渐变还是开始于椭圆的底部再下一点为好。可以从图上和代码里清晰的看到。
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/9d0d815903ff370933cfca9fcd669ae09996e045.png "3")](http://leaverimage.b0.upaiyun.com/28013_o.png)
+=======
+[![](/images/9d0d815903ff370933cfca9fcd669ae09996e045.png "3")](http://leaverimage.b0.upaiyun.com/28013_o.png)
+>>>>>>> 换电脑之后重新备份
 <pre class="lang:default decode:true ">&lt;!-- Refraction Layer --&gt;
 &lt;Ellipse x:Name="RefractionLayer"&gt;
   &lt;Ellipse.Fill&gt;
@@ -68,7 +80,11 @@ date: 2012-10-12 09:31:00
 第三层是光的反射层。是最难的部分。问题是反射效果不能使用任何标准的形状来画。因此。使用路径（Path）来画反射区域。当时。手工画也是可以的。但老实说。手工画图实在没什么可享受的（除非你是一个艺术家，或者有一个数位板），无论如何。我现在MS Blend中华好一个椭圆并转换成一个路径，然后我使用贝塞尔曲线点调整得到平滑的路径，你可以添加渐变到一个复杂的Path对象上。就像你对其他与定义的图形，比如椭圆，矩形所做的一样。为了得到光泽反射。我额每年需要一个透明-白色的径向渐变填充，从路径的底部开始（也就是按钮的中间某处），结束在顶部。我想如果我是一个艺术家。我会让渐变更准一点。可是我不是。因此。就这样。因为我们要把我们的按钮放在一个Grid里。所有我们设置VerticalAlignment="Top" 这样反射区域在按钮的中间的结束了。
 
 图三
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/a837470f0822bf1b924293855638d696dc4dba4a.png "3")](http://leaverimage.b0.upaiyun.com/28014_o.png)
+=======
+[![](/images/a837470f0822bf1b924293855638d696dc4dba4a.png "3")](http://leaverimage.b0.upaiyun.com/28014_o.png)
+>>>>>>> 换电脑之后重新备份
 <pre class="lang:default decode:true ">&lt;!-- Reflection Layer --&gt;
 &lt;Path x:Name="ReflectionLayer" VerticalAlignment="Top" Stretch="Fill"&gt;
   &lt;Path.RenderTransform&gt;
@@ -120,7 +136,11 @@ date: 2012-10-12 09:31:00
 好了。最后在Blend中看起来大概是这样
 
 图4
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/19fbafa7ad1cde09eafc0f6a70ac27b576e6302c.png "4")](http://leaverimage.b0.upaiyun.com/28011_o.png)
+=======
+[![](/images/19fbafa7ad1cde09eafc0f6a70ac27b576e6302c.png "4")](http://leaverimage.b0.upaiyun.com/28011_o.png)
+>>>>>>> 换电脑之后重新备份
 
 **4.添加一些交互性**
 

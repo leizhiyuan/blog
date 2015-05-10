@@ -62,12 +62,20 @@ Demo下载：[Demo.Threading.zip](http://pan.baidu.com/share/link?shareid=290200
 下面的几部分里。我将逐一展示实现方法。
 
 简而言之，多线程就是通过使程序同时运行多个任务来最大化计算机能力，同时能够保持UI响应。下图是一个例子的图示。
+<<<<<<< HEAD
  [![]({{BASE_PATH}}/images/472b9c05527afb3cb133d1d5689cdca367412bc0.jpg)](http://leaverimage.b0.upaiyun.com/32605_o.jpg)
+=======
+ [![](/images/472b9c05527afb3cb133d1d5689cdca367412bc0.jpg)](http://leaverimage.b0.upaiyun.com/32605_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 **代码**
 提供的源码是一个简单的WinForm程序。模拟了.net中委托，线程类和Background Worker三种方法。
 程序异步执行一个繁重的操作，这样UI就不会无响应。三个方法都是模拟的。
+<<<<<<< HEAD
  [![]({{BASE_PATH}}/images/a0567e4556b306284f9d9793d2879ae6716dae23.jpg)](http://leaverimage.b0.upaiyun.com/32606_o.jpg)
+=======
+ [![](/images/a0567e4556b306284f9d9793d2879ae6716dae23.jpg)](http://leaverimage.b0.upaiyun.com/32606_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 这个“繁重”的操作
 真实的开发中，这个繁重的操作从轮询数据库到流媒体操作都可以。基本上可以是任何事情。源码里面是向一个字符串追加值。String是不能变的。追加的时候，新的字符串变量会被创建，旧的会被丢弃，这是由CLR处理的。如果做很多次这个操作，是很耗资源的。这也是为什么我们使用Stringbuilder.Append 来代替这个操作。通过调整界面中的次数。可以通知追加的次数。

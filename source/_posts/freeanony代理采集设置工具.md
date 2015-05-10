@@ -13,7 +13,11 @@ date: 2012-06-17 20:10:05
 
 这个名字确实有点不太好。。因为刚开始我想到这个工具是在今天早上看到一个别人的代理工具的时候，突然想做的，没有好好规化，结果后来代码越写越多。。不过收获很大。
 
+<<<<<<< HEAD
 先看界面，因为是简单实现一下，所以就不要吐槽界面了。。[![]({{BASE_PATH}}/images/10c75978f904af3fc0eb8e9c41cf2a47d4d2545f.jpg "FreeAnony")](http://leaverimage.b0.upaiyun.com/23525_o.jpg)
+=======
+先看界面，因为是简单实现一下，所以就不要吐槽界面了。。[![](/images/10c75978f904af3fc0eb8e9c41cf2a47d4d2545f.jpg "FreeAnony")](http://leaverimage.b0.upaiyun.com/23525_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 刚开始想的思路就是先去一个经常发布代理IP的网页去采集。然后解析成一条条的信息。然后显示出来。中途遇到几个问题，一个就是在做代理验证的时候，没有用多线程，导致直接界面无响应。另一个就是DataGridView控件要实现对一个数组的绑定，需要的一个实体对象。
 <pre class="lang:c# decode:true">public IPEntity[] GetIpInfo(string url)

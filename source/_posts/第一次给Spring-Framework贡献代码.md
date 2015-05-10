@@ -19,7 +19,11 @@ date: 2014-08-21 07:46:26
 
 截图留念:
 
+<<<<<<< HEAD
 [![spring]({{BASE_PATH}}/images/56d25e223f79e6ffdb3162ac7658124363f1d82e.png)](http://leaverimage.b0.upaiyun.com/2014/08/spring.png)
+=======
+[![spring](/images/56d25e223f79e6ffdb3162ac7658124363f1d82e.png)](http://leaverimage.b0.upaiyun.com/2014/08/spring.png)
+>>>>>>> 换电脑之后重新备份
 
 https://github.com/spring-projects/spring-framework/commits?author=leizhiyuan
 

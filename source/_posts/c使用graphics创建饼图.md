@@ -20,7 +20,11 @@ date: 2012-09-27 13:47:25
 
 最为一个简单的Demo，我创建一个有着五个文本框的窗体，一个按钮，一个图片框。一会我就把饼图画在图片框里
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/f3681994ca4fce2b724886db9d7a958d854c8e39.png "client")](http://leaverimage.b0.upaiyun.com/27557_o.png)
+=======
+[![](/images/f3681994ca4fce2b724886db9d7a958d854c8e39.png "client")](http://leaverimage.b0.upaiyun.com/27557_o.png)
+>>>>>>> 换电脑之后重新备份
 在创建一个饼图之前，我们头脑里要有这个意识。我们不能创建一个不符合常规的圆，创建圆我们需要度数信息。
 
 为了转换度数。我们首先把给定的值做个求和。然后得出文本框里所有值的和。然后呢。用每个值除以总值再乘以360度。
@@ -104,7 +108,11 @@ graphics.FillPie(brush5, rect, deg1 + deg2 + deg3 + deg4, deg5);</pre>
    }
 }</pre>
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/341f6010ffe346f8245bdae48986ae61c6dfe90f.png "listbox")](http://leaverimage.b0.upaiyun.com/27558_o.png)
+=======
+[![](/images/341f6010ffe346f8245bdae48986ae61c6dfe90f.png "listbox")](http://leaverimage.b0.upaiyun.com/27558_o.png)
+>>>>>>> 换电脑之后重新备份
 首先我创建一个整型数组，数组元素个数等于列表框里的数目。然后我使用一个循环计算了所有值的和。
 然后。我创建了一个颜色的数组，这里我建议不要创建一个多于6个扇形。。不然看起来就连在一起了。。
 第三步呢。。我再次使用循环去把值转换成度数。fDegValue 用来保存每次计算的度数。在我们前面的例子里。我们需要把前面几个值加起来作为下一个扇形的开始。而这里。我们使用fDegSum 来保存前面的和就很好了。

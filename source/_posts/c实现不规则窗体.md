@@ -18,7 +18,11 @@ date: 2012-06-21 09:26:34
 
 刚开始的图；
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/80a3c49a3718c6f180278a86ba73b2a3d0d39966.jpg "form")](http://leaverimage.b0.upaiyun.com/23583_o.jpg)
+=======
+[![](/images/80a3c49a3718c6f180278a86ba73b2a3d0d39966.jpg "form")](http://leaverimage.b0.upaiyun.com/23583_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 然后新建windows应用程序。创建windows窗体并设置窗体基本属性。
 （1）将 FormBorderStyle 属性设置为 None。
@@ -83,7 +87,11 @@ private void Form1_MouseUp(object sender, MouseEventArgs e)
 Application.Exit();//退出应用程序</pre>
 我最终的效果是个圆，可以看到，锯齿很明显，我想要效果好的话，那个位图得好好设计。这个只是演示。。所以。。还有一种方法是链接1中提供的，有兴趣的可以试试。
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/33eb616a6ae722d472de3408f8a03596aaf5baaf.jpg "demo")](http://leaverimage.b0.upaiyun.com/23584_o.jpg)
+=======
+[![](/images/33eb616a6ae722d472de3408f8a03596aaf5baaf.jpg "demo")](http://leaverimage.b0.upaiyun.com/23584_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 工程源码下载：[IrregularForm.7z](http://115.com/file/c2ai3t6p#IrregularForm.7z)
 

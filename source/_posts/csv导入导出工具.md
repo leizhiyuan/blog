@@ -12,7 +12,11 @@ categories:
 date: 2012-09-30 22:33:19
 ---
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/650890bebf13c4d041d3113af4b40fb93a2cc0c5.png "form1")](http://leaverimage.b0.upaiyun.com/27639_o.png)
+=======
+[![](/images/650890bebf13c4d041d3113af4b40fb93a2cc0c5.png "form1")](http://leaverimage.b0.upaiyun.com/27639_o.png)
+>>>>>>> 换电脑之后重新备份
 **介绍**
 
 本文介绍并且实现了在平面文件CSV和SQL server之间的导入导出功能。使用VS2005写的。使用了.net 2.0
@@ -35,7 +39,11 @@ date: 2012-09-30 22:33:19
 使用不同的编码和分隔符
 使用SqlDataReader读取数据，使用StreamWriter转移数据到平面文件
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/b131fd0af27287ab9270df33d1a313ab957dfb12.png "form2")](http://leaverimage.b0.upaiyun.com/27640_o.png)
+=======
+[![](/images/b131fd0af27287ab9270df33d1a313ab957dfb12.png "form2")](http://leaverimage.b0.upaiyun.com/27640_o.png)
+>>>>>>> 换电脑之后重新备份
 使用
 1.	下载工程
 2.	新建一个数据库，或者使用一个存在的数据库

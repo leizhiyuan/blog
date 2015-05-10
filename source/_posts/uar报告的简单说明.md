@@ -34,7 +34,11 @@ The pull-down ListBox has 50 lines of information—in very small font. There ar
 
 &nbsp;
 
+<<<<<<< HEAD
 <center style="text-align: -webkit-auto;"><span style="font-size: small;"><span style="line-height: normal;">[![]({{BASE_PATH}}/images/ "uar")](http://seqcc.icarnegie.com/content/SSD/SSD4/3.1/normal/pg-creatng-evaltng-interfaces/pg-crt-eval-list-combo/pg-he-clean-beauty/Ex5.png)</span></span></center>In addition, the information is structured as follows:The string "[GMT " begins each line (which means Greenwich Mean Time). If the time zone is behind GMT, then a "-" indicates this fact, which is followed by the number of hours and minutes the time zone is behind GMT. If the time zone is ahead of GMT, a "+" is used instead. Finally, some words follow the GMT offset, which are either city or country names, or the names of regions.&nbsp;
+=======
+<center style="text-align: -webkit-auto;"><span style="font-size: small;"><span style="line-height: normal;">[![](/images/ "uar")](http://seqcc.icarnegie.com/content/SSD/SSD4/3.1/normal/pg-creatng-evaltng-interfaces/pg-crt-eval-list-combo/pg-he-clean-beauty/Ex5.png)</span></span></center>In addition, the information is structured as follows:The string "[GMT " begins each line (which means Greenwich Mean Time). If the time zone is behind GMT, then a "-" indicates this fact, which is followed by the number of hours and minutes the time zone is behind GMT. If the time zone is ahead of GMT, a "+" is used instead. Finally, some words follow the GMT offset, which are either city or country names, or the names of regions.&nbsp;
+>>>>>>> 换电脑之后重新备份
 
 The presentation of this structured information violates the **aesthetics and minimalist design** heuristic because the structure is not preserved visually from item to item. For example, the words are not always lined up vertically; see the entries for:
 

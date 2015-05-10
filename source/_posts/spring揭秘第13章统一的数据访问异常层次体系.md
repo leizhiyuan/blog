@@ -93,6 +93,10 @@ Spring揭秘-第13章 统一的数据访问异常层次体系
 <div></div>
 <div>该体系下面所有的异常类型均以DataAccessException为统领，然后划分成不同的子类型</div>
 <div></div>
+<<<<<<< HEAD
 <div>![]({{BASE_PATH}}/images/3ab324530a8c3d0b0216d3f7549ebbfa6b7869f4.jpg)</div>
+=======
+<div>![](/images/3ab324530a8c3d0b0216d3f7549ebbfa6b7869f4.jpg)</div>
+>>>>>>> 换电脑之后重新备份
 <div>这些类是啥搜索一下，或者根据名字猜一下，之后我们就可以</div>
 </div>

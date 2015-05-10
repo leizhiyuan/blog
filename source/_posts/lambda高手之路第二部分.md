@@ -149,6 +149,10 @@ Test Lambda [ms] Normal [ms]
 
 下图是上表的结果，我们可以看得到普通的方法和Lambda表达式基本上限差不多。当使用Lambda表达式的时候没有太大的性能损失。
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/b4702d953670f850f72d24daf0aefd146eb33227.png)](http://leaverimage.b0.upaiyun.com/30616_o.png)
+=======
+[![](/images/b4702d953670f850f72d24daf0aefd146eb33227.png)](http://leaverimage.b0.upaiyun.com/30616_o.png)
+>>>>>>> 换电脑之后重新备份
 
 第三部分会介绍背后的秘密-MSIL

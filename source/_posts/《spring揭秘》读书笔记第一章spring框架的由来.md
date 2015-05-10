@@ -16,7 +16,11 @@ date: 2014-06-30 20:40:40
 
 框架总结结构
 
+<<<<<<< HEAD
 [![Spring Framework]({{BASE_PATH}}/images/8775d9e40dbc29240061edd2b9b6f76990f39cad.jpg)](http://leaverimage.b0.upaiyun.com/2014/06/Spring-Framework.jpg)
+=======
+[![Spring Framework](/images/8775d9e40dbc29240061edd2b9b6f76990f39cad.jpg)](http://leaverimage.b0.upaiyun.com/2014/06/Spring-Framework.jpg)
+>>>>>>> 换电脑之后重新备份
 整个Spring架构建立在Core核心模块上，是基础，该模块中，有一个IoC容器的实现，用来以依赖注入的方式管理对象之间的依赖关系。Core中还有一些气筒工具类，比如IO工具类
 
 从图中看到，AOP模块，提供了轻便二强大的AOP框架，一AOP的形式增强POJO的能力，弥补OOP/OOSD的不足，采用Proxy模式，与IoC容器相结合

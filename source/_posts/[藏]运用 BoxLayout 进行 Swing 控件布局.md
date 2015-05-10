@@ -74,13 +74,21 @@ BoxLayout 往往和 Box 这个容器结合在一起使用，这么做的理由�
 
 ##### 图 1\. 应用 BoxLayout 进行按钮布局例子 1
 
+<<<<<<< HEAD
 [![image003]({{BASE_PATH}}/images/3f7f662b57a56e94f2e43da95973ee61d0735286.jpg)](http://leaverimage.b0.upaiyun.com/2014/03/image003.jpg)
+=======
+[![image003](/images/3f7f662b57a56e94f2e43da95973ee61d0735286.jpg)](http://leaverimage.b0.upaiyun.com/2014/03/image003.jpg)
+>>>>>>> 换电脑之后重新备份
 
 我们在布局中经常会碰到如图 1 所示要把按钮放在容器的两端，那么我们就可以给容器定义一个 BoxLayout 来布局按钮，我们在按钮 1 和按钮 2 之间放置一个不可见的 glue，如前面所提到的那样，glue 就会尽量挤占掉两个按钮之间的空间，从而将两个按钮放在两端。
 
 ##### 图 2\. 应用 BoxLayout 进行按钮布局例子 2
 
+<<<<<<< HEAD
 [![image005]({{BASE_PATH}}/images/b8b229a394ddf34ea26b833892a2f6669508189b.jpg)](http://leaverimage.b0.upaiyun.com/2014/03/image005.jpg)
+=======
+[![image005](/images/b8b229a394ddf34ea26b833892a2f6669508189b.jpg)](http://leaverimage.b0.upaiyun.com/2014/03/image005.jpg)
+>>>>>>> 换电脑之后重新备份
 
 再来看图 2 的例子，我们经常会遇到要将两个按钮放在容器的右边，我们就可以给容器定义一个 BoxLayout, 先放一个不可见的 glue，这个 glue 会挤占左边的空间，从而将两个按钮推到右边，
 
@@ -92,7 +100,11 @@ BoxLayout 往往和 Box 这个容器结合在一起使用，这么做的理由�
 
 ##### 图 3\. BoxLayout 演示
 
+<<<<<<< HEAD
 [![image007]({{BASE_PATH}}/images/58e1d7245bdcf3c716c70f9fc971531bd8959204.jpg)](http://leaverimage.b0.upaiyun.com/2014/03/image0071.jpg)
+=======
+[![image007](/images/58e1d7245bdcf3c716c70f9fc971531bd8959204.jpg)](http://leaverimage.b0.upaiyun.com/2014/03/image0071.jpg)
+>>>>>>> 换电脑之后重新备份
 
 这个演示是一个虚拟的用户对话框，只用于演示如何使用 BoxLayout, 例子代码中没有实现控件的动作。我们假定通过它用户可以选择要查询的运动会项目，然后查询，对话框中的表格显示了查询到的运动会项目的报名情况。为了完成这个布局，我们从上到下分别定义了 3 个 Panel, 分别叫做 topPanel，middlePanel，bottomPanel，这 3 个 Panel 都使用 BoxLayout。我们先看最上边的 topPanel，也就是包含表格的 Panel，topPanel 布局的基本思路是该 Panel 采用 BoxLayout 的垂直排列布局，先放置一个不可见的 Strut, `使`topPanel 相 `对顶部留出一定的空间，`再放置包含表格的滚动窗格，`再加入一个不可见的`Strut`，从而使`topPanel`和`middlePanel`之间留出一定的空间。`TopPanel 的代码如清单 1 所示：
 

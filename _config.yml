@@ -5,7 +5,11 @@
 # Site
 title: bystander's blog
 subtitle: 寻找窄门
+<<<<<<< HEAD
 description:  
+=======
+description:
+>>>>>>> 换电脑之后重新备份
 author: bystander
 email: leizhiyuan@gmail.com
 language: zh-CN
@@ -87,8 +91,15 @@ exclude_generator:
 deploy:
   type: git
   repo:
+<<<<<<< HEAD
     github: git@github.com:leizhiyuan/leizhiyuan.github.io.git,master
     gitcafe: git@gitcafe.com:leizhiyuan/leizhiyuan.git,gitcafe-pages
 
 plugins:
  - hexo-generator-feed
+=======
+    gitcafe: git@gitcafe.com:leizhiyuan/leizhiyuan.git,gitcafe-pages
+    github: git@github.com:leizhiyuan/leizhiyuan.github.io.git,master
+plugins:
+ - hexo-generator-feed
+>>>>>>> 换电脑之后重新备份

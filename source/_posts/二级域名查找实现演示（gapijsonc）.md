@@ -14,7 +14,11 @@ date: 2012-04-20 08:23:24
 思路；访问该页面，得到字符串-》去掉多余部分-》解析成对象-》提取对象的字段
 　　　　1.访问该<pre lang]"C#">http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=hello</pre>，其实hello部分就是需要查找的字串，对于查找二级域名这种事，应用到Google的一个语法就是site:leaver.me。类似这样的，可以获取到所有leaver.me上的子站和内容。。
 然后分析json数据。直接访问会发现格式很乱。使用http://jsonformatter.curiousconcept.com/这个工具进行格式化。最终结果如图
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/06ed49d2b62047555b3287b29255a3fcaa71d845.jpg)](http://leaverimage.b0.upaiyun.com/20804_z.jpg)
+=======
+[![](/images/06ed49d2b62047555b3287b29255a3fcaa71d845.jpg)](http://leaverimage.b0.upaiyun.com/20804_z.jpg)
+>>>>>>> 换电脑之后重新备份
 可以很清楚的看出json的结构，results是结果集，我需要的是需要的是[]之间的部分，包括[]，我理解的是这样。默认给出4个结果。
 
 　　　　2.要去掉多余部分，得用正则表达式了，
@@ -36,7 +40,11 @@ json解析我在外国找到了[json.net](https://json.codeplex.com/)这个解�
 　　　　4.完成后就得到了一个List<Result>对象。里面包含四个结果的所有信息，只要调用results[i].对应属性就可以了。这里分析后可知二级域名在visibleUrl里，所有就调用它。用到了HashSet这个模板。元素唯一不重复。
 
 最终效果：
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/)](http://leaverimage.b0.upaiyun.com/20805_o.jpg)
+=======
+[![](/images/)](http://leaverimage.b0.upaiyun.com/20805_o.jpg)
+>>>>>>> 换电脑之后重新备份
 　　　　写程序需要是处理边界情况。。感觉是。主要是我对json格式的解析很不清楚。。只能边学边做。。还有因为写之前没有规划好，打算写全一些，也没想好每个函数来干什么，结果导致后面很麻烦。竟然用了一个全局变量。。其实可以改的。还是算了，演示而已。而且。当时不太清楚google的限制。到达限制后会返回一个错误的结果，多次异常。不顾加强了调试代码的能力，也好。唉。矬人就是矬人啊。。
 
 源码下载：

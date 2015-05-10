@@ -47,7 +47,11 @@ font-size:40px;
 }</pre>
 显示效果就是这样的了...只是用来演示的一个字体。
 
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/0aa0db5ed4bc986d61cfbb9e1e421a2226c94f9b.png)](http://leaverimage.b0.upaiyun.com/38421_o.png)
+=======
+[![](/images/0aa0db5ed4bc986d61cfbb9e1e421a2226c94f9b.png)](http://leaverimage.b0.upaiyun.com/38421_o.png)
+>>>>>>> 换电脑之后重新备份
 
 &nbsp;
 

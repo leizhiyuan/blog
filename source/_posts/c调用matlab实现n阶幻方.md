@@ -57,11 +57,19 @@ Or see the online documentation at MathWorks' web site. (Page may load slowly.)<
 > ### MATLAB端的工作
 > 
 > 　　以我这个功能为例。打开MatLab，然后File->New->Deployment Project.然后在Type里选择.net Assembly,Ok即可。我选择的工程名是test，注意，这个test就会生成一个名为test.dll的程序集，所以起个好名字，，我没起好。如图1
+<<<<<<< HEAD
 > [![]({{BASE_PATH}}/images/494daca0321a65539ea6b2c7d6d3155345c3c32d.jpg "start")](http://leaverimage.b0.upaiyun.com/23964_o.jpg)
 > 　　然后在图2的视图中定位到你选择的工程目录，并依次点击。
 > [![]({{BASE_PATH}}/images/b2e74076bfe76e6aeac6b3b7365668d2f23431fe.jpg "step")](http://leaverimage.b0.upaiyun.com/23966_o.jpg)
 > 　　添加一个test.m的文件。图3
 > [![]({{BASE_PATH}}/images/110d97e0942789e04445dd3d3eee89873c49de11.jpg "test")](http://leaverimage.b0.upaiyun.com/23965_o.jpg)这个名称随意。但是要注意，这个名字必须和你里面将要写的那个函数名称一致，这个很好理解。好了以后，双击test.m就会打开。输入
+=======
+> [![](/images/494daca0321a65539ea6b2c7d6d3155345c3c32d.jpg "start")](http://leaverimage.b0.upaiyun.com/23964_o.jpg)
+> 　　然后在图2的视图中定位到你选择的工程目录，并依次点击。
+> [![](/images/b2e74076bfe76e6aeac6b3b7365668d2f23431fe.jpg "step")](http://leaverimage.b0.upaiyun.com/23966_o.jpg)
+> 　　添加一个test.m的文件。图3
+> [![](/images/110d97e0942789e04445dd3d3eee89873c49de11.jpg "test")](http://leaverimage.b0.upaiyun.com/23965_o.jpg)这个名称随意。但是要注意，这个名字必须和你里面将要写的那个函数名称一致，这个很好理解。好了以后，双击test.m就会打开。输入
+>>>>>>> 换电脑之后重新备份
 > 
 > <pre class="lang:default decode:true " >function m=test(n)
 > m=magic(n);
@@ -69,10 +77,17 @@ Or see the online documentation at MathWorks' web site. (Page may load slowly.)<
 > 
 > 　　创建一个test方法。该方法在C#调用的时候要用到，接受一个参数，然后输出一个幻方。保存关闭m文件，然后回到上图，双击test.prj也就是工程文件。
 > 来到图4
+<<<<<<< HEAD
 > [![]({{BASE_PATH}}/images/5ab49b4504bc1aba33d62b3c2cfbf897656c751d.jpg "add")](http://leaverimage.b0.upaiyun.com/23967_o.jpg)
 > 　　点击Add Class，就是向test.dll的程序集中添加类。我添加了一个类叫做Func1.这个类用来在C#中创建一个对象，然后调用test（n）这个函数，然后出现Add Files，点击打开浏览框，把刚才写好的test.m选上。就可以了
 > 　　最后看窗口右上角，，点击那个build图标就ok，等个几分钟，就会在目录里生成test.dll文件了。图5
 > [![]({{BASE_PATH}}/images/4e21f5823ece422097e73e2321e43b3b09a2cb7a.jpg "build")](http://leaverimage.b0.upaiyun.com/23968_o.jpg)
+=======
+> [![](/images/5ab49b4504bc1aba33d62b3c2cfbf897656c751d.jpg "add")](http://leaverimage.b0.upaiyun.com/23967_o.jpg)
+> 　　点击Add Class，就是向test.dll的程序集中添加类。我添加了一个类叫做Func1.这个类用来在C#中创建一个对象，然后调用test（n）这个函数，然后出现Add Files，点击打开浏览框，把刚才写好的test.m选上。就可以了
+> 　　最后看窗口右上角，，点击那个build图标就ok，等个几分钟，就会在目录里生成test.dll文件了。图5
+> [![](/images/4e21f5823ece422097e73e2321e43b3b09a2cb7a.jpg "build")](http://leaverimage.b0.upaiyun.com/23968_o.jpg)
+>>>>>>> 换电脑之后重新备份
 > 
 > ### VS端的代码
 > 
@@ -83,7 +98,11 @@ Or see the online documentation at MathWorks' web site. (Page may load slowly.)<
 > using MathWorks.MATLAB.NET.Utility;</pre> 
 > 
 > 　　然后设计C#界面，很简单的拖一个界面，图6
+<<<<<<< HEAD
 > [![]({{BASE_PATH}}/images/07a97d0fe021665574597469b813e53dc6b48677.jpg "ui")](http://leaverimage.b0.upaiyun.com/23969_o.jpg)
+=======
+> [![](/images/07a97d0fe021665574597469b813e53dc6b48677.jpg "ui")](http://leaverimage.b0.upaiyun.com/23969_o.jpg)
+>>>>>>> 换电脑之后重新备份
 > 　　然后单击事件代码：
 > 
 > <pre class="lang:c# decode:true " >            Func1 f = new Func1(); 
@@ -94,7 +113,11 @@ Or see the online documentation at MathWorks' web site. (Page may load slowly.)<
 >             na = (MWNumericArray)ansArray[0];//只有一个数组返回
 >             MessageBox.Show(na.ToString());</pre> 
 > 　　看到test有两个参数，第一个参数是指返回结果书，我们只需要一个就好了。所以为1，后面那个是阶数了。运行结果如图7：
+<<<<<<< HEAD
 > [![]({{BASE_PATH}}/images/891d04e30b4742ae3ca5b851d5fc379cc3d10950.jpg "result")](http://leaverimage.b0.upaiyun.com/23970_o.jpg)
+=======
+> [![](/images/891d04e30b4742ae3ca5b851d5fc379cc3d10950.jpg "result")](http://leaverimage.b0.upaiyun.com/23970_o.jpg)
+>>>>>>> 换电脑之后重新备份
 
 　　注意程序在初始化自定义类Func1时会花费较多时间，大约持续2~3秒钟，程序如同假死一般，但第二次点击按钮反应却很快.
 参考：

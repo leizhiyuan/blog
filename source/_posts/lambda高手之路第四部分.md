@@ -98,7 +98,11 @@ void Main()
 //通过调用Translations.GetSayMyName("de") 获取德语方法</pre> 
 
 即使这看起来似乎有点过度工程化了。但是也许这是方法工厂最好的例子了。毕竟方法简单易扩展，可以被用在很多情况下。这中模式和反射的组合可以是的程序代码更松耦合，更易使用。并且代码更健壮。下图展示了模式的工作流程
+<<<<<<< HEAD
 [![]({{BASE_PATH}}/images/e6a03db9751c4ebd13b63fd2880f2267e3af2b44.png)](http://leaverimage.b0.upaiyun.com/30815_o.png)
+=======
+[![](/images/e6a03db9751c4ebd13b63fd2880f2267e3af2b44.png)](http://leaverimage.b0.upaiyun.com/30815_o.png)
+>>>>>>> 换电脑之后重新备份
 
 **自定义方法**
 自定义方法模式一个JavaScript中普遍的技术。可以用在代码中提高性能和健壮性，这种模式的背后思想是方法被设置为一个属性。于是可以和其他方法非常方便的交换。我们看一下具体的代码

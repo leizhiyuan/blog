@@ -111,7 +111,11 @@ index.jsp内容是：
 
 图一
 
+<<<<<<< HEAD
 [![eclipse-tomcat-server]({{BASE_PATH}}/images/5c29f69c7cf928d6300dff7c9a176110ddb6c5ab.png)]({{BASE_PATH}}/images/5c29f69c7cf928d6300dff7c9a176110ddb6c5ab.png) [![final-folder]({{BASE_PATH}}/images/4876ca43cc63ce27270db95cc57c40c1e862cbe7.png)]({{BASE_PATH}}/images/4876ca43cc63ce27270db95cc57c40c1e862cbe7.png) [![project-structure]({{BASE_PATH}}/images/beffae62b8bf33f55abebbe65011f8547ea7b91f.png)](http://leaverimage.b0.upaiyun.com/2013/09/project-structure.png)
+=======
+[![eclipse-tomcat-server](/images/5c29f69c7cf928d6300dff7c9a176110ddb6c5ab.png)](/images/5c29f69c7cf928d6300dff7c9a176110ddb6c5ab.png) [![final-folder](/images/4876ca43cc63ce27270db95cc57c40c1e862cbe7.png)](/images/4876ca43cc63ce27270db95cc57c40c1e862cbe7.png) [![project-structure](/images/beffae62b8bf33f55abebbe65011f8547ea7b91f.png)](http://leaverimage.b0.upaiyun.com/2013/09/project-structure.png)
+>>>>>>> 换电脑之后重新备份
 
 不要迷惑，如果我们只输入
 <pre class="lang:default decode:true">mvn eclipse:eclipse</pre>
@@ -121,7 +125,11 @@ index.jsp内容是：
 
 图二
 
+<<<<<<< HEAD
 [![eclipse-tomcat-server]({{BASE_PATH}}/images/5c29f69c7cf928d6300dff7c9a176110ddb6c5ab.png)](http://leaverimage.b0.upaiyun.com/2013/09/eclipse-tomcat-server.png)
+=======
+[![eclipse-tomcat-server](/images/5c29f69c7cf928d6300dff7c9a176110ddb6c5ab.png)](http://leaverimage.b0.upaiyun.com/2013/09/eclipse-tomcat-server.png)
+>>>>>>> 换电脑之后重新备份
 
 可以通过_http://localhost:8080/CounterWebApp/_地址来访问
 
@@ -291,7 +299,11 @@ public class BaseController {
 
 图三
 
+<<<<<<< HEAD
 [![final-folder]({{BASE_PATH}}/images/4876ca43cc63ce27270db95cc57c40c1e862cbe7.png)](http://leaverimage.b0.upaiyun.com/2013/09/final-folder.png)
+=======
+[![final-folder](/images/4876ca43cc63ce27270db95cc57c40c1e862cbe7.png)](http://leaverimage.b0.upaiyun.com/2013/09/final-folder.png)
+>>>>>>> 换电脑之后重新备份
 
 ## 6.Eclipse+Tomcat
 
@@ -301,13 +313,21 @@ public class BaseController {
 
 图四
 
+<<<<<<< HEAD
 [![web-deployment-assembly]({{BASE_PATH}}/images/73a4412bcfedbc568e2c60c2ec1bf3bca9e1d102.png)](http://leaverimage.b0.upaiyun.com/2013/09/web-deployment-assembly.png)
+=======
+[![web-deployment-assembly](/images/73a4412bcfedbc568e2c60c2ec1bf3bca9e1d102.png)](http://leaverimage.b0.upaiyun.com/2013/09/web-deployment-assembly.png)
+>>>>>>> 换电脑之后重新备份
 
 执行完以后，就都有了
 
 图五
 
+<<<<<<< HEAD
 [![web-deployment-assembly-2]({{BASE_PATH}}/images/ce231a20448fb14ef64cbd33f10ce124236af4c4.png)](http://leaverimage.b0.upaiyun.com/2013/09/web-deployment-assembly-2.png)
+=======
+[![web-deployment-assembly-2](/images/ce231a20448fb14ef64cbd33f10ce124236af4c4.png)](http://leaverimage.b0.upaiyun.com/2013/09/web-deployment-assembly-2.png)
+>>>>>>> 换电脑之后重新备份
 
 重要！许多人就是没有第二次执行这个命令导致无法开始/调试，如果有问题，右击你的项目属性，看看依赖是否为空
 
@@ -334,7 +354,11 @@ web项目打包成war。放在target目录
 
 图六
 
+<<<<<<< HEAD
 [![demo1]({{BASE_PATH}}/images/b2247eded5f745ec924642e931b586cd75a1e4e5.png)](http://leaverimage.b0.upaiyun.com/2013/09/demo1.png)
+=======
+[![demo1](/images/b2247eded5f745ec924642e931b586cd75a1e4e5.png)](http://leaverimage.b0.upaiyun.com/2013/09/demo1.png)
+>>>>>>> 换电脑之后重新备份
 
 我们传个参数进去
 
@@ -344,7 +368,11 @@ _http://localhost:8080/CounterWebApp/welcome/mkyong_
 
 图七
 
+<<<<<<< HEAD
 [![demo2]({{BASE_PATH}}/images/0856171569637fa29d743717f2b75f91913b3dee.png)](http://leaverimage.b0.upaiyun.com/2013/09/demo2.png)
+=======
+[![demo2](/images/0856171569637fa29d743717f2b75f91913b3dee.png)](http://leaverimage.b0.upaiyun.com/2013/09/demo2.png)
+>>>>>>> 换电脑之后重新备份
 
 9.Demo下载
 

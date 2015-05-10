@@ -36,7 +36,11 @@ date: 2013-09-19 22:05:10
 
 看一下这个目录
 
+<<<<<<< HEAD
 [![maven-local-repo]({{BASE_PATH}}/images/4bc19a12bd7d869d840c872a9c3bdbfbd55d339c.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-local-repo.png)
+=======
+[![maven-local-repo](/images/4bc19a12bd7d869d840c872a9c3bdbfbd55d339c.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-local-repo.png)
+>>>>>>> 换电脑之后重新备份
 
 #  二.中央仓库(central repository)
 
@@ -46,7 +50,11 @@ date: 2013-09-19 22:05:10
 
 看起来是这样的
 
+<<<<<<< HEAD
 [![maven-center-repository-search]({{BASE_PATH}}/images/1b90bc7c3b841d566a18777d661d40b159a29b16.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-center-repository-search.png)
+=======
+[![maven-center-repository-search](/images/1b90bc7c3b841d566a18777d661d40b159a29b16.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-center-repository-search.png)
+>>>>>>> 换电脑之后重新备份
 
 &nbsp;
 
