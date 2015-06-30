@@ -3,6 +3,7 @@
   "version": "2.8.3",
   "private": true,
   "dependencies": {
+    "hexo-generator-feed": "^1.0.2",
     "hexo-migrator-image": "^1.0.5",
     "hexo-migrator-wordpress": "^0.1.1",
     "hexo-renderer-ejs": "*",
