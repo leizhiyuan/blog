@@ -39,11 +39,7 @@ file:/E:/workspace/Test/bin/</pre>
 
 再来一个实例，假设有如下Project结构：
 
-<<<<<<< HEAD
-[![o_PackageStructure1]({{BASE_PATH}}/images/94eb328bce2cf9ff32430cc4075af46091202a22.png)](http://leaverimage.b0.upaiyun.com/2013/12/o_PackageStructure1.png)
-=======
 [![o_PackageStructure1](/images/94eb328bce2cf9ff32430cc4075af46091202a22.png)](http://leaverimage.b0.upaiyun.com/2013/12/o_PackageStructure1.png)
->>>>>>> 换电脑之后重新备份
 
 如果我们想在TestMain.java中分别取到1~3.properties文件，该怎么写路径呢？代码如下：
 <pre class="lang:default decode:true">package testpackage;
@@ -107,11 +103,7 @@ null</pre>
 
 如果有同样的Project结构
 
-<<<<<<< HEAD
-[![o_PackageStructure]({{BASE_PATH}}/images/46e184c9601d96bbb9fbb19e475c7909c85fe52c.png)](http://leaverimage.b0.upaiyun.com/2013/12/o_PackageStructure.png)
-=======
 [![o_PackageStructure](/images/46e184c9601d96bbb9fbb19e475c7909c85fe52c.png)](http://leaverimage.b0.upaiyun.com/2013/12/o_PackageStructure.png)
->>>>>>> 换电脑之后重新备份
 
 使用Class.getClassLoader（）.getResource(String path)可以这么写：
 <div>

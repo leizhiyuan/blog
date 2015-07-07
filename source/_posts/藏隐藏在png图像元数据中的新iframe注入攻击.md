@@ -31,11 +31,7 @@ date: 2014-02-09 09:23:12
 
 像这样：
 
-<<<<<<< HEAD
-[![iframe-sample]({{BASE_PATH}}/images/3da10af5e9e3a897cf39927ee28a0106f297880a.png)](http://leaverimage.b0.upaiyun.com/2014/02/iframe-sample.png)
-=======
 [![iframe-sample](/images/3da10af5e9e3a897cf39927ee28a0106f297880a.png)](http://leaverimage.b0.upaiyun.com/2014/02/iframe-sample.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 
@@ -55,11 +51,7 @@ date: 2014-02-09 09:23:12
 
 如下，iFrame加载了一个有效的文件，没有什么恶意，一个叫jquery.js的JavaScript文件。这一切看上去都很好。你要细细的找：
 
-<<<<<<< HEAD
-[![blog_injection1-494x650]({{BASE_PATH}}/images/7f64ba23d5fd4d5763ff921134e11beede62faeb.png)](http://leaverimage.b0.upaiyun.com/2014/02/blog_injection1-494x650.png)
-=======
 [![blog_injection1-494x650](/images/7f64ba23d5fd4d5763ff921134e11beede62faeb.png)](http://leaverimage.b0.upaiyun.com/2014/02/blog_injection1-494x650.png)
->>>>>>> 换电脑之后重新备份
 
 起初，很多人会说我们傻。 这些代码很好，没看见什么问题，对不对？ 然后，我们注意到了这个小函数，loadFile（）。 函数本身并不奇怪，但事实上，它是装载一个PNG-**var strFile = ‘./dron.png**。 你会被它惊讶良久，它才是一个真正的黑手。
 
@@ -71,19 +63,11 @@ date: 2014-02-09 09:23:12
 
 噢，什么都没有，太无聊了，这纯粹是浪费时间。
 
-<<<<<<< HEAD
-[![Sucuri-iframe-png]({{BASE_PATH}}/images/0d8a2bcd6d6e5a6ac87f8858fe8f0a81878d6bbc.png)](http://leaverimage.b0.upaiyun.com/2014/02/Sucuri-iframe-png.png)
-
-但是，请等一下，我发现这里有个有趣的小循环。
-
-[![Sucuri-PNG-Decoding-Loop]({{BASE_PATH}}/images/8c17a78234586bebb89f023d8023b6b69d9f574b.png)](http://leaverimage.b0.upaiyun.com/2014/02/Sucuri-PNG-Decoding-Loop.png)
-=======
 [![Sucuri-iframe-png](/images/0d8a2bcd6d6e5a6ac87f8858fe8f0a81878d6bbc.png)](http://leaverimage.b0.upaiyun.com/2014/02/Sucuri-iframe-png.png)
 
 但是，请等一下，我发现这里有个有趣的小循环。
 
 [![Sucuri-PNG-Decoding-Loop](/images/8c17a78234586bebb89f023d8023b6b69d9f574b.png)](http://leaverimage.b0.upaiyun.com/2014/02/Sucuri-PNG-Decoding-Loop.png)
->>>>>>> 换电脑之后重新备份
 
 嗯，这是确实挺奇怪的，这是一个解码循环。 为什么要一个循环的解码PNG文件呢？
 
@@ -95,11 +79,7 @@ date: 2014-02-09 09:23:12
 
 测试页上加载它之后这，我们获得了strData变量：
 
-<<<<<<< HEAD
-[![sucuri-png-iframe-payload]({{BASE_PATH}}/images/4a1a1266a40ff50c6d0328eea9c9e849e043ae05.png)](http://leaverimage.b0.upaiyun.com/2014/02/sucuri-png-iframe-payload.png)
-=======
 [![sucuri-png-iframe-payload](/images/4a1a1266a40ff50c6d0328eea9c9e849e043ae05.png)](http://leaverimage.b0.upaiyun.com/2014/02/sucuri-png-iframe-payload.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 

@@ -11,11 +11,7 @@ categories:
 date: 2012-10-01 11:36:29
 ---
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/6d2217ea2873cc4f559cc605fc38f29dade4aef8.jpg "filesearcher")](http://leaverimage.b0.upaiyun.com/27654_o.jpg)
-=======
 [![](/images/6d2217ea2873cc4f559cc605fc38f29dade4aef8.jpg "filesearcher")](http://leaverimage.b0.upaiyun.com/27654_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 **介绍**
 在装有Vista的机器上。我想通过一个给定的字符串来搜索我硬盘上的一个文件，该文件内容包含这个字符串序列，资源管理器是做不到的。因此，我就决定自己写吧。然后就写成这样了。。

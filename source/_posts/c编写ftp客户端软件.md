@@ -13,11 +13,7 @@ categories:
 date: 2012-10-09 09:06:16
 ---
 
-<<<<<<< HEAD
-# [![]({{BASE_PATH}}/images/df5f8fbfeaeabe639c893a078ddeda6cac4361db.png "1")](http://leaverimage.b0.upaiyun.com/27933_o.png)
-=======
 # [![](/images/df5f8fbfeaeabe639c893a078ddeda6cac4361db.png "1")](http://leaverimage.b0.upaiyun.com/27933_o.png)
->>>>>>> 换电脑之后重新备份
 
 # 1 介绍
 
@@ -35,11 +31,7 @@ date: 2012-10-09 09:06:16
 
 图2
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/ceb7abd419bd3e983fa8f9cbf1962546cc0880a4.gif "2")](http://leaverimage.b0.upaiyun.com/27934_o.gif)
-=======
 [![](/images/ceb7abd419bd3e983fa8f9cbf1962546cc0880a4.gif "2")](http://leaverimage.b0.upaiyun.com/27934_o.gif)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 
@@ -51,11 +43,7 @@ FTP程序曾经是基于命令行的。我们仍沿可以通过cmd.exe连接FTP�
 
 图三
 
-<<<<<<< HEAD
-![]({{BASE_PATH}}/images/9c06cc0d8d904390202ef269a18467324df590c9.gif "3")
-=======
 ![](/images/9c06cc0d8d904390202ef269a18467324df590c9.gif "3")
->>>>>>> 换电脑之后重新备份
 
 一个完整的FTP文件传输需要建立两种类型的连接，一种为文件传输下命令，称为控制连接，另一种实现真正的文件传输，称为数据连接。
 
@@ -97,11 +85,7 @@ FTP程序曾经是基于命令行的。我们仍沿可以通过cmd.exe连接FTP�
 
 图四
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/b2ae5f59d51b1a183a0ceea50a2c9497971422e7.png "4")](http://leaverimage.b0.upaiyun.com/27937_o.png)
-=======
 [![](/images/b2ae5f59d51b1a183a0ceea50a2c9497971422e7.png "4")](http://leaverimage.b0.upaiyun.com/27937_o.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 

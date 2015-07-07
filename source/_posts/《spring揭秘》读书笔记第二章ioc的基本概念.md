@@ -82,11 +82,7 @@ newsListener.postProcessIfNecessary(newsId);
 
 <span style="font-family: SimSun; font-size: 9pt;">让别人为你服务！在图</span> <span style="font-family: 'Times New Roman'; font-size: 9pt;">2-1</span> <span style="font-family: SimSun; font-size: 9pt;">中，也就是让</span> <span style="font-family: 'Times New Roman'; font-size: 9pt;">IoC Service Provider</span> <span style="font-family: SimSun; font-size: 9pt;">来为你服务！</span>
 
-<<<<<<< HEAD
-![]({{BASE_PATH}}/images/45ddcfa8929fe85603c18852a59afac715fa4c7f.bmp)
-=======
 ![](/images/45ddcfa8929fe85603c18852a59afac715fa4c7f.bmp)
->>>>>>> 换电脑之后重新备份
 
 <span style="font-family: 宋体; font-size: 10pt;">这里，被注入对象就是</span> <span style="font-family: Courier; font-size: 8pt;">FXNewsProvider</span> <span style="font-family: 宋体; font-size: 8pt;">，被依赖于对象</span> <span style="font-family: Courier; font-size: 8pt;">IFXNewsListener</span> <span style="font-family: 宋体; font-size: 8pt;">和</span> <span style="font-family: Courier; font-size: 8pt;">IFXNewsPersister  </span>
 

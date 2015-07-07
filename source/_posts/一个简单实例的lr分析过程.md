@@ -39,11 +39,7 @@ date: 2012-05-14 11:38:49
 
 　　通过前两篇文章的步骤，此题可以构造出如下的一张LR分析表
 
-<<<<<<< HEAD
-　　[![]({{BASE_PATH}}/images/5b2465bb8d435fab286faf6634217380656ce008.jpg "lr分析表")](http://leaverimage.b0.upaiyun.com/21467_o.jpg)
-=======
 　　[![](/images/5b2465bb8d435fab286faf6634217380656ce008.jpg "lr分析表")](http://leaverimage.b0.upaiyun.com/21467_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 　　分析表中有Si和rj大家都知道的。s是shift的缩写，也就是移进，r是reduce的缩写，也就是规约。规约是推导的逆操作，大家都懂。
 
@@ -59,11 +55,7 @@ date: 2012-05-14 11:38:49
 
 　　然后使用我们将要使用的辅助表来分析吧，为了简单。我还是直接给出答案。然后分析一下典型的情况。
 
-<<<<<<< HEAD
-　　[![]({{BASE_PATH}}/images/d6565babf03f2f230fb9d8933518bc1cb55bf7cc.jpg "分析结果")](http://leaverimage.b0.upaiyun.com/21466_o.jpg)
-=======
 　　[![](/images/d6565babf03f2f230fb9d8933518bc1cb55bf7cc.jpg "分析结果")](http://leaverimage.b0.upaiyun.com/21466_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 　　第一步，符号栈中是#，输入符号串就是给定的要分析的串，状态栈因为从0开始，所以状态栈直接填0，大家都知道，LR分析是从左到右扫描的。所以心里想着一根指针p，p首先指向输入串的a，然后我们查分析表的（0，a）,0就是状态0，a就是指针的当前字符。分析表中的（0，a）是s2，填入第一步的action，并且动作列填入移进，根据规则，将2入状态栈，a入符号栈，
 

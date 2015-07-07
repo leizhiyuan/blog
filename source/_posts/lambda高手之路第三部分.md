@@ -13,11 +13,7 @@ date: 2012-12-20 20:12:54
 背后的秘密-MSIL
 
 通过著名的LINQPad，我们可以更深入的查看MSIL代码而没有任何秘密。下图是一个LINQPad的使用截图
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/2cc26ed754b0ac72d7caf372a917ef44d327d51a.png)](http://leaverimage.b0.upaiyun.com/30624_o.png)
-=======
 [![](/images/2cc26ed754b0ac72d7caf372a917ef44d327d51a.png)](http://leaverimage.b0.upaiyun.com/30624_o.png)
->>>>>>> 换电脑之后重新备份
 
 我们会看三个例子，第一个Lambda表达式如下：
 
@@ -53,11 +49,7 @@ IL_0008:  ret       </pre>
 
 我们在下图里演示一下编译器所做的修改。在这个图例。我们可以看到编译器把Lambda表达式移动成了一个固定的方法。
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/1500b574e9e4fd0cfb11b286eaff270102810b02.png)](http://leaverimage.b0.upaiyun.com/30625_o.png)
-=======
 [![](/images/1500b574e9e4fd0cfb11b286eaff270102810b02.png)](http://leaverimage.b0.upaiyun.com/30625_o.png)
->>>>>>> 换电脑之后重新备份
 第二个例子将展示Lambda表达式真正的奇妙之处，在这个例子里。我们既使用了有着全局变量的普通方法也使用了有捕获变量的Lambda表达式。代码如下
 
 <pre class="lang:default decode:true " >void Main()
@@ -140,10 +132,6 @@ IL_0006:  ret
 所有的变量因此就可以在新生成的类的对象里赋值/读取了。这解决了变量之间的引用问题。（其实就是只保留了对该类实例的引用。）编译器也足够智能之会把这些捕获的变量放到类里面。因此，当我们使用Lambda的时候才没有太大的性能问题。无论如何。注意。由于保持了对lambda表达式的引用，因此可能造成内存泄漏。只要方法还在。变量就仍然存活。显而易见。而现在我们知道了原因。
 
 我们再次用图示来说明。这这种闭包情况下里。不仅仅方法会被移动。捕获的变量也会被移动。所有被移动了的对象会被放到一个新生成的类里。因此一个没有名称的类就隐式的出现了。
-<<<<<<< HEAD
- [![]({{BASE_PATH}}/images/708c4bd6bea1fa2d592281cebf202af1b36b4e14.png)](http://leaverimage.b0.upaiyun.com/30626_o.png)
-=======
  [![](/images/708c4bd6bea1fa2d592281cebf202af1b36b4e14.png)](http://leaverimage.b0.upaiyun.com/30626_o.png)
->>>>>>> 换电脑之后重新备份
 
 下一节将是映射流行的JavaScrpit模式。

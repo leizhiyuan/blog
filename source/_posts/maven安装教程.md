@@ -16,11 +16,7 @@ Maven不需要作为服务组件安装到windows上，仅仅需要下载，解�
 
 确保JDK已经安装，同时JAVA_HOME变量已经添加到了windows环境变量里，指向jdk目录
 
-<<<<<<< HEAD
-[![maven-java-home]({{BASE_PATH}}/images/3161766919fb6fd118699cc45753f0740be3a6b4.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-java-home.png)
-=======
 [![maven-java-home](/images/3161766919fb6fd118699cc45753f0740be3a6b4.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-java-home.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 
@@ -36,11 +32,7 @@ Maven不需要作为服务组件安装到windows上，仅仅需要下载，解�
 
 添加一个新的环境变量MAVEN_HOME到环境变量，指向Maven目录
 
-<<<<<<< HEAD
-[![maven-maven-home]({{BASE_PATH}}/images/5a2878c27f389f27afa72040040a0cc54312b388.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-maven-home.png)
-=======
 [![maven-maven-home](/images/5a2878c27f389f27afa72040040a0cc54312b388.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-maven-home.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 
@@ -48,11 +40,7 @@ Maven不需要作为服务组件安装到windows上，仅仅需要下载，解�
 
 更新Path变量，把Maven的bin目录添加进去，这样就可以在任何地方执行mvn命令了
 
-<<<<<<< HEAD
-[![Maven-Path]({{BASE_PATH}}/images/ec2bd24fcc118b64cb10405acb807c59490c10d6.png)](http://leaverimage.b0.upaiyun.com/2013/09/Maven-Path.png)
-=======
 [![Maven-Path](/images/ec2bd24fcc118b64cb10405acb807c59490c10d6.png)](http://leaverimage.b0.upaiyun.com/2013/09/Maven-Path.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 

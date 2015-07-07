@@ -17,11 +17,7 @@ C#的反射可以用来实现一个简单的插件系统。思路很简单，我
 
 结构图如下：
 
-<<<<<<< HEAD
-[![Myapplication]({{BASE_PATH}}/images/bf202a9b50d5ce497f88718743c344d8579fadf1.jpg)](http://leaverimage.b0.upaiyun.com/32896_o.jpg)
-=======
 [![Myapplication](/images/bf202a9b50d5ce497f88718743c344d8579fadf1.jpg)](http://leaverimage.b0.upaiyun.com/32896_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 关键代码也就是通过对程序集载入。搜索到对应接口的实现类。然后调用即可。
 <pre class="lang:default decode:true">Assembly a = Assembly.LoadFrom(AssemblyName);
@@ -42,10 +38,6 @@ C#的反射可以用来实现一个简单的插件系统。思路很简单，我
                 }</pre>
 运行结果：
 
-<<<<<<< HEAD
-[![QQ截图20130220200408]({{BASE_PATH}}/images/6c33ac761faef8c7d4beae4a478b4240cdeb7ee3.jpg)](http://leaverimage.b0.upaiyun.com/32897_o.jpg)
-=======
 [![QQ截图20130220200408](/images/6c33ac761faef8c7d4beae4a478b4240cdeb7ee3.jpg)](http://leaverimage.b0.upaiyun.com/32897_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 源码下载：[PluginSystem.zip](http://pan.baidu.com/share/link?shareid=302323&amp;uk=1493685990)

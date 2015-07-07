@@ -12,11 +12,7 @@ categories:
 date: 2012-10-17 10:00:24
 ---
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/2ad13c7f6efeae2f1463e231f11d164126743c47.png "1")](http://leaverimage.b0.upaiyun.com/28185_o.png)
-=======
 [![](/images/2ad13c7f6efeae2f1463e231f11d164126743c47.png "1")](http://leaverimage.b0.upaiyun.com/28185_o.png)
->>>>>>> 换电脑之后重新备份
 
 这是Office2010中的文件菜单点开后的效果。本文我将以强大的WPF来实现类似的效果。希望你能有所收获。而不是只拷贝/粘贴代码而已。
 
@@ -76,11 +72,7 @@ date: 2012-10-17 10:00:24
 
 然后会大概是这个效果
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/797a20d8d2f0489af03c4d57e307fcf0c14657be.png "2")](http://leaverimage.b0.upaiyun.com/28186_o.png)
-=======
 [![](/images/797a20d8d2f0489af03c4d57e307fcf0c14657be.png "2")](http://leaverimage.b0.upaiyun.com/28186_o.png)
->>>>>>> 换电脑之后重新备份
 
 为了改变TabControl的显示效果。我们使用模板机制，我们把模板写进一个资源字典里。这样就可以重用了。添加一个资源字典的步骤如下
 
@@ -152,11 +144,7 @@ date: 2012-10-17 10:00:24
 
 在这之前，先把资源字典加到窗体的Reesouce里。然后再设置。然后运行软件。效果会有一些不一样。
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/2ba7dae0ace3d2aba71967d816315b1b953d139b.png "3")](http://leaverimage.b0.upaiyun.com/28187_o.png)
-=======
 [![](/images/2ba7dae0ace3d2aba71967d816315b1b953d139b.png "3")](http://leaverimage.b0.upaiyun.com/28187_o.png)
->>>>>>> 换电脑之后重新备份
 
 然后要修改左侧单个标签的显示效果。通过改变模板来实现。给模板添加如下的代码
 
@@ -206,11 +194,7 @@ date: 2012-10-17 10:00:24
 
 然后再运行
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/ded32740b808794d30171ba7b82b5b1c6c89a6c3.png "4")](http://leaverimage.b0.upaiyun.com/28188_o.png)
-=======
 [![](/images/ded32740b808794d30171ba7b82b5b1c6c89a6c3.png "4")](http://leaverimage.b0.upaiyun.com/28188_o.png)
->>>>>>> 换电脑之后重新备份
 
 VisualState很有意思。我们可以放在Grid里。然后设置正常状态和鼠标悬停的状态。
 
@@ -288,21 +272,13 @@ VisualState很有意思。我们可以放在Grid里。然后设置正常状态�
 
 之后效果如下
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/c3260420be7f836a117fde4fbf6f35cc91728bc9.png "5")](http://leaverimage.b0.upaiyun.com/28193_o.png)
-=======
 [![](/images/c3260420be7f836a117fde4fbf6f35cc91728bc9.png "5")](http://leaverimage.b0.upaiyun.com/28193_o.png)
->>>>>>> 换电脑之后重新备份
 
 然后添加选中项的样式，在hoverShape 下面再添加一个Border，名字是buttonShape。通过这个我们给被选中项的上下边缘添加2个像素的黑蓝色边缘，
 
 在 Expression Blend中打开, 使用钢笔工具绘制个你想要的路径形状即可。然后把生成的xaml代码拷些过来。
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/5caf76900ae64f75e8ca5f6985109cf145b1127f.png "6")](http://leaverimage.b0.upaiyun.com/28190_o.png)
-=======
 [![](/images/5caf76900ae64f75e8ca5f6985109cf145b1127f.png "6")](http://leaverimage.b0.upaiyun.com/28190_o.png)
->>>>>>> 换电脑之后重新备份
 
 也可以直接用我的代码。。不顾我说过要怎么做了。
 
@@ -410,11 +386,7 @@ VisualState很有意思。我们可以放在Grid里。然后设置正常状态�
 
 现在再运行会发现效果更好了
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/3b46642c7ed968464713adc3e60749fa05066b65.png "7")](http://leaverimage.b0.upaiyun.com/28191_o.png)
-=======
 [![](/images/3b46642c7ed968464713adc3e60749fa05066b65.png "7")](http://leaverimage.b0.upaiyun.com/28191_o.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 
@@ -454,11 +426,7 @@ VisualState很有意思。我们可以放在Grid里。然后设置正常状态�
 
 最终效果如下:
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/c540f5dfc7dbed9ae6def8f6d7d461a85be83f89.png "8")](http://leaverimage.b0.upaiyun.com/28192_o.png)
-=======
 [![](/images/c540f5dfc7dbed9ae6def8f6d7d461a85be83f89.png "8")](http://leaverimage.b0.upaiyun.com/28192_o.png)
->>>>>>> 换电脑之后重新备份
 
 源代码地址：
 [downloadicon href=http://pan.baidu.com/share/link?shareid=85332&amp;uk=1493685990]OfficeTab.7z[/downloadicon]

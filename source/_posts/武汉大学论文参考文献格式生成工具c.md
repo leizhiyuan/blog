@@ -17,11 +17,7 @@ date: 2013-05-24 11:31:19
 
 程序提供8种参考文献类型，第9种电子文献，没有实现，因为感觉在论文中参考文献要是网址的话很难看.而且用的不多..其实主要还是懒..每种文献类型需要填写的信息都不一样，8种...8种...
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/0a81d82d86007c82e327e9c0bbce1e32bb637f0e.png)](http://leaverimage.b0.upaiyun.com/36356_o.png)
-=======
 [![](/images/0a81d82d86007c82e327e9c0bbce1e32bb637f0e.png)](http://leaverimage.b0.upaiyun.com/36356_o.png)
->>>>>>> 换电脑之后重新备份
 
 使用方法：
 

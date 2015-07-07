@@ -13,27 +13,13 @@ date: 2012-06-23 06:22:49
 
 这几天在想C# winform程序界面实在太单一，而我[C#实现不规则窗体](http://leaver.me/archives/990.html)中也说了，如果用背景这种东西来做的话，效果很差，抗锯齿能力基本为0，所以我当时在博客园提问，然后园友有了很给力的回答，比如WPF来做，或者第三方插件，或者深入底层改写ONPaint函数的，今天没事，恰好看到了一篇文章讲这个的，于是，就做一个简单的Demo出来，华丽的效果有木有，先看效果图
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/ba031241897a97ce5f76970d0787694511d3960a.jpg "效果")](http://leaverimage.b0.upaiyun.com/23622_o.jpg)
-=======
 [![](/images/ba031241897a97ce5f76970d0787694511d3960a.jpg "效果")](http://leaverimage.b0.upaiyun.com/23622_o.jpg)
->>>>>>> 换电脑之后重新备份
 在win 7下使用win+Tab切换效果也很华丽。就不演示了。
 
 做起来还算比较简单，首先使用Microsoft Expression Design 4 设计一个界面，破解版什么的太多了，，软件界面和ps挺像，不过功能弱很多，自己操作操作就好了，我说一个问题，就是我当时想画一个空心的圆，也就是一个圆环，ps里大家都知道，直接选区相减就可以了，但是这个死活没找到，基本上最后这个界面所有的地方被找了一遍，猜了猜，才发现了，
 
 具体操作如下，首先汇出一个圆形，然后在圆里面再绘出一个圆形，这时候选中第二次的这个小圆，点击屏幕右侧的那个箭头会出现高级选项，
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/7bb961d46945780dd51bf752d4109eb6dfec9583.jpg "高级")](http://leaverimage.b0.upaiyun.com/23623_o.jpg)
-
-然后选择混合模式为橡皮擦，就会擦去这个小圆，于是就只剩下一个圆环了。
-
-[![]({{BASE_PATH}}/images/47a442eae19c0450c9de4ef532d026c4608439f1.jpg "橡皮擦")](http://leaverimage.b0.upaiyun.com/23624_o.jpg)
-
-画好以后，选择文件-&gt;导出，按如下设置，
-[![]({{BASE_PATH}}/images/5a4dc13cbe7e3ade5841d175eace74870fd42395.jpg "导出")](http://leaverimage.b0.upaiyun.com/23625_o.jpg)
-=======
 [![](/images/7bb961d46945780dd51bf752d4109eb6dfec9583.jpg "高级")](http://leaverimage.b0.upaiyun.com/23623_o.jpg)
 
 然后选择混合模式为橡皮擦，就会擦去这个小圆，于是就只剩下一个圆环了。
@@ -42,7 +28,6 @@ date: 2012-06-23 06:22:49
 
 画好以后，选择文件-&gt;导出，按如下设置，
 [![](/images/5a4dc13cbe7e3ade5841d175eace74870fd42395.jpg "导出")](http://leaverimage.b0.upaiyun.com/23625_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 
@@ -75,11 +60,7 @@ MouseDown="Window_MouseDown"&gt;</pre>
 
 然后对着那个函数名点右键，如下图
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/2bda8545e86b4ffc4155d5c63505252bb57506bf.jpg "导航")](http://leaverimage.b0.upaiyun.com/23626_o.jpg)
-=======
 [![](/images/2bda8545e86b4ffc4155d5c63505252bb57506bf.jpg "导航")](http://leaverimage.b0.upaiyun.com/23626_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 导航到事件处理程序，然后在打开的函数里写上
 <pre class="lang:default decode:true">if(e.ChangedButton==MouseButton.Left)

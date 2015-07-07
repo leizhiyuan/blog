@@ -43,15 +43,9 @@ date: 2012-05-15 13:26:14
 
 　　几个月后，Caesar发现他的秘密文件被非法察看。这到底是怎么回事呢？
 
-<<<<<<< HEAD
-[![letter]({{BASE_PATH}}/images/867e9ee66a7ab1aed4342dcb1a98489a6ab17134.png) ](http://www.cits.rub.de/imperia/md/content/magnus/letter_of_rec.ps)[![order]({{BASE_PATH}}/images/1a84f3c37a7c98c13605362aa25991c19b6d2d7b.png)](http://www.cits.rub.de/imperia/md/content/magnus/order.ps)
-
-　　![(apply MD5 to both documents)]({{BASE_PATH}}/images/bf67e539f3da6867fc8a9070b940b83ff6daed5d.png)
-=======
 [![letter](/images/867e9ee66a7ab1aed4342dcb1a98489a6ab17134.png) ](http://www.cits.rub.de/imperia/md/content/magnus/letter_of_rec.ps)[![order](/images/1a84f3c37a7c98c13605362aa25991c19b6d2d7b.png)](http://www.cits.rub.de/imperia/md/content/magnus/order.ps)
 
 　　![(apply MD5 to both documents)](/images/bf67e539f3da6867fc8a9070b940b83ff6daed5d.png)
->>>>>>> 换电脑之后重新备份
 
 　　a25f7f0b 29ee0b39 68c86073 8533a4b9
 

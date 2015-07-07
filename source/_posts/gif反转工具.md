@@ -12,17 +12,10 @@ date: 2012-06-15 17:33:29
 ---
 
 首先看下效果图：
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/b38ddf634b3f63f7f6e7f6016218ba55907c67b5.jpg "gif反转工具")](http://leaverimage.b0.upaiyun.com/23424_o.jpg)
-然后是两张gif的对比
-[![]({{BASE_PATH}}/images/3b7f81c3127dc8ebb3eb51d13a29d45751861ea7.gif "旧图")](http://leaverimage.b0.upaiyun.com/23425_o.gif)   //原本图是正着走的
-[![]({{BASE_PATH}}/images/576d8c2f7990984cd6927c59d24684f2ae94fcb4.gif "新图")](http://leaverimage.b0.upaiyun.com/23426_o.gif)   //处理后是倒着走的
-=======
 [![](/images/b38ddf634b3f63f7f6e7f6016218ba55907c67b5.jpg "gif反转工具")](http://leaverimage.b0.upaiyun.com/23424_o.jpg)
 然后是两张gif的对比
 [![](/images/3b7f81c3127dc8ebb3eb51d13a29d45751861ea7.gif "旧图")](http://leaverimage.b0.upaiyun.com/23425_o.gif)   //原本图是正着走的
 [![](/images/576d8c2f7990984cd6927c59d24684f2ae94fcb4.gif "新图")](http://leaverimage.b0.upaiyun.com/23426_o.gif)   //处理后是倒着走的
->>>>>>> 换电脑之后重新备份
 
 gif是动态的嘛。然后我昨天和一个朋友聊天的时候发了一串相同的gif图，然后看着千篇一律的东西。我想能不能写个程序实现gif的初始状态不同呢。什么意思呢。我们知道，gif是由帧构成的，我想实现的功能是比如一个gif共有十帧，那么我写出来的程序能够生成10个gif文件，分别对应不同的初始状态来进行循环。后来一想，gif帧太多的话，比较慢，而且也不实用，于是决定简化一下，只做一个反转工具，比如一个gif是从左到右播放的，通过这个成功可以生成一个相同的gif图，不过是倒着播放的。
 

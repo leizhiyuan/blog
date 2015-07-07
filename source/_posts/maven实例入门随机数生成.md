@@ -102,11 +102,7 @@ maven已经生成了一个完整的工程了，为了能够导入到eclipse里�
 
 图1.导入eclipse之后的效果
 
-<<<<<<< HEAD
-[![maven-single-java-project]({{BASE_PATH}}/images/a6c0fbb8d5b17d6afc6d6fb110de27cf98be1715.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-single-java-project.png)
-=======
 [![maven-single-java-project](/images/a6c0fbb8d5b17d6afc6d6fb110de27cf98be1715.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-single-java-project.png)
->>>>>>> 换电脑之后重新备份
 
 ## 4.更新pom文件
 
@@ -254,11 +250,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------</pre>
 程序开始编译，并且执行了单元测试，然后在target目录下生成了jar包，最后，程序目录结构如下：
 
-<<<<<<< HEAD
-[![maven-single-java-project-final]({{BASE_PATH}}/images/5a515167b36d7c7b74b5643e421cea11097736eb.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-single-java-project-final.png)
-=======
 [![maven-single-java-project-final](/images/5a515167b36d7c7b74b5643e421cea11097736eb.png)](http://leaverimage.b0.upaiyun.com/2013/09/maven-single-java-project-final.png)
->>>>>>> 换电脑之后重新备份
 
 ## 7.执行Demo
 

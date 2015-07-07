@@ -26,10 +26,6 @@ date: 2012-05-17 06:02:51
 
 　　</pre>
 效果如下图，安装程序已经默认到D盘了
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/a83d479db2c8d3fac56dc0dacca9fca7329d7c61.jpg "w")](http://leaverimage.b0.upaiyun.com/21644_o.jpg)
-=======
 [![](/images/a83d479db2c8d3fac56dc0dacca9fca7329d7c61.jpg "w")](http://leaverimage.b0.upaiyun.com/21644_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 update:已知后遗症，我在这样实践了以后，发现vs2010的.net framework 4将会丢失。也就是说就不能新建.net framework 4项目了，具体不明，可能是我当初把VS一部分安装到D盘的缘故，应该可以通过重新安装vs解决，如果你不想折腾。把注册表改回去就可以了。

@@ -8,11 +8,7 @@ categories:
 date: 2012-04-16 22:04:41
 ---
 
-<<<<<<< HEAD
-　　[![]({{BASE_PATH}}/images/5e90de21e5b4fc73c2ddcbabdb6dc50e8a80ae2f.jpg)](http://leaverimage.b0.upaiyun.com/20636_o.jpg)
-=======
 　　[![](/images/5e90de21e5b4fc73c2ddcbabdb6dc50e8a80ae2f.jpg)](http://leaverimage.b0.upaiyun.com/20636_o.jpg)
->>>>>>> 换电脑之后重新备份
 　　今天从早上到下午一使劲把[PHP和MySQL程序设计](http://book.douban.com/subject/3693851/) 这本书读完了。因为昨天读完了head first的那本php书。所以看这本书难度也不是很大。先对这本书整体评价一下。
 
 　　这本书我其实之前并没有在豆瓣上看看评论。豆瓣也不适合看这类专业书的评论。只是看到是第三版。说明这本书还是不错的。一般国内的专业书很少看到出过第二版的。。因为质量实在是太差了。选好书的一个方法就是看版本。。能出到第N版的都是有其可圈可点之处的。于是把这本书拿来就看。

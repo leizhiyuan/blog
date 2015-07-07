@@ -9,11 +9,7 @@ date: 2014-07-13 11:20:09
 ---
 
 <div></div>
-<<<<<<< HEAD
-<div>之前说了，IoC容器就是一个IoC Service Provider，但是容器是个啥意思？![]({{BASE_PATH}}/images/d4d1615a6c1a06895088631c37e3fca7692f0b8a.png)</div>
-=======
 <div>之前说了，IoC容器就是一个IoC Service Provider，但是容器是个啥意思？![](/images/d4d1615a6c1a06895088631c37e3fca7692f0b8a.png)</div>
->>>>>>> 换电脑之后重新备份
 <div>可以看到IoC容器提供了更多的内容，</div>
 <div>Spring的IoC容器又分成两种，</div>
 <div>1.BeanFactory</div>
@@ -26,11 +22,7 @@ date: 2014-07-13 11:20:09
 <div></div>
 <div></div>
 <div></div>
-<<<<<<< HEAD
-<div>![]({{BASE_PATH}}/images/f531ea3e11bb391453eb5f763283398c938634b2.png)</div>
-=======
 <div>![](/images/f531ea3e11bb391453eb5f763283398c938634b2.png)</div>
->>>>>>> 换电脑之后重新备份
 <div></div>
 <div></div>
 <div></div>

@@ -25,19 +25,11 @@ date: 2012-05-13 10:45:13
 
 　　上篇文章的例题是这样的：LR（0）项目集规范簇也已经算出来了，共有6个I，从I0-I5，最终构造的LR(0)的分析表共7行，包括标题行，也就是ACTION和GOTO，然后是状态行，状态行和ACTION的交处分割成三列，分别是终结符号，和#终结符。也就是分割多少列取决于终结符的数目，GOTO列是非终结符，分割多少列也取决于非终结符的数目。，然后就是具体的6个状态了，画出表的结构后，如下，先不用管表的内容怎么写。
 
-<<<<<<< HEAD
-　[![]({{BASE_PATH}}/images/0f0ac59f4cab73039ae7f5aecb327def5665da13.jpg)](http://leaverimage.b0.upaiyun.com/21422_o.jpg)
-
-　　然后对照构造原则来填写表，这时你会发现要一个个从那么多的GO函数和I项目组中找对应的式子实在太难了，看不清楚，这时候，我们用GO函数把LR(0)项目集规范族连成一个识别该文法所产生的活前缀的DFA，有点像流程图了，首先把各个I项目画出来，然后需要把他们的关系表示出来，关系由GO函数确定，比如I5=GO(I2, S)，则在I2和I5之间画一个箭头，由I2指向I5，线上写上S，由括号里的第二个值确定，此题构造的DFA如下图，很简单吧。
-
-　　[![]({{BASE_PATH}}/images/ "识别活前缀的DFA")](http://leaverimage.b0.upaiyun.com/21397_o.jpg)
-=======
 　[![](/images/0f0ac59f4cab73039ae7f5aecb327def5665da13.jpg)](http://leaverimage.b0.upaiyun.com/21422_o.jpg)
 
 　　然后对照构造原则来填写表，这时你会发现要一个个从那么多的GO函数和I项目组中找对应的式子实在太难了，看不清楚，这时候，我们用GO函数把LR(0)项目集规范族连成一个识别该文法所产生的活前缀的DFA，有点像流程图了，首先把各个I项目画出来，然后需要把他们的关系表示出来，关系由GO函数确定，比如I5=GO(I2, S)，则在I2和I5之间画一个箭头，由I2指向I5，线上写上S，由括号里的第二个值确定，此题构造的DFA如下图，很简单吧。
 
 　　[![](/images/ "识别活前缀的DFA")](http://leaverimage.b0.upaiyun.com/21397_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 　　<span style="font-family: Verdana, Arial, Helvetica, sans-serif;"><span style="font-size: 12px; line-height: normal;">然后我们正式开始吧。第一条指导规则说到， 若项目A→α·aβ属于Ik且转换函数GO(Ik,a)= Ij，当a为终结符时则置ACTION[k,a]为Sj，我们先考察对于I0，发现S-&gt;·aS属于I0，且GO(I0,a)=I1,所有我们ACTION[0,a]置为S1.同理S-&gt;·bS属于I0，GO(I0,b)=I2，所以ACTION[0,b]置为S2。</span></span>
 

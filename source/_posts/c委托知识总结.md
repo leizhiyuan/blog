@@ -74,11 +74,7 @@ public delegate string TeaDelegate(string spText);
          }
      }</pre>
 输出结果
-<<<<<<< HEAD
-![]({{BASE_PATH}}/images/)
-=======
 ![](/images/)
->>>>>>> 换电脑之后重新备份
 
 上面使用最普通的一种方式来定义了一个委托的使用，这个例子虽然很简单，但是能够很形象的描述委托的使用。
 

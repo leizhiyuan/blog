@@ -70,16 +70,9 @@ namespace leaver
 }</pre> 
 
 程序运行结果：
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/d2623dbdf85b9caabedb4336e53e1fd67cfc07d6.jpg "result")](http://leaverimage.b0.upaiyun.com/27392_o.jpg)
-xpath表达式的具体书写都是需要分析你需要解析的网站源码的。。。。
-xpath辅助工具的界面：
-[![]({{BASE_PATH}}/images/2387485c54eef302fae5ddba1382b6a2092c4b67.jpg "xpath")](http://leaverimage.b0.upaiyun.com/27391_o.jpg)
-=======
 [![](/images/d2623dbdf85b9caabedb4336e53e1fd67cfc07d6.jpg "result")](http://leaverimage.b0.upaiyun.com/27392_o.jpg)
 xpath表达式的具体书写都是需要分析你需要解析的网站源码的。。。。
 xpath辅助工具的界面：
 [![](/images/2387485c54eef302fae5ddba1382b6a2092c4b67.jpg "xpath")](http://leaverimage.b0.upaiyun.com/27391_o.jpg)
->>>>>>> 换电脑之后重新备份
 下载：[HtmlAgilityPack](http://pan.baidu.com/share/link?shareid=61130&uk=1493685990)
 下载：[HAPExplorer](http://pan.baidu.com/share/link?shareid=61131&uk=1493685990)

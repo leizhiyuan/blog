@@ -28,11 +28,7 @@ date: 2013-04-11 18:50:25
 
 看个图就好了
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/d0b2eed86d2ba2b987d3e5db380b9a452e8f5f87.png)](http://leaverimage.b0.upaiyun.com/34863_o.png)
-=======
 [![](/images/d0b2eed86d2ba2b987d3e5db380b9a452e8f5f87.png)](http://leaverimage.b0.upaiyun.com/34863_o.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 

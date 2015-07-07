@@ -10,19 +10,11 @@ date: 2012-04-12 07:35:43
 
 博客刚刚建立，找了一个比较漂亮的主题，白色的。也就是[Origin](http://devpress.com/shop/origin/)这个。
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/)](http://leaverimage.b0.upaiyun.com/20340_o.png)
-
-然后呢。为了有一个好的图片展示效果，也就是我首页的相册页面。我使用了被大家广泛好评的NextGEN Gallery，在一切完成后，我发现浏览图片的时候会出现重复的效果<!--more-->
-
-[![]({{BASE_PATH}}/images/)](http://leaverimage.b0.upaiyun.com/20341_o.png)
-=======
 [![](/images/)](http://leaverimage.b0.upaiyun.com/20340_o.png)
 
 然后呢。为了有一个好的图片展示效果，也就是我首页的相册页面。我使用了被大家广泛好评的NextGEN Gallery，在一切完成后，我发现浏览图片的时候会出现重复的效果<!--more-->
 
 [![](/images/)](http://leaverimage.b0.upaiyun.com/20341_o.png)
->>>>>>> 换电脑之后重新备份
 
 注意看后面，还有一层效果，也就是说把这层关掉以后，还要再关一次，可以认为图片被展开了两次。
 
@@ -30,11 +22,7 @@ Google了n久未果。。然后
 
 查看了一下主题的说明
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/)](http://leaverimage.b0.upaiyun.com/20342_o.png)
-=======
 [![](/images/)](http://leaverimage.b0.upaiyun.com/20342_o.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 

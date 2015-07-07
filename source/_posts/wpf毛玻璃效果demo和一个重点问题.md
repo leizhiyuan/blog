@@ -15,11 +15,7 @@ date: 2012-09-24 08:04:25
 
 　　那天看到WPF书上讲的毛玻璃效果，就去找了下效果。。忘了例子是从哪发现得了。。先看下效果，
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/638a69761205e3d5c16a5bd34a2f775de190d137.jpg "glass")](http://leaverimage.b0.upaiyun.com/27420_o.jpg)
-=======
 [![](/images/638a69761205e3d5c16a5bd34a2f775de190d137.jpg "glass")](http://leaverimage.b0.upaiyun.com/27420_o.jpg)
->>>>>>> 换电脑之后重新备份
 　　但是这不是重点，作者给出的代码有一个设计时错误。。错误提示为：
 无法将类型为“Microsoft.Expression.Platform.WPF.InstanceBuilders.WindowInstance”的对象强制转换为类型“System.Windows.Window”，，
 

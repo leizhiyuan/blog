@@ -23,12 +23,6 @@ tags:
 
 　　这篇文章短是短了点。。好吧。那顺带分享一套非常精美的C#控件。
 [RadControls-For-WinForms 控件2012](http://115.com/file/dptqnr63#RadControls-WinForms-2012-2-608-Dev.msi)
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/35b3a6023ad34c4bab5564678dffabbcdd53a5da.jpg "wpf")](http://leaverimage.b0.upaiyun.com/24794_o.jpg)
-[RadControls-for-WPF控件2012](http://115.com/file/e79q6pju#RadControls-for-WPF-2012-2-0607-Dev.msi)
-[![]({{BASE_PATH}}/images/c3f1eeb8b01e38643d7ce0d2e2716bba20285943.jpg "winform")](http://leaverimage.b0.upaiyun.com/24793_o.jpg)
-=======
 [![](/images/35b3a6023ad34c4bab5564678dffabbcdd53a5da.jpg "wpf")](http://leaverimage.b0.upaiyun.com/24794_o.jpg)
 [RadControls-for-WPF控件2012](http://115.com/file/e79q6pju#RadControls-for-WPF-2012-2-0607-Dev.msi)
 [![](/images/c3f1eeb8b01e38643d7ce0d2e2716bba20285943.jpg "winform")](http://leaverimage.b0.upaiyun.com/24793_o.jpg)
->>>>>>> 换电脑之后重新备份

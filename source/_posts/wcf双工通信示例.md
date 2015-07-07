@@ -26,10 +26,6 @@ date: 2012-09-07 22:22:30
 
 　　运行截图：
 
-<<<<<<< HEAD
-　　[![]({{BASE_PATH}}/images/35cc6b919f9d513bf612503ffcac5b3448f20f37.jpg "wcfExample")](http://leaverimage.b0.upaiyun.com/26775_o.jpg)
-=======
 　　[![](/images/35cc6b919f9d513bf612503ffcac5b3448f20f37.jpg "wcfExample")](http://leaverimage.b0.upaiyun.com/26775_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 　　示例代码下载：[Lazy.Duplex](http://dl.vmall.com/c0c44hq61p)

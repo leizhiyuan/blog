@@ -19,11 +19,7 @@ AvalonDock是一个组合的布局模型，很多的控件都在视图上显示�
 
 从下面这个截图中我们可以理解AvalonDock组件
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/38cf4425c7a05bde89671d9f06c99e6626985373.png "ADTutorial")](http://leaverimage.b0.upaiyun.com/27544_o.png)
-=======
 [![](/images/38cf4425c7a05bde89671d9f06c99e6626985373.png "ADTutorial")](http://leaverimage.b0.upaiyun.com/27544_o.png)
->>>>>>> 换电脑之后重新备份
 **DockingManager** 这是AvalonDock中的核心控件，它将包含的窗格排序，处理飞出的窗格，还有浮动的窗口。在上面这个图中，DockingManager 对象包含了所有空间（WPF控件），从顶部的工具栏到底部的状态栏都算。同时。DockingManager 也可以处理保存和恢复布局。
 
 **LayoutPanel** 这个面板用来管理在一个方向上的子窗口（通过Orientation属性来选择方向），并且在它们之间添加了一个大小调节控件，在一个Orientation属性是Horizontal（水平）的LayoutPanel 上，排列了三个窗格。一个LayoutAnchorablePane在左，一个LayoutDocumentPane在中间。一个LayoutDockablePane在右边。

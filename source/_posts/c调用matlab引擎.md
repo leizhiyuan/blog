@@ -14,11 +14,7 @@ date: 2012-08-09 22:39:57
 
 　　调用matlab引擎类似于在C#中新开了一个进程。然后执行一些命令。之前需要引用Matlab Application Type Library。这是个com组件
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/b938768405ede59db17f36bdc27e700bf3cbf1dc.jpg "type")](http://leaverimage.b0.upaiyun.com/25657_o.jpg)
-=======
 [![](/images/b938768405ede59db17f36bdc27e700bf3cbf1dc.jpg "type")](http://leaverimage.b0.upaiyun.com/25657_o.jpg)
->>>>>>> 换电脑之后重新备份
 然后在程序里使用 using语句 
 
 <pre class="lang:c# decode:true " >using MLApp;</pre> 

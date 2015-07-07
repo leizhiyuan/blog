@@ -23,20 +23,12 @@ WPF里是没有LinkLabel控件的。因此我自己写一个。首先。我们�
 
 图1
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/2fbf37d3f59121424e1f68d6ac6e2a461f8e1ab9.png "1")](http://leaverimage.b0.upaiyun.com/27987_o.png)
-=======
 [![](/images/2fbf37d3f59121424e1f68d6ac6e2a461f8e1ab9.png "1")](http://leaverimage.b0.upaiyun.com/27987_o.png)
->>>>>>> 换电脑之后重新备份
 虽然这种方法也行，但是我还是不太喜欢。因为我觉得我还是写一个类似windows窗体程序中的LinkLabel控件。然后我就做了。首先看一下控件的样子
 
 图2
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/b4438242681c5adebadef5aff0f7f2145be09a43.gif "2")](http://leaverimage.b0.upaiyun.com/27988_o.gif)
-=======
 [![](/images/b4438242681c5adebadef5aff0f7f2145be09a43.gif "2")](http://leaverimage.b0.upaiyun.com/27988_o.gif)
->>>>>>> 换电脑之后重新备份
 
 第一个是默认的LinkLabel控件。第二个是LinkLabelBehavior 属性被设置为HoverUnderline ，第三个的Foreground和 HoverForeground 属性都使用了自定的颜色。
 
@@ -66,11 +58,7 @@ Url 超链接的目标
 &lt;ThemedControlLibrary:LinkLabel Foreground="#FF847901" HoverForeground="#FF06C8F2" Content="Link Label" LinkLabelBehavour="NeverUnderline"/&gt;</pre>
 图三
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/a3a5126a4aba4698c3916d5a9e92f4daa7d77b97.png "3")](http://leaverimage.b0.upaiyun.com/27989_o.png)
-=======
 [![](/images/a3a5126a4aba4698c3916d5a9e92f4daa7d77b97.png "3")](http://leaverimage.b0.upaiyun.com/27989_o.png)
->>>>>>> 换电脑之后重新备份
 
 然后是控件的使用方法。仅仅添加命名空间到xaml中。然后使用就行了。
 <pre class="lang:default decode:true">&lt;Window

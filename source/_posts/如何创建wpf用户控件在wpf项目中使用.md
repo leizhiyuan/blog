@@ -13,11 +13,7 @@ date: 2012-10-14 15:19:24
 
 作者给的Demo我合并了下。VS2010直接打开解决方案。二者都有。
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/82f9a2b2665cf35702e252f3518a2f420361da11.png "00")](http://leaverimage.b0.upaiyun.com/28121_o.png)
-=======
 [![](/images/82f9a2b2665cf35702e252f3518a2f420361da11.png "00")](http://leaverimage.b0.upaiyun.com/28121_o.png)
->>>>>>> 换电脑之后重新备份
 
 **介绍**
 本文展示在WPF中如何创建用户控件并且如果在WPF项目中使用。我将使用VS2008和C#来展示如何创建一个自定义的ToolTip
@@ -30,11 +26,7 @@ date: 2012-10-14 15:19:24
 
 开始。首先，我们创建一个用户控件。因此，我们选择新建WPF用户控件类库（WPF User Control Library）。
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/920a78558c2e8a260f9fd448739f68cd80e37108.png "01")](http://leaverimage.b0.upaiyun.com/28122_o.png)
-=======
 [![](/images/920a78558c2e8a260f9fd448739f68cd80e37108.png "01")](http://leaverimage.b0.upaiyun.com/28122_o.png)
->>>>>>> 换电脑之后重新备份
 
 现在。我们可以创建或者编辑XAML代码来创建自定义的用户控件了。我使用XAML来创建自定义的ToolTip。你想做什么随你。
 <pre class="lang:default decode:true">&lt;UserControl 
@@ -153,17 +145,6 @@ date: 2012-10-14 15:19:24
 
 完成之后。我们按Shift+F6快捷键来生成dll文件。现在可以创建WPF项目并且使用我们的控件了。我们选择WPF应用程序项目
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/ff20062e235c703bee9f99d1d63f2ddcf7ca18d0.png "02")](http://leaverimage.b0.upaiyun.com/28123_o.png)
-
-然后。我们添加对我们的控件生成dll的引用（注意。其实还可以把这两个项目放在同一个解决方案里。然后此处添加对项目的引用就可以 –译者）
-
-[![]({{BASE_PATH}}/images/f4ebc892c58f3c592813960b371677af584d9cac.png "03")](http://leaverimage.b0.upaiyun.com/28124_o.png)
-
-我们将会在XAML窗体里使用自定义的用户控件。因此我们需要添加一些额外的XAML代码。我们在Window元素里添加下面一行。
-
-[![]({{BASE_PATH}}/images/9ba6752518f547fcdfd695c9be8ed46283f3d0b3.png "04")](http://leaverimage.b0.upaiyun.com/28125_o.png)
-=======
 [![](/images/ff20062e235c703bee9f99d1d63f2ddcf7ca18d0.png "02")](http://leaverimage.b0.upaiyun.com/28123_o.png)
 
 然后。我们添加对我们的控件生成dll的引用（注意。其实还可以把这两个项目放在同一个解决方案里。然后此处添加对项目的引用就可以 –译者）
@@ -173,7 +154,6 @@ date: 2012-10-14 15:19:24
 我们将会在XAML窗体里使用自定义的用户控件。因此我们需要添加一些额外的XAML代码。我们在Window元素里添加下面一行。
 
 [![](/images/9ba6752518f547fcdfd695c9be8ed46283f3d0b3.png "04")](http://leaverimage.b0.upaiyun.com/28125_o.png)
->>>>>>> 换电脑之后重新备份
 
 至少。我们必须有一个Window 元素。。
 <pre class="lang:default decode:true">&lt;Window x:Class="WpfApplication1.Window1"
@@ -184,11 +164,7 @@ date: 2012-10-14 15:19:24
 &lt;/Window&gt;</pre>
 好。现在我们在XAML中像这样使用控件
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/ee363bd71413c52234278396f27f28bad40e1559.png "05")](http://leaverimage.b0.upaiyun.com/28126_o.png)
-=======
 [![](/images/ee363bd71413c52234278396f27f28bad40e1559.png "05")](http://leaverimage.b0.upaiyun.com/28126_o.png)
->>>>>>> 换电脑之后重新备份
 
 最后。我创建了如下的XAML代码：
 <pre class="lang:default decode:true">&lt;Window x:Class="WpfApplication1.Window1"

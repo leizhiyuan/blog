@@ -138,11 +138,7 @@ Excel.Range range2010 = excelApp.Cells[1, 1];</pre>
 </tbody>
 </table>
 再来一张图...
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/d0e1ec824f1199a847d9a16237673a4a299e0dce.jpg)](http://leaverimage.b0.upaiyun.com/36512_o.jpg)
-=======
 [![](/images/d0e1ec824f1199a847d9a16237673a4a299e0dce.jpg)](http://leaverimage.b0.upaiyun.com/36512_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 </div>
 <div></div>

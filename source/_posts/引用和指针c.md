@@ -42,11 +42,7 @@ return 0;
 oneInt的内存地址:                     0xbff43318       整数值:  77
 twoInt的内存地址:                     0xbff4331a       整数值:  35698
 pPointer所指向的地址(也就是pPoint的值): 0xbff4331a       整数值:  35698</pre>
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/ef97273d51f6843eb062463a3091a8edb177b30e.png)](http://leaverimage.b0.upaiyun.com/36294_o.png)
-=======
 [![](/images/ef97273d51f6843eb062463a3091a8edb177b30e.png)](http://leaverimage.b0.upaiyun.com/36294_o.png)
->>>>>>> 换电脑之后重新备份
 
 这张图是这几个变量的内存分布图，上面一排是内存地址编号，正对我们的是该处的值
 
@@ -88,11 +84,7 @@ int main() {
 
 其实，引用和指针的工作原理类似，引用变量存储了其引用变量的地址，看图
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/4bfa9483e34045214dcefa4a6a383a8d189cc7fa.png)](http://leaverimage.b0.upaiyun.com/36295_o.png)
-=======
 [![](/images/4bfa9483e34045214dcefa4a6a383a8d189cc7fa.png)](http://leaverimage.b0.upaiyun.com/36295_o.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 

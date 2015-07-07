@@ -13,11 +13,7 @@ date: 2012-09-24 08:03:17
 ---
 
 今天实在看WPF揭秘的时候看到TaskDialog这个控件的。然后就去找了一下开源的代码。在codeproject上发现了这个，非常给力。。另外codeproject改版后很漂亮哦。
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/ea5f46934b5478701eb79bb9b9b08381704b7996.jpg "one")](http://leaverimage.b0.upaiyun.com/27400_o.jpg)
-=======
 [![](/images/ea5f46934b5478701eb79bb9b9b08381704b7996.jpg "one")](http://leaverimage.b0.upaiyun.com/27400_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 ### 介绍：
 
@@ -78,11 +74,7 @@ dialog.Show();</pre>
 
 TaskDialog控件派生自HeaderedContentControl类，因为从HeaderedContentControl类可以获得Header和Content属性，TaskDialog仅仅是添加了Detail和Footer属性，这些属性是Object类型，并且有他们自己的template（模板）属性HeaderTemplate, ContentTemplate, DetailTemplate, 和 FooterTemplate)，TaskDialog类对于文本内容有着缺省的数据模板，当然你也可以用那四个模板来替换，这样你就可以以你喜欢的任何方式来格式化文本了。下面这个图展示了通过斜体和下划线来格式化文本。
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/05a7c6d00f37749a2b770d0b1f1ebaab51528de0.jpg "two")](http://leaverimage.b0.upaiyun.com/27401_o.jpg)
-=======
 [![](/images/05a7c6d00f37749a2b770d0b1f1ebaab51528de0.jpg "two")](http://leaverimage.b0.upaiyun.com/27401_o.jpg)
->>>>>>> 换电脑之后重新备份
 图2
 
 <pre class="lang:c# decode:true " >//为上面这个图的content属性的 DataTemplate 模板 
@@ -97,20 +89,12 @@ TaskDialog控件派生自HeaderedContentControl类，因为从HeaderedContentCon
 
 因为Header，Content，Detail和Footer是object类型，因此不再受到只能是文本的限制了，你可以防止你喜欢的任何类型到TaskDialog，下面这个例子中的TaskDialog是不是很像UAC的提示呢。这里Content属性是一个UserControl类型，放置了一个图片和一些文本还有两个CommandButtons（都是普通的按钮。。不过添加了一些定制的样式，再加了Header属性）
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/8d51c0c800cce2a90b815b20432b5cd520562e92.jpg "three")](http://leaverimage.b0.upaiyun.com/27402_o.jpg)
-=======
 [![](/images/8d51c0c800cce2a90b815b20432b5cd520562e92.jpg "three")](http://leaverimage.b0.upaiyun.com/27402_o.jpg)
->>>>>>> 换电脑之后重新备份
 图三
 
 一个模拟vista的文件拷贝窗口的TaskDialog。。
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/14c4b78afe3921ae6648d96cdd78718930914d07.jpg "four")](http://leaverimage.b0.upaiyun.com/27403_o.jpg)
-=======
 [![](/images/14c4b78afe3921ae6648d96cdd78718930914d07.jpg "four")](http://leaverimage.b0.upaiyun.com/27403_o.jpg)
->>>>>>> 换电脑之后重新备份
 图四
 
 ### 额外的一些有意思的属性

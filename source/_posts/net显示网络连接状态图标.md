@@ -13,11 +13,7 @@ date: 2012-09-24 08:04:02
 ---
 
 效果图：
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/ "internet connection")](http://leaverimage.b0.upaiyun.com/27419_o.jpg) 
-=======
 [![](/images/ "internet connection")](http://leaverimage.b0.upaiyun.com/27419_o.jpg) 
->>>>>>> 换电脑之后重新备份
 
 ### 介绍
 

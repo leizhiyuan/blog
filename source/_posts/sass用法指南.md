@@ -27,11 +27,7 @@ date: 2012-06-19 17:03:49
 
 你可以用它开发网页样式，但是没法用它编程。也就是说，CSS基本上是设计师的工具，不是程序员的工具。在程序员眼里，CSS是一件很麻烦的东西。它没有变量，也没有条件语句，只是一行行单纯的描述，写起来相当费事。
 
-<<<<<<< HEAD
-![]({{BASE_PATH}}/images/24063303e3abc5d5089bc58bdba65c550be0f8cb.jpg)
-=======
 ![](/images/24063303e3abc5d5089bc58bdba65c550be0f8cb.jpg)
->>>>>>> 换电脑之后重新备份
 
 很自然地，有人就开始为CSS加入编程元素，这被叫做["CSS预处理器"](http://www.catswhocode.com/blog/8-css-preprocessors-to-speed-up-development-time)（css preprocessor）。它的基本思想是，用一种专门的编程语言，进行网页样式设计，然后再编译成正常的CSS文件。
 
@@ -43,11 +39,7 @@ date: 2012-06-19 17:03:49
 
 作者：阮一峰
 
-<<<<<<< HEAD
-![]({{BASE_PATH}}/images/c00b9e9a6c97811cb70a4f18ec85976f493eb3e7.png)
-=======
 ![](/images/c00b9e9a6c97811cb70a4f18ec85976f493eb3e7.png)
->>>>>>> 换电脑之后重新备份
 
 **一、什么是SASS**
 

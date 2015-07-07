@@ -96,11 +96,7 @@ public class HelloWorld {
 
 ##  6.最终的目录结构
 
-<<<<<<< HEAD
-[![Spring3-hello-world-example]({{BASE_PATH}}/images/bbe4d8f74c9337766eb4a368bb71c6c0d09a248b.png)](http://leaverimage.b0.upaiyun.com/2013/09/Spring3-hello-world-example.png)
-=======
 [![Spring3-hello-world-example](/images/bbe4d8f74c9337766eb4a368bb71c6c0d09a248b.png)](http://leaverimage.b0.upaiyun.com/2013/09/Spring3-hello-world-example.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 

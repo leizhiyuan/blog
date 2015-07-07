@@ -43,11 +43,7 @@ bt下直接
 <pre class="lang:default decode:true">modules</pre>
 图一
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/88f2dd5c24ad567a09c5b6162cd60d70b3fb781d.jpg)](http://leaverimage.b0.upaiyun.com/32339_o.jpg)
-=======
 [![](/images/88f2dd5c24ad567a09c5b6162cd60d70b3fb781d.jpg)](http://leaverimage.b0.upaiyun.com/32339_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 我以获取子域名为例，通过我前面的介绍你已经知道了hosts模块里的所有模块基本都是干这事的。我用里面的baidu模块来说明。你也可以使用bing等，，
 
@@ -55,11 +51,7 @@ bt下直接
 <pre class="lang:default decode:true">load hosts::baidu</pre>
 图二
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/f818e08de804ba8875667692fbdd580ad8114667.jpg)](http://leaverimage.b0.upaiyun.com/32340_o.jpg)
-=======
 [![](/images/f818e08de804ba8875667692fbdd580ad8114667.jpg)](http://leaverimage.b0.upaiyun.com/32340_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 刚开始你可能不清楚这个模块的说明。那么继续输入info即可查看模块的详细说明
 要开始使用。我们输入
@@ -68,11 +60,7 @@ bt下直接
 
 图三
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/7848e773ab3e4e3ad03f59ba7b5ac6704d333ce6.jpg)](http://leaverimage.b0.upaiyun.com/32341_o.jpg)
-=======
 [![](/images/7848e773ab3e4e3ad03f59ba7b5ac6704d333ce6.jpg)](http://leaverimage.b0.upaiyun.com/32341_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 看表，会发现有三行。第一行是标题，第二行是域名设置，第三行是输出。这个current value也就是当前值已经为true。所以不用设置。req的意思是是否必须设置。我们输入
 baidu.com就是你的目标了。
@@ -81,10 +69,6 @@ baidu.com就是你的目标了。
 <pre class="lang:default decode:true">run</pre>
 图四
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/125a841869478ff39dd63113e2e9427c3ae1cf81.jpg)](http://leaverimage.b0.upaiyun.com/32342_o.jpg)
-=======
 [![](/images/125a841869478ff39dd63113e2e9427c3ae1cf81.jpg)](http://leaverimage.b0.upaiyun.com/32342_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 更多希望大家发掘吧。我抛砖。求引玉。

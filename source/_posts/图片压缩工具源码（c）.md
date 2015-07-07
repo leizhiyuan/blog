@@ -10,11 +10,7 @@ date: 2012-05-04 08:17:30
 
 以前在用一个破解版的图片压缩工具。今天早上想想自己也试着做一个吧。查了一些资料。参考了一些代码。总算是写出来了。其实关键代码很简单。主要还是画界面，处理边界。。
 看下效果图
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/00f5221099dd3a813d09fbb95fe9a36e5268d652.jpg)](http://leaverimage.b0.upaiyun.com/21131_o.jpg)
-=======
 [![](/images/00f5221099dd3a813d09fbb95fe9a36e5268d652.jpg)](http://leaverimage.b0.upaiyun.com/21131_o.jpg)
->>>>>>> 换电脑之后重新备份
 处理图像的关键代码是这样的：
 <pre lang="java"> 
     bmp = new Bitmap(width, height);  //创建一张空白画布
@@ -32,11 +28,7 @@ date: 2012-05-04 08:17:30
 ToolTip toolTip = new System.Windows.Forms.ToolTip();
 toolTip.SetToolTip(this.lboxPicPath, "双击可删除不需要的图片");
 </pre>
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/516b951c5df12c7569b3cfefd817a894d380c063.jpg)](http://leaverimage.b0.upaiyun.com/21132_o.jpg)
-=======
 [![](/images/516b951c5df12c7569b3cfefd817a894d380c063.jpg)](http://leaverimage.b0.upaiyun.com/21132_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 还有一些边界，比如只接受数字数字之类的，我在代码里给出了详细的说明。实用工具的效果自行测试。对大图片效果最好。
 

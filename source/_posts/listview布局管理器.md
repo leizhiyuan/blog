@@ -13,11 +13,7 @@ categories:
 date: 2012-09-29 10:14:54
 ---
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/3908a54221845d3b8f0b2ad7c3c0b559dae7a979.jpg "listview")](http://leaverimage.b0.upaiyun.com/27575_o.jpg)
-=======
 [![](/images/3908a54221845d3b8f0b2ad7c3c0b559dae7a979.jpg "listview")](http://leaverimage.b0.upaiyun.com/27575_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 ### 介绍
 

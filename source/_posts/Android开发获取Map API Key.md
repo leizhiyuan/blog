@@ -21,10 +21,6 @@ date: 2012-10-21 11:01:14
 
 输入：android，之后，会出现指纹认证MD5，如下：
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/81f1a9c78815b22e8b390275737d4d1c74212447.jpg "md5")](http://leaverimage.b0.upaiyun.com/28249_o.jpg)
-=======
 [![](/images/81f1a9c78815b22e8b390275737d4d1c74212447.jpg "md5")](http://leaverimage.b0.upaiyun.com/28249_o.jpg)
->>>>>>> 换电脑之后重新备份
 &lt;3&gt;去官方生成真正的api key
 访问 [Sign Up for the Android Maps API](https://developers.google.com/android/maps-api-signup?hl=zh-CN) 输入那串值，同意条款，确定后要求用Google帐号登录。然后会拿到一个key。ok

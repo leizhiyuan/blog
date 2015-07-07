@@ -15,11 +15,7 @@ date: 2013-01-11 21:31:52
 然后就看到了这个问题。这个问题。我曾经遇到过。貌似大家知道比较多的是两种。第一种就是设置大小。
 <pre class="lang:default decode:true">tabControl1.SizeMode = TabSizeMode.Fixed;
 tabControl1.ItemSize = new Size(0, 1);</pre>
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/3070c473ca2d01dd23741af3e13d2f4328b9d89d.jpg)](http://leaverimage.b0.upaiyun.com/31378_o.jpg)
-=======
 [![](/images/3070c473ca2d01dd23741af3e13d2f4328b9d89d.jpg)](http://leaverimage.b0.upaiyun.com/31378_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 但是这样你注意看的话，左上角有个小的瑕疵。这个没办法的。。还有一种比较低级但还算有效的方法就是在设计的时候将TabControl向上移动。运行以后就会遮住了。
 

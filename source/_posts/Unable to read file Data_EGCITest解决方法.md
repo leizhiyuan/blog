@@ -20,11 +20,7 @@ load Unable to read file Data_EGCITest: No such file or directory. Error in =&gt
 　　组合了几个关键字进行搜索，发现了[这篇文章](http://www.mathworks.cn/matlabcentral/answers/33037-matlab-builder-ne-exception-with-supposedly-toolbox-support)，翻译过来很简单。
 
 　　错误提示说的那个Data_EGCITest是一个名为Data_EGCITest.mat的文件，位于$MATLABROOT/toolbox/econ/econ/Data_EGCITest.mat目录下，$MATLABROOT指的是你matlab的安装路径。在你build 工程的时候，在下图中，记得添加这个文件。
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/9f98cf04debe57b3ec360a6b3ae27c8995579770.jpg "操作")](http://leaverimage.b0.upaiyun.com/24000_o.jpg)
-=======
 [![](/images/9f98cf04debe57b3ec360a6b3ae27c8995579770.jpg "操作")](http://leaverimage.b0.upaiyun.com/24000_o.jpg)
->>>>>>> 换电脑之后重新备份
 
 　　然后build生成的dll文件就可以正常在C#里使用了。
 

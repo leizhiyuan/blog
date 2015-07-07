@@ -16,11 +16,7 @@ date: 2013-05-01 20:39:52
 
 原理很简单，目前好像还没有大规模传开，我就不透露了，大家低调使用.为了方便，我写了个客户端，下载地址在文章末尾
 
-<<<<<<< HEAD
-[![]({{BASE_PATH}}/images/c14131e3f22197232347a8230c51cb661e50f167.png)](http://leaverimage.b0.upaiyun.com/35412_o.png)
-=======
 [![](/images/c14131e3f22197232347a8230c51cb661e50f167.png)](http://leaverimage.b0.upaiyun.com/35412_o.png)
->>>>>>> 换电脑之后重新备份
 
 &nbsp;
 
