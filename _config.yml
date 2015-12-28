@@ -91,3 +91,8 @@ deploy:
     github: git@github.com:leizhiyuan/leizhiyuan.github.io.git,master
 plugins:
  - hexo-generator-feed
+highlight: 
+  enable: true
+  auto_detect: true
+  line_number: true
+  tab_replace: ''
