@@ -87,7 +87,6 @@ exclude_generator:
 deploy:
   type: git
   repo:
-    gitcafe: git@gitcafe.com:leizhiyuan/leizhiyuan.git,gitcafe-pages
     github: git@github.com:leizhiyuan/leizhiyuan.github.io.git,master
 plugins:
  - hexo-generator-feed
