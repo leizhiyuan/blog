@@ -24,7 +24,7 @@
     width:                       100%;
     padding:                     calc(#{map-get($header, 'height')} + 30px) 0 30px 0;
     // 100% minus header high, minus padding-top, minus padding bottom and minus 4px for perfect pixels
-    height:                      calc(100% - #{map-get($header, 'height')} - 4px);
+    height:                      100%;
     z-index:                     map-get($z-indexes, 'c-post-header-cover');
     // Sidebar animation
     // Transition style (push)
@@ -52,7 +52,7 @@
         // Post meta contains post's date, post's categories and tags
         .post-meta {
             max-width:      map-get($main-content, 'max-width');
-            font-family:    $font_content;
+            font-family:    map-get($font-families, 'post-meta');
             font-size:      $font-size-base;
             color:          white !important;
             font-weight:    400;
@@ -74,20 +74,6 @@
 
 .post-header-cover-caption {
     margin: 5px 0 50px 0;
-}
-
-// adjust post's max-width in large screen
-@media #{$large-and-up} {
-.post-header-cover {
-         .post-header {
-              .post-title {
-              max-width:     map-get($main-content, max-width-large);
-              }
-              .post-meta {
-              max-width:     map-get($main-content, max-width-large);
-              }
-          }
-     }
 }
 
 // Decrease the font size of the post's title on very small screen

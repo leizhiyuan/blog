@@ -1,7 +1,7 @@
 html {
-    font-family: $font_base;
+    font-family: $font-family-base;
     // equal to 10px, useful to use em and rem
-    font-size:   62.5%;
+    font-size:   10px;
     // Gives you better control of the font size when the first selected font is not available.
     @include prefix(text-size-adjust, 100%, 'ms' 'webkit');
     // Overrides the highlight color shown when the user taps
@@ -15,7 +15,7 @@ body {
     margin:         0;
     padding:        0;
     background:     white;
-    font-family:    $font_base;
+    font-family:    $font-family-base;
     font-size:      map-get($font-size, base);
     line-height:    $line-height-base;
     letter-spacing: $letter-spacing-base;
@@ -35,16 +35,16 @@ h4,
 h5,
 h6 {
     letter-spacing: -0.04em;
-    font-family:    $font_title;
-    font-weight:    normal;
+    font-family:    map-get($font-families, 'headings');
+    font-weight:    700;
     line-height:    1.45em;
-    color:          map-get($colors, grey900);
+    color:          #4a4a4a;
 }
 
 h1,
 h2,
 h3 {
-    margin: 2em 0 1em 0;
+    margin: 1em 0 1em 0;
 }
 
 h4,
@@ -60,11 +60,14 @@ h6 {
     }
 }
 
-p,
+p {
+    margin: 0 0 1.5em 0;
+}
+
 ul,
 ol,
 dl {
-    margin: 0 0 1.75em 0;
+    margin: 0 0 0.5em 0;
 }
 
 a {
@@ -77,7 +80,7 @@ a {
         text-decoration: none;
     }
     &:hover {
-        color:            darken(map-get($colors, link), 15);
+        color:           map-get($colors, link);
         text-decoration: underline;
     }
 }
@@ -90,18 +93,25 @@ table {
     text-align:      left;
 
     th {
-        font-weight:    bold;
-        padding-bottom: 0.5em;
-        border-bottom:  2px solid lighten(#dce4f1, 2);
+        padding:       5px 10px;
+        font-weight:   bold;
+        border-bottom: 2px solid #909ba2;
     }
     td {
-        border-bottom: 1px solid lighten(#dce4f1, 2);
-        padding:       1rem 0;
+        padding: 5px 10px;
+    }
+    tr {
+        &:nth-child(2n) {
+            background: #f7f8f8;
+        }
     }
 }
 
 hr {
-    border: 1px solid #eef2f8;
+    margin:     1.5em 0 0;
+    outline:    none;
+    border:     none;
+    border-top: 1px solid #eef2f8;
 }
 
 dl {
@@ -113,16 +123,30 @@ dl {
     }
 }
 
+// code block
+pre > code {
+    display:     block;
+    width:       100%;
+    box-sizing:  border-box;
+    padding:     15px;
+    font-family: #{map-get($font-families, 'highlight')};
+    border:      none;
+    margin:      0;
+    // To override cursor attribute of `.tag` components
+    cursor:      text;
+    overflow-x:  auto;
+    line-height: map-get($highlight, line-height) + 0.4em;
+    font-size:   map-get($highlight, font-size);
+}
+
+// inline code
 code {
-    display:       inline-block;
-    font-family:   $font_code;
-    font-weight:   400;
-    font-size:     1.3rem;
-    border-radius: 5px;
-    background:    #f5f5f5;
-    padding:       0 5px;
-    margin-left:   2px;
-    margin-right:  2px;
+    font-size:        map-get($font-size, medium);
+    display:          inline-block;
+    font-family:      map-get($font-families, 'code');
+    font-weight:      400;
+    background-color: map-get($highlight, 'background');
+    padding:          0 10px;
 }
 
 acronym,
@@ -131,24 +155,27 @@ abbr {
 }
 
 blockquote {
-    border-left: 2px solid darken(#dce4f1, 3);
-    padding:     10px 20px;
+    border-left: 3px solid map-get($colors, 'base');
+    padding:     0 15px;
+    font-style:  italic;
+    margin:      1.5em 0 0;
 
     cite {
         &:before {
             content: ' — ';
             padding: 0 0.3em;
         }
-
+    }
+    & > p:first-child {
+        margin: 0;
     }
 }
 
 // Reduce global font-size base and headings font size on small screen and down
 @media #{$small-and-down} {
-    body {
-        font-size: map-get($font-size, base) - $font-size-base-sm-screen-reduction-factor;
+    code {
+        font-size: map-get($font-size, medium) - $font-size-base-sm-screen-reduction-factor;
     }
-
     @each $key, $value in $headings-font-size {
         #{$key} {
             font-size: $value - $headings-font-size-sm-screen-reduction-factor;
@@ -158,10 +185,6 @@ blockquote {
 
 // Reduce global font-size base and headings font size on medium screen only
 @media #{$medium-only} {
-    body {
-        font-size: map-get($font-size, base) - $font-size-base-md-screen-reduction-factor;
-    }
-
     @each $key, $value in $headings-font-size {
         #{$key} {
             font-size: $value - $headings-font-size-md-screen-reduction-factor;

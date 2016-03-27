@@ -1,64 +1,71 @@
-+function($) {
-    'use strict'
+(function($) {
+  'use strict';
 
-    // Hide the post bottom bar when the post footer is visible by the user,
-    // and show it when the post footer isn't visible by the user
+  // Hide the post bottom bar when the post footer is visible by the user,
+  // and show it when the post footer isn't visible by the user
+
+  /**
+   * PostBottomBar
+   * @constructor
+   */
+  var PostBottomBar = function() {
+    this.$postBottomBar = $('.post-bottom-bar');
+    this.$postFooter = $('.post-actions-wrap');
+    this.$header = $('#header');
+    this.delta = 1;
+    this.lastScrollTop = 0;
+  };
+
+  PostBottomBar.prototype = {
 
     /**
-     * PostBottomBar
-     * @constructor
+     * Run PostBottomBar feature
+     * @return {void}
      */
-    var PostBottomBar = function() {
-        this.$postBottomBar = $('.post-bottom-bar');
-        this.$postFooter    = $('.post-footer');
+    run: function() {
+      var self = this;
+      var didScroll;
+      // Run animation for first time
+      self.swipePostBottomBar();
+      // Detects if the user is scrolling
+      $(window).scroll(function() {
+        didScroll = true;
+      });
+      // Check if the user scrolled every 250 milliseconds
+      setInterval(function() {
+        if (didScroll) {
+          self.swipePostBottomBar();
+          didScroll = false;
+        }
+      }, 250);
+    },
+
+    /**
+     * Swipe the post bottom bar
+     * @return {void}
+     */
+    swipePostBottomBar: function() {
+      var scrollTop = $(window).scrollTop();
+      var postFooterOffsetTop = this.$postFooter.offset().top;
+      // show bottom bar
+      // if the user scrolled upwards more than `delta`
+      // and `post-footer` div isn't visible
+      if (this.lastScrollTop > scrollTop &&
+        (postFooterOffsetTop + this.$postFooter.height() > scrollTop + $(window).height() ||
+        postFooterOffsetTop < scrollTop + this.$header.height())) {
+        this.$postBottomBar.slideDown();
+      }
+      else {
+        this.$postBottomBar.slideUp();
+      }
+      this.lastScrollTop = scrollTop;
     }
+  };
 
-    PostBottomBar.prototype = {
-
-        /**
-         * Run PostBottomBar feature
-         */
-        run: function() {
-            var self = this;
-            var didScroll;
-
-            // Run animation for first time
-            self.swipePostBottomBar();
-
-            // Detects if the user is scrolling
-            $(window).scroll(function() {
-                self.didScroll = true;
-            });
-
-            // Check if the user scrolled every 250 milliseconds
-            setInterval(function() {
-                if (self.didScroll) {
-                    self.swipePostBottomBar();
-                    self.didScroll = false;
-                }
-            }, 250);
-        },
-
-        /**
-         * Animate the post bottom bar
-         */
-        swipePostBottomBar: function() {
-            var postFooterElemPos = (this.$postFooter.offset().top + this.$postBottomBar.height());
-
-            // Check if the post footer element is visible by the user
-            if (($(window).scrollTop() + $(window).height()) > (postFooterElemPos)) {
-                this.$postBottomBar.slideUp();
-            }
-            else {
-                this.$postBottomBar.slideDown();
-            }
-        }
-    };
-
-    $(document).ready(function() {
-        if ($('.post-bottom-bar').length) {
-            var postBottomBar = new PostBottomBar();
-            postBottomBar.run();
-        }
-    });
-}(jQuery);
+  $(document).ready(function() {
+    if ($('.post-bottom-bar').length) {
+      var postBottomBar = new PostBottomBar();
+      postBottomBar.run();
+    }
+  });
+})(jQuery);

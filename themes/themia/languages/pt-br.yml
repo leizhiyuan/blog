@@ -1,10 +1,12 @@
-# date format displayed everywhere in the blog
+# formato de data exibido em todos os lugares no blog
 date_format: "DD/MM/YYYY"
 
 global:
     home: "Início"
     categories: "Categorias"
+    category: "Category"
     tags: "Tags"
+    tag: "Tag"
     archives: "Arquivo"
     search: "Pesquisar"
     about: "Sobre"
@@ -13,19 +15,31 @@ global:
     twitter: "Twitter"
     facebook: "Facebook"
     google_plus: "Google Plus"
-    linked_in: "Linked In"
+    linkedin: "LinkedIn"
     mail: "Mail"
     rss: "RSS"
-    share_on_google_plus: "Share on Google Plus"
-    share_on_facebook: "Share on Facebook"
-    share_on_twitter: "Share on Twitter"
+    share_on_google_plus: "Partilhar no Google Plus"
+    share_on_facebook: "SPartilhar no Facebook"
+    share_on_twitter: "Partilhar no Twitter"
     search_category: "Pesquisar categoria"
     search_tag: "Pesquisar tag"
     search_date: "Pesquisar data (AAAA/MM/DD)"
+    posts_found:
+        zero: "não foram encontrados artigos"
+        one: "1 artigo encontrados"
+        other: "{n} artigos encontrados"
+    categories_found:
+        zero: "não foram encontrados categorias"
+        one: "1 category encontrados"
+        other: "{n} categorias encontrados"
+    tags_found:
+        zero: "não foram encontrados tag"
+        one: "1 tag encontrados"
+        other: "{n} tags encontrados"
 
 pagination:
-    page: "página"
-    of: "de"
+    page: "página %d"
+    of: "de %d"
     newer_posts: "POSTS MAIS NOVOS"
     older_posts: "POSTS MAIS ANTIGOS"
     previous: "ANTERIOR"
@@ -38,9 +52,10 @@ post:
     toc: "Tabela de Conteúdos"
     read_more: "Continuar leitura"
     go_to_website: "Ir para o site"
+    comment_and_share: "Comentar e compartilhar"
 
 author:
-    # Your biography in portuguese (Markdown and HTML supported)
+    # Sua biografia (Markdown and HTML supported)
     bio: ""
-    # Your job in portuguese
+    # Seu trabalho
     job: ""
