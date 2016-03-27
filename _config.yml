@@ -74,12 +74,12 @@ per_page: 10
 pagination_dir: page
 
 # Disqus
-disqus_shortname:
+disqus_shortname: leaverme
 
 # Extensions
 ## Plugins: https://github.com/hexojs/hexo/wiki/Plugins
 ## Themes: https://github.com/hexojs/hexo/wiki/Themes
-theme: jacman
+theme: themia
 exclude_generator:
 
 # Deployment
@@ -90,7 +90,7 @@ deploy:
     github: git@github.com:leizhiyuan/leizhiyuan.github.io.git,master
 plugins:
  - hexo-generator-feed
-highlight: 
+highlight:
   enable: true
   auto_detect: true
   line_number: true
