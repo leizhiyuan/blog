@@ -95,5 +95,7 @@ feed:
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:leizhiyuan/leizhiyuan.github.io.git
+  repository: 
+    github: git@github.com:leizhiyuan/leizhiyuan.github.io.git
+    coding: git@git.coding.net:leizhiyuan/leizhiyuan.git
   branch: master
