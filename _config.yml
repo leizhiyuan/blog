@@ -98,5 +98,4 @@ deploy:
   type: git
   repository: 
     github: git@github.com:leizhiyuan/leizhiyuan.github.io.git
-    coding: git@git.coding.net:leizhiyuan/leizhiyuan.git
   branch: master
