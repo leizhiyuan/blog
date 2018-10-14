@@ -1,0 +1,86 @@
+baseURL = "https://leizhiyuan.github.io/"
+languageCode = "zh-CN"
+title = "bystander's blog"
+theme = "beautifulhugo"
+metaDataFormat = "yaml"
+pygmentsStyle = "trac"
+pygmentsUseClasses = true
+pygmentsCodeFences = true
+pygmentsCodefencesGuessSyntax = true
+disqusShortname = "leaverme"
+
+[Params]
+  subtitle = "寻找窄门"
+  logo = "images/author.jpg"
+  favicon = "images/favicon.ico"
+  dateFormat = "January 2, 2006"
+  commit = false
+  rss = true
+  comments = true
+  readingTime = true
+  useHLJS = true
+  socialShare = false
+#  gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+  errorpage = "https://res.cloudinary.com/jimmysong/image/upload/images/404-not-found-cat.png"
+
+
+[permalinks]
+  post = "/:year/:month/:day/:title/"
+
+#[[Params.bigimg]]
+#  src = "img/triangle.jpg"
+#  desc = "Triangle"
+#[[Params.bigimg]]
+#  src = "img/sphere.jpg"
+#  desc = "Sphere"
+#  # position: see values of CSS background-position.
+#  position = "center top"
+#[[Params.bigimg]]
+#  src = "img/hexagon.jpg"
+#  desc = "Hexagon"
+
+[Author]
+  name = "bystander"
+  website = "leaver.me"
+  #email = "youremail@domain.com"
+  #facebook = "username"
+  #googleplus = "+username" # or xxxxxxxxxxxxxxxxxxxxx
+  github = "leizhiyuan"
+  #gitlab = "username"
+  #bitbucket = "username"
+  #twitter = "username"
+  #reddit = "username"
+  #linkedin = "username"
+  #xing = "username"
+  #stackoverflow = "users/XXXXXXX/username"
+  #snapchat = "username"
+  #instagram = "username"
+  #youtube = "user/username" # or channel/channelname
+  #soundcloud = "username"
+  #spotify = "username"
+  #bandcamp = "username"
+  #itchio = "username"
+  #vk = "username"
+  #paypal = "username"
+  #telegram = "username"
+
+[[menu.main]]
+    name = "首页"
+    url = "/"
+    weight = 1
+
+[[menu.main]]
+    identifier = "Categories"
+    name = "目录"
+    url = "/categories"
+    weight = 2
+
+[[menu.main]]
+    name = "标签"
+    url = "tags"
+    weight = 3
+
+[[menu.main]]
+    name = "关于我"
+    url = "/about/"
+    weight = 4
