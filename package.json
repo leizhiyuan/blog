@@ -18,6 +18,6 @@
     "hexo-server": "^0.2.0"
   },
   "hexo": {
-    "version": "3.2.2"
+    "version": "3.7.1"
   }
 }
