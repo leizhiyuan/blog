@@ -2,8 +2,4 @@
 Thumbs.db
 db.json
 debug.log
-node_modules/
-public/
-.deploy/
-.deploy_git/
 
