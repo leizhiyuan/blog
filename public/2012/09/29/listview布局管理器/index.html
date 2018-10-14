@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>ListView布局管理器</title>
+  <meta property="og:title" content="ListView布局管理器" />
+  <meta name="twitter:title" content="ListView布局管理器" />
+  <meta name="description" content="介绍 使用ListViewLayoutManager 可以控制ListView/GridView列的布局 1. 固定列宽：有着固定列宽的列 2. 范围列宽：有着最小最大宽度的列 3. 比例列宽：成比例的列宽
+范围列宽可以限制列的宽度，也包括填充列的剩余可视区域。
+据我们了解的Html中的表格和Grid空间。比例列以一个百分比来定义列宽，以下几个因素共同确定了比例列的宽度。
+ 垂直ListView滚动条的可视与否 ListView控件宽度的改变 非比例列宽度的改变  本程序支持通过XAML或是后台代码来控制ListView。如果通过XAML来控制。则允许ListViewLayoutManager 被附加到一个存在的ListView控件上。
+ConverterGridColumn 类通过接口IValueConverter 提供了对象绑定。使用ImageGridViewColumn 类则允许通过DataTemplate（数据模板）将列显示成图片等。
+在 User Setting Applied中，我展示了如何固定ListViewlieder顺序和大小
+XAML中ListView/GridView布局 固定列 下面的例子展示了通过XAML使用固定列宽控制列
+&lt;ListView Name=&#34;MyListView&#34; ctrl:ListViewLayoutManager.Enabled=&#34;true&#34;&gt; &lt;ListView.View&gt; &lt;GridView&gt; &lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=Name}&#34; ctrl:FixedColumn.Width=&#34;100&#34; Header=&#34;Name&#34; /&gt; &lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=City}&#34; ctrl:FixedColumn.Width=&#34;300&#34; Header=&#34;City&#34; /&gt; &lt;/GridView&gt; &lt;/ListView.View&gt; &lt;/ListView&gt;  设置附加到ListView控件上的ListViewLayoutManager 的Enabled属性为True。然后FixedColumn.Width 就会阻止鼠标拖动改变列的宽度。
+比例列
+下面的例子展示了使用XAML通过比例来控制列 
+&lt;GridView&gt; &lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=Name}&#34; ctrl:ProportionalColumn.Width=&#34;1&#34; Header=&#34;Name&#34; /&gt; &lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=City}&#34; ctrl:ProportionalColumn.Width=&#34;3&#34; Header=&#34;City&#34; /&gt; &lt;/GridView&gt; &lt;/ListView.">
+  <meta property="og:description" content="介绍 使用ListViewLayoutManager 可以控制ListView/GridView列的布局 1. 固定列宽：有着固定列宽的列 2. 范围列宽：有着最小最大宽度的列 3. 比例列宽：成比例的列宽
+范围列宽可以限制列的宽度，也包括填充列的剩余可视区域。
+据我们了解的Html中的表格和Grid空间。比例列以一个百分比来定义列宽，以下几个因素共同确定了比例列的宽度。
+ 垂直ListView滚动条的可视与否 ListView控件宽度的改变 非比例列宽度的改变  本程序支持通过XAML或是后台代码来控制ListView。如果通过XAML来控制。则允许ListViewLayoutManager 被附加到一个存在的ListView控件上。
+ConverterGridColumn 类通过接口IValueConverter 提供了对象绑定。使用ImageGridViewColumn 类则允许通过DataTemplate（数据模板）将列显示成图片等。
+在 User Setting Applied中，我展示了如何固定ListViewlieder顺序和大小
+XAML中ListView/GridView布局 固定列 下面的例子展示了通过XAML使用固定列宽控制列
+&lt;ListView Name=&#34;MyListView&#34; ctrl:ListViewLayoutManager.Enabled=&#34;true&#34;&gt; &lt;ListView.View&gt; &lt;GridView&gt; &lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=Name}&#34; ctrl:FixedColumn.Width=&#34;100&#34; Header=&#34;Name&#34; /&gt; &lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=City}&#34; ctrl:FixedColumn.Width=&#34;300&#34; Header=&#34;City&#34; /&gt; &lt;/GridView&gt; &lt;/ListView.View&gt; &lt;/ListView&gt;  设置附加到ListView控件上的ListViewLayoutManager 的Enabled属性为True。然后FixedColumn.Width 就会阻止鼠标拖动改变列的宽度。
+比例列
+下面的例子展示了使用XAML通过比例来控制列 
+&lt;GridView&gt; &lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=Name}&#34; ctrl:ProportionalColumn.Width=&#34;1&#34; Header=&#34;Name&#34; /&gt; &lt;GridViewColumn DisplayMemberBinding=&#34;{Binding Path=City}&#34; ctrl:ProportionalColumn.Width=&#34;3&#34; Header=&#34;City&#34; /&gt; &lt;/GridView&gt; &lt;/ListView.">
+  <meta name="twitter:description" content="介绍 使用ListViewLayoutManager 可以控制ListView/GridView列的布局 1. 固定列宽：有着固定列宽的列 2. 范围列宽：有着最小最大宽度的列 3. 比例列宽：成比例的列宽
+范围列宽可以限制列的宽度，也包括填充列的剩余可视区域。
+据我们了解的Html中的表格和Grid空间。比例列以一个百分比来定义列宽，以下几个因素共同确定了比例列的宽度。
+ 垂直ListView滚 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/09/29/listview%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86%E5%99%A8/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/09/29/listview%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86%E5%99%A8/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>ListView布局管理器</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 29, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (516 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p><a href="http://leaverimage.b0.upaiyun.com/27575_o.jpg"><img src="/images/3908a54221845d3b8f0b2ad7c3c0b559dae7a979.jpg" alt="" title="listview" /></a></p>
+
+<h3 id="介绍">介绍</h3>
+
+<p>使用ListViewLayoutManager  可以控制ListView/GridView列的布局
+1.  固定列宽：有着固定列宽的列
+2.  范围列宽：有着最小最大宽度的列
+3.  比例列宽：成比例的列宽</p>
+
+<p>范围列宽可以限制列的宽度，也包括填充列的剩余可视区域。</p>
+
+<p>据我们了解的Html中的表格和Grid空间。比例列以一个百分比来定义列宽，以下几个因素共同确定了比例列的宽度。</p>
+
+<ol>
+<li>垂直ListView滚动条的可视与否</li>
+<li>ListView控件宽度的改变</li>
+<li>非比例列宽度的改变</li>
+</ol>
+
+<p>本程序支持通过XAML或是后台代码来控制ListView。如果通过XAML来控制。则允许ListViewLayoutManager 被附加到一个存在的ListView控件上。</p>
+
+<p>ConverterGridColumn 类通过接口IValueConverter 提供了对象绑定。使用ImageGridViewColumn 类则允许通过DataTemplate（数据模板）将列显示成图片等。</p>
+
+<p>在 <a href="http://www.codeproject.com/Articles/25829/User-Settings-Applied">User Setting Applied</a>中，我展示了如何固定ListViewlieder顺序和大小</p>
+
+<h3 id="xaml中listview-gridview布局">XAML中ListView/GridView布局</h3>
+
+<p>固定列
+下面的例子展示了通过XAML使用固定列宽控制列</p>
+
+<pre class="lang:c# decode:true " >&lt;ListView
+    Name="MyListView"
+    ctrl:ListViewLayoutManager.Enabled="true"&gt;
+
+    &lt;ListView.View&gt;
+      &lt;GridView&gt;
+        &lt;GridViewColumn
+          DisplayMemberBinding="{Binding Path=Name}"
+
+          ctrl:FixedColumn.Width="100"
+          Header="Name" /&gt;
+
+        &lt;GridViewColumn
+          DisplayMemberBinding="{Binding Path=City}"
+          ctrl:FixedColumn.Width="300"
+
+          Header="City" /&gt;
+      &lt;/GridView&gt;
+
+    &lt;/ListView.View&gt;
+  &lt;/ListView&gt;
+</pre> 
+
+<p>设置附加到ListView控件上的ListViewLayoutManager 的Enabled属性为True。然后FixedColumn.Width 就会阻止鼠标拖动改变列的宽度。</p>
+
+<p>比例列</p>
+
+<p>下面的例子展示了使用XAML通过比例来控制列
+<pre class="lang:c# decode:true " ><ListView
+    Name="MyListView"
+    ctrl:ListViewLayoutManager.Enabled="true">
+    <ListView.View></p>
+<div class="highlight"><pre class="chroma">  &lt;GridView&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=Name}&#34;
+      ctrl:ProportionalColumn.Width=&#34;1&#34;
+
+      Header=&#34;Name&#34; /&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=City}&#34;
+
+      ctrl:ProportionalColumn.Width=&#34;3&#34;
+      Header=&#34;City&#34; /&gt;
+  &lt;/GridView&gt;
+
+&lt;/ListView.View&gt;</pre></div>
+<p></ListView></pre></p>
+
+<p>对比Grid控件的RowDefinition.Width 属性，ProportionalColumn.Width会计算百分比。简单来说，就是上面的例子中Name列会占到总宽度的25%，而City列占到75%。
+与固定列相似。鼠标将不能改变列的宽度。</p>
+
+<p>范围列</p>
+
+<p>下面的例子展示了使用XAML通过最小/最小宽度来控制列
+<pre class="lang:c# decode:true " >
+<ListView
+    Name="MyListView"
+    ctrl:ListViewLayoutManager.Enabled="true">
+    <ListView.View></p>
+<div class="highlight"><pre class="chroma">  &lt;GridView&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=Name}&#34;
+      ctrl:RangeColumn.MinWidth=&#34;100&#34;
+      Width=&#34;150&#34;
+
+      Header=&#34;Name&#34; /&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=City}&#34;
+      ctrl:RangeColumn.MaxWidth=&#34;200&#34;
+      Width=&#34;150&#34;
+
+      Header=&#34;City&#34; /&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=Country}&#34;
+      Width=&#34;100&#34;
+      ctrl:RangeColumn.MinWidth=&#34;50&#34;
+
+      ctrl:RangeColumn.MaxWidth=&#34;150&#34;
+      Header=&#34;Country&#34; /&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=State}&#34;
+      Width=&#34;100&#34;
+
+      ctrl:RangeColumn.MinWidth=&#34;100&#34;
+      ctrl:RangeColumn.IsFillColumn=&#34;true&#34;
+      Header=&#34;Country&#34; /&gt;
+
+  &lt;/GridView&gt;
+
+&lt;/ListView.View&gt;</pre></div>
+<p></ListView></pre></p>
+
+<p>第一个范围列的IsFillColumn 属性被设置为True，因此将会自动改变大小来填满剩余的空间，而如果ListView包含一个比例列的话，范围列将不会填充</p>
+
+<p>通过鼠标可以拖动范围列的宽度。鼠标指针会有一些提示。。</p>
+
+<p>组合使用</p>
+
+<p>在真实的世界里。组合使用很普遍。他们的顺序可以多种多样。
+<pre class="lang:c# decode:true " >
+<ListView
+    Name="MyListView"
+    ctrl:ListViewLayoutManager.Enabled="true"></p>
+<div class="highlight"><pre class="chroma">&lt;ListView.View&gt;
+  &lt;GridView&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=State}&#34;
+      ctrl:FixedColumn.Width=&#34;25&#34;
+      Header=&#34;Name&#34; /&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=Name}&#34;
+
+      Width=&#34;150&#34;
+      ctrl:RangeColumn.MinWidth=&#34;100&#34;
+      ctrl:RangeColumn.MaxWidth=&#34;200&#34;
+
+      Header=&#34;City&#34; /&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=City}&#34;
+      ctrl:ProportionalColumn.Width=&#34;1&#34;
+      Header=&#34;Zip&#34; /&gt;
+
+    &lt;GridViewColumn
+      DisplayMemberBinding=&#34;{Binding Path=Country}&#34;
+
+      ctrl:ProportionalColumn.Width=&#34;2&#34;
+      Header=&#34;Country&#34; /&gt;
+  &lt;/GridView&gt;
+
+&lt;/ListView.View&gt;</pre></div>
+<p></ListView></pre></p>
+
+<h3 id="使用后台代码控制listview-gridview布局">使用后台代码控制ListView/GridView布局</h3>
+
+<pre class="lang:c# decode:true " >
+ListView listView = new ListView();
+ new ListViewLayoutManager( listView ); // attach the layout manager
+
+ GridView gridView = new GridView();
+ gridView.Columns.Add( FixedColumn.ApplyWidth( new MyGridViewColumn( "State" ), 25 ) );
+ gridView.Columns.Add( RangeColumn.ApplyWidth( new MyGridViewColumn( "Name" ), 100,
+     150, 200 ) ); // 100...200
+ gridView.Columns.Add( ProportionalColumn.ApplyWidth( new MyGridViewColumn( "City" ),
+     1 ) ); // 33%
+ gridView.Columns.Add( ProportionalColumn.ApplyWidth( new MyGridViewColumn(
+     "Country" ), 2 ) ); // 66%
+
+ listView.View = gridView;
+</pre>
+
+<h3 id="定制列的效果">定制列的效果</h3>
+
+<p>类ConverterGridColumn 作为一个基类，用来绑定列到独立的对象。
+<pre class="lang:c# decode:true " >// &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+  public class Customer
+  {
+    // &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-
+    public Customer()
+    {
+    } // Customer</p>
+<div class="highlight"><pre class="chroma">// ----------------------------------------------------------------------
+public string FirstName
+{
+  get { return this.firstName; }
+  set { this.firstName = value; }
+} // FirstName
+
+// ----------------------------------------------------------------------
+public string LastName
+{
+  get { return this.lastName; }
+  set { this.lastName = value; }
+} // LastName
+
+// ----------------------------------------------------------------------
+// members
+private string firstName;
+private string lastName;</pre></div>
+<p>} // class Customer</p>
+
+<p>// &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+  public class CustomerFullNameColumn : ConverterGridViewColumn
+  {
+    // &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-
+    public CustomerGridViewColumn() :
+      base( typeof( Customer ) )
+    {
+    } // CustomerGridViewColumn</p>
+<div class="highlight"><pre class="chroma">// ----------------------------------------------------------------------
+protected override object ConvertValue( object value )
+{
+  Customer customer = value as Customer;
+  return string.Concat( customer.FirstName, &#34; &#34;, customer.LastName );
+} // ConvertValue</pre></div>
+<p>} // class CustomerFullNameColumn</pre></p>
+
+<h3 id="列以图片展示">列以图片展示</h3>
+
+<p>ImageGridColumn 作为一个基类，用来绑定列到图片
+<pre class="lang:c# decode:true " >// &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+  public class Customer
+  {
+    // &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-
+    public Customer()
+    {
+    } // Customer</p>
+<div class="highlight"><pre class="chroma">// ----------------------------------------------------------------------
+public bool IsActive
+{
+  get { return this.isActive; }
+  set { this.isActive = value; }
+} // IsActive
+
+// ----------------------------------------------------------------------
+// members
+private bool isActive;</pre></div>
+<p>} // class Customer</p>
+
+<p>// &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+  public class CustomerActiveColumn : ImageGridViewColumn
+  {
+    // &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-
+    public CustomerActiveColumn()
+    {
+    } // CustomerActiveColumn</p>
+<div class="highlight"><pre class="chroma">// ----------------------------------------------------------------------
+protected override ImageSource GetImageSource( object value )
+{
+  Customer customer = value as Customer;
+  if ( customer != null )
+  {
+    return new BitmapImage( new Uri( customer.IsActive ? &#34;Active.png&#34; :
+        &#34;Inactive.png&#34; ) );
+  }
+  return null;
+} // GetImageSource</pre></div>
+<p>} // class CustomerActiveColumn</pre></p>
+
+<h3 id="有意思的地方">有意思的地方</h3>
+
+<p>作为ListView控件的核心部件- ListViewLayoutManager  有以下的功能
+阻止改变固定列和比例列的宽度
+强制了范围列的范围
+随着ListView控件的改变而更新列布局
+随着某一列的改变而更新布局</p>
+
+<p>为了正确的接收到请求的信息，分析ListView控件的可视树是很有必要的,Thumb对象提供了列宽改变的事件。而为了正确的展示鼠标指针，PreviewMouseMove 和PreviewMouseLeftButtonDown 事件都会被处理</p>
+
+<p>当Viewport控件大小改变（ScrollChangedEventArgs.ViewportWidthChange）的时候，会触发ScrollViewer 控件的ScrollChanged 事件
+通过使用DependencyPropertyDescriptor  可以追踪 GridViewColumn的宽度改变。并发出通知。</p>
+
+<p>为了可以集成进已有的系统，列数据被放置在附加属性里。使用DependencyProperty.ReadLocalValue()方法会检测当前的属性是否在同一个对象里。</p>
+
+<p>类ConverterGridViewColumn  同时使用一个简单的绑定。展示数据转换（IValueConverter接口）</p>
+
+<p>类ImageGridViewColumn 在数据模板中使用FrameworkElementFactory 来动态嵌入图片，缺省情况下，在ListView/GridView控件中的图片会自动拉伸（Image.Stretch属性），因为数据模板中的图片是动态创建的。模板元素的值需要使用绑定来制定
+<pre class="lang:c# decode:true " >// &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-
+ protected ImageGridViewColumn( Stretch imageStretch )
+ {
+   FrameworkElementFactory imageElement = new FrameworkElementFactory( typeof( Image ) );</p>
+
+<p>// image stretching
+   Binding imageStretchBinding = new Binding();
+   imageStretchBinding.Source = imageStretch;
+   imageElement.SetBinding( Image.StretchProperty, imageStretchBinding );</p>
+
+<p>DataTemplate template = new DataTemplate();
+   template.VisualTree = imageElement;
+   CellTemplate = template;
+ } // ImageGridViewColumn</pre></p>
+
+<h3 id="许可">许可</h3>
+
+<p>本文及所有代码和文件在CPOL下授权</p>
+
+<h3 id="demo下载">Demo下载</h3>
+
+<p><a href="http://pan.baidu.com/share/link?shareid=64579&amp;uk=1493685990">ListView LayOut</a></p>
+
+<p>原文地址：<a href="http://www.codeproject.com/Articles/25058/ListView-Layout-Manager">ListView-Layout-Manager</a>
+著作权声明：本文由<a href="http://leaver.me">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/wpf/">WPF</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/09/27/%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BB%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%91%E7%94%9F%E6%97%A0%E6%95%88%E7%9A%84%E5%8F%82%E6%95%B0%E5%BC%82%E5%B8%B8/" data-toggle="tooltip" data-placement="top" title="从数据库读取图片发生“无效的参数”异常">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/09/30/csv%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E5%B7%A5%E5%85%B7/" data-toggle="tooltip" data-placement="top" title="CSV导入导出工具">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

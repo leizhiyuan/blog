@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>kafka快速开发demo</title>
+  <meta property="og:title" content="kafka快速开发demo" />
+  <meta name="twitter:title" content="kafka快速开发demo" />
+  <meta name="description" content="在kafka快速上手,主要是使用kafka提供的测试来做了一下简单测试,实际开发中的使用可能才是我们要关系的.启动zk和kafka,新建topic的过程都不变.
+1 新建一个maven工程,引入依赖
+&lt;dependency&gt; &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt; &lt;artifactId&gt;kafka_2.11&lt;/artifactId&gt; &lt;version&gt;0.8.2.1&lt;/version&gt; &lt;/dependency&gt; 2 编写配置文件
+public interface KafkaProperties { public final static String ZK = &#34;127.0.0.1:2181&#34;; public final static String GROUP_ID = &#34;test_group1&#34;; public final static String TOPIC = &#34;test&#34;; public final static String BROKER_LIST = &#34;127.0.0.1:9092&#34;; public final static String SESSION_TIMEOUT = &#34;20000&#34;; public final static String SYNC_TIMEOUT = &#34;20000&#34;; public final static String INTERVAL = &#34;1000&#34;; } 3 编写生产者
+public class KafkaProducer extends Thread { private Producer&lt;Integer, String&gt; producer; private String topic; private Properties props = new Properties(); private final int SLEEP = 1000 * 3; public KafkaProducer(String topic) { props.">
+  <meta property="og:description" content="在kafka快速上手,主要是使用kafka提供的测试来做了一下简单测试,实际开发中的使用可能才是我们要关系的.启动zk和kafka,新建topic的过程都不变.
+1 新建一个maven工程,引入依赖
+&lt;dependency&gt; &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt; &lt;artifactId&gt;kafka_2.11&lt;/artifactId&gt; &lt;version&gt;0.8.2.1&lt;/version&gt; &lt;/dependency&gt; 2 编写配置文件
+public interface KafkaProperties { public final static String ZK = &#34;127.0.0.1:2181&#34;; public final static String GROUP_ID = &#34;test_group1&#34;; public final static String TOPIC = &#34;test&#34;; public final static String BROKER_LIST = &#34;127.0.0.1:9092&#34;; public final static String SESSION_TIMEOUT = &#34;20000&#34;; public final static String SYNC_TIMEOUT = &#34;20000&#34;; public final static String INTERVAL = &#34;1000&#34;; } 3 编写生产者
+public class KafkaProducer extends Thread { private Producer&lt;Integer, String&gt; producer; private String topic; private Properties props = new Properties(); private final int SLEEP = 1000 * 3; public KafkaProducer(String topic) { props.">
+  <meta name="twitter:description" content="在kafka快速上手,主要是使用kafka提供的测试来做了一下简单测试,实际开发中的使用可能才是我们要关系的.启动zk和kafka,新建topic的过程都不变.
+1 新建一个maven工程,引入依赖
+&lt;dependency&gt; &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt; …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2015/09/08/kafka%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91demo/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2015/09/08/kafka%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91demo/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>kafka快速开发demo</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 8, 2015
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (294 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>在<a href="http://leaver.me/2015/09/03/kafka%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/">kafka快速上手</a>,主要是使用kafka提供的测试来做了一下简单测试,实际开发中的使用可能才是我们要关系的.启动zk和kafka,新建topic的过程都不变.</p>
+
+<p>1 新建一个maven工程,引入依赖</p>
+<div class="highlight"><pre class="chroma">    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;
+        &lt;artifactId&gt;kafka_2.11&lt;/artifactId&gt;
+        &lt;version&gt;0.8.2.1&lt;/version&gt;
+    &lt;/dependency&gt;</pre></div>
+<p>2 编写配置文件</p>
+<div class="highlight"><pre class="chroma">    public interface KafkaProperties {
+        public final static String ZK              = &#34;127.0.0.1:2181&#34;;
+        public final static String GROUP_ID        = &#34;test_group1&#34;;
+        public final static String TOPIC           = &#34;test&#34;;
+        public final static String BROKER_LIST     = &#34;127.0.0.1:9092&#34;;
+        public final static String    SESSION_TIMEOUT = &#34;20000&#34;;
+        public final static String    SYNC_TIMEOUT    = &#34;20000&#34;;
+        public final static String    INTERVAL        = &#34;1000&#34;;
+
+    }</pre></div>
+<p>3 编写生产者</p>
+<div class="highlight"><pre class="chroma">    public class KafkaProducer extends Thread {
+
+        private Producer&lt;Integer, String&gt; producer;
+        private String                    topic;
+        private Properties                props = new Properties();
+        private final int                 SLEEP = 1000 * 3;
+
+        public KafkaProducer(String topic) {
+            props.put(&#34;serializer.class&#34;, &#34;kafka.serializer.StringEncoder&#34;);
+            //生产者直接和broker列表连接
+            props.put(&#34;metadata.broker.list&#34;, KafkaProperties.BROKER_LIST);
+            producer = new Producer&lt;Integer, String&gt;(new ProducerConfig(props));
+            this.topic = topic;
+        }
+
+        @Override
+        public void run() {
+            int offsetNo = 1;
+            while (true) {
+                String msg = new String(&#34;Message_&#34; + offsetNo);
+                System.out.println(&#34;Send-&gt;[&#34; + msg + &#34;]&#34;);
+                producer.send(new KeyedMessage&lt;Integer, String&gt;(topic, msg));
+                offsetNo++;
+                try {
+                    sleep(SLEEP);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }</pre></div>
+<p>4 编写消费者</p>
+<div class="highlight"><pre class="chroma">    public class KafkaConsumer extends Thread {
+
+        private ConsumerConnector consumer;
+        private String            topic;
+        private final int         SLEEP = 1000 * 3;
+
+        public KafkaConsumer(String topic) {
+            consumer = Consumer.createJavaConsumerConnector(this.consumerConfig());
+            this.topic = topic;
+        }
+
+        private ConsumerConfig consumerConfig() {
+            Properties props = new Properties();
+            //消费者使用zk的地址获取连接
+            props.put(&#34;zookeeper.connect&#34;, KafkaProperties.ZK);
+            props.put(&#34;group.id&#34;, KafkaProperties.GROUP_ID);
+            props.put(&#34;zookeeper.session.timeout.ms&#34;, KafkaProperties.SESSION_TIMEOUT);
+            props.put(&#34;zookeeper.sync.time.ms&#34;, KafkaProperties.SYNC_TIMEOUT);
+            props.put(&#34;auto.commit.interval.ms&#34;, KafkaProperties.INTERVAL);
+            return new ConsumerConfig(props);
+        }
+
+        @Override
+        public void run() {
+            Map&lt;String, Integer&gt; topicCountMap = new HashMap&lt;String, Integer&gt;();
+            topicCountMap.put(topic, new Integer(1));
+            Map&lt;String, List&lt;KafkaStream&lt;byte[], byte[]&gt;&gt;&gt; consumerMap = consumer
+                .createMessageStreams(topicCountMap);
+            KafkaStream&lt;byte[], byte[]&gt; stream = consumerMap.get(topic).get(0);
+            ConsumerIterator&lt;byte[], byte[]&gt; it = stream.iterator();
+            while (it.hasNext()) {
+                System.out.println(&#34;Receive-&gt;[&#34; + new String(it.next().message()) + &#34;]&#34;);
+                try {
+                    sleep(SLEEP);
+                    } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }</pre></div>
+<p>5 编写启动辅助类</p>
+<div class="highlight"><pre class="chroma">    public class KafkaClientApp {
+        public static void main(String[] args) {
+
+            KafkaProducer pro = new KafkaProducer(KafkaProperties.TOPIC);
+
+            pro.start();
+
+            KafkaConsumer con = new KafkaConsumer(KafkaProperties.TOPIC);
+
+            con.start();
+        }
+    }</pre></div>
+<p>之后启动测试一下就好了.
+1. <a href="http://www.cnblogs.com/smartloli/p/4543211.html">参考来源</a></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2015/09/07/kafka%E6%96%87%E7%AB%A0%E6%8E%A8%E8%8D%90/" data-toggle="tooltip" data-placement="top" title="kafka文章推荐">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2015/09/12/%E4%BA%8B%E5%8A%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="事务学习笔记">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

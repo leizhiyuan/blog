@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>C#调用MatLab实现N阶幻方</title>
+  <meta property="og:title" content="C#调用MatLab实现N阶幻方" />
+  <meta name="twitter:title" content="C#调用MatLab实现N阶幻方" />
+  <meta name="description" content="MatLab的计算能力太强大了。最近需要通过C#来调用MatLab来进行一些计算，可是MatLab没用过。安装文件在我硬盘里躺了整整一年。
+　我们希望的是由外部程序调用MatLab函数。所以。希望可以完全脱离MATLAB环境，实现软件的快速开发。为此需要先介绍一下MCR。
+MCR简介 　MCR的全称是MATLAB Compiler Runtime，即MATLAB编译器运行时。是一个由MATLAB共享类库构成的执行引擎，他能够使MATLAB文件在没有MATLAB的机器上运行。这一点和.NET Framework相对于.NET程序一样，即为程序的运行提供了底层支持。当发布程序的时候，需要将MCR也打包进来，这样没有MATLAB的机器上也能执行，MCR随MATLAB软件一同发布，可以在MATLAB中输入命令“mcr”或者“mcrinstaller”获取其保存路径：
+&gt;&gt; mcr The WIN32 MCR Installer, version 7.15, is: D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\win32\MCRInstaller.exe MCR installers for other platforms are located in: D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\&lt;ARCH&gt; &lt;ARCH&gt; is the value of COMPUTER(&#39;arch&#39;) on the target machine. Full list of available MCR installers: D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\win32\MCRInstaller.exe For more information, read your local MCR Installer help. Or see the online documentation at MathWorks&#39; web site. (Page may load slowly.">
+  <meta property="og:description" content="MatLab的计算能力太强大了。最近需要通过C#来调用MatLab来进行一些计算，可是MatLab没用过。安装文件在我硬盘里躺了整整一年。
+　我们希望的是由外部程序调用MatLab函数。所以。希望可以完全脱离MATLAB环境，实现软件的快速开发。为此需要先介绍一下MCR。
+MCR简介 　MCR的全称是MATLAB Compiler Runtime，即MATLAB编译器运行时。是一个由MATLAB共享类库构成的执行引擎，他能够使MATLAB文件在没有MATLAB的机器上运行。这一点和.NET Framework相对于.NET程序一样，即为程序的运行提供了底层支持。当发布程序的时候，需要将MCR也打包进来，这样没有MATLAB的机器上也能执行，MCR随MATLAB软件一同发布，可以在MATLAB中输入命令“mcr”或者“mcrinstaller”获取其保存路径：
+&gt;&gt; mcr The WIN32 MCR Installer, version 7.15, is: D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\win32\MCRInstaller.exe MCR installers for other platforms are located in: D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\&lt;ARCH&gt; &lt;ARCH&gt; is the value of COMPUTER(&#39;arch&#39;) on the target machine. Full list of available MCR installers: D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\win32\MCRInstaller.exe For more information, read your local MCR Installer help. Or see the online documentation at MathWorks&#39; web site. (Page may load slowly.">
+  <meta name="twitter:description" content="MatLab的计算能力太强大了。最近需要通过C#来调用MatLab来进行一些计算，可是MatLab没用过。安装文件在我硬盘里躺了整整一年。
+　我们希望的是由外部程序调用MatLab函数。所以。希望可以完全脱离MATLAB环境，实现软件的快速开发。为此需要先介绍一下MCR。
+MCR简介 　MCR的全称是MATLAB Compiler Runtime，即MATLAB编译器运行时。是一个由MATLAB共 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/07/02/c" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/07/02/c" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>C#调用MatLab实现N阶幻方</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on July 2, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (145 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p>MatLab的计算能力太强大了。最近需要通过C#来调用MatLab来进行一些计算，可是MatLab没用过。安装文件在我硬盘里躺了整整一年。</p>
+
+<p>　　我们希望的是由外部程序调用MatLab函数。所以。希望可以完全脱离MATLAB环境，实现软件的快速开发。为此需要先介绍一下MCR。</p>
+
+<h3 id="mcr简介">MCR简介</h3>
+
+<p>　　 MCR的全称是MATLAB Compiler Runtime，即MATLAB编译器运行时。是一个由MATLAB共享类库构成的执行引擎，他能够使MATLAB文件在没有MATLAB的机器上运行。这一点和.NET Framework相对于.NET程序一样，即为程序的运行提供了底层支持。当发布程序的时候，需要将MCR也打包进来，这样没有MATLAB的机器上也能执行，MCR随MATLAB软件一同发布，可以在MATLAB中输入命令“mcr”或者“mcrinstaller”获取其保存路径：</p>
+
+<pre class="lang:default decode:true " >&gt;&gt; mcr
+The WIN32 MCR Installer, version 7.15, is:
+    D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\win32\MCRInstaller.exe
+
+MCR installers for other platforms are located in:
+    D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\&lt;ARCH&gt;
+  &lt;ARCH&gt; is the value of COMPUTER('arch') on the target machine.
+
+Full list of available MCR installers:
+D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\win32\MCRInstaller.exe
+
+For more information, read your local MCR Installer help.
+Or see the online documentation at MathWorks' web site. (Page may load slowly.)</pre> 
+
+<p>　　根据上面的运行结果，可知该文件的完整路径是：</p>
+
+<pre class="lang:default decode:true " >D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\win32\MCRInstaller.exe</pre> 
+
+<h3 id="mwarray-api简介">MWArray API简介</h3>
+
+<p>　MCR包含了文件MWArray.dll，该文件中的API承担了用户程序和MCR之间数据交换的任务，因此，每一个独立文件都需要包含对该文件的引用，否则程序就不能使用MATLAB中的函数，为使用该文件，需要先使用上一步找到的安装MCR，我安装在D:\Program Files\MATLAB\MATLAB Compiler Runtime目录，然后该dll该文件在安装完MCR后位于：</p>
+
+<pre class="lang:default decode:true " >D:\Program Files\MATLAB\MATLAB Compiler Runtime\v715\toolbox\dotnetbuilder\bin\win32\v2.0，名字是MWArray.dll，</pre> 
+
+<p>　　另外，该文件中有两个重要的命名空间，MathWorks.MATLAB.NET.Arrays和MathWorks.MATLAB.NET.Utility，Arrays命名空间下的类提供从其他任何兼容CLS（Common Language Specification） 语言访问MATLAB中数组的功能，这些类支持数组格式化、类型的特定索引和错误处理的功能。而Utility命名空间下的类提供了对MWArray类架构和MATLAB公共运行时的托管API的通用支持。</p>
+
+<h3 id="实施">实施</h3>
+
+<blockquote>
+<p>为了将MATLAB中的程序作为组件提供给其他.NET程序使用，需要做两方面的工作：</p>
+
+<p>1.将M文件打包为与.NET兼容的程序集</p>
+
+<p>2.在外部程序中添加对程序集的引用</p>
+
+<h3 id="matlab端的工作">MATLAB端的工作</h3>
+
+<p>　　以我这个功能为例。打开MatLab，然后File-&gt;New-&gt;Deployment Project.然后在Type里选择.net Assembly,Ok即可。我选择的工程名是test，注意，这个test就会生成一个名为test.dll的程序集，所以起个好名字，，我没起好。如图1
+<a href="http://leaverimage.b0.upaiyun.com/23964_o.jpg"><img src="/images/494daca0321a65539ea6b2c7d6d3155345c3c32d.jpg" alt="" title="start" /></a>
+　　然后在图2的视图中定位到你选择的工程目录，并依次点击。
+<a href="http://leaverimage.b0.upaiyun.com/23966_o.jpg"><img src="/images/b2e74076bfe76e6aeac6b3b7365668d2f23431fe.jpg" alt="" title="step" /></a>
+　　添加一个test.m的文件。图3
+<a href="http://leaverimage.b0.upaiyun.com/23965_o.jpg"><img src="/images/110d97e0942789e04445dd3d3eee89873c49de11.jpg" alt="" title="test" /></a>这个名称随意。但是要注意，这个名字必须和你里面将要写的那个函数名称一致，这个很好理解。好了以后，双击test.m就会打开。输入</p>
+
+<pre class="lang:default decode:true " >function m=test(n)
+m=magic(n);
+end</pre> 
+
+<p>　　创建一个test方法。该方法在C#调用的时候要用到，接受一个参数，然后输出一个幻方。保存关闭m文件，然后回到上图，双击test.prj也就是工程文件。
+来到图4
+<a href="http://leaverimage.b0.upaiyun.com/23967_o.jpg"><img src="/images/5ab49b4504bc1aba33d62b3c2cfbf897656c751d.jpg" alt="" title="add" /></a>
+　　点击Add Class，就是向test.dll的程序集中添加类。我添加了一个类叫做Func1.这个类用来在C#中创建一个对象，然后调用test（n）这个函数，然后出现Add Files，点击打开浏览框，把刚才写好的test.m选上。就可以了
+　　最后看窗口右上角，，点击那个build图标就ok，等个几分钟，就会在目录里生成test.dll文件了。图5
+<a href="http://leaverimage.b0.upaiyun.com/23968_o.jpg"><img src="/images/4e21f5823ece422097e73e2321e43b3b09a2cb7a.jpg" alt="" title="build" /></a></p>
+
+<h3 id="vs端的代码">VS端的代码</h3>
+
+<p>　　现在，打开vs，创建C#工程，添加两个引用，分别是MWArray.dll和test.dll，添加引用的方法就是在解决方案资源管理器中，的引用上，点击，然后添加引用-&gt;浏览-&gt;找到这两个dll，为了方便，我一般会把这两个dll复制到我的C#工程目录里，然后添加引用，如前面所说，MWArray.dll里有两个命名空间，我们使用using语句都添加上。也包括生成的test.dll</p>
+
+<pre class="lang:c# decode:true " >using test;
+using MathWorks.MATLAB.NET.Arrays;
+using MathWorks.MATLAB.NET.Utility;</pre> 
+
+<p>　　然后设计C#界面，很简单的拖一个界面，图6
+<a href="http://leaverimage.b0.upaiyun.com/23969_o.jpg"><img src="/images/07a97d0fe021665574597469b813e53dc6b48677.jpg" alt="" title="ui" /></a>
+　　然后单击事件代码：</p>
+
+<p><pre class="lang:c# decode:true " >            Func1 f = new Func1();
+            MWNumericArray na = null;
+            MWArray[] ansArray = null;
+            int i = Convert.ToInt16(textBox1.Text);
+            ansArray = f.test(1, i);
+            na = (MWNumericArray)ansArray[0];//只有一个数组返回
+            MessageBox.Show(na.ToString());</pre>
+　　看到test有两个参数，第一个参数是指返回结果书，我们只需要一个就好了。所以为1，后面那个是阶数了。运行结果如图7：
+<a href="http://leaverimage.b0.upaiyun.com/23970_o.jpg"><img src="/images/891d04e30b4742ae3ca5b851d5fc379cc3d10950.jpg" alt="" title="result" /></a></p>
+</blockquote>
+
+<p>　　注意程序在初始化自定义类Func1时会花费较多时间，大约持续2~3秒钟，程序如同假死一般，但第二次点击按钮反应却很快.
+参考：
+    <a href="http://www.360doc.com/content/12/0530/10/9587654_214689438.shtml">http://www.360doc.com/content/12/0530/10/9587654_214689438.shtml</a></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/matlab/">matlab</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/07/02/c#%E4%B8%AD%E7%9A%84%E9%9D%99%E6%80%81%E4%B8%8E%E9%9D%9E%E9%9D%99%E6%80%81/" data-toggle="tooltip" data-placement="top" title="C#中的静态与非静态">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/07/03/unable-to-read-file-data_egcitest%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" data-toggle="tooltip" data-placement="top" title="Unable to read file Data_EGCITest解决方法">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

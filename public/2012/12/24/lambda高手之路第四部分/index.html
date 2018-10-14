@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Lambda高手之路第四部分</title>
+  <meta property="og:title" content="Lambda高手之路第四部分" />
+  <meta name="twitter:title" content="Lambda高手之路第四部分" />
+  <meta name="description" content="首先祝大家平安夜快乐。本篇介绍一些流行的JavaScript模式。为下一篇打基础
+使用/了解JavaScript的一个好处就是函数的高级用法。。在JavaScript里。函数仅仅是对象。他们可以有赋给他们的属性。而在C#中。我们不能做我们可以在JavaScript的全部事情。但是我们仍然可以做些事情。一个原因是JavaScript在函数里给变量以作用域。因此，不得不通过创建函数，大多数情况是匿名的来定位变量。而在C#中。通过使用块，通过花括号来创建作用域
+当然，换种方式来说。C#中，函数也会给变量作用域。通过使用Lambda表达式。我们通过花括号在其里面创建了一个变量。然而。我们也可以局部的创建作用域。
+我们来看看通过使用Lambda表达式可以实现一些在JavaScript里面有用的模式把。
+回调模式
+这个模式是个老的模式。事实上。回调模式从.net 的第一版就开始使用了。但是是以一种很简单的方式实现的。而现在。通过使用Lambda表达式。闭包，捕获变量等特性能够允许我们写出如下的代码来。
+void CreateTextBox() { var tb = new TextBox(); tb.IsReadOnly = true; tb.Text = &#34;Please wait ...&#34;; DoSomeStuff(() =&gt; { tb.Text = string.Empty; tb.IsReadOnly = false; }); } void DoSomeStuff(Action callback) { // Do some stuff - asynchronous would be helpful ... callback(); } 对于JavaScript程序员会觉得这没什么啊。他们使用这个模式太多了。然而，它非常有用。因为我们可以使用参数作为Ajax相关事件的事件处理器（比如oncompleted，onsuccess），等等。如果你使用LINQ，那么你可能也会用到回调模式的一些东西。举个例子。LINQ的where子句将会在每一次迭代中回调你的查询语句。这只是回调函数的一个例子。在.net的世界里。事件如它名字所暗示的那样。通常是事件处理的首选方法。这有时候很像一个回调。他有两个参数。有一个特殊的关键字和一个类型模式（两个参数分别是sender和arguments，sender通常是object类型。Arguments通常继承自EventArgs） 可以通过&#43;= 和-=给事件添加/删除事件处理程序。
+返回方法 和普通的方法比较。Lambda表达式也可以返回一个方法指针（就是一个委托实例），这意味着我们可以使用Lambda表达式创建/返回一个lambda表达式（或者今年仅是一个已定义好的方法的委托实例），大量的情况下。这个模式也很有用。首先看一下例子。
+Func&lt;string, string&gt; SayMyName(string language) { switch(language.ToLower()) { case &#34;fr&#34;: return name =&gt; { return &#34;Je m&#39;appelle &#34;">
+  <meta property="og:description" content="首先祝大家平安夜快乐。本篇介绍一些流行的JavaScript模式。为下一篇打基础
+使用/了解JavaScript的一个好处就是函数的高级用法。。在JavaScript里。函数仅仅是对象。他们可以有赋给他们的属性。而在C#中。我们不能做我们可以在JavaScript的全部事情。但是我们仍然可以做些事情。一个原因是JavaScript在函数里给变量以作用域。因此，不得不通过创建函数，大多数情况是匿名的来定位变量。而在C#中。通过使用块，通过花括号来创建作用域
+当然，换种方式来说。C#中，函数也会给变量作用域。通过使用Lambda表达式。我们通过花括号在其里面创建了一个变量。然而。我们也可以局部的创建作用域。
+我们来看看通过使用Lambda表达式可以实现一些在JavaScript里面有用的模式把。
+回调模式
+这个模式是个老的模式。事实上。回调模式从.net 的第一版就开始使用了。但是是以一种很简单的方式实现的。而现在。通过使用Lambda表达式。闭包，捕获变量等特性能够允许我们写出如下的代码来。
+void CreateTextBox() { var tb = new TextBox(); tb.IsReadOnly = true; tb.Text = &#34;Please wait ...&#34;; DoSomeStuff(() =&gt; { tb.Text = string.Empty; tb.IsReadOnly = false; }); } void DoSomeStuff(Action callback) { // Do some stuff - asynchronous would be helpful ... callback(); } 对于JavaScript程序员会觉得这没什么啊。他们使用这个模式太多了。然而，它非常有用。因为我们可以使用参数作为Ajax相关事件的事件处理器（比如oncompleted，onsuccess），等等。如果你使用LINQ，那么你可能也会用到回调模式的一些东西。举个例子。LINQ的where子句将会在每一次迭代中回调你的查询语句。这只是回调函数的一个例子。在.net的世界里。事件如它名字所暗示的那样。通常是事件处理的首选方法。这有时候很像一个回调。他有两个参数。有一个特殊的关键字和一个类型模式（两个参数分别是sender和arguments，sender通常是object类型。Arguments通常继承自EventArgs） 可以通过&#43;= 和-=给事件添加/删除事件处理程序。
+返回方法 和普通的方法比较。Lambda表达式也可以返回一个方法指针（就是一个委托实例），这意味着我们可以使用Lambda表达式创建/返回一个lambda表达式（或者今年仅是一个已定义好的方法的委托实例），大量的情况下。这个模式也很有用。首先看一下例子。
+Func&lt;string, string&gt; SayMyName(string language) { switch(language.ToLower()) { case &#34;fr&#34;: return name =&gt; { return &#34;Je m&#39;appelle &#34;">
+  <meta name="twitter:description" content="首先祝大家平安夜快乐。本篇介绍一些流行的JavaScript模式。为下一篇打基础
+使用/了解JavaScript的一个好处就是函数的高级用法。。在JavaScript里。函数仅仅是对象。他们可以有赋给他们的属性。而在C#中。我们不能做我们可以在JavaScript的全部事情。但是我们仍然可以做些事情。一个原因是JavaScript在函数里给变量以作用域。因此，不得不通过创建函数，大多数情况是匿名的 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/12/24/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/12/24/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Lambda高手之路第四部分</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 24, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (483 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>首先祝大家平安夜快乐。本篇介绍一些流行的JavaScript模式。为下一篇打基础</p>
+
+<p>使用/了解JavaScript的一个好处就是函数的高级用法。。在JavaScript里。函数仅仅是对象。他们可以有赋给他们的属性。而在C#中。我们不能做我们可以在JavaScript的全部事情。但是我们仍然可以做些事情。一个原因是JavaScript在函数里给变量以作用域。因此，不得不通过创建函数，大多数情况是匿名的来定位变量。而在C#中。通过使用块，通过花括号来创建作用域</p>
+
+<p>当然，换种方式来说。C#中，函数也会给变量作用域。通过使用Lambda表达式。我们通过花括号在其里面创建了一个变量。然而。我们也可以局部的创建作用域。</p>
+
+<p>我们来看看通过使用Lambda表达式可以实现一些在JavaScript里面有用的模式把。</p>
+
+<p><strong>回调模式</strong></p>
+
+<p>这个模式是个老的模式。事实上。回调模式从.net 的第一版就开始使用了。但是是以一种很简单的方式实现的。而现在。通过使用Lambda表达式。闭包，捕获变量等特性能够允许我们写出如下的代码来。</p>
+
+<pre class="lang:default decode:true " >void CreateTextBox()
+{
+    var tb = new TextBox();
+    tb.IsReadOnly = true;
+    tb.Text = "Please wait ...";
+    DoSomeStuff(() =&gt; {
+        tb.Text = string.Empty;
+        tb.IsReadOnly = false;
+    });
+}
+
+void DoSomeStuff(Action callback)
+{
+    // Do some stuff - asynchronous would be helpful ...
+    callback();
+}</pre> 
+
+<p>对于JavaScript程序员会觉得这没什么啊。他们使用这个模式太多了。然而，它非常有用。因为我们可以使用参数作为Ajax相关事件的事件处理器（比如oncompleted，onsuccess），等等。如果你使用LINQ，那么你可能也会用到回调模式的一些东西。举个例子。LINQ的where子句将会在每一次迭代中回调你的查询语句。这只是回调函数的一个例子。在.net的世界里。事件如它名字所暗示的那样。通常是事件处理的首选方法。这有时候很像一个回调。他有两个参数。有一个特殊的关键字和一个类型模式（两个参数分别是sender和arguments，sender通常是object类型。Arguments通常继承自EventArgs）
+可以通过+= 和-=给事件添加/删除事件处理程序。</p>
+
+<p><strong>返回方法</strong>
+和普通的方法比较。Lambda表达式也可以返回一个方法指针（就是一个委托实例），这意味着我们可以使用Lambda表达式创建/返回一个lambda表达式（或者今年仅是一个已定义好的方法的委托实例），大量的情况下。这个模式也很有用。首先看一下例子。</p>
+
+<pre class="lang:default decode:true " >Func&lt;string, string&gt; SayMyName(string language)
+{
+    switch(language.ToLower())
+    {
+        case "fr":
+            return name =&gt; {
+                return "Je m'appelle " + name + ".";
+            };
+        case "de":
+            return name =&gt; {
+                return "Mein Name ist " + name + ".";
+            };
+        default:
+            return name =&gt; {
+                return "My name is " + name + ".";
+            };
+    }
+}
+
+void Main()
+{
+    var lang = "de";
+    //Get language - e.g. by current OS settings
+    var smn = SayMyName(lang);
+    var name = Console.ReadLine();
+    var sentence = smn(name);
+    Console.WriteLine(sentence);
+}</pre> 
+
+<p>代码本应该更短些。我们可以让default如果请求的语言没有找到。只是抛出一个异常即可。不过。这个例子展示了这是一种方法工厂。另一种同等效果的方法是包含一个Hashtable。或者更好的话用Dictionary<K, V></p>
+
+<pre class="lang:default decode:true " >static class Translations
+{
+    static readonly Dictionary&lt;string, Func&lt;string, string&gt;&gt; smnFunctions = new Dictionary&lt;string, Func&lt;string, string&gt;&gt;();
+
+    static Translations()
+    {
+        smnFunctions.Add("fr", name =&gt; "Je m'appelle " + name + ".");
+        smnFunctions.Add("de", name =&gt; "Mein Name ist " + name + ".");
+        smnFunctions.Add("en", name =&gt; "My name is " + name + ".");
+    }
+
+    public static Func&lt;string, string&gt; GetSayMyName(string language)
+    {
+        //检查请求的语言是否可用
+        return smnFunctions[language];
+    }
+}
+
+//通过调用Translations.GetSayMyName("de") 获取德语方法</pre> 
+
+<p>即使这看起来似乎有点过度工程化了。但是也许这是方法工厂最好的例子了。毕竟方法简单易扩展，可以被用在很多情况下。这中模式和反射的组合可以是的程序代码更松耦合，更易使用。并且代码更健壮。下图展示了模式的工作流程
+<a href="http://leaverimage.b0.upaiyun.com/30815_o.png"><img src="/images/e6a03db9751c4ebd13b63fd2880f2267e3af2b44.png" alt="" /></a></p>
+
+<p><strong>自定义方法</strong>
+自定义方法模式一个JavaScript中普遍的技术。可以用在代码中提高性能和健壮性，这种模式的背后思想是方法被设置为一个属性。于是可以和其他方法非常方便的交换。我们看一下具体的代码</p>
+
+<pre class="lang:default decode:true " >class SomeClass
+{
+    public Func&lt;int&gt; NextPrime
+    {
+        get;
+        private set;
+    }
+
+    int prime;
+
+    public SomeClass()
+    {
+        NextPrime = () =&gt; {
+            prime = 2;
+
+            NextPrime = () =&gt; {
+                //获得下一个素数
+                //设置素数
+                return prime;
+            };
+
+            return prime;
+        };
+    }
+}
+</pre> 
+
+<p>这段代码做了什么？好吧。第一种情况下，我们得到第一个素数。也就是2.虽然这很显而易见。我们可以体征我们的算法默认来排除掉所有的偶数。这就加速我们的算法。但是我们依然能够得到开始的偶素数2.我们就可以通过调用NextPrime方法来获得素数了。我们就可以在第二部分里有话我们的算了。</p>
+
+<p>我们已经看到这种写法可以优化性能。我们可能一下这个例子</p>
+
+<pre class="lang:default decode:true " >Action&lt;int&gt; loopBody = i =&gt; {
+    if(i == 1000)
+        loopBody = /* 1000之后的数进行的操作*/;
+
+    /* 前1000个数进行的操作 */
+};
+
+for(int j = 0; j &lt; 10000000; j++)
+    loopBody(j);
+
+</pre> 
+
+<p>这里我们有了两根分开的区域。一个是为钱1000个数准备的。其他的则留在了另一个区域。通常我们可能需要区分这两种情况。这就是我们为什么使用了自定义方法，当小区域执行完后，自定义函数就会改变了。来执行大的区域了。</p>
+
+<p><strong>即时执行方法表达式</strong></p>
+
+<p>在JavaScript中即时执行方法表达式也叫做IIFEs,也相当普遍。这是因为在JavaScript中，不像C#中的花括号可以构造一个局部变量。因此一个变狼可能会污染一个全局对象。（最有可能就是一个window对象），由于很多原因，这种情况很不好。。</p>
+
+<p>解决方法也很简单，当花括号不能给一个作用域的时候，方法却可以。因此，定义在方法里面的变量就被限制在这个方法里。就像是他的孩子一样。因此，通常JavaScript用户想让那些方法立刻执行。否则，是对变量名和语句行的浪费。另一个原因就是这个方法只执行一次。</p>
+
+<p>在C#中我们也可以写出类似的方法。我们也会得到一个新的作用域。但这不是我们主要关心的。因为我们可以随心所欲创建新的作用域，我们看些例子</p>
+
+<pre class="lang:default decode:true " >(() =&gt; {
+    // Do Something here!
+})();</pre> 
+
+<p>这段代码很容易理解。然后，如果我们想要传一些参数时候。我们需要定义他们的类型你个，我们看一下如何给即时执行方法传递参数</p>
+
+<pre class="lang:default decode:true " >((string s, int no) =&gt; {
+    // Do Something here!
+})("Example", 8);</pre> 
+
+<p>看上去似乎没做什么。然而。我们可以和async关键字组合起来。我们看</p>
+
+<pre class="lang:default decode:true " >await (async (string s, int no) =&gt; {
+    // 使用Tasks异步执行!
+})("Example", 8);
+
+//task完成后继续执行</pre> 
+
+<p>Ok了。</p>
+
+<p><strong>即时对象初始化</strong></p>
+
+<p>我把这个模式放在关于Lambda表达式的文章里是因为匿名对象比我们刚刚的一些简单的例子能表达的要多得多。其中一个就是匿名对象也可以包含Lambda表达式。这可以作为我写在本文里的理由。</p>
+
+<pre class="lang:default decode:true " >//创建匿名对象
+var person = new {
+    Name = "Florian",
+    Age = 28,
+    Ask = (string question) =&gt; {
+        Console.WriteLine("The answer to `" + question + "` is certainly 42!");
+    }
+};
+
+//执行方法
+person.Ask("Why are you doing this?");</pre> 
+
+<p>如果你想要运行这个模式，你可能会看到一个异常。。至少我看到了。。这难以理解的理由是Lambda表达式不能被赋给匿名对象。如果你也没明白。。那我们看来是坐在一条船上的。
+幸运的是，编译器已经告诉我们了。“哥们，我不知道我该为你的那个Lambda表达式创建哪种类型的委托啊”我们可以帮一下编译器。如下所示。</p>
+
+<pre class="lang:default decode:true " >var person = new {
+    Name = "Florian",
+    Age = 28,
+    Ask = (Action&lt;string&gt;)((string question) =&gt; {
+        Console.WriteLine("The answer to `" + question + "` is certainly 42!");
+    })
+};</pre> 
+
+<p>一个问题就产生了。方法（这里是Ask）存活的作用域是什么？答案是他存活在创建匿名对象的类里面，或者如果他使用了捕获变量，就在他自己的作用域里面。因此，编译器仍然创建了一个匿名对象（包含对编译器生成的类的元数据，实例化了一个有着类信息的新的对象），但是只是设置了委托对象Ask属性</p>
+
+<p>注意：你应该避免使用这个模式，当你真的想要访问一个匿名对象的所有属性的时候。理由如下：C#编译器请求在你使用每一个对象之前，应该首先声明他。因此，用的地方一定在声明之后，但是编译器怎么知道？在编译器看来。Person变量还没声明完呢。就开始使用了。
+所以，在上面那个Lambda表达式里并不能直接访问person的Name和Age属性
+有一个方法跳出这个陷阱（事实上有很多种，但我只喜欢这一种最优雅的，考虑下面这段代码</p>
+
+<pre class="lang:default decode:true " >dynamic person = null;
+person = new {
+    Name = "Florian",
+    Age = 28,
+    Ask = (Action&lt;string&gt;)((string question) =&gt; {
+        Console.WriteLine("The answer to `" + question + "` is certainly 42! My age is " + person.Age + ".");
+    })
+};
+
+//执行方法。
+person.Ask("Why are you doing this?");</pre> 
+
+<p>现在因为我们之前已经声明了，我们也可以说明person为object对象。但是这样的话我们就要用到反射机制了（可能还需要一些漂亮的包装器），来访问匿名对象的属性，在这种情况下，我们依赖于DLR，他会对这种情况出现一个最漂亮的包装器，现在这段代码就非常JavaScript化了，我也不知道是好还是坏，这也就是为什么我说这个是一个注意点。。</p>
+
+<p><strong>初始时间分支</strong></p>
+
+<p>这个模式事实上和自定义方法非常接近，唯一的不同，这种情况下，该方法并不定义自己，而是包含其他方法。显然是可能的。如果这个“其他方法”不是通过传统的方式定义，而是通过属性，（成员变量）</p>
+
+<p>这种模式的别名也叫做加载时分支，是一个优化模式，这个模式用来避免switch-case或if-else语句等控制结构的大量使用。也可以理解为这个模式为代码永久性的创建了确定分支之间的连接。
+考虑下面这个例子</p>
+
+<pre class="lang:default decode:true " >public Action AutoSave { get; private set; }
+
+public void ReadSettings(Settings settings)
+{
+    /* 读取一些用户设置信息 */
+
+    if(settings.EnableAutoSave)
+        AutoSave = () =&gt; { /* 进行自动设置 */ };
+    else
+        AutoSave = () =&gt; { }; //什么都不做!
+}</pre> 
+
+<p>我们都做了什么呢？首先我们有一个方法读取用户配置（由一个配置Setting类来保存），如果我们发现启用了自动设置。我们就给AutoSave这个属性赋上全部的代码，否则我们就放一个空方法在这里，而们就可以通过调用AutoSave（）一次就行了，不再需要检查配置设置或其他的什么情况了。我们也不需要保存一个特殊的布尔变量，因为对应的方法已经被动态的设置了。</p>
+
+<p>有人也许认为这不是一个巨大的性能提高，但是这仅仅是一个小例子，在一些复杂的代码里，这会节省很多时间，尤其是代码越来越复杂的情况下。</p>
+
+<p>另外（我认为这是最主要的原因），代码更加容易维护（如果你了解这个模式的话）没有了不必要的控制逻辑，程序员可以更加专注于重要的东西—调用这个自动保存的具体操作</p>
+
+<p>在JavaScript中，像初始时间分支模式被用在很多性能检测上（比如浏览器检测）不去管浏览器检测实际上是很邪恶的，并且不应该在任何网页上检测用户的浏览器，
+性能检测非常有用，通常和这种模式一起组合使用，这也是Jquery用来对Ajax请求检测需要的正确对象的方法。</p>
+
+<p>下一部分介绍Lambda表达式超级有用的情况，同样圣诞节快乐。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/12/20/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/" data-toggle="tooltip" data-placement="top" title="Lambda高手之路第三部分">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/12/27/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86/" data-toggle="tooltip" data-placement="top" title="Lambda高手之路第五部分">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

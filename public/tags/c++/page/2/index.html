@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>C&#43;&#43;</title>
+  <meta property="og:title" content="C&#43;&#43;" />
+  <meta name="twitter:title" content="C&#43;&#43;" />
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/tags/c&#43;&#43;/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/tags/c&#43;&#43;/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/tags/c&#43;&#43;/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="tags-heading">
+              
+                <h1>C&#43;&#43;</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/04/01/%E8%97%8F%E5%85%B3%E4%BA%8Eb%E6%A0%91%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">
+                <h2 class="post-title">[藏]关于B树的一篇文章</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on April 1, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (22 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>很多人对B树的理解有很多错误，我看的最多的就是有人混淆二叉树（Binary Tree）和B树（B-Tree）,二叉树是不用简称，也就是BT的，而特殊一点的二叉搜索树才会用BST(Binary Search Tree),至于B-树和B树，这两个其实一样的，英文都是(B-Tree)，注意看中间的-号，这个是国内翻译的问题.所以大家不要被误导.</p>
+
+<p>Rudolf Bayer 和 Ed McCreight 于1972年，在Boeing Research Labs 工作时发明了B 树，但是他们没有解释B 代表什么意义（如果有的话）.Douglas Comer 解释说: 两位作者从来都没解释过B树的原始意义。我个人觉得很有可能是他的名字，程序员对其作品的一种情结吧.</p>
+
+<p>这篇文章来自国外,是某大学的CS课程在线的,由于有时候无法访问，我直接提供PDF版,对其构造过程非常清晰.非常非常好的B树教程,图示很多,就不翻译了,强烈推荐阅读！</p>
+
+<p>&nbsp;</p>
+
+<p>下载：<a href="http://pan.baidu.com/share/link?shareid=404077&amp;amp;uk=1493685990">B树讲解</a></p>
+
+<p>&nbsp;</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/10/04/%E7%AE%80%E5%8D%95%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E5%A2%9E%E5%BC%BA%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7/">
+                <h2 class="post-title">简单扩展方法增强代码可读性</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 4, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (122 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  本文技术含量不高，但是思路可以借鉴。。
+介绍
+当你处理计时器，时间间隔，或是其他关于日期的计算的时候。你必然会使用TimeSpan类。
+我觉得写出下面的代码可读性并不好。。 // 1个表示5小时的时间间隔 var theTimespan = new TimeSpan(0, 5, 0, 0, 0); 而下面的代码就要好一些 //一个表示5小时的时间间隔 var theTimespan = 5.Hours();  扩展方法
+使用这些扩展了int类的方法。可以使得创建TimeSpan可读性更好 public static TimeSpan Days(this int value) { return new TimeSpan(value, 0, 0, 0, 0); }
+public static TimeSpan Years(this int value) { var dt = DateTime.Now.AddYears(value); return (dt - DateTime.Now).Duration(); }
+public static TimeSpan Hours(this int value) { return new TimeSpan(0, value, 0, 0, 0); }
+                  <a href="https://leizhiyuan.github.io/2012/10/04/%E7%AE%80%E5%8D%95%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E5%A2%9E%E5%BC%BA%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/10/03/11%E4%B8%AA%E9%AB%98%E6%95%88%E7%9A%84vs%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/">
+                <h2 class="post-title">11个高效的VS调试技巧</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 3, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (45 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p><strong>介绍</strong></p>
+
+<p>调试是软件开发周期中的一个很重要的部分，有时很有挑战性，有时候则让程序员迷惑，有时候让程序员发疯，但是。可以肯定的是，对于任何不是太那个微不足道的程序来说，调试是不可避免的。近年来，调试工具的发展已经使得很多调试任务简单省时了。</p>
+
+<p>本文总结了十个调试技巧，当你使用VS的时候可以节省你很多时间。</p>
+
+<p>1. 悬停鼠标查看表达式</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/27679_o.png"><img src="/images/5b9e01a5158e02f8079c7dc331f56110f3e0b82d.png" alt="" title="1" /></a></p>
+
+<p>调试有时候很有挑战性，当你步入一个函数想看看哪块出错的时候，查看调用栈来想想值是从哪来的。另一些情况下，则需要添加一些监视表达式，或者查看局部变量列表，这通常还是花费一些时间的，但是。如果你把你鼠标指向你感兴趣的一个变量。你会发现事情简单多了。而且，类和结构体可以通过单击展开。这样。你就可以方便快捷的找到你想查看的变量了。</p>
+
+<p>2. 实时改变值
+<a href="http://leaverimage.b0.upaiyun.com/27680_o.png"><img src="/images/eade577f5ea39d3b970613ac3123610b67e427cb.png" alt="" title="2" /></a>
+调试器不仅仅是一个分析程序崩溃或是异常结果的工具了，许多bug都可以通过步入新写的函数，检查函数是否如期望的那样运行来预防。有时候你可能会好奇“如果条件为真函数会正确运行吗”大多数情况下，根本不需要改变代码重启挑起，仅仅把鼠标悬停到一个变量上，双击值然后输入一个新值就可以了。。</p>
+
+<p>3．设置下一条语句
+<a href="http://leaverimage.b0.upaiyun.com/27690_o.png"><img src="/images/1c86cc15b16c98adc1563eb1660481fa249beaf0.png" alt="" title="3" /></a>
+一个典型的调试情况就是通过单步跟踪分析为什么一个函数调用失败了。当你发现一个函数调用的另一个函数返回错误的时候你会怎么做？重启调试？有更好的方法。拖动这个黄色的语句标识到你想下一步执行的语句前就可以了。比如你刚才失败的那块，然后步入。简单，不是吗？</p>
+
+<p>4.编辑然后继续
+<a href="http://leaverimage.b0.upaiyun.com/27682_o.png"><img src="/images/8117d2025d49155485268fc1b56041e96cefaeac.png" alt="" title="4" /></a>
+调试一个复杂的程序，或是一个插件的时候，在一个被调用很多次的函数处发现一个错误。但是不想浪费时间停下来，重新编译然后重新调试。没问题，仅仅在该处改正代码然后继续单步就可以。VS会修正程序然后继续调试不需要重启</p>
+
+<p>注意，编辑然后继续有大量的已知限制，首先，64位代码是不行的。如果他如果为你的C#程序工作。就去工程设置的生成选项，然后目标平台为x86.不要担心。发布版的目标平台和调试的时候是分开的。可以被设置为任何平台。。</p>
+
+<p>第二．编辑然后继续改变在一个方法里应该是局部的。。如果你改变了方法签名，添加一些新方法或是类。你就不得不重启程序了。或者撤销改变来继续。改变方法也包含lambda表达式隐式修改的自动生成的代理类，因此也不能继续。</p>
+
+<p>5.方便的监视窗口
+<a href="http://leaverimage.b0.upaiyun.com/27683_o.png"><img src="/images/a204da1e7bb82719b4a965da45d1cfcc51a90cd3.png" alt="" title="5" /></a>
+大概现代的调试器都有一个监视窗口，无论如何。VS允许你简单的添加或移除变量。单击空行，输入你的表达式按下回车，或者是在不需要的表达式上按下Delete键就可以删除了。
+而且。从监视窗口你不仅仅可以看到“正常”的变量。你可以输入$handles 来追踪你的程序打开了多少句柄（可以方便的修复内存泄漏） ，输入$err 可以看到上一个函数的错误码，然后使用工具-错误信息可以看到更详细的描述，或者输入@eax（64位是@rax）来查看包含函数返回值的寄存器。</p>
+
+<p>6.带注释的反汇编
+<a href="http://leaverimage.b0.upaiyun.com/27684_o.png"><img src="/images/d61b64ed0a189bec2f34f2faaf059916cce8e525.png" alt="" title="6" /></a>
+使用交互式的反汇编模式可以使得优化程序的关键部分变得很容易，VS给出对应你代码每一行的汇编指令，并且运行单步运行。同时，可以在任何位置设置断点。而且，表达式的查看和修改也像在C++代码里一样</p>
+
+<p>7.带有栈的线程窗口
+<a href="http://leaverimage.b0.upaiyun.com/27691_o.png"><img src="/images/5b212033679007829bb5c0684d62ab8f27a0514b.png" alt="" title="7" /></a>
+调试多线程的程序是痛苦的。。或者也可以是很有趣的。取决于你的调试器。VS2010真正优美的特性是线程窗口的栈视图，通过窗口的调用栈你可以方便的总览线程。</p>
+
+<p>8.条件断点
+<a href="http://leaverimage.b0.upaiyun.com/27686_o.png"><img src="/images/e93436bf72af22e533fe859971913a3d3c555789.png" alt="" title="8" /></a>
+如果你尝试通过断点再现一个罕见的事件，该情况引发了一些严重的错误。你可以添加条件断点。定义一个断点的条件，然后如果条件不成立，VS会忽略该断点</p>
+
+<p>9.内存窗口
+<a href="http://leaverimage.b0.upaiyun.com/27687_o.png"><img src="/images/0cfda80c7dbe3d0c50bb5646155914b5e3f07f4f.png" alt="" title="9" /></a>
+有些bug由不正确的结构体定义引起，忽略的对齐属性等等。查看内存中的内容可以定位然后修复bug。VS提供了一个放百年的内存窗口，可以把值以8/16/32/64位的形式展示。还有浮点值。也允许实时改变他们。就像在文本编辑器里一样。</p>
+
+<p>10.转到定义
+<a href="http://leaverimage.b0.upaiyun.com/27688_o.png"><img src="/images/3593aad0199fbed2f8faaef908e151a068e14d09.png" alt="" title="10" /></a>
+这个特性不是直接关于调试的，而是关于浏览大项目的。如果你尝试找到一些不是你自己写的代码中的错误，快速知道“这个类型是什么”或者“这个函数是干嘛的”，可以节省很多时间，VS通过一个转到定义命令方便了你。</p>
+
+<p>11.命令窗口
+<a href="http://leaverimage.b0.upaiyun.com/27689_o.png"><img src="/images/2af5b37764b18abe3ae34c1a67e4398721fbd04b.png" alt="" title="11" /></a>
+第十一的技巧<a href="http://www.codeproject.com/script/Membership/View.aspx?mid=4917930">chaau</a>已经建议过了。确实可以节省很多时间，VS支持命令窗口，可以通过，视图-其他窗口-命令窗口来启动。一旦激活，你可以输入不同的命令来自动化调试。举个例子。你可以通过如下命令 简单的模拟MFC COleDateTime 变量。
+<pre class="lang:default decode:true">? dt.Format(&ldquo;%Y-%m-%d %H:%M:%S&rdquo;)</pre>
+许可
+本文包括源代码和文件在CPOL下授权。</p>
+
+<p>&nbsp;</p>
+
+<p>原文地址：<a href="http://www.codeproject.com/Articles/359801/10plus-powerful-debugging-tricks-with-Visual-Studi">10plus-powerful-debugging-tricks-with-Visual-Studi</a></p>
+
+<p>著作权声明：本文由<a href="http://leaver.me/">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/24/vs2010-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85boost%E5%BA%93/">
+                <h2 class="post-title">VS2010 编译安装boost库</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 24, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (140 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  实践是最好的办法。。学习C++，想试试线程，然后打算用boost库，结果boost库编译差点吓到我。。没看到比较完整的安装教程。。一直耽搁。今天动手。完成了。方法记录如下： 1.下载boost 从boost官网( http://www.boost.org )上下载最新的boost版本，现在最新是1.49版本，解压到自定义目录(我解压到了D:/program files,最终的目录结构是D:\Program Files\boost_1_49_0)
+2.编译安装
+在D:\Program Files\boost_1_49_0的目录下，有一个bootstrap.bat文件，直接双击运行。就会在同目录生成b2.exe；bjam.exe两个文件。
+3.设定编译环境 修改user-config.jam (D:\Program Files\boost_1_49_0\tools\build\v2\user-config.jam) 的MSVC configuration
+MSVC configuration Configure msvc (default version, searched for in standard locations and PATH). using msvc ; 在上面这段的下面直接添加如下的文字。 using msvc : 10.0 : :/wd4819/D_CRT_SECURE_NO_DEPRECATE/D_SCL_SECURE_NO_DEPRECATE/D_SECURE_SCL=0 ; 保存关闭。
+4.开始编译 点击开始-&gt;所有程序-&gt;“Microsoft Visual Studio 2010”，指向“Visual Studio tools(工具)”，然后单击“Visual Studio 2010 command prompt（命令提示）” 使用cd切换到D:\Program Files\boost_1_49_0目录。这个就不说了 然后输入如下的代码： b2 toolset=msvc-10.0 architecture=x86 instruction-set=i686 address-model=32 link=static variant=debug,release threading=multi runtime-link=shared &ndash;without-python &ndash;without-mpi &ndash;without-wave &ndash;without-graph &ndash;without-math &ndash;without-serialization stage &nbsp;
+                  <a href="https://leizhiyuan.github.io/2012/05/24/vs2010-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85boost%E5%BA%93/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/19/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+                <h2 class="post-title">快速排序算法</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 19, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (103 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <pre lang="c">
+#include <iostream>
+using namespace std;
+
+//化分区间,找到最后元素的排序位置。并返回分隔的点（即最后一数据排序的位置）。
+//划分的区间是[nBegin, nEnd). pData是保存数据的指针
+int Partition(int* pData, int nBeging, int nEnd)
+{
+                int i = nBeging - 1;    //分隔符号，最后nD保存在这里
+                --nEnd;
+                int nD = pData[nEnd]; //比较的数据。
+                int nTemp; // 交换用的临时数据
+
+                //遍历数据比较，找到nD的位置，这里注意，比较结果是,
+                //i的左边是小于等于nD的，i的右边是大于nD的
+                for (int j = nBeging; j < nEnd; ++j)
+                {
+                                if (pData[j] <= nD)        //如果数据比要比较的小，则在该数据的左边，与i+1交换
+                                {
+                                                ++i;                //小于nD的数据多一个，所以要加1，i的左边数据都比nD小
+                                                nTemp = pData[i];    //交换数据
+                                                pData[i] = pData[j];
+                                                pData[j] = nTemp;
+                                }
+                }
+
+                //最后不要忘了吧nD和i+1交换，因为这里就是nD的位置咯。
+                ++i;
+                pData[nEnd] = pData[i];
+                pData[i] = nD;
+
+                return i;   //返回nD的位置，就是分割的位置。
+}
+
+//排序的递归调用。
+int QuickSortRecursion(int* pData, int nBeging, int nEnd)
+{
+                if (nBeging >= nEnd -1)        //如果区域不存在或只有一个数据则不递归排序
+                {
+                                return 1;
+                }
+
+                //这里因为分割的时候，分割点处的数据就是排序中他的位置。
+                //也就是说他的左边的数据都小于等于他，他右边的数据都大于他。
+                //所以他不在递归调用的数据中。
+                int i = Partition(pData, nBeging, nEnd);        //找到分割点
+                QuickSortRecursion(pData, nBeging, i);            //递归左边的排序
+                QuickSortRecursion(pData, i + 1, nEnd);            //递归右边的排序
+                return 1;
+}
+
+//快速排序
+int QuickSort(int* pData, int nLen)
+{
+                //递归调用，快速排序。
+                QuickSortRecursion(pData, 0, nLen);
+                return 1;
+}
+int main()
+{
+                int nData[10] = {5,9,3,2,1,6,20,45,88,75};        //测试数据
+                QuickSort(nData, 10);            //调用快速排序
+                for (int i = 0; i < 10; ++i)        //输出结果
+                {
+                                cout<<nData[i]<<" ";
+                }
+                cout<<endl;
+
+                return 0;
+}
+</pre>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/09/c--%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/">
+                <h2 class="post-title">C&#43;&#43;回调函数</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 9, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (87 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  回调函数就是一个通过函数指针调用的函数。如果你把函数的指针(地址)作为参数传递给另一个函数，当这个指针被用为调用它所指向的函数时，我们就说这是回调函数。
+　也就是说，回调函数它首先是一个函数，然后有一个指针指向它（该指针称为函数指针），在别的代码块中，通过这个函数指针调用了这个函数，仅此而已。
+　下面给出一个例子，我写出了比较详细的注释。希望足够清晰。这个例子说明了，回调函数可以把调用者和被调用者分开，对于调用者来说，只需要知道自己要调用一个函数，该函数有一个string类型的参数，至于具体调用哪个，被调用的函数到底怎么执行，怎么解释该参数，是完全不用关心的。 #include 
+#include 
+using namespace std;
+typedef void (*PF)(string s); //定义一个名为PF的函数指针，该指针指向一类函数，该类函数有一个string类型的参数，返回值为void。
+void funcOne(string s) //回调函数1
+{
+cout &lt;&lt; s+&rdquo; One&rdquo;&lt;&lt; endl;
+}
+void funcTwo(string s) //回调函数2 {
+cout &lt;&lt; s+&rdquo; Two&rdquo;&lt;&lt; endl;
+}
+void caller( PF pf, string s) //调用函数
+{
+cout &lt;&lt; &ldquo;I am Caller Function&rdquo; &lt;&lt; endl;
+pf(s);
+}
+int main()
+{
+string str = &ldquo;Test CallBack Function&rdquo;;
+PF pf1 = funcOne; //实例化一个函数指针，指向func函数
+                  <a href="https://leizhiyuan.github.io/2012/05/09/c--%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+        </div>
+        
+          <ul class="pager main-pager">
+            
+              <li class="previous">
+                <a href="/tags/c&#43;&#43;/page/1/">&larr; Newer Posts</a>
+              </li>
+            
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/tags/c&#43;&#43;/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

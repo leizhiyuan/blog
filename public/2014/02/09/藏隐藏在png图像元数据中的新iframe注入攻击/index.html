@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>[藏]隐藏在PNG图像元数据中的新iFrame注入攻击</title>
+  <meta property="og:title" content="[藏]隐藏在PNG图像元数据中的新iFrame注入攻击" />
+  <meta name="twitter:title" content="[藏]隐藏在PNG图像元数据中的新iFrame注入攻击" />
+  <meta name="description" content="这个攻击方式很旧了，但手法相当不错，来自乐嵌网
+我们一直在努力保持领先的最新趋势，今天我们发现了一个非常有趣的事，这或者是我们之前没有发现，或者是刚发生的。 我们只能说这是新发现的。
+&nbsp;
+我们都了解的iFrame注入攻击，对吧？
+&nbsp;
+了解一个iFrame注入
+今天的iFrame 是非常标准的HTML标记，它是在自己网页中嵌入其他网站内容的简单方式。 被几乎所有的浏览器支持和百万计的网站使用，使用AdSense吗？ 那么你的网站中就有一个iFrame。
+我知道这东西很好，然而总是福祸相惜。
+今天的攻击，特别是当我们谈论路过式下载，首选是利用IFRAME标记。 它简单方便，只需简单的属性修改，攻击者可以稳妥的从另一个站点嵌入代码，并通过客户的浏览器不知不觉的加载。
+&nbsp;
+像这样：
+
+&nbsp;
+攻击者通常从其他网站嵌入的恶意文件，通常是一个PHP文件或类似的形式。 当然，这并不是唯一的方法，但是是最普遍的。 从检测和修复的角度来看，这往往很容易修复。
+&nbsp;
+新的iFrame注入法
+然而今天，我们发现一个有趣的iFrame注入类型。
+它的特殊之处不是在iframe标签中嵌入的内容，而是它分发恶意软件的方式。 你会看到，攻击者将威胁隐藏在PNG文件中。
+我几乎可以听到很多你的窃笑，PFF .. 这不是新的…. 但问题是在细节上我的朋友。
+&nbsp;
+如下，iFrame加载了一个有效的文件，没有什么恶意，一个叫jquery.js的JavaScript文件。这一切看上去都很好。你要细细的找：
+
+起初，很多人会说我们傻。 这些代码很好，没看见什么问题，对不对？ 然后，我们注意到了这个小函数，loadFile（）。 函数本身并不奇怪，但事实上，它是装载一个PNG-var strFile = ‘./dron.png。 你会被它惊讶良久，它才是一个真正的黑手。
+&nbsp;
+自然，下一步就是好奇的打开dron.png文件。 会有什么可怕的事情发生吗？
+&nbsp;
+噢，什么都没有，太无聊了，这纯粹是浪费时间。
+
+但是，请等一下，我发现这里有个有趣的小循环。
+
+嗯，这是确实挺奇怪的，这是一个解码循环。 为什么要一个循环的解码PNG文件呢？
+&nbsp;
+作为一个优秀的研究人员，采取最简单的方式，我可以将它加载到简单的测试页上 并提取图像内容。搞定！
+&nbsp;
+测试页上加载它之后这，我们获得了strData变量：
+
+&nbsp;
+看到它在干嘛了吗？
+它做了个iFrame注入，并把它嵌入到PNG的元数据中，像一个新的分配机制。
+&nbsp;
+有两点需要特别注意了，它使用createElement做了一个iFrame标签，然后设置elm.style.position.left 和 elm.style.position.top 属性的值为-1000px，把iframe放到可视区域之外。这些值都是负值，在浏览器中根本看不到。但是你知道谁能看到吗？只有浏览器和Google能看到。这就是下载驱动和搜索引擎感染（SEP)攻击的小伎俩。
+&nbsp;
+最后我们在elm.src元素中发现了真正的威胁。
+&nbsp;
+做的这么独特到底有什么用呢？
+它尽力隐藏真正的威胁的水平是独特的。现在的杀毒软件不会解码图像元数据，直到JavaScript文件加载完毕就停止扫描。不会追踪cookie文件，对于攻击者来说，这太好了，使它们很难被发现。">
+  <meta property="og:description" content="这个攻击方式很旧了，但手法相当不错，来自乐嵌网
+我们一直在努力保持领先的最新趋势，今天我们发现了一个非常有趣的事，这或者是我们之前没有发现，或者是刚发生的。 我们只能说这是新发现的。
+&nbsp;
+我们都了解的iFrame注入攻击，对吧？
+&nbsp;
+了解一个iFrame注入
+今天的iFrame 是非常标准的HTML标记，它是在自己网页中嵌入其他网站内容的简单方式。 被几乎所有的浏览器支持和百万计的网站使用，使用AdSense吗？ 那么你的网站中就有一个iFrame。
+我知道这东西很好，然而总是福祸相惜。
+今天的攻击，特别是当我们谈论路过式下载，首选是利用IFRAME标记。 它简单方便，只需简单的属性修改，攻击者可以稳妥的从另一个站点嵌入代码，并通过客户的浏览器不知不觉的加载。
+&nbsp;
+像这样：
+
+&nbsp;
+攻击者通常从其他网站嵌入的恶意文件，通常是一个PHP文件或类似的形式。 当然，这并不是唯一的方法，但是是最普遍的。 从检测和修复的角度来看，这往往很容易修复。
+&nbsp;
+新的iFrame注入法
+然而今天，我们发现一个有趣的iFrame注入类型。
+它的特殊之处不是在iframe标签中嵌入的内容，而是它分发恶意软件的方式。 你会看到，攻击者将威胁隐藏在PNG文件中。
+我几乎可以听到很多你的窃笑，PFF .. 这不是新的…. 但问题是在细节上我的朋友。
+&nbsp;
+如下，iFrame加载了一个有效的文件，没有什么恶意，一个叫jquery.js的JavaScript文件。这一切看上去都很好。你要细细的找：
+
+起初，很多人会说我们傻。 这些代码很好，没看见什么问题，对不对？ 然后，我们注意到了这个小函数，loadFile（）。 函数本身并不奇怪，但事实上，它是装载一个PNG-var strFile = ‘./dron.png。 你会被它惊讶良久，它才是一个真正的黑手。
+&nbsp;
+自然，下一步就是好奇的打开dron.png文件。 会有什么可怕的事情发生吗？
+&nbsp;
+噢，什么都没有，太无聊了，这纯粹是浪费时间。
+
+但是，请等一下，我发现这里有个有趣的小循环。
+
+嗯，这是确实挺奇怪的，这是一个解码循环。 为什么要一个循环的解码PNG文件呢？
+&nbsp;
+作为一个优秀的研究人员，采取最简单的方式，我可以将它加载到简单的测试页上 并提取图像内容。搞定！
+&nbsp;
+测试页上加载它之后这，我们获得了strData变量：
+
+&nbsp;
+看到它在干嘛了吗？
+它做了个iFrame注入，并把它嵌入到PNG的元数据中，像一个新的分配机制。
+&nbsp;
+有两点需要特别注意了，它使用createElement做了一个iFrame标签，然后设置elm.style.position.left 和 elm.style.position.top 属性的值为-1000px，把iframe放到可视区域之外。这些值都是负值，在浏览器中根本看不到。但是你知道谁能看到吗？只有浏览器和Google能看到。这就是下载驱动和搜索引擎感染（SEP)攻击的小伎俩。
+&nbsp;
+最后我们在elm.src元素中发现了真正的威胁。
+&nbsp;
+做的这么独特到底有什么用呢？
+它尽力隐藏真正的威胁的水平是独特的。现在的杀毒软件不会解码图像元数据，直到JavaScript文件加载完毕就停止扫描。不会追踪cookie文件，对于攻击者来说，这太好了，使它们很难被发现。">
+  <meta name="twitter:description" content="这个攻击方式很旧了，但手法相当不错，来自乐嵌网
+我们一直在努力保持领先的最新趋势，今天我们发现了一个非常有趣的事，这或者是我们之前没有发现，或者是刚发生的。 我们只能说这是新发现的。
+&nbsp;
+我们都了解的iFrame注入攻击，对吧？
+&nbsp;
+了解一个iFrame注入
+今天的iFrame 是非常标准的HTML标记，它是在自己网页中嵌入其他网站内容的简单方式。 被几乎所有的浏览器支持和百万 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2014/02/09/%E8%97%8F%E9%9A%90%E8%97%8F%E5%9C%A8png%E5%9B%BE%E5%83%8F%E5%85%83%E6%95%B0%E6%8D%AE%E4%B8%AD%E7%9A%84%E6%96%B0iframe%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2014/02/09/%E8%97%8F%E9%9A%90%E8%97%8F%E5%9C%A8png%E5%9B%BE%E5%83%8F%E5%85%83%E6%95%B0%E6%8D%AE%E4%B8%AD%E7%9A%84%E6%96%B0iframe%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>[藏]隐藏在PNG图像元数据中的新iFrame注入攻击</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on February 9, 2014
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (80 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>这个攻击方式很旧了，但手法相当不错，来自<a href="http://www.lembed.com/new-iframe-injections-leverage-png-image-metadata/">乐嵌网</a></p>
+
+<p>我们一直在努力保持领先的最新趋势，今天我们发现了一个非常有趣的事，这或者是我们之前没有发现，或者是刚发生的。 我们只能说这是新发现的。</p>
+
+<p>&nbsp;</p>
+
+<p>我们都了解的iFrame注入攻击，对吧？</p>
+
+<p>&nbsp;</p>
+
+<p><strong>了解一个iFrame注入</strong></p>
+
+<p>今天的iFrame 是非常标准的HTML标记，它是在自己网页中嵌入其他网站内容的简单方式。 被几乎所有的浏览器支持和百万计的网站使用，使用AdSense吗？ 那么你的网站中就有一个iFrame。</p>
+
+<p>我知道这东西很好，然而总是福祸相惜。</p>
+
+<p>今天的攻击，特别是当我们谈论路过式下载，首选是利用IFRAME标记。 它简单方便，只需简单的属性修改，攻击者可以稳妥的从另一个站点嵌入代码，并通过客户的浏览器不知不觉的加载。</p>
+
+<p>&nbsp;</p>
+
+<p>像这样：</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/2014/02/iframe-sample.png"><img src="/images/3da10af5e9e3a897cf39927ee28a0106f297880a.png" alt="iframe-sample" /></a></p>
+
+<p>&nbsp;</p>
+
+<p>攻击者通常从其他网站嵌入的恶意文件，通常是一个PHP文件或类似的形式。 当然，这并不是唯一的方法，但是是最普遍的。 从检测和修复的角度来看，这往往很容易修复。</p>
+
+<p>&nbsp;</p>
+
+<p><strong>新的iFrame注入法</strong></p>
+
+<p>然而今天，我们发现一个有趣的iFrame注入类型。</p>
+
+<p>它的特殊之处不是在iframe标签中嵌入的内容，而是它分发恶意软件的方式。 你会看到，攻击者将威胁隐藏在PNG文件中。</p>
+
+<p>我几乎可以听到很多你的窃笑，PFF .. 这不是新的…. 但问题是在细节上我的朋友。</p>
+
+<p>&nbsp;</p>
+
+<p>如下，iFrame加载了一个有效的文件，没有什么恶意，一个叫jquery.js的JavaScript文件。这一切看上去都很好。你要细细的找：</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/2014/02/blog_injection1-494x650.png"><img src="/images/7f64ba23d5fd4d5763ff921134e11beede62faeb.png" alt="blog_injection1-494x650" /></a></p>
+
+<p>起初，很多人会说我们傻。 这些代码很好，没看见什么问题，对不对？ 然后，我们注意到了这个小函数，loadFile（）。 函数本身并不奇怪，但事实上，它是装载一个PNG-<strong>var strFile = ‘./dron.png</strong>。 你会被它惊讶良久，它才是一个真正的黑手。</p>
+
+<p>&nbsp;</p>
+
+<p>自然，下一步就是好奇的打开dron.png文件。 会有什么可怕的事情发生吗？</p>
+
+<p>&nbsp;</p>
+
+<p>噢，什么都没有，太无聊了，这纯粹是浪费时间。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/2014/02/Sucuri-iframe-png.png"><img src="/images/0d8a2bcd6d6e5a6ac87f8858fe8f0a81878d6bbc.png" alt="Sucuri-iframe-png" /></a></p>
+
+<p>但是，请等一下，我发现这里有个有趣的小循环。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/2014/02/Sucuri-PNG-Decoding-Loop.png"><img src="/images/8c17a78234586bebb89f023d8023b6b69d9f574b.png" alt="Sucuri-PNG-Decoding-Loop" /></a></p>
+
+<p>嗯，这是确实挺奇怪的，这是一个解码循环。 为什么要一个循环的解码PNG文件呢？</p>
+
+<p>&nbsp;</p>
+
+<p>作为一个优秀的研究人员，采取最简单的方式，我可以将它加载到简单的测试页上 并提取图像内容。搞定！</p>
+
+<p>&nbsp;</p>
+
+<p>测试页上加载它之后这，我们获得了strData变量：</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/2014/02/sucuri-png-iframe-payload.png"><img src="/images/4a1a1266a40ff50c6d0328eea9c9e849e043ae05.png" alt="sucuri-png-iframe-payload" /></a></p>
+
+<p>&nbsp;</p>
+
+<p>看到它在干嘛了吗？</p>
+
+<p>它做了个iFrame注入，并把它嵌入到PNG的元数据中，像一个新的分配机制。</p>
+
+<p>&nbsp;</p>
+
+<p>有两点需要特别注意了，它使用<strong>createElement</strong>做了一个<strong>iFrame</strong>标签<strong>，</strong>然后设置<strong>elm.style.position.left 和 elm.style.position.top </strong>属性的值为-1000px，把iframe放到可视区域之外。这些值都是负值，在浏览器中根本看不到。但是你知道谁能看到吗？只有浏览器和Google能看到。这就是下载驱动和搜索引擎感染（SEP)攻击的小伎俩。</p>
+
+<p>&nbsp;</p>
+
+<p>最后我们在<strong>elm.src</strong>元素中发现了真正的威胁<strong>。</strong></p>
+
+<p>&nbsp;</p>
+
+<p><strong>做的这么独特到底有什么用呢？</strong></p>
+
+<p>它尽力隐藏真正的威胁的水平是独特的。现在的杀毒软件不会解码图像元数据，直到JavaScript文件加载完毕就停止扫描。不会追踪cookie文件，对于攻击者来说，这太好了，使它们很难被发现。</p>
+
+<p>&nbsp;</p>
+
+<p>记住一点，尽管我们这里谈论的是PNG文件，这些方法和概念也可以应用到其他类型图像中。重要的一点是：留意你的web 服务状态，了解哪些修改和未修改的文件并确保漏洞未被利用。</p>
+
+<p>&nbsp;</p>
+
+<p>通常情况下，一些新的侦查和排障需要一定的时间。 现在我们的 网站恶意软件扫描器能发现它吗 ？ 绝对可以！</p>
+
+<p>&nbsp;</p>
+
+<p>不要笑了，朋友们！</p>
+
+<p>原文：<a href="http://blog.sucuri.net/2014/02/new-iframe-injections-leverage-png-image-metadata.html">new-iframe-injections-leverage-png-image-metadata</a> by Peter Gramantik</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E4%B8%8A%E6%B5%B7/">上海</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AE%89%E5%85%A8/">安全</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2014/02/08/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8B/" data-toggle="tooltip" data-placement="top" title="[笔记]写代码遇到的一些问题汇总下">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2014/02/11/%E5%B0%9D%E8%AF%95javafx%E5%BC%80%E5%8F%91/" data-toggle="tooltip" data-placement="top" title="尝试JavaFX开发">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

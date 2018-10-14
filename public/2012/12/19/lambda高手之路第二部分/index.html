@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Lambda高手之路第二部分</title>
+  <meta property="og:title" content="Lambda高手之路第二部分" />
+  <meta name="twitter:title" content="Lambda高手之路第二部分" />
+  <meta name="description" content="闭包的影响 为了展示闭包的影响，我们看下面这个例子。 var buttons = new Button[10];
+for(var i = 0; i &lt; buttons.Length; i&#43;&#43;) { var button = new Button(); button.Text = (i &#43; 1) &#43; &ldquo;. Button - Click for Index!&rdquo;; button.OnClick &#43;= (s, e) =&gt; { Messagebox.Show(i.ToString()); }; buttons[i] = button; } //如果我们点击按钮会发生什么 这个问题很怪，我在我的JavaScript课程上经常问我的学生。95%的学生会说。显然按钮0显示0，按钮1显示1，等等。而不足5%的学生学习了闭包之后会明白。所有的按钮都会显示10.
+局部变量i的值改变了。并且等于buttons.Length。也就是10了。想要避免这个诡异的情况也很简单。如下就行了。 var button = new Button(); var index = i; button.Text = (i &#43; 1) &#43; &ldquo;. Button - Click for Index!&rdquo;; button.">
+  <meta property="og:description" content="闭包的影响 为了展示闭包的影响，我们看下面这个例子。 var buttons = new Button[10];
+for(var i = 0; i &lt; buttons.Length; i&#43;&#43;) { var button = new Button(); button.Text = (i &#43; 1) &#43; &ldquo;. Button - Click for Index!&rdquo;; button.OnClick &#43;= (s, e) =&gt; { Messagebox.Show(i.ToString()); }; buttons[i] = button; } //如果我们点击按钮会发生什么 这个问题很怪，我在我的JavaScript课程上经常问我的学生。95%的学生会说。显然按钮0显示0，按钮1显示1，等等。而不足5%的学生学习了闭包之后会明白。所有的按钮都会显示10.
+局部变量i的值改变了。并且等于buttons.Length。也就是10了。想要避免这个诡异的情况也很简单。如下就行了。 var button = new Button(); var index = i; button.Text = (i &#43; 1) &#43; &ldquo;. Button - Click for Index!&rdquo;; button.">
+  <meta name="twitter:description" content="闭包的影响 为了展示闭包的影响，我们看下面这个例子。 var buttons = new Button[10];
+for(var i = 0; i &lt; buttons.Length; i&#43;&#43;) { var button = new Button(); button.Text = (i &#43; 1) &#43; &ldquo;. Button - Click for Index!&rdquo;; …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/12/19/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/12/19/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Lambda高手之路第二部分</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 19, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (346 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<h1 id="span-style-color-0000ff-闭包的影响-span"><span style="color: #0000ff;">闭包的影响</span></h1>
+
+<p>为了展示闭包的影响，我们看下面这个例子。
+<pre class="lang:default decode:true">var buttons = new Button[10];</p>
+
+<p>for(var i = 0; i &lt; buttons.Length; i++)
+{
+    var button = new Button();
+    button.Text = (i + 1) + &ldquo;. Button - Click for Index!&rdquo;;
+    button.OnClick += (s, e) =&gt; { Messagebox.Show(i.ToString()); };
+    buttons[i] = button;
+}
+//如果我们点击按钮会发生什么</pre>
+这个问题很怪，我在我的JavaScript课程上经常问我的学生。95%的学生会说。显然按钮0显示0，按钮1显示1，等等。而不足5%的学生学习了闭包之后会明白。所有的按钮都会显示10.</p>
+
+<p>局部变量i的值改变了。并且等于buttons.Length。也就是10了。想要避免这个诡异的情况也很简单。如下就行了。
+<pre class="lang:default decode:true">var button = new Button();
+var index = i;
+button.Text = (i + 1) + &ldquo;. Button - Click for Index!&rdquo;;
+button.OnClick += (s, e) =&gt; { Messagebox.Show(index.ToString()); };
+buttons[i] = button;</pre>
+问题解决了，但是index变量是一个值类型，因此保留了“全局”i的一个拷贝</p>
+
+<p>最后一个话题是一个叫做表达式树的东西，他和Lambda表达式协作。并且，他会使得在ASP.NET MVC中的Html扩展方法发生一些很奇妙的东西。关键的问题是：如何发现目标函数</p>
+
+<p>1. 传递进去的变量的名称是什么
+2. 方法的主体是什么
+3. 函数体里使用了什么类型</p>
+
+<p>Expression 解决了这些问题，他允许我们挖掘生成的表达式树，我们也可以执行传递给Func和Action委托的函数，而且，可以在运行时解析Lambda表达式</p>
+
+<p>我们看一下如何使用Expression 类型的例子
+<pre class="lang:default decode:true">Expression&lt;Func&lt;MyModel, int&gt;&gt; expr = model =&gt; model.MyProperty;
+var member = expr.Body as MemberExpression;
+var propertyName = memberExpression.Member.Name; //当 member != null的时候执行  &hellip;</pre>
+这是Expression最简单的用法了。规则也相当直接。通过构建一个Expression类型的对象。编译器为生成的解释树生成一些元数据。这个解释树包含所有相关的信息，比如参数和方法体。</p>
+
+<p>方法体包含完整的解释树，我们可以访问这些操作。就像完整的语句一样。也可以操作返回指和类型。当然，返回可以为null，无论如此。大多数情况下。我们对表达式很感兴趣。这和ASP.NET MVC中处理Expression类型的方法是很相似的—可以得到使用的参数的名字，而好处是显而易见的。不会出现名称拼写错误了。也就不会出现因此而出现的编译错误了。</p>
+
+<p>注意：当程序员仅仅对调用的属性的名字感兴趣的时候。有一个更简单，更优雅的解决方案，那就是参数特性CallerMemberName 这个特性可以得到调用方法/属性的名称。而字段被编译器自动填充。因此，如果我们仅仅想知道名字，而不想知道其他更多的信息，那么我我们只需要写出像下面这个例子里的代码就行了。通过调用WhatsMyName() 方法可以返回方法的名字
+<pre class="lang:default decode:true">string WhatsMyName([CallerMemberName] string callingName = null)
+{
+    return callingName;
+}</pre></p>
+
+<h1 id="span-style-color-0000ff-lambda表达式的性能-span"><span style="color: #0000ff;">Lambda表达式的性能</span></h1>
+
+<p>有一个很大的问题：Lambda表达式有多快？好吧。首先，我们期望他们能和我们一般的函数一样快。下一节里。我们会看到Lambda的MSIL代码和普通的函数没有太大的不同。</p>
+
+<p>最有趣的一个讨论是如果Lambda表达式产生了闭包，将会和使用全局变量的方法一样快。这就产生了一个有趣的问题，和一个区域内局部变量的数目多少会有关系吗？</p>
+
+<p>我们看看测试代码，通过4个不同的指标，我们可以看到普通方法和Lambda方法的不同。
+<pre class="lang:default decode:true">using System;
+using System.Collections.Generic;
+using System.Diagnostics;</p>
+
+<p>namespace LambdaTests
+{
+    class StandardBenchmark : Benchmark
+    {
+        const int LENGTH = 100000;
+        static double[] A;
+        static double[] B;</p>
+<div class="highlight"><pre class="chroma">    static void Init()
+    {
+        var r = new Random();
+        A = new double[LENGTH];
+        B = new double[LENGTH];
+
+        for (var i = 0; i &amp;lt; LENGTH; i++)
+        {
+            A[i] = r.NextDouble();
+            B[i] = r.NextDouble();
+        }
+    }
+
+    static long LambdaBenchmark()
+    {
+        Func&amp;lt;double&amp;gt; Perform = () =&amp;gt;
+        {
+            var sum = 0.0;
+
+            for (var i = 0; i &amp;lt; LENGTH; i++)
+                sum += A[i] * B[i];
+
+            return sum;
+        };
+        var iterations = new double[100];
+        var timing = new Stopwatch();
+        timing.Start();
+
+        for (var j = 0; j &amp;lt; iterations.Length; j++)
+            iterations[j] = Perform();
+
+        timing.Stop();
+        Console.WriteLine(&#34;Time for Lambda-Benchmark: \t {0}ms&#34;, timing.ElapsedMilliseconds);
+        return timing.ElapsedMilliseconds;
+    }
+
+    static long NormalBenchmark()
+    {
+        var iterations = new double[100];
+        var timing = new Stopwatch();
+        timing.Start();
+
+        for (var j = 0; j &amp;lt; iterations.Length; j++)
+            iterations[j] = NormalPerform();
+
+        timing.Stop();
+        Console.WriteLine(&#34;Time for Normal-Benchmark: \t {0}ms&#34;, timing.ElapsedMilliseconds);
+        return timing.ElapsedMilliseconds;
+    }
+
+    static double NormalPerform()
+    {
+        var sum = 0.0;
+
+        for (var i = 0; i &amp;lt; LENGTH; i++)
+            sum += A[i] * B[i];
+
+        return sum;
+    }
+}</pre></div>
+<p>}</pre>
+本来用Lambda表达式我们可以把代码写的更好。最终我没有这样做。是为了防止影响看最后的结果。因此，本质上。上述代码里有三个方法
+1个是Lambda测试，一个是普通测试，还有一个是在普通测试里调用的方法。而没有的第四个方法其实是我们的lambda表达式。在第一个方法里已经创建了。计算过程很简单，我们随机取数字防止编译器做任何优化。最后我们对普通方法和Lambda方法的不同很有兴趣。</p>
+
+<p>如果我们运行这个测试程序。我们会发现Lambda表达式并不总是比普通方法差。我们惊奇的是有时候甚至Lambda表达式更快一些。然而，在有闭包的情况下，，就不对了。这就是说大多数情况下我们可以毫不犹豫的使用lambda表达式。当使用闭包的时候会出现一点点的性能损失，不过还好，下一节会讲述性能损失的几个原因。
+下面是测试输出的结果表</p>
+
+<p>Test Lambda [ms] Normal [ms]
+0 45+-1                       46+-1
+1 44+-1                       46+-2
+2 49+-3                      45+-2
+3 48+-2                      45+-2</p>
+
+<p>下图是上表的结果，我们可以看得到普通的方法和Lambda表达式基本上限差不多。当使用Lambda表达式的时候没有太大的性能损失。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/30616_o.png"><img src="/images/b4702d953670f850f72d24daf0aefd146eb33227.png" alt="" /></a></p>
+
+<p>第三部分会介绍背后的秘密-MSIL</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/12/18/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/" data-toggle="tooltip" data-placement="top" title="Lambda高手之路第一部分">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/12/20/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/" data-toggle="tooltip" data-placement="top" title="Lambda高手之路第三部分">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

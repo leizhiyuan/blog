@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>C</title>
+  <meta property="og:title" content="C" />
+  <meta name="twitter:title" content="C" />
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/tags/c/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/tags/c/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/tags/c/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="tags-heading">
+              
+                <h1>C</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/06/25/%E5%A7%94%E6%89%98%E5%92%8C%E4%BA%8B%E4%BB%B6%E7%A4%BA%E4%BE%8B/">
+                <h2 class="post-title">委托和事件示例</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on June 25, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (197 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  C#中委托和事件的例子比较多，讲得好的非常好，就不瞎凑热闹了，推荐博客园大牛的一篇：
+C# 中的委托和事件 ，如果你已经有了相应的基础，但没写过相关的例子，那我这里提供一个，首先看一下规范
+.Net Framework的编码规范：
+ 委托类型的名称都应该以EventHandler结束。 委托的原型定义：有一个void返回值，并接受两个输入参数：一个Object 类型，一个 EventArgs类型(或继承自EventArgs)。 事件的命名为 委托去掉 EventHandler之后剩余的部分。 继承自EventArgs的类型应该以EventArgs结尾。 然后描述一下流程：  老板监视时间变动（ComputerOffWorkTime方法），当工作时间满50后，通知员工时间到（OnNotifyOffWork方法，并传递OffWorkEventArgs参数），可以下班了，（OnNotifyOffWork方法内部调用事件NotifyOffWork），正式员工收到通知后，则下班，其他员工则清扫一下办公室
+&nbsp;
+然后给出例子： using System; using System.Collections.Generic; using System.IO; using System.Linq; using System.Security.Cryptography; using System.Text;
+namespace DelegateAndEvent {
+public class Boss { //表示工作时间 private int virTime; //下班时老板说的话 public String SaidWords { get { return &#34;Boss:时间到，下班了&#34;; } } //委托定义 public delegate void NotifyOffWorkEventHandler(Object sender, OffWorkEventArgs e); //事件 public event NotifyOffWorkEventHandler NotifyOffWork; //事件参数 public class OffWorkEventArgs:EventArgs { public readonly int virTime; public OffWorkEventArgs(int virTime) { this.
+                  <a href="https://leizhiyuan.github.io/2013/06/25/%E5%A7%94%E6%89%98%E5%92%8C%E4%BA%8B%E4%BB%B6%E7%A4%BA%E4%BE%8B/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/06/11/dmp%E7%89%88%E6%9C%AC%E4%BF%AE%E6%94%B9%E5%B7%A5%E5%85%B7c/">
+                <h2 class="post-title">DMP版本修改工具(C#)</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on June 11, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (10 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>最近在使用oracle导入一个dmp文件的时候，由于不知道dmp文件是如何导出的，是使用exp还是expdp导出的，所以纠结了比较长的时间，最后想到是否可以查看dmp文件的一些辅助信息呢，于是有了这个工具。</p>
+
+<p>在使用dmp导入的时候报如下错误
+<pre class="lang:default decode:true">IMP-00010: 不是有效的导出文件，标题验证失败
+IMP-00000: 未成功终止导入</pre>
+据说有两个可能，1个是文件本身损坏，另一个是版本问题，多出现在高版本导出的数据向低版本导入。解决方法就是修改一下dmp文件就行了。dmp文件头部大概9个字节处标识了版本号用来头部验证。对于非常大的dmp我们不能直接用文本编辑器打开，因此找找资料，写个工具。本机一个12GB的文件已测试。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/37341_o.png"><img src="/images/71a2a354a4dd2867eb60f08548a9da16870e4949.png" alt="" /></a></p>
+
+<p>工具使用很简单，选择文件，识别出来版本，按格式改成导入端oracle的版本值，然后即可正常导入11G-10G测试成功。</p>
+
+<p>下载地址：<a href="http://pan.baidu.com/share/link?shareid=2717736101&amp;amp;uk=1493685990">DMP版本修改工具</a></p>
+
+<p>&nbsp;</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/05/27/%E8%AF%91%E5%8F%8D%E5%B0%84reflection%E5%92%8C%E5%8A%A8%E6%80%81dynamic/">
+                <h2 class="post-title">[译]反射(Reflection)和动态(dynamic)</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 27, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (140 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  反射 &nbsp; 当我们需要检查，调用一个程序集的内容的时候，用反射，比如，当VS给智能提示的时候，就应用了反射。  
+简单用法实例： &nbsp;  var myAssembly = Assembly.LoadFile(@&ldquo;C:\ClassLibrary1.dll&rdquo;); var myType = myAssembly.GetType(&ldquo;ClassLibrary1.Class1&rdquo;); dynamic objMyClass = Activator.CreateInstance(myType); // 获取类的类型信息 Type parameterType = objMyClass.GetType();
+// 浏览方法 foreach (MemberInfo objMemberInfo in parameterType.GetMembers()) {Console.WriteLine(objMemberInfo.Name);}
+// 浏览属性. foreach (PropertyInfo objPropertyInfo in parameterType.GetProperties()) {Console.WriteLine(objPropertyInfo.Name);}
+//开始调用 parameterType.InvokeMember(&ldquo;Display&rdquo;,BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.InvokeMethod | BindingFlags.Instance,null, objMyClass, null);   
+实际一点的用处呢： &nbsp; 1.当你也要开发一个类似VS的编辑器的时候，要提供智能提示就需要反射 2.当创建单元测试框架的时候，为了测试需要动态调用方法和属性的时候 3.有时候我们想把类型的属性，方法等全部导出的时候  
+动态dynamic &nbsp; 编程语言分为强/弱类型，dynamic是弱类型，此关键字会让编译器不做编译时的类型检查，只做运行时的检查。  
+简单用法示例： &nbsp;  dynamic x = &ldquo;c#&rdquo;; x++;  所以上面这行代码可以编译通过，但会产生运行时一场。
+                  <a href="https://leizhiyuan.github.io/2013/05/27/%E8%AF%91%E5%8F%8D%E5%B0%84reflection%E5%92%8C%E5%8A%A8%E6%80%81dynamic/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/05/24/%E6%AD%A6%E6%B1%89%E5%A4%A7%E5%AD%A6%E8%AE%BA%E6%96%87%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E6%A0%BC%E5%BC%8F%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7c/">
+                <h2 class="post-title">武汉大学论文参考文献格式生成工具(C#)</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 24, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (9 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>每次写论文报告什么的，最头疼的就是参考文献的，本来打算写一个论文格式生成工具的，不过，一想起代码量，就有点吓人，所以分而治之，先写参考文献生成工具.</p>
+
+<p>本工具生成的文献格式符合武汉大学本科生论文的格式要求，因此，放心使用，填写内容都是必填，页码什么的要是不知道就随便填一个..你懂的..有问题请留言反馈。</p>
+
+<p>程序提供8种参考文献类型，第9种电子文献，没有实现，因为感觉在论文中参考文献要是网址的话很难看.而且用的不多..其实主要还是懒..每种文献类型需要填写的信息都不一样，8种&hellip;8种&hellip;</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/36356_o.png"><img src="/images/0a81d82d86007c82e327e9c0bbce1e32bb637f0e.png" alt="" /></a></p>
+
+<p>使用方法：</p>
+
+<p>1.在界面右侧选择参考文献类型，然后填写。添加，左侧将会出现</p>
+
+<p>2.如果填写错误，双击左侧条目，即可删除</p>
+
+<p>3.完成后导出，即可在本目录生成docx文档</p>
+
+<p>下载地址：<a href="http://pan.baidu.com/share/link?shareid=510063&amp;amp;uk=1493685990">武汉大学论文参考文献格式生成工具</a></p>
+
+<p>&nbsp;</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E4%B8%8B%E8%BD%BD/">下载</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/05/01/%E5%B7%B2%E5%A4%B1%E6%95%88csdn%E5%85%8D%E7%A7%AF%E5%88%86%E4%B8%8B%E8%BD%BD%E5%99%A8/">
+                <h2 class="post-title">[已失效]Csdn免积分下载器</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 1, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (18 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>作者：bystander</p>
+
+<p>转载请注明来源:<a href="http://leaver.me">http://leaver.me</a></p>
+
+<p>原理很简单，目前好像还没有大规模传开，我就不透露了，大家低调使用.为了方便，我写了个客户端，下载地址在文章末尾</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/35412_o.png"><img src="/images/c14131e3f22197232347a8230c51cb661e50f167.png" alt="" /></a></p>
+
+<p>&nbsp;</p>
+
+<p>使用方法直接把你想下载的地址复制过去，点击下载就会调用ie来下载了.</p>
+
+<p>&nbsp;</p>
+
+<p>文章太短了，发两个可乐的吧：
+<div><span><span>第一个是：</span></span></div>
+<div><span><span>＂网上发言，请不要随便自称笔者，毕竟有没有在用笔在写一目了然。这个词汇已经要汇入历史长河了，虽然曾经的那么疯狂存在过，但至少在互联网上该消失了。＂</span></span>
+<span><span>＂那以后自称什么？＂</span></span>
+<span><span>＂键人。＂</span></span></div>
+<div>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-</div>
+<div>第二个：</div>
+<div>
+<div>&mdash;光棍君：五一快到了，你还是一个人吗？</div>
+<div>
+<div>  &mdash;你MB，难道我会变成狗吗？</div>
+<div>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-</div>
+<div>第一个冷笑话，第二个是热笑话，冷暖自知。一个成语瞬间提升了整篇文章的境界。</div>
+</div>
+</div>
+下载地址：<a href="http://pan.baidu.com/share/link?shareid=468747&amp;amp;uk=1493685990">Csdn下载器</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/03/06/e.net-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8C%87%E5%8D%97/">
+                <h2 class="post-title">[E].Net 多线程指南</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on March 6, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (27 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>这是codeproject上的一个系列。我看完了。收获匪浅。可惜作者之后未能更新预想中的总结贴，多少有些可惜，不过。此系列非常非常不错。建议想学习.net多线程的看看。</p>
+
+<p>1.net 多线程介绍 <a href="http://www.codeproject.com/KB/threads/ThreadingDotNet.aspx">Introduction into threading in .NET</a></p>
+
+<p>2.线程周期/线程优势/陷阱 <a href="http://www.codeproject.com/KB/threads/ThreadingDotNet2.aspx">Lifecycle of threads/Threading opportunities/Traps </a></p>
+
+<p>3.线程同步 <a href="http://www.codeproject.com/KB/threads/ThreadingDotNet3.aspx">Synchronization</a></p>
+
+<p>4.线程池 <a href="http://www.codeproject.com/KB/threads/ThreadingDotNet4.aspx">Thread Pools</a></p>
+
+<p>5.UI中的线程应用 <a href="http://www.codeproject.com/KB/threads/ThreadingDotNet5.aspx">Threading in UIs (WinForms / WPF / Silverlight)</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/03/01/c#%E4%B8%AD%E7%9A%84debug%E7%B1%BB/">
+                <h2 class="post-title">C#中的Debug类</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on March 1, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (41 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>位于命名空间System.Diagnostics中
+1.Debug.Print方法</p>
+
+<pre class="lang:default decode:true " >Debug.Print("Today: {0}", DateTime.Today);</pre> 
+
+<p>2.Debug.WriteLine方法</p>
+
+<pre class="lang:default decode:true " >Debug.WriteLine("Have a nice day");</pre> 
+
+<p>3.TraceListener类</p>
+
+<p>DelimitedListTraceListener创建的时候指定一个文件名，当Flush调用的时候，就被覆写到文件里。</p>
+
+<pre class="lang:default decode:true " >TraceListener listener = new DelimitedListTraceListener(@"C:\debugfile.txt");
+
+        // Add listener.
+        Debug.Listeners.Add(listener);
+
+        // Write and flush.
+        Debug.WriteLine("Welcome");
+        Debug.Flush();</pre> 
+
+<p>4.Debug.Write和WriteIf以及WriteLineIf方法</p>
+
+<pre class="lang:default decode:true " >Debug.WriteLineIf(IsThursday(), "Thursday");
+</pre> 
+
+<p>第一个参数一个bool值，为真则输出。</p>
+
+<p>5.Debug.Assert方法</p>
+
+<pre class="lang:default decode:true " >Debug.Assert(value != -1, "Value must never be -1.");</pre> 
+
+<p>如果表达式为false，则输出。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/02/21/c#%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%8F%92%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
+                <h2 class="post-title">C#反射实现简单的插件系统</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on February 21, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (40 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>如果用过一些优秀的开源或是非开源的应用软件，就会发现这些软件的一个很大的优势就是其开放性，任何有能力的人都可以为其开发不同的插件来增强其的功能。比如著名的foobar2000，Vim和TotalCommander等等。</p>
+
+<p>C#的反射可以用来实现一个简单的插件系统。思路很简单，我们创建一个解决方案，包含三个工程，一个为我们的软件MyApplication，一个为插件接口IPlugin，一个为具体的插件MyPlugin。插件系统的基本思路是我们用一个接口类库,来定义我们软件可以使用的插件必须实现的方法签名。然后我们的软件MyApplication通过引用该IPlugin dll来动态调用，而具体的实现插件MyPlugin则引用该接口来实现具体的方法。这样我们的应用程序就能在不知道具体插件的情况下调用插件了。。</p>
+
+<p>结构图如下：</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/32896_o.jpg"><img src="/images/bf202a9b50d5ce497f88718743c344d8579fadf1.jpg" alt="Myapplication" /></a></p>
+
+<p>关键代码也就是通过对程序集载入。搜索到对应接口的实现类。然后调用即可。
+<pre class="lang:default decode:true">Assembly a = Assembly.LoadFrom(AssemblyName);
+                foreach (Type t in a.GetTypes())
+                {
+                    if (t.GetInterface(&ldquo;IMyFunction&rdquo;) != null)
+                    {
+                        try
+                        {
+                            IMyFunction pluginclass = Activator.CreateInstance(t) as IMyFunction;
+                            pluginclass.doSomething();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString());
+                        }
+                    }
+                }</pre>
+运行结果：</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/32897_o.jpg"><img src="/images/6c33ac761faef8c7d4beae4a478b4240cdeb7ee3.jpg" alt="QQ截图20130220200408" /></a></p>
+
+<p>源码下载：<a href="http://pan.baidu.com/share/link?shareid=302323&amp;amp;uk=1493685990">PluginSystem.zip</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/02/12/c#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8F%AD%E7%A7%98/">
+                <h2 class="post-title">C#多线程揭秘</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on February 12, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 7 minutes (1487 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  文章略长。。。 Demo下载：Demo.Threading.zip 介绍 本文将通过一些例子来展示.net 中如何实现多线程，涉及到以下四部分。 1 .线程概念 2 .如何实现多线程 3 .如何确保线程安全 4 .死锁
+什么是进程 一个进程就是一个可执行文件运行的操作系统上下文环境。它被用来分隔虚拟地址空间，线程，对象句柄（指向类似文件这样的资源的指针），以及环境变量，进程还有一些类似优先级类和最大内存分配的属性。
+也就是说： 1 .一个进程就是一个包含资源的内存块。 2 .操作系统执行的一个单独的任务。 3 .一个正在运行的软件 4 .一个进程拥有一个/多个操作系统线程
+一般的。一个进程最大可以是4GB的内存空间，这块内存是安全，私有，其他进程是无法访问的。
+什么是线程 一个线程就是在一个进程里执行的一条指令流，所有的线程都在一个进程里执行，也就是一个进程可以包含多个线程。线程公用进程的虚拟地址空间。线程是操作系统的调度单元。一个线程的上下文由操作系统进行保存/恢复。 也就是说： 1 .一个线程是进程里的一条指令流。 2 .所有的线程在进程里。一个进程可以有多个线程 3 .一个进程的所有线程使用进程的虚拟地址空间。
+什么是多线程 多线程指的是进程同时有多个线程活动。这可以通过时间片的线程模拟或是多cpu上的超线程来实现。可以提高性能。 多线程-为什么或是为什么不? 为什么多线程 1 .保持UI响应。 2 .提高性能(对于cpu密集型和I/O密集型的进程) 为什么不多线程 1 .过度使用降低性能 2 .代码复杂，增加设计时间，潜在的bug
+线程池 线程池为你的程序提供了一个由操作系统管理的机制。在线程池里的都是后台线程。一个线程池线程在程序的前台线程都退出后，也会推出。每个进程一个线程池。默认情况下。每个处理器会为进程分配25个线程。但是可以通过SetMaxThreads 方法来改变。
+.net 中的线程 在.net 中，线程可以通过下面6个方法来实现。 1 .Thread线程类 2 .Delegates委托 3 .Background Worker 4 .ThreadPool 线程池 5 .Task任务类 6 .Parallel并行类
+下面的几部分里。我将逐一展示实现方法。
+简而言之，多线程就是通过使程序同时运行多个任务来最大化计算机能力，同时能够保持UI响应。下图是一个例子的图示。
+                  <a href="https://leizhiyuan.github.io/2013/02/12/c#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8F%AD%E7%A7%98/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/02/02/%E5%88%A9%E7%94%A8%E5%8F%8D%E5%B0%84%E8%BD%AC%E6%8D%A2%E5%AF%B9%E8%B1%A1list%E5%88%B0csv/">
+                <h2 class="post-title">利用反射转换对象list到csv</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on February 2, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (172 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  扒自一工程。。可以学习一下.net中反射的简单用法 /// &lt;summary&gt; /// Take object List as input and export to csv which will be prompt save as dialog /// &lt;/summary&gt; /// &lt;typeparam name=&ldquo;T&rdquo;&gt; Type of object&lt;/typeparam&gt; /// &lt;param name=&ldquo;listToExport&rdquo;&gt; Object list to export&lt;/param&gt; /// &lt;param name=&ldquo;seperateChar&rdquo;&gt; character to use as scv separator&lt;/param&gt; public static string ExportListToCSV&lt;T&gt;( List&lt;T&gt; listToExport, string seperateChar) { Int32 success = 0; StringBuilder export = new StringBuilder(); try { string seperator = &ldquo;&rdquo; ; StringBuilder builder = new StringBuilder();
+                  <a href="https://leizhiyuan.github.io/2013/02/02/%E5%88%A9%E7%94%A8%E5%8F%8D%E5%B0%84%E8%BD%AC%E6%8D%A2%E5%AF%B9%E8%B1%A1list%E5%88%B0csv/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+        </div>
+        
+          <ul class="pager main-pager">
+            
+            
+              <li class="next">
+                <a href="/tags/c/page/2/">Older Posts &rarr;</a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/tags/c/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

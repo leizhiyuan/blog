@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Android on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/android/</link>
+    <description>Recent content in Android on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 21 Oct 2012 11:01:14 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Android开发获取Map API Key</title>
+      <link>https://leizhiyuan.github.io/2012/10/21/android%E5%BC%80%E5%8F%91%E8%8E%B7%E5%8F%96map-api-key/</link>
+      <pubDate>Sun, 21 Oct 2012 11:01:14 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/21/android%E5%BC%80%E5%8F%91%E8%8E%B7%E5%8F%96map-api-key/</guid>
+      <description>地图应用使用com.google.android.maps这个包。通过MapView控件使用。但是之前需要申请一个用于开发的API Key，这个key会和当前的计算机用户绑定。然后通过这个key去官方申请就可以拿到一个开发用的api key了 &amp;lt;1&amp;gt;首先找到用户的debug.keystore文件，可以再”运行“里面搜debug.keystore；如：c:\users\Administrator.android\debug.keystore
+&amp;lt;2&amp;gt;接下来获取MD5指纹，网上很多说的有误。貌似新版默认是出现sha1加密的。通过添加-v 参数会显示所有。
+首先运行cmd,在dos界面里，输入 keytool -list -v -keystore c:\users\Bystander.android\debug.keystore 命令，然后会让你输入keystore密码，
+输入：android，之后，会出现指纹认证MD5，如下：
+ &amp;lt;3&amp;gt;去官方生成真正的api key 访问 Sign Up for the Android Maps API 输入那串值，同意条款，确定后要求用Google帐号登录。然后会拿到一个key。ok</description>
+    </item>
+    
+  </channel>
+</rss>

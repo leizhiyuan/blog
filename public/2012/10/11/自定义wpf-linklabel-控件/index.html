@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>自定义WPF LinkLabel 控件</title>
+  <meta property="og:title" content="自定义WPF LinkLabel 控件" />
+  <meta name="twitter:title" content="自定义WPF LinkLabel 控件" />
+  <meta name="description" content="WPF里是没有LinkLabel控件的。因此我自己写一个。首先。我们看一下WPF中什么类似的组件可以实现这个链接功能
+如果你想要模拟一个LinkLabel控件。你可以在TextBlock里使用内联的Hyperlink。像下面这样 &lt;TextBlock&gt; &lt;Hyperlink&gt; &lt;Run Text=&ldquo;Test link&rdquo;/&gt; &lt;/Hyperlink&gt; &lt;/TextBlock&gt; 你可以使用Label控件。加一个内联的HyperLink，但是我认为TextBlock更好。因为你可以在Expression Blend 中通过InlineCollection 编辑所有子元素的属性
+图1
+ 虽然这种方法也行，但是我还是不太喜欢。因为我觉得我还是写一个类似windows窗体程序中的LinkLabel控件。然后我就做了。首先看一下控件的样子
+图2
+
+第一个是默认的LinkLabel控件。第二个是LinkLabelBehavior 属性被设置为HoverUnderline ，第三个的Foreground和 HoverForeground 属性都使用了自定的颜色。
+&nbsp;
+LinkLabel控件支持的属性
+1.Foreground和 HoverForeground属性
+允许自定义这两个属性的值
+2.LinkLabelBehavior 属性
+允许设置下划线的显示与否
+3.自定义HyperlinkStyle 属性
+你可以使用这个属性给超链接设置自定义的样式。如果你已经自定了Foreground和 HoverForeground。则会被覆盖。
+Url 超链接的目标
+所有这些属性都继承自标准的System.Windows.Controls.Label 控件
+通过Blend/Xaml设置这些属性很简单 &lt;ThemedControlLibrary:LinkLabel Content=&ldquo;Link Label&rdquo; FontSize=&ldquo;22&rdquo;/&gt; &lt;ThemedControlLibrary:LinkLabel Content=&ldquo;Link Label&rdquo; LinkLabelBehavour=&ldquo;HoverUnderline&rdquo; /&gt; &lt;ThemedControlLibrary:LinkLabel Foreground=&ldquo;#FF847901&rdquo; HoverForeground=&ldquo;#FF06C8F2&rdquo; Content=&ldquo;Link Label&rdquo; LinkLabelBehavour=&ldquo;NeverUnderline&rdquo;/&gt; 图三
+
+然后是控件的使用方法。仅仅添加命名空间到xaml中。然后使用就行了。 &lt;Window xmlns=&ldquo;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot; xmlns:x=&ldquo;http://schemas.microsoft.com/winfx/2006/xaml&quot; x:Class=&ldquo;DemoApplication.Window1&rdquo; Title=&ldquo;DemoApplication&rdquo; Height=&ldquo;300&rdquo; Width=&ldquo;300&rdquo; xmlns:ThemedControlsLibrary=&ldquo;clr-namespace:ThemedControlsLibrary;assembly=ThemedControlsLibrary&rdquo; &gt; &lt;Grid&gt; &lt;ThemedControlsLibrary:LinkLabel HorizontalAlignment=&ldquo;Left&rdquo; VerticalAlignment=&ldquo;Top&rdquo; Content=&ldquo;LinkLabel&rdquo;/&gt; &lt;/Grid&gt; &lt;/Window&gt; &nbsp;">
+  <meta property="og:description" content="WPF里是没有LinkLabel控件的。因此我自己写一个。首先。我们看一下WPF中什么类似的组件可以实现这个链接功能
+如果你想要模拟一个LinkLabel控件。你可以在TextBlock里使用内联的Hyperlink。像下面这样 &lt;TextBlock&gt; &lt;Hyperlink&gt; &lt;Run Text=&ldquo;Test link&rdquo;/&gt; &lt;/Hyperlink&gt; &lt;/TextBlock&gt; 你可以使用Label控件。加一个内联的HyperLink，但是我认为TextBlock更好。因为你可以在Expression Blend 中通过InlineCollection 编辑所有子元素的属性
+图1
+ 虽然这种方法也行，但是我还是不太喜欢。因为我觉得我还是写一个类似windows窗体程序中的LinkLabel控件。然后我就做了。首先看一下控件的样子
+图2
+
+第一个是默认的LinkLabel控件。第二个是LinkLabelBehavior 属性被设置为HoverUnderline ，第三个的Foreground和 HoverForeground 属性都使用了自定的颜色。
+&nbsp;
+LinkLabel控件支持的属性
+1.Foreground和 HoverForeground属性
+允许自定义这两个属性的值
+2.LinkLabelBehavior 属性
+允许设置下划线的显示与否
+3.自定义HyperlinkStyle 属性
+你可以使用这个属性给超链接设置自定义的样式。如果你已经自定了Foreground和 HoverForeground。则会被覆盖。
+Url 超链接的目标
+所有这些属性都继承自标准的System.Windows.Controls.Label 控件
+通过Blend/Xaml设置这些属性很简单 &lt;ThemedControlLibrary:LinkLabel Content=&ldquo;Link Label&rdquo; FontSize=&ldquo;22&rdquo;/&gt; &lt;ThemedControlLibrary:LinkLabel Content=&ldquo;Link Label&rdquo; LinkLabelBehavour=&ldquo;HoverUnderline&rdquo; /&gt; &lt;ThemedControlLibrary:LinkLabel Foreground=&ldquo;#FF847901&rdquo; HoverForeground=&ldquo;#FF06C8F2&rdquo; Content=&ldquo;Link Label&rdquo; LinkLabelBehavour=&ldquo;NeverUnderline&rdquo;/&gt; 图三
+
+然后是控件的使用方法。仅仅添加命名空间到xaml中。然后使用就行了。 &lt;Window xmlns=&ldquo;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot; xmlns:x=&ldquo;http://schemas.microsoft.com/winfx/2006/xaml&quot; x:Class=&ldquo;DemoApplication.Window1&rdquo; Title=&ldquo;DemoApplication&rdquo; Height=&ldquo;300&rdquo; Width=&ldquo;300&rdquo; xmlns:ThemedControlsLibrary=&ldquo;clr-namespace:ThemedControlsLibrary;assembly=ThemedControlsLibrary&rdquo; &gt; &lt;Grid&gt; &lt;ThemedControlsLibrary:LinkLabel HorizontalAlignment=&ldquo;Left&rdquo; VerticalAlignment=&ldquo;Top&rdquo; Content=&ldquo;LinkLabel&rdquo;/&gt; &lt;/Grid&gt; &lt;/Window&gt; &nbsp;">
+  <meta name="twitter:description" content="WPF里是没有LinkLabel控件的。因此我自己写一个。首先。我们看一下WPF中什么类似的组件可以实现这个链接功能
+如果你想要模拟一个LinkLabel控件。你可以在TextBlock里使用内联的Hyperlink。像下面这样 &lt;TextBlock&gt; &lt;Hyperlink&gt; &lt;Run Text=&ldquo;Test link&rdquo;/&gt; …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/10/11/%E8%87%AA%E5%AE%9A%E4%B9%89wpf-linklabel-%E6%8E%A7%E4%BB%B6/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/10/11/%E8%87%AA%E5%AE%9A%E4%B9%89wpf-linklabel-%E6%8E%A7%E4%BB%B6/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>自定义WPF LinkLabel 控件</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 11, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (224 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>WPF里是没有LinkLabel控件的。因此我自己写一个。首先。我们看一下WPF中什么类似的组件可以实现这个链接功能</p>
+
+<p>如果你想要模拟一个LinkLabel控件。你可以在TextBlock里使用内联的Hyperlink。像下面这样
+<pre class="lang:default decode:true">&lt;TextBlock&gt;
+    &lt;Hyperlink&gt;
+        &lt;Run Text=&ldquo;Test link&rdquo;/&gt;
+    &lt;/Hyperlink&gt;
+&lt;/TextBlock&gt;</pre>
+你可以使用Label控件。加一个内联的HyperLink，但是我认为TextBlock更好。因为你可以在Expression Blend 中通过<a href="http://msdn2.microsoft.com/en-us/library/system.windows.documents.inlinecollection.aspx" title="InlineCollection">InlineCollection</a>  编辑所有子元素的属性</p>
+
+<p>图1</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/27987_o.png"><img src="/images/2fbf37d3f59121424e1f68d6ac6e2a461f8e1ab9.png" alt="" title="1" /></a>
+虽然这种方法也行，但是我还是不太喜欢。因为我觉得我还是写一个类似windows窗体程序中的LinkLabel控件。然后我就做了。首先看一下控件的样子</p>
+
+<p>图2</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/27988_o.gif"><img src="/images/b4438242681c5adebadef5aff0f7f2145be09a43.gif" alt="" title="2" /></a></p>
+
+<p>第一个是默认的LinkLabel控件。第二个是LinkLabelBehavior 属性被设置为HoverUnderline ，第三个的Foreground和 HoverForeground 属性都使用了自定的颜色。</p>
+
+<p>&nbsp;</p>
+
+<p>LinkLabel控件支持的属性</p>
+
+<p>1.Foreground和 HoverForeground属性</p>
+
+<p>允许自定义这两个属性的值</p>
+
+<p>2.LinkLabelBehavior 属性</p>
+
+<p>允许设置下划线的显示与否</p>
+
+<p>3.自定义HyperlinkStyle 属性</p>
+
+<p>你可以使用这个属性给超链接设置自定义的样式。如果你已经自定了Foreground和 HoverForeground。则会被覆盖。</p>
+
+<p>Url 超链接的目标</p>
+
+<p>所有这些属性都继承自标准的System.Windows.Controls.Label 控件</p>
+
+<p>通过Blend/Xaml设置这些属性很简单
+<pre class="lang:default decode:true">&lt;ThemedControlLibrary:LinkLabel Content=&ldquo;Link Label&rdquo; FontSize=&ldquo;22&rdquo;/&gt;
+&lt;ThemedControlLibrary:LinkLabel Content=&ldquo;Link Label&rdquo; LinkLabelBehavour=&ldquo;HoverUnderline&rdquo; /&gt;
+&lt;ThemedControlLibrary:LinkLabel Foreground=&ldquo;#FF847901&rdquo; HoverForeground=&ldquo;#FF06C8F2&rdquo; Content=&ldquo;Link Label&rdquo; LinkLabelBehavour=&ldquo;NeverUnderline&rdquo;/&gt;</pre>
+图三</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/27989_o.png"><img src="/images/a3a5126a4aba4698c3916d5a9e92f4daa7d77b97.png" alt="" title="3" /></a></p>
+
+<p>然后是控件的使用方法。仅仅添加命名空间到xaml中。然后使用就行了。
+<pre class="lang:default decode:true">&lt;Window
+    xmlns=&ldquo;<a href="http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;">http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</a>
+    xmlns:x=&ldquo;<a href="http://schemas.microsoft.com/winfx/2006/xaml&quot;">http://schemas.microsoft.com/winfx/2006/xaml&quot;</a>
+    x:Class=&ldquo;DemoApplication.Window1&rdquo;
+    Title=&ldquo;DemoApplication&rdquo; Height=&ldquo;300&rdquo; Width=&ldquo;300&rdquo;
+    xmlns:ThemedControlsLibrary=&ldquo;clr-namespace:ThemedControlsLibrary;assembly=ThemedControlsLibrary&rdquo;
+    &gt;
+    &lt;Grid&gt;
+        &lt;ThemedControlsLibrary:LinkLabel HorizontalAlignment=&ldquo;Left&rdquo; VerticalAlignment=&ldquo;Top&rdquo; Content=&ldquo;LinkLabel&rdquo;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+&nbsp;</p>
+
+<p>控件的完整代码很简单。就定义一下需要的属性，和控制这些属性应该显示在Blend中的（category）目录位置就行了。</p>
+
+<p>&nbsp;
+<pre class="lang:default decode:true">public class LinkLabel : Label
+{
+    private const string _linkLabel = &ldquo;LinkLabel&rdquo;;</p>
+<div class="highlight"><pre class="chroma">public static readonly DependencyProperty UrlProperty = DependencyProperty.Register(&#34;Url&#34;, typeof(Uri), typeof(LinkLabel));
+
+[Category(&#34;Common Properties&#34;), Bindable(true)]
+public Uri Url
+{
+    get { return GetValue(UrlProperty) as Uri; }
+    set { SetValue(UrlProperty, value); }
+}
+
+public static readonly DependencyProperty HyperlinkStyleProperty = DependencyProperty.Register(&#34;HyperlinkStyle&#34;, typeof(Style),
+        typeof(LinkLabel));
+
+public Style HyperlinkStyle
+{
+    get { return GetValue(HyperlinkStyleProperty) as Style; }
+    set { SetValue(HyperlinkStyleProperty, value); }
+}
+
+public static readonly DependencyProperty HoverForegroundProperty = DependencyProperty.Register(&#34;HoverForeground&#34;, typeof(Brush),
+        typeof(LinkLabel));
+
+[Category(&#34;Brushes&#34;), Bindable(true)]
+public Brush HoverForeground
+{
+    get { return GetValue(HoverForegroundProperty) as Brush; }
+    set { SetValue(HoverForegroundProperty, value); }
+}
+
+public static readonly DependencyProperty LinkLabelBehavourProperty = DependencyProperty.Register(&#34;LinkLabelBehavour&#34;,            typeof(LinkLabelBehaviour),     typeof(LinkLabel));
+
+[Category(&#34;Common Properties&#34;), Bindable(true)]
+public LinkLabelBehaviour LinkLabelBehavour
+{
+    get { return (LinkLabelBehaviour)GetValue(LinkLabelBehavourProperty); }
+    set { SetValue(LinkLabelBehavourProperty, value); }
+}
+
+static LinkLabel()
+{
+    FrameworkElement.DefaultStyleKeyProperty.OverrideMetadata(
+        typeof(LinkLabel),
+        new FrameworkPropertyMetadata(typeof(LinkLabel)));
+}</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>为了使得内容可以绑定。我使用了Filipe Fortes 实现的BindableRun 我添加BindableRun  到控件模板中
+<pre class="lang:default decode:true">&lt;local:BindableRun BoundText=&ldquo;{Binding RelativeSource= {RelativeSource TemplatedParent}, Path=Content}&rdquo;/&gt;</pre>
+&nbsp;</p>
+
+<p>为了支持主题显示。应该在工程里有个Themes文件夹。包含控件的样式。LinkLabel只有一个样式文件Generic.xaml，因为超链接样式不管当前主题是什么。都是一样的。我不会包含LinkLabel 的模板。</p>
+
+<p>&nbsp;</p>
+
+<p>多看源代码。下载并且开始使用吧。</p>
+
+<p><a href="http://pan.baidu.com/share/link?shareid=80913&amp;amp;uk=1493685990">示例和源码下载</a></p>
+
+<p><a href="http://www.blagoev.com/blog/post/building-a-wpf-linklabel-control.aspx">http://www.blagoev.com/blog/post/building-a-wpf-linklabel-control.aspx</a></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/wpf/">WPF</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/10/10/c#%E5%88%B6%E4%BD%9C%E8%BF%9B%E5%BA%A6%E7%AA%97%E4%BD%93/" data-toggle="tooltip" data-placement="top" title="C#制作进度窗体">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/10/12/%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%95%99%E4%BD%A0%E5%88%B6%E4%BD%9Cwpf%E5%9C%86%E5%BD%A2%E7%8E%BB%E7%92%83%E6%8C%89%E9%92%AE/" data-toggle="tooltip" data-placement="top" title="一步步教你制作WPF圆形玻璃按钮">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数学 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E6%95%B0%E5%AD%A6/</link>
+    <description>Recent content in 数学 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 29 Jun 2013 18:14:08 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E6%95%B0%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>等物体填充问题</title>
+      <link>https://leizhiyuan.github.io/2013/06/29/%E7%AD%89%E7%89%A9%E4%BD%93%E5%A1%AB%E5%85%85%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 29 Jun 2013 18:14:08 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/06/29/%E7%AD%89%E7%89%A9%E4%BD%93%E5%A1%AB%E5%85%85%E9%97%AE%E9%A2%98/</guid>
+      <description>那天在群里，rich大牛提了一个问题，一个直径为10cm的球内最多能够填充直径为1cm的球多少个.
+之前看到过一个类似的简单说明，就像是在一个盒子里装乒乓球，如果装满了，想继续装，如何办？经验告诉我们，摇一摇盒子。。这个问题看上去简单，其实是个NP难问题&amp;hellip;于是，查找了一些资料，比较有意思，分享一下。
+&amp;nbsp;
+首先是stetson大学efriedma教授的网页，收集了各类填充（英文是packing）问题的图示，欢迎移步：packing center ，不过这里面恰好没有球体填充（SpherePacking）的问题，然后继续查找，进入了一个可以演示球体填充问题的页面：sphere packing demo 感谢网站作者Hugo Pfoertner，这里作者解出了1-72个球的问题，但是，作者说对于n&amp;gt;10的情况无法证明最优化.不过这个页面的演示太帅了，推荐看看。
+
+&amp;nbsp;
+可以鼠标拖动旋转3D视角。
+然后在数学世界看到了一球体填充问题的证明结果，见：SpherePacking，当然，下面一大堆引用我都没看..看文章里的意思是说这个填充问题填充率已经被证明最大是77.9%，但是这个上限可能还能提高，因为貌似根据这个情况，rich大牛提出的这个问题应该数量在779左右..
+&amp;nbsp;</description>
+    </item>
+    
+  </channel>
+</rss>

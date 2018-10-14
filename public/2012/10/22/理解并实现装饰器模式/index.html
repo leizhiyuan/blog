@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>理解并实现装饰器模式</title>
+  <meta property="og:title" content="理解并实现装饰器模式" />
+  <meta name="twitter:title" content="理解并实现装饰器模式" />
+  <meta name="description" content="背景 本文讨论装饰器模式,这个模式是因为很多情况下需要动态的给对象添加功能.比如我们创建了一个Stream类.后来需要对这个数据流类动态的添加一个加密功能.有人可能说把加密方法写到流类里面啊.然后使用一个bool变量来控制开关就行了.但是这样.这个加密方法只能写一种..如果用派生类来实现.那么..对于不同的加密方法.,都要创建一个子类,举个例子.比如有时候是一些函数的组合.我们最终的派生类的数目基本上就和排列组合的数目一样了.
+我们使用装饰器模式来解决这个问题.GoF描述为 &ldquo;Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.&rdquo;
+首先看一下图.理解一下这个模式中每一个类的作用
+ • Component:定义了可以动态添加功能的具体类ConcreteComponents的接口. • ConcreteComponent: 可以动态添加功能的具体类 • Decorator: 定义了动态添加到ConcreteComponent类中的功能的接口 • ConcreteDecorator: 可以添加到 ConcreteComponent.中的具体功能类.
+使用代码
+我们开一个面包店的例子.面包店卖蛋糕和甜点.客户可以买蛋糕和甜点,同时添加一些额外的东西.额外的东西包括奶油(Cream),樱桃(Cherry),香料(Scent)和会员(Name Card)
+如果我们用派生类来实现..那么我们会有如下的类 • CakeOnly • CakeWithCreamAndCherry • CakeWithCreamAndCherryAndScent • CakeWithCreamAndCherryAndScentAndNameCard • CakeWithCherryOnly • PastryOnly • PastryWithCreamAndCherry • PastryWithCreamAndCherryAndScent • PastryWithCreamAndCherryAndScentAndNameCard • PastryWithCherryOnly • 等等等等
+这简直就是噩梦..我们用装饰器模式来实现把. 首先定义Component 接口
+public abstract class BakeryComponent { public abstract string GetName(); public abstract double GetPrice(); }  前面说过了.">
+  <meta property="og:description" content="背景 本文讨论装饰器模式,这个模式是因为很多情况下需要动态的给对象添加功能.比如我们创建了一个Stream类.后来需要对这个数据流类动态的添加一个加密功能.有人可能说把加密方法写到流类里面啊.然后使用一个bool变量来控制开关就行了.但是这样.这个加密方法只能写一种..如果用派生类来实现.那么..对于不同的加密方法.,都要创建一个子类,举个例子.比如有时候是一些函数的组合.我们最终的派生类的数目基本上就和排列组合的数目一样了.
+我们使用装饰器模式来解决这个问题.GoF描述为 &ldquo;Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.&rdquo;
+首先看一下图.理解一下这个模式中每一个类的作用
+ • Component:定义了可以动态添加功能的具体类ConcreteComponents的接口. • ConcreteComponent: 可以动态添加功能的具体类 • Decorator: 定义了动态添加到ConcreteComponent类中的功能的接口 • ConcreteDecorator: 可以添加到 ConcreteComponent.中的具体功能类.
+使用代码
+我们开一个面包店的例子.面包店卖蛋糕和甜点.客户可以买蛋糕和甜点,同时添加一些额外的东西.额外的东西包括奶油(Cream),樱桃(Cherry),香料(Scent)和会员(Name Card)
+如果我们用派生类来实现..那么我们会有如下的类 • CakeOnly • CakeWithCreamAndCherry • CakeWithCreamAndCherryAndScent • CakeWithCreamAndCherryAndScentAndNameCard • CakeWithCherryOnly • PastryOnly • PastryWithCreamAndCherry • PastryWithCreamAndCherryAndScent • PastryWithCreamAndCherryAndScentAndNameCard • PastryWithCherryOnly • 等等等等
+这简直就是噩梦..我们用装饰器模式来实现把. 首先定义Component 接口
+public abstract class BakeryComponent { public abstract string GetName(); public abstract double GetPrice(); }  前面说过了.">
+  <meta name="twitter:description" content="背景 本文讨论装饰器模式,这个模式是因为很多情况下需要动态的给对象添加功能.比如我们创建了一个Stream类.后来需要对这个数据流类动态的添加一个加密功能.有人可能说把加密方法写到流类里面啊.然后使用一个bool变量来控制开关就行了.但是这样.这个加密方法只能写一种..如果用派生类来实现.那么..对于不同的加密方法.,都要创建一个子类,举个例子.比如有时候是一些函数的组合.我们最终的派生类的数目基 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/10/22/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/10/22/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>理解并实现装饰器模式</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 22, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (388 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><strong>背景</strong>
+本文讨论装饰器模式,这个模式是因为很多情况下需要动态的给对象添加功能.比如我们创建了一个Stream类.后来需要对这个数据流类动态的添加一个加密功能.有人可能说把加密方法写到流类里面啊.然后使用一个bool变量来控制开关就行了.但是这样.这个加密方法只能写一种..如果用派生类来实现.那么..对于不同的加密方法.,都要创建一个子类,举个例子.比如有时候是一些函数的组合.我们最终的派生类的数目基本上就和排列组合的数目一样了.</p>
+
+<p>我们使用装饰器模式来解决这个问题.GoF描述为
+ &ldquo;Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.&rdquo;</p>
+
+<p>首先看一下图.理解一下这个模式中每一个类的作用</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/28377_o.jpg"><img src="/images/7858234df16590f30fcdf85a0a8791d33d076e2d.jpg" alt="" title="1" /></a>
+•   Component:定义了可以动态添加功能的具体类ConcreteComponents的接口.
+•   ConcreteComponent: 可以动态添加功能的具体类
+•   Decorator: 定义了动态添加到ConcreteComponent类中的功能的接口
+•   ConcreteDecorator: 可以添加到 ConcreteComponent.中的具体功能类.</p>
+
+<p>使用代码</p>
+
+<p>我们开一个面包店的例子.面包店卖蛋糕和甜点.客户可以买蛋糕和甜点,同时添加一些额外的东西.额外的东西包括奶油(Cream),樱桃(Cherry),香料(Scent)和会员(Name Card)</p>
+
+<p>如果我们用派生类来实现..那么我们会有如下的类
+•   CakeOnly
+•   CakeWithCreamAndCherry
+•   CakeWithCreamAndCherryAndScent
+•   CakeWithCreamAndCherryAndScentAndNameCard
+•   CakeWithCherryOnly
+•   PastryOnly
+•   PastryWithCreamAndCherry
+•   PastryWithCreamAndCherryAndScent
+•   PastryWithCreamAndCherryAndScentAndNameCard
+•   PastryWithCherryOnly
+•   等等等等</p>
+
+<p>这简直就是噩梦..我们用装饰器模式来实现把.
+首先定义Component 接口</p>
+
+<pre class="lang:default decode:true " >public abstract class BakeryComponent
+{
+    public abstract string GetName();
+    public abstract double GetPrice();
+}
+</pre> 
+
+<p>前面说过了.这个类定义了能够动态添加功能的具体类(ConcreteComponents)的接口,好吧.然后来创建具体类ConcreteComponents</p>
+
+<pre class="lang:default decode:true " >class CakeBase : BakeryComponent
+{
+    // 真实世界里,这个值应该来自数据库等
+    private string m_Name = "Cake Base";
+    private double m_Price = 200.0;
+
+    public override string GetName()
+    {
+        return m_Name;
+    }
+
+    public override double GetPrice()
+    {
+        return m_Price;
+    }
+}
+
+class PastryBase : BakeryComponent
+{
+    //真实世界里,这个值应该来自数据库等
+    private string m_Name = "Pastry Base";
+    private double m_Price = 20.0;
+
+    public override string GetName()
+    {
+        return m_Name;
+    }
+
+    public override double GetPrice()
+    {
+        return m_Price;
+    }
+}</pre> 
+
+<p>现在基对象准备好了.看看那些可以被动态添加的功能.我们看看Decorator  类</p>
+
+<pre class="lang:default decode:true " >public abstract class Decorator : BakeryComponent
+{
+    BakeryComponent m_BaseComponent = null;
+
+    protected string m_Name = "Undefined Decorator";
+    protected double m_Price = 0.0;
+
+    protected Decorator(BakeryComponent baseComponent)
+    {
+        m_BaseComponent = baseComponent;
+    }
+
+    #region BakeryComponent Members
+
+    string BakeryComponent.GetName()
+    {
+        return string.Format("{0}, {1}", m_BaseComponent.GetName(), m_Name);
+    }
+
+    double BakeryComponent.GetPrice()
+    {
+        return m_Price + m_BaseComponent.GetPrice();
+    }
+    #endregion
+}
+</pre> 
+
+<p>注意两个地方.第一个就是类实现BakeryComponent  接口,原因是装饰后的蛋糕还是蛋糕,另一个是该类也持有一个BakeryComponent 对象,原因是,我们需要Cake和装饰的项目是is-a关系,但是事实上不是.通过加一个对象就可以模拟is-a关系.</p>
+
+<p>一句话.我们使用继承实现了静态的is-a关系,而是用构成则是一个动态的is-a关系.</p>
+
+<p>然后看看ConcreteDecorators 如何实现</p>
+
+<pre class="lang:default decode:true " >class ArtificialScentDecorator : Decorator
+{
+    public ArtificialScentDecorator(BakeryComponent baseComponent)
+        : base(baseComponent)
+    {
+        this.m_Name = "Artificial Scent";
+        this.m_Price = 3.0;
+    }
+}
+
+class CherryDecorator : Decorator
+{
+    public CherryDecorator(BakeryComponent baseComponent)
+        : base(baseComponent)
+    {
+        this.m_Name = "Cherry";
+        this.m_Price = 2.0;
+    }
+}
+
+class CreamDecorator : Decorator
+{
+    public CreamDecorator(BakeryComponent baseComponent)
+        : base(baseComponent)
+    {
+        this.m_Name = "Cream";
+        this.m_Price = 1.0;
+    }
+}</pre> 
+
+<p>然后看一下如何给一个会员卡添加一个打折的信息.</p>
+
+<pre class="lang:default decode:true " >class NameCardDecorator : Decorator
+{
+    private int m_DiscountRate = 5;
+
+    public NameCardDecorator(BakeryComponent baseComponent)
+        : base(baseComponent)
+    {
+        this.m_Name = "Name Card";
+        this.m_Price = 4.0;
+    }
+
+    public override string GetName()
+    {
+        return base.GetName() + 
+            string.Format("\n(Please Collect your discount card for {0}%)", 
+            m_DiscountRate);
+    }        
+}
+</pre> 
+
+<p>现在我们的客户端可使用Decorator 来装饰ConcreteComponents  生成不同的组合.看看例子</p>
+
+<pre class="lang:default decode:true " >static void Main(string[] args)
+{
+    // 创建一个基本的蛋糕
+    CakeBase cBase = new CakeBase();
+    PrintProductDetails(cBase);
+
+    // 添加奶油
+    CreamDecorator creamCake = new CreamDecorator(cBase);
+    PrintProductDetails(creamCake);
+
+    // 添加樱桃
+    CherryDecorator cherryCake = new CherryDecorator(creamCake);
+    PrintProductDetails(cherryCake);
+
+    // 添加香料
+    ArtificialScentDecorator scentedCake = new ArtificialScentDecorator(cherryCake);
+    PrintProductDetails(scentedCake);
+
+    // 添加一张会员卡
+    NameCardDecorator nameCardOnCake = new NameCardDecorator(scentedCake);
+    PrintProductDetails(nameCardOnCake);
+
+    // 添加一个甜点
+    PastryBase pastry = new PastryBase();
+    PrintProductDetails(pastry);
+
+    // 添加 奶油和樱桃
+    CreamDecorator creamPastry = new CreamDecorator(pastry);
+    CherryDecorator cherryPastry = new CherryDecorator(creamPastry);
+    PrintProductDetails(cherryPastry);
+}</pre> 
+
+<p>运行效果</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/28379_o.jpg"><img src="/images/107779584959d1f4308b310068eb087bcb423852.jpg" alt="" title="2" /></a>
+看看我们的装饰器模式例子的类图结构</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/28378_o.jpg"><img src="/images/df8b8eab0b223420a2b0127c16f55802925fb0f9.jpg" alt="" title="3" /></a></p>
+
+<p><strong>亮点在那里</strong>
+装饰器模式是很典型的开放-封闭原则的例子.我们的类对扩展开放,而对修改封闭.
+<strong>Demo下载</strong>
+[downloadicon href=<a href="http://pan.baidu.com/share/link?shareid=88379&amp;uk=1493685990]DecoratorSampleApp.zip[/downloadicon">http://pan.baidu.com/share/link?shareid=88379&amp;uk=1493685990]DecoratorSampleApp.zip[/downloadicon</a>]</p>
+
+<p>原文地址：<a href="http://www.codeproject.com/Articles/479635/UnderstandingplusandplusImplementingplusDecoratorp">UnderstandingplusandplusImplementingplusDecoratorp</a>
+著作权声明：本文由<a href="http://leaver.me">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/10/21/android%E5%BC%80%E5%8F%91%E8%8E%B7%E5%8F%96map-api-key/" data-toggle="tooltip" data-placement="top" title="Android开发获取Map API Key">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/10/23/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E5%A4%96%E8%A7%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" data-toggle="tooltip" data-placement="top" title="理解并实现外观设计模式">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

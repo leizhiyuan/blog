@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>解决win8无法上网的问题</title>
+  <meta property="og:title" content="解决win8无法上网的问题" />
+  <meta name="twitter:title" content="解决win8无法上网的问题" />
+  <meta name="description" content="昨天晚上@虎振兴同学装了win8.。结果悲剧了。症状为连接宽带可以连接上。上qq也正常。但是。只要打开网页。就会自动断网。再连接就会提示651错误了。网上大多说是驱动不兼容。但是解决的方法大部分是不对的。下面结合网上的给大家说一说。。
+网卡驱动目测是都是美满公司，也就是Marvell 的Yukon系列网卡驱动的问题。首先下载一个旧版本的驱动（32位下载/64位下载） 然后按下图操作，第一步是打开计算机-管理。。各种姿势只要打开了计算机管理就可以了。  在这里稍微记一下这个名字。Marvell Yukon 88exxxxx PCI-E Fast Ethernet..  找到网络适配器，右键更新驱动程序。    注意记下兼容的网卡。名字和第二步的差不多的那个，点击从磁盘安装，选择下载后驱动的解压的安装文件，如图  到这一步以后，点击打开，可能会出现一个驱动列表。这是时候选择一个和兼容列表名字一样的。88e这部分不一样。如果找不到，也可以找类似的，比如途中给出的后两位是39.我装的是40也没问题。这个是驱动的历史版本。然后就可以了 
+最后。提醒各位童鞋。win8整体还是很不错的。不过呢。对于我来说。metro界面和正常的界面的傻傻分不清楚的模式。令我很是蛋疼。。所以暂时没有考虑换到win8.。。">
+  <meta property="og:description" content="昨天晚上@虎振兴同学装了win8.。结果悲剧了。症状为连接宽带可以连接上。上qq也正常。但是。只要打开网页。就会自动断网。再连接就会提示651错误了。网上大多说是驱动不兼容。但是解决的方法大部分是不对的。下面结合网上的给大家说一说。。
+网卡驱动目测是都是美满公司，也就是Marvell 的Yukon系列网卡驱动的问题。首先下载一个旧版本的驱动（32位下载/64位下载） 然后按下图操作，第一步是打开计算机-管理。。各种姿势只要打开了计算机管理就可以了。  在这里稍微记一下这个名字。Marvell Yukon 88exxxxx PCI-E Fast Ethernet..  找到网络适配器，右键更新驱动程序。    注意记下兼容的网卡。名字和第二步的差不多的那个，点击从磁盘安装，选择下载后驱动的解压的安装文件，如图  到这一步以后，点击打开，可能会出现一个驱动列表。这是时候选择一个和兼容列表名字一样的。88e这部分不一样。如果找不到，也可以找类似的，比如途中给出的后两位是39.我装的是40也没问题。这个是驱动的历史版本。然后就可以了 
+最后。提醒各位童鞋。win8整体还是很不错的。不过呢。对于我来说。metro界面和正常的界面的傻傻分不清楚的模式。令我很是蛋疼。。所以暂时没有考虑换到win8.。。">
+  <meta name="twitter:description" content="昨天晚上@虎振兴同学装了win8.。结果悲剧了。症状为连接宽带可以连接上。上qq也正常。但是。只要打开网页。就会自动断网。再连接就会提示651错误了。网上大多说是驱动不兼容。但是解决的方法大部分是不对的。下面结合网上的给大家说一说。。
+网卡驱动目测是都是美满公司，也就是Marvell 的Yukon系列网卡驱动的问题。首先下载一个旧版本的驱动（32位下载/64位下载） 然后按下图操作，第一步是打开计 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/11/21/%E8%A7%A3%E5%86%B3win8%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/11/21/%E8%A7%A3%E5%86%B3win8%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>解决win8无法上网的问题</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 21, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (14 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>昨天晚上@虎振兴同学装了win8.。结果悲剧了。症状为连接宽带可以连接上。上qq也正常。但是。只要打开网页。就会自动断网。再连接就会提示651错误了。网上大多说是驱动不兼容。但是解决的方法大部分是不对的。下面结合网上的给大家说一说。。</p>
+
+<p>网卡驱动目测是都是美满公司，也就是Marvell 的Yukon系列网卡驱动的问题。首先下载一个旧版本的驱动（<a href="http://pan.baidu.com/share/link?shareid=157758&amp;uk=1493685990">32位下载</a>/<a href="http://pan.baidu.com/share/link?shareid=157761&amp;uk=1493685990">64位下载</a>）
+然后按下图操作，第一步是打开计算机-管理。。各种姿势只要打开了计算机管理就可以了。
+<a href="http://leaverimage.b0.upaiyun.com/29531_o.jpg"><img src="/images/64492d91b55bcb36bfca307f79e7085701e4d385.jpg" alt="" title="1" /></a>
+在这里稍微记一下这个名字。Marvell Yukon  88exxxxx  PCI-E Fast Ethernet..
+<a href="http://leaverimage.b0.upaiyun.com/29542_o.jpg"><img src="/images/f62bc3bc8f6c801bb02b7ac3b5828cd8b8949409.jpg" alt="" title="2" /></a>
+找到网络适配器，右键更新驱动程序。
+<a href="http://leaverimage.b0.upaiyun.com/29532_o.jpg"><img src="/images/de07155b61319d7d4bcd6850502b67cf08e010e7.jpg" alt="" title="3" /></a>
+<a href="http://leaverimage.b0.upaiyun.com/29534_o.jpg"><img src="/images/31566293ba5a32fff3f1654f50247e65824c1def.jpg" alt="" title="4" /></a>
+<a href="http://leaverimage.b0.upaiyun.com/29535_o.jpg"><img src="/images/b77e3594df179d35a82777375611b20549290884.jpg" alt="" title="5" /></a>
+注意记下兼容的网卡。名字和第二步的差不多的那个，点击从磁盘安装，选择下载后驱动的解压的安装文件，如图
+<a href="http://leaverimage.b0.upaiyun.com/29536_o.jpg"><img src="/images/925d77e1da47d263c1e41785765b5af2b6152818.jpg" alt="" title="6" /></a>
+到这一步以后，点击打开，可能会出现一个驱动列表。这是时候选择一个和兼容列表名字一样的。88e这部分不一样。如果找不到，也可以找类似的，比如途中给出的后两位是39.我装的是40也没问题。这个是驱动的历史版本。然后就可以了
+<a href="http://leaverimage.b0.upaiyun.com/29538_o.jpg"><img src="/images/02f918179789c33bccb038983bae0125c0d0d988.jpg" alt="" title="9" /></a></p>
+
+<p>最后。提醒各位童鞋。win8整体还是很不错的。不过呢。对于我来说。metro界面和正常的界面的傻傻分不清楚的模式。令我很是蛋疼。。所以暂时没有考虑换到win8.。。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/11/21/%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E6%A8%A1%E5%BC%8F/" data-toggle="tooltip" data-placement="top" title="依赖倒置原则和依赖注入模式">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/11/23/%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/" data-toggle="tooltip" data-placement="top" title="获取操作系统版本信息">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

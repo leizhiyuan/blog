@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>设计</title>
+  <meta property="og:title" content="设计" />
+  <meta name="twitter:title" content="设计" />
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/tags/%E8%AE%BE%E8%AE%A1/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/tags/%E8%AE%BE%E8%AE%A1/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/tags/%E8%AE%BE%E8%AE%A1/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="tags-heading">
+              
+                <h1>设计</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2015/05/10/%E5%85%B3%E4%BA%8E%E9%87%8D%E6%9E%84%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                <h2 class="post-title">关于重构和设计模式</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 10, 2015
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (5 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>之前在工作写了一个数据库查询的工具.大体背景就是这种工具需要跨不同环境的数据库,开发,测试,性能等.最早简单写了一个版本,在第一次查询时会初始化三个库的连接,保存在map中,然后后续查询直接根据使用者选择的环境类型取出对应的连接构造sql即可.</p>
+
+<p>随着各个不同系统接入的越来越多,各个平台都保存了自己的连接,导致代码冗余度急剧上升,上周,利用晚上的一点时间读了一下&lt;&lt;重构&gt;&gt;,这本书,深受启发,一个是重构就是要采用小步快走的方式,在测试用例的覆盖下,快速改动,去掉代码中不合理的地方.另一个就是重构需要对业务的当下和未来的变化有一个比较深刻的理解,知道这个系统能做什么,不能做什么.才能更好地做重构.</p>
+
+<p>于是,根据这个工具的特点,感觉抽象工厂模式比较合适,于是在抽象工厂模式的指导下,对关键部分进行了重构,在增加了几个类之后,代码复杂度开始下降.各个接入系统的代码基本上保持在了几十行内,之前都是几百行,大量冗余代码,只能说自己之前眼光太短浅了.并且,采用了类似单例模式的操作.当查询的时候,先根据当前环境作为key取连接,如果连接被关闭,或者不存在,则初始化,然后放到map中,返回.如果有的话,直接用.这样改动后,第一次查询的时候只需要初始化一个连接,速度极快.也算个好处..</p>
+
+<p>由此,反思了一下,设计模式之前也看过.但是总觉得各种书上讲的都比较浅显,给出的例子也似乎如作者所说,很符合那个模式,但实际上,在工作中如何识别当下的业务应该是比较难的,需要在业务变动中,不断地重构自己的代码,才能发现,某一种模式似乎特别适合解决这种问题,反之,重构也需要一定的设计模式作为基础,否则对代码的重构会只停留在抽取公共方法.重命名.大类变小类的阶段..</p>
+
+<p>希望接下来能够抽空把&lt;&lt;敏捷软件开发：原则、模式与实践&gt;&gt;这本书看完.同时能够真的理解这些模式的场合,想起一句话,知道一个技术方案的好,说明你还没有理解这种方法,只有你知道了这个方案的不足,你才真正理解了他,相信很多技术我都没有理解.设计模式也是,希望之后能够理解每种模式的不足,重构这本书也要经常翻翻,能加深对代码的理解.</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2014/06/30/spring%E6%8F%AD%E7%A7%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0spring%E6%A1%86%E6%9E%B6%E7%9A%84%E7%94%B1%E6%9D%A5/">
+                <h2 class="post-title">《Spring揭秘》读书笔记-第一章Spring框架的由来</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on June 30, 2014
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (23 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>1.框架的由来</p>
+
+<p>倡导J2EE轻量级应用解决方案</p>
+
+<p>框架总结结构</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/2014/06/Spring-Framework.jpg"><img src="/images/8775d9e40dbc29240061edd2b9b6f76990f39cad.jpg" alt="Spring Framework" /></a>
+整个Spring架构建立在Core核心模块上，是基础，该模块中，有一个IoC容器的实现，用来以依赖注入的方式管理对象之间的依赖关系。Core中还有一些气筒工具类，比如IO工具类</p>
+
+<p>从图中看到，AOP模块，提供了轻便二强大的AOP框架，一AOP的形式增强POJO的能力，弥补OOP/OOSD的不足，采用Proxy模式，与IoC容器相结合</p>
+
+<p>继续向上看，在Core和AOP之上，提供了完毕的数据访问和事务管理的抽象，其中，对JDBC API的最佳实践简化了API的使用，还未ORM产品提供了统一的支持，</p>
+
+<p>为了简化Java EE的服务，比如JNDI，JMS等等，Spring还提供了这些的集成服务，</p>
+
+<p>最后就是Web模块，提供了一套自己的Web MVC框架，上层模块依赖于下层模块，水平之间的模块彼此基本可以认为独立。</p>
+
+<p>Spring不仅仅是容器，更是开发任何Java应用的框架，</p>
+
+<p>Spring 框架之上衍生的产品包括不限于Spring Web Flow,Spring Web Services,Spring Security,Spring Integration，Spring Rich Client 等等等等</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/java/">java</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/spring/">spring</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2014/03/03/%E8%97%8F%E8%BF%90%E7%94%A8-boxlayout-%E8%BF%9B%E8%A1%8C-swing-%E6%8E%A7%E4%BB%B6%E5%B8%83%E5%B1%80/">
+                <h2 class="post-title">[藏]运用 BoxLayout 进行 Swing 控件布局</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on March 3, 2014
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 5 minutes (862 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  写的非常非常好的一个教程，感谢陈 怡平
+引言 在用户使用 Java Swing 进行用户界面开发过程中，会碰到如何对 Java Swing 的控件进行布局的问题。Swing 的控件放置在容器 (Container) 中，容器就是能够容纳控件或者其它容器的类，容器的具体例子有 Frame、Panel 等等。容器需要定义一个布局管理器来对控件进行布局管理，Swing 当中提供的主要的布局管理器有 FlowLayout、BorderLayout、BoxLayout、GridLayout 和 GridBaglayout, 它们的主要特点如表 1 所示：
+表 1. Swing 中的一些主要布局管理器的比较   布局管理器 特点     FlowLayout 把控件按照顺序一个接一个由左向右的水平放置在容器中，一行放不下，就放到下一行   BorderLayout 将整个容器划分成东南西北中五个方位来放置控件，放置控件时需要指定控件放置的方位   BoxLayout 可以指定在容器中是否对控件进行水平或者垂直放置，比 FlowLayout 要更为灵活   GridLayout 将整个容器划分成一定的行和一定的列，可以指定控件放在某行某列上   GridBagLayout 是 Swing 当中最灵活也是最复杂的布局管理器，可对控件在容器中的位置进行比较灵活的调整    本文主要关注在 BoxLayout 布局管理器的使用上。我们首先对 BoxLayout 作一下介绍。
+BoxLayout 介绍 如前所述，BoxLayout 可以把控件依次进行水平或者垂直排列布局，这是通过参数 X_AXIS、Y_AXIS 来决定的。X_AXIS 表示水平排列，而 Y_AXIS 表示垂直排列。BoxLayout 的构造函数有两个参数，一个参数定义使用该 BoxLayout 的容器，另一个参数是指定 BoxLayout 是采用水平还是垂直排列。下面是一个创建 BoxLayout 实例的例子：   JPanel panel=new JPanel(); BoxLayout layout=new BoxLayout(panel, BoxLayout.
+                  <a href="https://leizhiyuan.github.io/2014/03/03/%E8%97%8F%E8%BF%90%E7%94%A8-boxlayout-%E8%BF%9B%E8%A1%8C-swing-%E6%8E%A7%E4%BB%B6%E5%B8%83%E5%B1%80/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/java/">java</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2014/03/01/%E8%AF%91%E4%BD%BF%E7%94%A8mockito%E7%AE%80%E5%8D%95mock%E5%85%A5%E9%97%A8/">
+                <h2 class="post-title">[译]使用Mockito简单mock入门</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on March 1, 2014
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (628 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  我们在写单元测试的时候，面临的一个挑战就是要测试的内容总是依赖于其他组件，要是我们还得先配置好其他组件，未免有点不如意，那么我们可以使用Mocks来代替那些依赖的组件
+本文问了展示这个过程，我会创建一个DAL，数据访问层，这是一个类，提供了一个通用的api来访问和修改数据仓库的数据，然后，我们要测试这个api，而不用配置连接某个本地的数据库，，或者一个远程的数据库，或者是一个文件系统，反正就是任何放数据的东西，DAL层的好处就是隔离开了数据访问和应用程序代码
+首先使用maven来创建一个工程 mvn archetype:generate -DgroupId=info.sanaulla -DartifactId=MockitoDemo -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 执行之后，本地生成MockitoDemo 文件夹，然后整个工程的目录结构与生成好了。
+然后，我们写这样一个model类，表示book类型 package info.sanaulla.models;
+import java.util.List;
+/** * Model class for the book details. */ public class Book {
+private String isbn; private String title; private List&lt;String&gt; authors; private String publication; private Integer yearOfPublication; private Integer numberOfPages; private String image;
+public Book(String isbn, String title, List&lt;String&gt; authors, String publication, Integer yearOfPublication, Integer numberOfPages, String image){
+this.isbn = isbn; this.title: = title; this.
+                  <a href="https://leizhiyuan.github.io/2014/03/01/%E8%AF%91%E4%BD%BF%E7%94%A8mockito%E7%AE%80%E5%8D%95mock%E5%85%A5%E9%97%A8/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/java/">java</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%B7%A5%E4%BD%9C/">工作</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/07/17/%E4%BD%BF%E7%94%A8css3%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93%E7%BE%8E%E5%8C%96%E6%96%87%E5%AD%97/">
+                <h2 class="post-title">使用CSS3的自定义字体美化文字</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on July 17, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (31 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>之前看到一些设计师的主题的字体很美，下载下来发现使用了css3的自定义字体，可以用来显示服务器上的字体，非常方便，学习了一下</p>
+
+<p>1.首先得到字体</p>
+
+<p>这个方法很多，本机的字体，一些国外的免费网站，比如这个：<a href="http://www.dafont.com/">http://www.dafont.com</a>，下载后的字体一般为ttf格式，ttf字体被很多浏览器支持，但是，IE不支持，为了兼容性，需要为IE单独设置字体文件，格式必须为eot，所以我们需要转换字体，使用在线工具，比如<a href="http://www.kirsle.net/wizards/ttf2eot.cgi">http://www.kirsle.net/wizards/ttf2eot.cgi</a>，当然类似的网站有很多，根据个人爱好，随意。</p>
+
+<p>&nbsp;</p>
+
+<p>2.添加内容</p>
+
+<p>这里，我写一个简单的html文件，内容为
+<pre class="lang:default decode:true">&lt;body&gt;
+&lt;p class=&ldquo;test&rdquo;&gt;bystander&lt;/p&gt;
+&lt;/body&gt;</pre>
+在没有设置customFont这个类的css之前，字体就是默认的字体了。</p>
+
+<p>&nbsp;</p>
+
+<p>3.设置css样式
+<pre class="lang:default decode:true">@font-face
+{
+font-family:myFont;/<em>主流浏览器可用</em>/
+src:url(&ldquo;PONCTUATION.ttf&rdquo;);
+}
+@font-face
+{
+font-family:myFont;/<em>兼容IE</em>/
+src:url(&ldquo;PONCTUATION.eot&rdquo;);
+}
+.test
+{
+font-family:myFont;
+font-size:40px;
+}</pre>
+显示效果就是这样的了&hellip;只是用来演示的一个字体。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/38421_o.png"><img src="/images/0aa0db5ed4bc986d61cfbb9e1e421a2226c94f9b.png" alt="" /></a></p>
+
+<p>&nbsp;</p>
+
+<p>因为浏览器是要自动下载这个字体文件的，所以对于英文字体没啥问题，英文字体一般这个字体文件在100k左右，和一张图片比起来，基本算不是问题，但是对于中文字体，包一般在10M-20M左右，这样是不现实的，我的想法是，可以自己制作字体包，这样只需要满足常用的一些汉字就行了，大大减少包的大小，然后去找了一下，发现了<a href="http://www.high-logic.com/font-editor/fontcreator.html">http://www.high-logic.com/font-editor/fontcreator.html</a>这个软件，是可以直接编辑字体包的，也可以创建字体包，有空了用来试试.</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/02/21/c#%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%8F%92%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
+                <h2 class="post-title">C#反射实现简单的插件系统</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on February 21, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (40 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>如果用过一些优秀的开源或是非开源的应用软件，就会发现这些软件的一个很大的优势就是其开放性，任何有能力的人都可以为其开发不同的插件来增强其的功能。比如著名的foobar2000，Vim和TotalCommander等等。</p>
+
+<p>C#的反射可以用来实现一个简单的插件系统。思路很简单，我们创建一个解决方案，包含三个工程，一个为我们的软件MyApplication，一个为插件接口IPlugin，一个为具体的插件MyPlugin。插件系统的基本思路是我们用一个接口类库,来定义我们软件可以使用的插件必须实现的方法签名。然后我们的软件MyApplication通过引用该IPlugin dll来动态调用，而具体的实现插件MyPlugin则引用该接口来实现具体的方法。这样我们的应用程序就能在不知道具体插件的情况下调用插件了。。</p>
+
+<p>结构图如下：</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/32896_o.jpg"><img src="/images/bf202a9b50d5ce497f88718743c344d8579fadf1.jpg" alt="Myapplication" /></a></p>
+
+<p>关键代码也就是通过对程序集载入。搜索到对应接口的实现类。然后调用即可。
+<pre class="lang:default decode:true">Assembly a = Assembly.LoadFrom(AssemblyName);
+                foreach (Type t in a.GetTypes())
+                {
+                    if (t.GetInterface(&ldquo;IMyFunction&rdquo;) != null)
+                    {
+                        try
+                        {
+                            IMyFunction pluginclass = Activator.CreateInstance(t) as IMyFunction;
+                            pluginclass.doSomething();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString());
+                        }
+                    }
+                }</pre>
+运行结果：</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/32897_o.jpg"><img src="/images/6c33ac761faef8c7d4beae4a478b4240cdeb7ee3.jpg" alt="QQ截图20130220200408" /></a></p>
+
+<p>源码下载：<a href="http://pan.baidu.com/share/link?shareid=302323&amp;amp;uk=1493685990">PluginSystem.zip</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/02/02/%E5%88%A9%E7%94%A8%E5%8F%8D%E5%B0%84%E8%BD%AC%E6%8D%A2%E5%AF%B9%E8%B1%A1list%E5%88%B0csv/">
+                <h2 class="post-title">利用反射转换对象list到csv</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on February 2, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (172 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  扒自一工程。。可以学习一下.net中反射的简单用法 /// &lt;summary&gt; /// Take object List as input and export to csv which will be prompt save as dialog /// &lt;/summary&gt; /// &lt;typeparam name=&ldquo;T&rdquo;&gt; Type of object&lt;/typeparam&gt; /// &lt;param name=&ldquo;listToExport&rdquo;&gt; Object list to export&lt;/param&gt; /// &lt;param name=&ldquo;seperateChar&rdquo;&gt; character to use as scv separator&lt;/param&gt; public static string ExportListToCSV&lt;T&gt;( List&lt;T&gt; listToExport, string seperateChar) { Int32 success = 0; StringBuilder export = new StringBuilder(); try { string seperator = &ldquo;&rdquo; ; StringBuilder builder = new StringBuilder();
+                  <a href="https://leizhiyuan.github.io/2013/02/02/%E5%88%A9%E7%94%A8%E5%8F%8D%E5%B0%84%E8%BD%AC%E6%8D%A2%E5%AF%B9%E8%B1%A1list%E5%88%B0csv/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/01/27/c#-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E7%B4%A2%E5%BC%95/">
+                <h2 class="post-title">C# 基础知识系列文章索引</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on January 27, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (57 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>清理GR的加星标项目。分享来自博客园 <a href="http://www.cnblogs.com/zhili">zhili</a> 的C#基础系列文章。</p>
+
+<p>C#基础知识系列终于告了一个段落了, 本系列中主要和大家介绍了C#1.0到C# 4.0中一些重要的特性，刚开始写这个专题的初衷主要是我觉得掌握了C#这些基础知识之后，对于其他任何的一门语言都是差不多的，这样可以提高朋友们对其他语言的掌握，以及可以让大家更加迅速地掌握.NET的新特性， 并且相信这个系列对于找工作的朋友也是很有帮助的，因为很多公司面试都很看重基础知识是否扎实，是否对C#有一个全面的认识和理解，所以很多公司面试都会问到一些C#基础概念的问题，例如，经常面试会问：你是如何理解委托的，如何理解匿名函数等问题。</p>
+
+<p>然而这个系列中并没有介绍COM互操作性的内容以及.Net 4.5中的一些新特性，所以后面将会对这两个方面的内容进行补充，由于这个系列托的太久了(大概也有3个月吧)，所以就先告一段落的，后面将会带来.NET互操作性系列的介绍。下面就为这个系列文章做一个索引，方便大家收藏和查找。</p>
+
+<p>C#基础知识系列索引</p>
+
+<p>C#1.0</p>
+
+<p>1. <a href="http://www.cnblogs.com/zhili/archive/2012/10/22/Delegate.html">深入解析委托——C#中为什么要引入委托</a></p>
+
+<p>2. <a href="http://www.cnblogs.com/zhili/archive/2012/10/25/DeepDelegate.html">委托本质论</a></p>
+
+<p>3. <a href="http://www.cnblogs.com/zhili/archive/2012/10/27/MulticastDelegate.html">如何用委托包装多个方法——委托链</a></p>
+
+<p>4. <a href="http://www.cnblogs.com/zhili/archive/2012/10/27/Event.html">事件揭秘</a></p>
+
+<p>5. <a href="http://www.cnblogs.com/zhili/archive/2012/10/29/ButtonClickEvent.html">当点击按钮时触发Click事件背后发生的事情</a></p>
+
+<p>C# 2.0</p>
+
+<p>6. <a href="http://www.cnblogs.com/zhili/archive/2012/11/03/GenericType.html">泛型基础篇——为什么引入泛型</a></p>
+
+<p>7. <a href="http://www.cnblogs.com/zhili/archive/2012/11/08/Generic_1.html">泛型深入理解(一)</a></p>
+
+<p>8. <a href="http://www.cnblogs.com/zhili/archive/2012/11/08/Generic_2.html">泛型深入理解(二)</a></p>
+
+<p>9. <a href="http://www.cnblogs.com/zhili/archive/2012/11/12/GenericVari.html">深入理解泛型可变性</a></p>
+
+<p>10. <a href="http://www.cnblogs.com/zhili/archive/2012/11/23/Nullable.html">全面解析可空类型</a></p>
+
+<p>11. <a href="http://www.cnblogs.com/zhili/archive/2012/12/01/anonymousmethod.html">匿名方法解析</a></p>
+
+<p>12. <a href="http://www.cnblogs.com/zhili/archive/2012/12/02/Interator.html">迭代器</a></p>
+
+<p>C# 3.0</p>
+
+<p>13. <a href="http://www.cnblogs.com/zhili/archive/2012/12/11/basicfeatures.html">全面解析对象集合初始化器、匿名类型和隐式类型</a></p>
+
+<p>14. <a href="http://www.cnblogs.com/zhili/archive/2012/12/12/LambdaExpression.html">深入理解Lambda表达式</a></p>
+
+<p>15. <a href="http://www.cnblogs.com/zhili/archive/2012/12/17/ExtensionMethod.html">全面解析扩展方法</a></p>
+
+<p>16. <a href="http://www.cnblogs.com/zhili/archive/2012/12/24/Linq.html">Linq介绍</a></p>
+
+<p>C# 4.0</p>
+
+<p>17. <a href="http://www.cnblogs.com/zhili/archive/2013/01/07/DynamicType.html">深入理解动态类型</a></p>
+
+<p>&nbsp;</p>
+
+<p>从C#的所有特性可以看出,C#中提出的每个新特性都是建立在原来特性的基础上,并且是对原来特性的一个改进, 做这么多的改进主要是为了方便开发人员更好地使用C#来编写程序,是让我们写更少的代码来实现我们的程序,把一些额外的工作交给编译器去帮我们做,也就是很多人说微软很喜欢搞语法糖的意思(语法糖即让编译器帮我们做一些额外的事情，减少开发人员所考虑的事情，使开发人员放更多的精力放在系统的业务逻辑上面。)，大家从C# 3中提出的特性中可以很好的看出这点(指的是玩语法糖)，C#3中几乎大部分特性都是C#提供的语法糖，从CLR层面来说(指的是增加新的IL指令)，C# 3并没有更新什么，C# 4中提出的动态类型又是建立在表达式树的基础上，包括Linq也是建立在表达式树的基础上，所以每个特性都是层层递进的一个关系。相信C#后面提出的新特性将会更加方便我们开发程序，感觉所有语言的一个统一的思想都是——写更少的代码，却可以做更多的事情。但是我们不能仅仅停住于知道怎么使用它，我们还应该深入研究它的背后的故事，知道新特性是如何实现的和原理。用一句说就是——我们要知其然之气所以然，学习知识应该抱着刨根问底的态度去学习,<strong>相信这样的学习方式也可以让大家不感到心虚,写出的程序将会更加自信。</strong></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/01/23/%E4%B8%8D%E8%A6%81%E5%8F%98%E6%88%90%E4%BD%A0%E8%AE%A8%E5%8E%8C%E7%9A%84%E4%BA%BA%E9%9D%A2%E7%9B%AE%E5%8F%AF%E6%86%8E/">
+                <h2 class="post-title">不要变成你讨厌的人，面目可憎</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on January 23, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (58 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>本文来自<a href="http://www.xjp.cc/2013-log/01/5379.html">xjp的碎碎念</a>，我很喜欢的一个博主。博客已被伟大的GFW屏蔽。和文章的主题类似，我有时候会在G+上会纠正一些人的谣言，并且给出澄清，可是，往往效果不大。我的态度很简单，你要反对一样东西，请你不要是那样的东西。或用那样的东西去反对。不要为任何主义所迷惑，你要做好一个人。</p>
+
+<p>今天看到一篇来自《新京报》的报道，称时事评论员<a href="http://weiba.weibo.com/10015/t/zfCUGgdhj">@周筱赟爆料</a>称，根据铁道部的两份采购合同显示，推测铁道部12306订票网站实际投入已经超过5亿元，而不是之前曾披露的3.2亿元。</p>
+
+<p>首先我很赞同周筱赟所做的事情，在国内目前民众获取信息渠道有限的情况下，有这样的热心人士去披露政府部门行政行为中值得讨论的部分，对于整个社会的公正与透明都有极大的推动作用。</p>
+
+<p>但我注意的是另一群人，他们典型的回复是：
+&gt; 1、花5个多亿做成这么垃圾的网站，铁道部公然贪污多少钱？臭不要脸的！二逼的网站和系统归功于傻逼造就！
+&gt;
+&gt; 2、卧槽，里面有4.5亿是贪污款吧
+&gt;
+&gt; 3、习总说反腐，最大的蛀虫在这里，敢反否？
+&gt;
+&gt; 4、3亿建站为什么这些年一直没有工商部去追查12306的贪污问题。你懂我懂大家懂。
+&gt;
+&gt; 5、中央纪委、监察部和各级纪检监察机关要加大检查监督力度，执好纪、问好责、把好关。
+&gt;
+&gt; 6、太极集团是做医药的呀，怎么也搞起软件来了。我想说，有没经验都不要紧，要紧的是有钱。咱就撒都能做！
+&gt;
+&gt; 7、五亿······· 用了个500的模版 月薪5000水平的制作团队
+&gt;
+&gt; 8、三億各單位部門宣傳費，一億三公支出，五千萬采購合同草擬費用，四千萬給媒體掩口費, 九百九十萬信息產業部備案費用，最後十萬才是網站制作費用… 這五億基本上都使對了地方，沒有錯啊!
+其它的评论都是诸如此类，某一些理性的评论都被深埋其中。</p>
+
+<p>我不是铁道部、太极的任何一方，我不能拍着胸脯说这些问题一定不存在，但真正让我恐惧的是，有大量网友没有认真去研究文章的内容与事实，只是单纯下意识地做出了判断，然后开喷。</p>
+
+<p>我们仔细去看我们讨厌的那些五毛与政府宣传部门，他们的日常做法都是：
+&gt; 1、戴帽子
+&gt;
+&gt; 2、站在道德高度，说正确的废话
+&gt;
+&gt; 3、自说自话，完全不管别人在说什么
+&gt;
+&gt; 4、预设立场
+&gt;
+&gt; 5、我永远是对的，反对我的都是错的
+&gt;
+&gt; 6、你们站在人民的对立面
+然后有一个微博网友在评论里跟我说，他只需要一万元就能够搞定12306的网站外包开发。听到这样的话，我不由地一阵颤抖，如果这话来自一名所谓的业内人士，那我真的不知道应该怎么说了。</p>
+
+<p>引用某网友的评论：
+&gt; 从专业角度来说，投入不算多，只是透明度不够，民众才疑惑！全国各地还需要再多些大型机房，才能满足高峰期分流排队和并发操作！
+我的看法是，不否认铁道部的开发、架构设计存在一定问题，如果没有实际的大型系统设计经验的团队，可能会造成很多理论与实际脱节问题，事实上今年的12306已经比去年好太多了，他们也在吸取教训。当然，我也赞成他们向互联网公司取经，吸收现有经验。</p>
+
+<p>建议大家不要单纯喷，5亿这个数字可能略高，但比起数千万的静态网站好多了，至于具体审计是国家审计局的事情，我支持惩处贪腐。做一个覆盖数千万用户，承受刷票插件5秒一次的并发，服务器、带宽、配套都是成本。而售票数字化几乎是必经之路，铁道部走出这一步是好的，买不到票有基础运力的问题，跟网络售票无关。</p>
+
+<p>不要一叶障目，买不到票人人都会烦心，诚然铁道部是一个不错的发泄口，但如果只是为了喷而喷。借用我之前的一句话，铁道部如何做你们才满意？</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%94%9F%E6%B4%BB/">生活</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/01/21/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7/">
+                <h2 class="post-title">社工字典生成工具</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on January 21, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (58 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>在家无聊写了这个工具，主要是为了防止自己这一直写随笔把本行忘了。。也熟悉一下代码。。暂时不放源代码了。以后改的好一点再发吧。</p>
+
+<p>作者：bystander</p>
+
+<p>博客：<a href="http://leaver.me">http://leaver.me</a></p>
+
+<p>转载请注明出处！</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/31971_o.png"><img src="/images/a46e1099507677947d020ad1fc0251a2fe9fca27.png" alt="" /></a></p>
+
+<p>&nbsp;</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/31972_o.png"><img src="/images/674f4d21632e17d90688202f0e06717fbeba54c8.png" alt="" /></a></p>
+
+<p>涉及到的东西有：</p>
+
+<p>1.C#隐藏TabControl的header部分，前面的文章有介绍</p>
+
+<p>2.获取窗体全部的某一类控件（这个无聊的话抽象出一个通用的方法出来，以后就可以直接用了）
+<pre class="lang:default decode:true">  /// &lt;summary&gt;
+        /// 获取所有的文本框控件
+        /// &lt;/summary&gt;
+        /// &lt;param name=&ldquo;control&rdquo;&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        private List&lt;TextBox&gt; GetAllControls(Control control)
+        {
+            foreach (Control con in control.Controls)
+            {
+                if (con.Controls.Count &gt; 0)
+                {
+                    GetAllControls(con);
+                }
+                else if (con is TextBox)
+                {
+                    tBoxList.Add(con as TextBox);
+                }
+            }
+            return tBoxList;
+        }</pre>
+&nbsp;</p>
+
+<p>3.文件操作</p>
+
+<p>4.字符串操作</p>
+
+<p>反正很简单，主要就是写的时候思路要清晰。知道大部分使用密码的规则。处理一下生日格式。否则后面很麻烦。。相应的验证也比较少。界面依然毫无美感。。</p>
+
+<p>总结：</p>
+
+<p>现在发现在控件命名上越来越顺利了。自我感觉良好。后面慢慢的要开始尝试使用学到的一些新的技术点。。</p>
+
+<p>下载：<a href="http://pan.baidu.com/share/link?shareid=244748&amp;amp;uk=1493685990">社工字典生成工具</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+        </div>
+        
+          <ul class="pager main-pager">
+            
+            
+              <li class="next">
+                <a href="/tags/%E8%AE%BE%E8%AE%A1/page/2/">Older Posts &rarr;</a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/tags/%E8%AE%BE%E8%AE%A1/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>C#与.net 程序员面试笔记</title>
+  <meta property="og:title" content="C#与.net 程序员面试笔记" />
+  <meta name="twitter:title" content="C#与.net 程序员面试笔记" />
+  <meta name="description" content="这是前几天读的书。书不难。10-13章跳过了。以后再看。
+以前，一个应用程序对应一个进程。并且为该进程指定虚拟内存，这样。进程会消耗很多资源，而且进程之间的通信业比较麻烦
+应用程序域可以理解为很多应用程序域都可以运行在同一个.net 进程中，降低内存消耗。同时不同的域之间隔离。安全有保证。通信也简单。
+程序集是指包含编译好的。面向.net framework的代码的逻辑单元。是完全自我描述性的一个逻辑单元。可以存储在多个文件中。简单来说，程序集就是几个彼此有关联程序文件的集合。程序集会包含程序的元数据。描述了对应代码中定义的方法和类型。
+装箱和拆箱：装箱转换是将一个值类型显式或隐式的转换成一个object对象。并且把这个对象转换成一个被该值类型应用的的接口类型。装箱后的object对象中的数据位于堆中。一般应该避免这种运算。 CLR将值类型的数据包裹到匿名的托管对象中，并将托管对象的引用放在Object类型的变量中。这个过程称为装箱。一般还是使用泛型来代替多好。
+值类型和引用类型：值类型实例通常分配在线程的栈上。并且不包含指向任何实例数据的指针。引用类型实例分配在托管堆上。变量保存了实例数据的内存引用。引用类型复制的话会导致引用同一个内存地址。
+C#预处理指令是在编译时调用的。预处理指令通知C#编译器要编译哪些代码。并指出如何处理特定的错误和异常。比如用在一些调试的时候。在顶部define一个debug 内部的测试部分写上测试用例。具体示例 //定义条件变量，注意条件变量的定义要在代码的最前面 #define Debug using System; namespace MyConsole { class Preprocesor { public static void Main() { //如果条件变量是Debug则运行单元调试代码，再运行功能模块返回运行结果 #if Debug Console.WriteLine(&ldquo;运行单元测试模块&rdquo;); Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;); Console.Read(); #elif Release //如果条件变量是Release，则直接运行功能模块返回运行结果 Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;); Console.Read(); #endif } } } C#中的指针 指针是一个无符号整数。是以当前系统寻址范围为取值范围的整数，CLR支持三种指针类型：受托管指针，非托管指针，非托管函数指针，受托管指针存储在堆上的托管块的引用，一个非托管指针就是传统意义上的指针，要放在unsafe中使用，C#中指针并不继承自Object
+String 是CLR的类型名称。而string是C#的关键字。其实C#编译时。。会增下如下代码： using string=System.String
+Array 到ArrayList的转换 1.使用ArrayList.Adapter(ArrayName) 可以直接得到ArrayList 2.使用遍历逐个添加到ArrayList里。 反向的话直接使用(Array[])ArrayListName.ToArray(typeof(Array));即可
+checked和unchecked语句用于控制整形算术运算和显示转换的溢出检查上下文。checked关键字用于对整型算术运算和转换显式启用溢出检查。因为默认情况下。如果表达式产生的值超过了类型的范围。则常数表达式将会导致编译时错误。而非常数表达式则在运行时计算并将引发异常。
+Asp.Net 中的Request对象主要功能是从客户端得到数据信息。他的属性比较多。比如UserLanguage，TotalBytes，Path，ApplicationPath
+ViewState是其的一个重要特性。用于把生成页面要用的状态值保存到一个隐藏域里。而不是用cookie/内存
+SOAP是Web Service应用的基础协议。他是一种轻量的简单的。基于xml的协议。被设计成在wEb上交换结构化的和固有的信息。 WSDL是一种用于描述web服务和说明如何与Web服务通信的XML语言。WSDL是一种符合XML语法规范的语言。它的设计完全基于Soap协议的实现。当一个WEb Service 服务器期望为使用者提供服务说明时，WSDL语言是最好的选择之一。
+&nbsp;
+对企业的一些认识 
+千万不要说自己未来的打算是做到管理层，首先对管理层的定义不清楚。职务不清楚。所以保险的答案是我会努力钻研技术。使得能够达到业内的专业人士。深刻理解公司和行业
+我是为了找一份长期性的工作。我不喜欢频繁的跳槽我希望在这个利于发展自己的事业。深入学习。向专业人士请教。那。该我想问这个职务是长期的吗？
+不要把公司想像成慈善机构。工作的运作方面应该是尽可能快的实现盈利。树立品牌，赢得客户。我的工作就是完成企业的良性运作。
+如果被问到是否需要考虑看分数。应该说用人单位确实需要全面考量。也要考虑应聘者的工作积极性/服从性。实际经验/对开发的理解诶。这些也许比分数更有价值。">
+  <meta property="og:description" content="这是前几天读的书。书不难。10-13章跳过了。以后再看。
+以前，一个应用程序对应一个进程。并且为该进程指定虚拟内存，这样。进程会消耗很多资源，而且进程之间的通信业比较麻烦
+应用程序域可以理解为很多应用程序域都可以运行在同一个.net 进程中，降低内存消耗。同时不同的域之间隔离。安全有保证。通信也简单。
+程序集是指包含编译好的。面向.net framework的代码的逻辑单元。是完全自我描述性的一个逻辑单元。可以存储在多个文件中。简单来说，程序集就是几个彼此有关联程序文件的集合。程序集会包含程序的元数据。描述了对应代码中定义的方法和类型。
+装箱和拆箱：装箱转换是将一个值类型显式或隐式的转换成一个object对象。并且把这个对象转换成一个被该值类型应用的的接口类型。装箱后的object对象中的数据位于堆中。一般应该避免这种运算。 CLR将值类型的数据包裹到匿名的托管对象中，并将托管对象的引用放在Object类型的变量中。这个过程称为装箱。一般还是使用泛型来代替多好。
+值类型和引用类型：值类型实例通常分配在线程的栈上。并且不包含指向任何实例数据的指针。引用类型实例分配在托管堆上。变量保存了实例数据的内存引用。引用类型复制的话会导致引用同一个内存地址。
+C#预处理指令是在编译时调用的。预处理指令通知C#编译器要编译哪些代码。并指出如何处理特定的错误和异常。比如用在一些调试的时候。在顶部define一个debug 内部的测试部分写上测试用例。具体示例 //定义条件变量，注意条件变量的定义要在代码的最前面 #define Debug using System; namespace MyConsole { class Preprocesor { public static void Main() { //如果条件变量是Debug则运行单元调试代码，再运行功能模块返回运行结果 #if Debug Console.WriteLine(&ldquo;运行单元测试模块&rdquo;); Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;); Console.Read(); #elif Release //如果条件变量是Release，则直接运行功能模块返回运行结果 Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;); Console.Read(); #endif } } } C#中的指针 指针是一个无符号整数。是以当前系统寻址范围为取值范围的整数，CLR支持三种指针类型：受托管指针，非托管指针，非托管函数指针，受托管指针存储在堆上的托管块的引用，一个非托管指针就是传统意义上的指针，要放在unsafe中使用，C#中指针并不继承自Object
+String 是CLR的类型名称。而string是C#的关键字。其实C#编译时。。会增下如下代码： using string=System.String
+Array 到ArrayList的转换 1.使用ArrayList.Adapter(ArrayName) 可以直接得到ArrayList 2.使用遍历逐个添加到ArrayList里。 反向的话直接使用(Array[])ArrayListName.ToArray(typeof(Array));即可
+checked和unchecked语句用于控制整形算术运算和显示转换的溢出检查上下文。checked关键字用于对整型算术运算和转换显式启用溢出检查。因为默认情况下。如果表达式产生的值超过了类型的范围。则常数表达式将会导致编译时错误。而非常数表达式则在运行时计算并将引发异常。
+Asp.Net 中的Request对象主要功能是从客户端得到数据信息。他的属性比较多。比如UserLanguage，TotalBytes，Path，ApplicationPath
+ViewState是其的一个重要特性。用于把生成页面要用的状态值保存到一个隐藏域里。而不是用cookie/内存
+SOAP是Web Service应用的基础协议。他是一种轻量的简单的。基于xml的协议。被设计成在wEb上交换结构化的和固有的信息。 WSDL是一种用于描述web服务和说明如何与Web服务通信的XML语言。WSDL是一种符合XML语法规范的语言。它的设计完全基于Soap协议的实现。当一个WEb Service 服务器期望为使用者提供服务说明时，WSDL语言是最好的选择之一。
+&nbsp;
+对企业的一些认识 
+千万不要说自己未来的打算是做到管理层，首先对管理层的定义不清楚。职务不清楚。所以保险的答案是我会努力钻研技术。使得能够达到业内的专业人士。深刻理解公司和行业
+我是为了找一份长期性的工作。我不喜欢频繁的跳槽我希望在这个利于发展自己的事业。深入学习。向专业人士请教。那。该我想问这个职务是长期的吗？
+不要把公司想像成慈善机构。工作的运作方面应该是尽可能快的实现盈利。树立品牌，赢得客户。我的工作就是完成企业的良性运作。
+如果被问到是否需要考虑看分数。应该说用人单位确实需要全面考量。也要考虑应聘者的工作积极性/服从性。实际经验/对开发的理解诶。这些也许比分数更有价值。">
+  <meta name="twitter:description" content="这是前几天读的书。书不难。10-13章跳过了。以后再看。
+以前，一个应用程序对应一个进程。并且为该进程指定虚拟内存，这样。进程会消耗很多资源，而且进程之间的通信业比较麻烦
+应用程序域可以理解为很多应用程序域都可以运行在同一个.net 进程中，降低内存消耗。同时不同的域之间隔离。安全有保证。通信也简单。
+程序集是指包含编译好的。面向.net framework的代码的逻辑单元。是完全自我描述性的一个 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/11/28/c" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/11/28/c" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>C#与.net 程序员面试笔记</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 28, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (70 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>这是前几天读的书。书不难。10-13章跳过了。以后再看。</p>
+
+<p>以前，一个应用程序对应一个进程。并且为该进程指定虚拟内存，这样。进程会消耗很多资源，而且进程之间的通信业比较麻烦</p>
+
+<p><strong>应用程序域</strong>可以理解为很多应用程序域都可以运行在同一个.net 进程中，降低内存消耗。同时不同的域之间隔离。安全有保证。通信也简单。</p>
+
+<p><strong>程序集</strong>是指包含编译好的。面向.net framework的代码的逻辑单元。是完全自我描述性的一个逻辑单元。可以存储在多个文件中。简单来说，程序集就是几个彼此有关联程序文件的集合。程序集会包含程序的元数据。描述了对应代码中定义的方法和类型。</p>
+
+<p><strong>装箱和拆箱</strong>：装箱转换是将一个值类型显式或隐式的转换成一个object对象。并且把这个对象转换成一个被该值类型应用的的接口类型。装箱后的object对象中的数据位于堆中。一般应该避免这种运算。
+CLR将值类型的数据包裹到匿名的托管对象中，并将托管对象的引用放在Object类型的变量中。这个过程称为装箱。一般还是使用泛型来代替多好。</p>
+
+<p><strong>值类型和引用类型</strong>：值类型实例通常分配在线程的栈上。并且不包含指向任何实例数据的指针。引用类型实例分配在托管堆上。变量保存了实例数据的内存引用。引用类型复制的话会导致引用同一个内存地址。</p>
+
+<p><strong>C#预处理指令</strong>是在编译时调用的。预处理指令通知C#编译器要编译哪些代码。并指出如何处理特定的错误和异常。比如用在一些调试的时候。在顶部define一个debug 内部的测试部分写上测试用例。具体示例
+<pre class="lang:default decode:true">//定义条件变量，注意条件变量的定义要在代码的最前面
+#define Debug
+using System;
+namespace MyConsole
+{
+  class Preprocesor
+  {
+    public static void Main()
+    {
+     //如果条件变量是Debug则运行单元调试代码，再运行功能模块返回运行结果
+    #if Debug
+      Console.WriteLine(&ldquo;运行单元测试模块&rdquo;);
+      Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;);
+     Console.Read();
+   #elif Release
+      //如果条件变量是Release，则直接运行功能模块返回运行结果
+        Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;);
+       Console.Read();
+       #endif
+      }
+   }
+}</pre>
+<strong>C#中的指针</strong>
+指针是一个无符号整数。是以当前系统寻址范围为取值范围的整数，CLR支持三种指针类型：受托管指针，非托管指针，非托管函数指针，受托管指针存储在堆上的托管块的引用，一个非托管指针就是传统意义上的指针，要放在unsafe中使用，C#中指针并不继承自Object</p>
+
+<p>String 是CLR的类型名称。而string是C#的关键字。其实C#编译时。。会增下如下代码：
+using string=System.String</p>
+
+<p><strong>Array 到ArrayList的转换</strong>
+1.使用ArrayList.Adapter(ArrayName) 可以直接得到ArrayList
+2.使用遍历逐个添加到ArrayList里。
+反向的话直接使用(Array[])ArrayListName.ToArray(typeof(Array));即可</p>
+
+<p><strong>checked和unchecked</strong>语句用于控制整形算术运算和显示转换的溢出检查上下文。checked关键字用于对整型算术运算和转换显式启用溢出检查。因为默认情况下。如果表达式产生的值超过了类型的范围。则常数表达式将会导致编译时错误。而非常数表达式则在运行时计算并将引发异常。</p>
+
+<p>Asp.Net 中的<strong>Request对象</strong>主要功能是从客户端得到数据信息。他的属性比较多。比如UserLanguage，TotalBytes，Path，ApplicationPath</p>
+
+<p><strong>ViewState</strong>是其的一个重要特性。用于把生成页面要用的状态值保存到一个隐藏域里。而不是用cookie/内存</p>
+
+<p><strong>SOAP</strong>是Web Service应用的基础协议。他是一种轻量的简单的。基于xml的协议。被设计成在wEb上交换结构化的和固有的信息。
+WSDL是一种用于描述web服务和说明如何与Web服务通信的XML语言。WSDL是一种符合XML语法规范的语言。它的设计完全基于Soap协议的实现。当一个WEb Service 服务器期望为使用者提供服务说明时，WSDL语言是最好的选择之一。</p>
+
+<p>&nbsp;</p>
+
+<p><strong>对企业的一些认识 </strong></p>
+
+<p>千万不要说自己未来的打算是做到管理层，首先对管理层的定义不清楚。职务不清楚。所以保险的答案是我会努力钻研技术。使得能够达到业内的专业人士。深刻理解公司和行业</p>
+
+<p>我是为了找一份长期性的工作。我不喜欢频繁的跳槽我希望在这个利于发展自己的事业。深入学习。向专业人士请教。那。该我想问这个职务是长期的吗？</p>
+
+<p>不要把公司想像成慈善机构。工作的运作方面应该是尽可能快的实现盈利。树立品牌，赢得客户。我的工作就是完成企业的良性运作。</p>
+
+<p>如果被问到是否需要考虑看分数。应该说用人单位确实需要全面考量。也要考虑应聘者的工作积极性/服从性。实际经验/对开发的理解诶。这些也许比分数更有价值。</p>
+
+<p>应届生的优缺点应该是足够的理论知识和专业能力。缺点是工作和社会经验不足。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/11/25/c#%E6%A8%A1%E6%8B%9F%E6%89%8B%E5%B7%A5%E6%B4%97%E7%89%8C%E9%99%84%E6%B5%8B%E8%AF%95/" data-toggle="tooltip" data-placement="top" title="C#模拟手工洗牌(附测试)">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/12/03/%E6%BA%90%E7%A0%81%E6%89%93%E5%8C%85%E4%B8%8B%E8%BD%BD%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BC%94%E7%A4%BA%E5%8A%A8%E7%94%BB/" data-toggle="tooltip" data-placement="top" title="[源码]打包下载算法与数据结构演示动画">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

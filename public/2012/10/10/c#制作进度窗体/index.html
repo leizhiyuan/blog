@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>C#制作进度窗体</title>
+  <meta property="og:title" content="C#制作进度窗体" />
+  <meta name="twitter:title" content="C#制作进度窗体" />
+  <meta name="description" content="介绍
+这是我在CodeProject上的第一篇文章。我希望对你有用
+当我开发软件的时候。我通常因为一个很耗时是任务需要完成。而请求让用户等待，并且通过也允许用户取消。不论我做何种操作（比如下载文件。保存大文件等等）。我都需要做下面几件事：
+ 通过一个模态对话框来让用户等待操作完成 能让用户看到进度。 能让用户随时取消。 我搜了好久也没找到拿来就能用的窗体控件，也许是我没找到。于是我自己写。。 图1  背景
+BackgroundWorker 类包含了我需要完成任务的所有东西。我只需要给他提供一个对话框。
+使用代码
+ProgressForm 包含了一个BackgroundWorker ，你要做的仅仅就是提供了一个完成工作的方法。 ProgressForm form = new ProgressForm(); form.DoWork &#43;= new ProgressForm.DoWorkEventHandler(form_DoWork); //如果想为后台任务提供参数的话 form.Argument = something; 为了开始BackgroundWorker，只需要调用ShowDialog 方法。返回值则取决于任务是怎么完成的。 DialogResult result = form.ShowDialog(); if (result == DialogResult.Cancel) { //用户点击了取消 } else if (result == DialogResult.Abort) { /未处理的异常抛出 //你可以得到异常信息 MessageBox.Show(form.Result.Error.Message); } else if (result == DialogResult.OK) { //正常完成 //结果存储在 form.Result里 } &nbsp;
+最后。任务方法看起来是这样的。 void form_DoWork(ProgressForm sender, DoWorkEventArgs e) { //得到参数 object myArgument = e.">
+  <meta property="og:description" content="介绍
+这是我在CodeProject上的第一篇文章。我希望对你有用
+当我开发软件的时候。我通常因为一个很耗时是任务需要完成。而请求让用户等待，并且通过也允许用户取消。不论我做何种操作（比如下载文件。保存大文件等等）。我都需要做下面几件事：
+ 通过一个模态对话框来让用户等待操作完成 能让用户看到进度。 能让用户随时取消。 我搜了好久也没找到拿来就能用的窗体控件，也许是我没找到。于是我自己写。。 图1  背景
+BackgroundWorker 类包含了我需要完成任务的所有东西。我只需要给他提供一个对话框。
+使用代码
+ProgressForm 包含了一个BackgroundWorker ，你要做的仅仅就是提供了一个完成工作的方法。 ProgressForm form = new ProgressForm(); form.DoWork &#43;= new ProgressForm.DoWorkEventHandler(form_DoWork); //如果想为后台任务提供参数的话 form.Argument = something; 为了开始BackgroundWorker，只需要调用ShowDialog 方法。返回值则取决于任务是怎么完成的。 DialogResult result = form.ShowDialog(); if (result == DialogResult.Cancel) { //用户点击了取消 } else if (result == DialogResult.Abort) { /未处理的异常抛出 //你可以得到异常信息 MessageBox.Show(form.Result.Error.Message); } else if (result == DialogResult.OK) { //正常完成 //结果存储在 form.Result里 } &nbsp;
+最后。任务方法看起来是这样的。 void form_DoWork(ProgressForm sender, DoWorkEventArgs e) { //得到参数 object myArgument = e.">
+  <meta name="twitter:description" content="介绍
+这是我在CodeProject上的第一篇文章。我希望对你有用
+当我开发软件的时候。我通常因为一个很耗时是任务需要完成。而请求让用户等待，并且通过也允许用户取消。不论我做何种操作（比如下载文件。保存大文件等等）。我都需要做下面几件事：
+ 通过一个模态对话框来让用户等待操作完成 能让用户看到进度。 能让用户随时取消。 我搜了好久也没找到拿来就能用的窗体控件，也许是我没找到。于是我自己写。。 图1 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/10/10/c" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/10/10/c" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>C#制作进度窗体</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 10, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 4 minutes (729 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><strong>介绍</strong></p>
+
+<p>这是我在CodeProject上的第一篇文章。我希望对你有用</p>
+
+<p>当我开发软件的时候。我通常因为一个很耗时是任务需要完成。而请求让用户等待，并且通过也允许用户取消。不论我做何种操作（比如下载文件。保存大文件等等）。我都需要做下面几件事：</p>
+
+<ul>
+<li>通过一个模态对话框来让用户等待操作完成</li>
+<li>能让用户看到进度。</li>
+<li>能让用户随时取消。
+我搜了好久也没找到拿来就能用的窗体控件，也许是我没找到。于是我自己写。。
+图1</li>
+</ul>
+
+<p><img src="/images/9f46aad8d865255936532f68d592d8ffd45b8b3d.jpg" alt="" title="progress" /></p>
+
+<p><strong>背景</strong></p>
+
+<p>BackgroundWorker 类包含了我需要完成任务的所有东西。我只需要给他提供一个对话框。</p>
+
+<p><strong>使用代码</strong></p>
+
+<p>ProgressForm 包含了一个BackgroundWorker ，你要做的仅仅就是提供了一个完成工作的方法。
+<pre class="lang:default decode:true">ProgressForm form = new ProgressForm();
+form.DoWork += new ProgressForm.DoWorkEventHandler(form_DoWork);
+//如果想为后台任务提供参数的话
+form.Argument = something;</pre>
+为了开始BackgroundWorker，只需要调用ShowDialog 方法。返回值则取决于任务是怎么完成的。
+<pre class="lang:default decode:true">DialogResult result = form.ShowDialog();
+if (result == DialogResult.Cancel)
+{
+//用户点击了取消
+}
+else if (result == DialogResult.Abort)
+{
+/未处理的异常抛出
+//你可以得到异常信息
+MessageBox.Show(form.Result.Error.Message);
+}
+else if (result == DialogResult.OK)
+{
+//正常完成
+//结果存储在 form.Result里
+}</pre>
+&nbsp;</p>
+
+<p>最后。任务方法看起来是这样的。
+<pre class="lang:default decode:true">void form_DoWork(ProgressForm sender, DoWorkEventArgs e)
+{
+//得到参数
+object myArgument = e.Argument;</p>
+
+<p>//做一些耗时的任务&hellip;
+for (int i = 0; i &lt; 100; i++)
+{
+//通知进度
+sender.SetProgress(i, &ldquo;Step &rdquo; + i.ToString() + &ldquo; / 100&hellip;&rdquo;);</p>
+
+<p>//&hellip;</p>
+
+<p>//检查是否点击了取消
+if (sender.CancellationPending)
+{
+e.Cancel = true;
+return;
+}
+}
+}</pre>
+如果你想要改改进度条，或者进度条显示的文本。SetProgress 有一些重载的方法
+<pre class="lang:default decode:true">public void SetProgress(string status);
+public void SetProgress(int percent);
+public void SetProgress(int percent, string status);</pre>
+最后一个可自定义的字符串是：有两个预定义的字符串CancellingText 和DefaultStatusText. CancellingText ，这两个字符串，当用户点击取消的时候显示</p>
+
+<p><strong>如何实现</strong>
+ProgressForm 紧紧嵌入了一个BackgroundWorker ，并包装进了主函数。</p>
+
+<p>首先。我设计了如图所示的一个窗体，然后。添加了BackgroundWorker。
+<pre class="lang:default decode:true">public partial class ProgressForm : Form
+{
+public ProgressForm()
+{
+InitializeComponent();</p>
+
+<p>worker = new BackgroundWorker();
+worker.WorkerReportsProgress = true;
+worker.WorkerSupportsCancellation = true;
+worker.DoWork += new System.ComponentModel.DoWorkEventHandler(worker_DoWork);
+worker.ProgressChanged += new ProgressChangedEventHandler(
+worker_ProgressChanged);
+worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
+worker_RunWorkerCompleted);
+}
+void worker_DoWork(object sender, DoWorkEventArgs e)
+{
+}
+void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+{
+}
+void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+{
+}
+BackgroundWorker worker;
+}</pre>
+我们必须把DoWork事件暴露给用户。我添加了一个委托。这样。我可以很容易的访问窗体成员
+<pre class="lang:default decode:true">public delegate void DoWorkEventHandler(ProgressForm sender, DoWorkEventArgs e);
+public event DoWorkEventHandler DoWork;</p>
+
+<p>void worker_DoWork(object sender, DoWorkEventArgs e)
+{
+//后台任务开始
+//调用用户的事件处理程序
+if (DoWork != null)
+DoWork(this, e);
+}</pre>
+&nbsp;</p>
+
+<p>好。我们已经有了任务和事件。先爱。我们希望当窗体显示的时候。后台任务尽可能开始。我们在Load事件中写代码
+<pre class="lang:default decode:true">void ProgressForm_Load(object sender, EventArgs e)
+{
+worker.RunWorkerAsync();
+}</pre>
+现在写一个方法通知进度。添加代码到ProgressChanged 事件处理程序中
+<pre class="lang:default decode:true">public void SetProgress(int percent, string status)
+{
+worker.ReportProgress(percent, status);
+}
+void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+{
+if (e.ProgressPercentage &gt;= progressBar.Minimum &amp;&amp;
+e.ProgressPercentage &lt;= progressBar.Maximum)
+{
+progressBar.Value = e.ProgressPercentage;
+}
+if (e.UserState != null)
+labelStatus.Text = e.UserState.ToString();
+}</pre>
+我们快做好了。现在我们添加取消按钮
+<pre class="lang:default decode:true">void buttonCancel_Click(object sender, EventArgs e)
+{
+//通过worker我们要取消
+worker.CancelAsync();
+//使取消按钮不可用，改变状态文本
+buttonCancel.Enabled = false;
+labelStatus.Text = &ldquo;Cancelling&hellip;&rdquo;
+}</pre>
+最后一件事是我们想要当worker完成的时候自动关闭窗体，因为我们的worker通过ShowDialog 方法启动。如果直接接收返回结果会很好
+<pre class="lang:default decode:true">void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+{
+//ShowDialog返回值会指示worker是不是正确完成了
+if (e.Error != null)
+DialogResult = DialogResult.Abort;
+else if (e.Cancelled)
+DialogResult = DialogResult.Cancel;
+else
+DialogResult = DialogResult.OK;
+//关闭窗体
+Close();
+}</pre>
+主要的工作就完成了。我添加了一些预定义的字符串啊。如果正在取消。保护状态不会改变。还有传递参数啊。
+完整的代码如下：
+<pre class="lang:default decode:true">/// &lt;summary&gt;
+/// 简单的进度窗体
+/// &lt;/summary&gt;
+public partial class ProgressForm : Form
+{
+/// &lt;summary&gt;
+/// 获得进度条以对他自定义
+/// 在显示窗体之前.
+/// 不要在后台任务中直接使用 !
+/// &lt;/summary&gt;
+public ProgressBar ProgressBar { get { return progressBar; } }
+/// &lt;summary&gt;
+/// 传递给后台任务的参数.
+/// &lt;/summary&gt;
+public object Argument { get; set; }
+/// &lt;summary&gt;
+/// 后台任务的结果.
+///也可以检查ShowDialog返回值
+///来看看是不是正确完成了.
+/// &lt;/summary&gt;</p>
+
+<p>public RunWorkerCompletedEventArgs Result { get; private set; }
+/// &lt;summary&gt;
+/// 如果点击了取消按钮则为true
+///后台任务还在执行
+/// &lt;/summary&gt;
+public bool CancellationPending
+{
+get { return worker.CancellationPending; }
+}</p>
+
+<p>/// &lt;summary&gt;
+/// 取消按钮被点击之后的显示文本
+/// &lt;/summary&gt;
+public string CancellingText { get; set; }
+/// &lt;summary&gt;
+/// 缺省状态文本.
+/// &lt;/summary&gt;
+public string DefaultStatusText { get; set; }
+/// &lt;summary&gt;
+/// DoWork事件的委托.
+/// &lt;/summary&gt;
+/// &lt;param name=&ldquo;sender&rdquo;&gt;T事件源.&lt;/param&gt;
+/// &lt;param name=&ldquo;e&rdquo;&gt;包含事件数据.&lt;/param&gt;
+public delegate void DoWorkEventHandler(ProgressForm sender, DoWorkEventArgs e);
+/// &lt;summary&gt;
+/// 当后台任务开始的时候发生.
+/// &lt;/summary&gt;
+public event DoWorkEventHandler DoWork;</p>
+
+<p>/// &lt;summary&gt;
+/// 构造函数.
+/// &lt;/summary&gt;
+public ProgressForm()
+{
+InitializeComponent();</p>
+
+<p>DefaultStatusText = &ldquo;Please wait&hellip;&rdquo;;
+CancellingText = &ldquo;Cancelling operation&hellip;&rdquo;;</p>
+
+<p>worker = new BackgroundWorker();
+worker.WorkerReportsProgress = true;
+worker.WorkerSupportsCancellation = true;
+worker.DoWork += new System.ComponentModel.DoWorkEventHandler(worker_DoWork);
+worker.ProgressChanged += new ProgressChangedEventHandler(worker_ProgressChanged);
+worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
+worker_RunWorkerCompleted);
+}</p>
+
+<p>/// &lt;summary&gt;
+/// 改变状态文本.
+/// &lt;/summary&gt;
+/// &lt;param name=&ldquo;status&rdquo;&gt;新状态文本.&lt;/param&gt;
+public void SetProgress(string status)
+{
+//如果没有改变
+//或者取消请求还在处理就不改变状态文本
+if (status != lastStatus &amp;&amp; !worker.CancellationPending)
+{
+lastStatus = status;
+worker.ReportProgress(progressBar.Minimum - 1, status);
+}
+}
+/// &lt;summary&gt;
+///改变进度条的值
+/// &lt;/summary&gt;
+/// &lt;param name=&ldquo;percent&rdquo;&gt;新值.&lt;/param&gt;
+public void SetProgress(int percent)
+{
+//如果值没有改变就不要更新进度条
+if (percent != lastPercent)
+{
+lastPercent = percent;
+worker.ReportProgress(percent);
+}
+}
+/// &lt;summary&gt;
+///改变进度条值和文本.
+/// &lt;/summary&gt;
+/// &lt;param name=&ldquo;percent&rdquo;&gt;N新值.&lt;/param&gt;
+/// &lt;param name=&ldquo;status&rdquo;&gt;新文本.&lt;/param&gt;
+public void SetProgress(int percent, string status)
+{
+//如果至少一个改变就调用
+if (percent != lastPercent || (status != lastStatus &amp;&amp; !worker.CancellationPending))
+{
+lastPercent = percent;
+lastStatus = status;
+worker.ReportProgress(percent, status);
+}
+}</p>
+
+<p>private void ProgressForm_Load(object sender, EventArgs e)
+{
+//重用窗体，恢复缺省值
+Result = null;
+buttonCancel.Enabled = true;
+progressBar.Value = progressBar.Minimum;
+labelStatus.Text = DefaultStatusText;
+lastStatus = DefaultStatusText;
+lastPercent = progressBar.Minimum;
+//窗体已载入就开始后台任务
+worker.RunWorkerAsync(Argument);
+}</p>
+
+<p>private void buttonCancel_Click(object sender, EventArgs e)
+{
+//通知后台任务，我们要取消
+worker.CancelAsync();
+//取消按钮不可用，改变文本
+buttonCancel.Enabled = false;
+labelStatus.Text = CancellingText;
+}</p>
+
+<p>void worker_DoWork(object sender, DoWorkEventArgs e)
+{
+//后台任务开始
+//调用用户的处理程序
+if (DoWork != null)
+DoWork(this, e);
+}</p>
+
+<p>void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+{
+//确保新值可用并更新
+if (e.ProgressPercentage &gt;= progressBar.Minimum &amp;&amp;
+e.ProgressPercentage &lt;= progressBar.Maximum)
+{
+progressBar.Value = e.ProgressPercentage;
+}
+//如果取消请求正在处理就不要更新
+if (e.UserState != null &amp;&amp; !worker.CancellationPending)
+labelStatus.Text = e.UserState.ToString();
+}</p>
+
+<p>void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+{
+//后台任务完成
+//保持结果，关闭窗体
+Result = e;
+if (e.Error != null)
+DialogResult = DialogResult.Abort;
+else if (e.Cancelled)
+DialogResult = DialogResult.Cancel;
+else
+DialogResult = DialogResult.OK;
+Close();
+}</p>
+
+<p>BackgroundWorker worker;
+int lastPercent;
+string lastStatus;
+}</pre>
+<strong>结论</strong>
+窗体简单，我通常用。希望对你们也有用</p>
+
+<p><strong>Demo下载</strong></p>
+
+<p><a href="http://pan.baidu.com/share/link?shareid=79426&amp;amp;uk=1493685990">源码和测试下载</a></p>
+
+<p><strong>许可</strong>
+本文，包括源代码和文件在CPOL下授权。</p>
+
+<p>&nbsp;</p>
+
+<p>原文地址：<a href="http://www.codeproject.com/Articles/160219/ProgressForm-A-simple-form-linked-to-a-BackgroundW">ProgressForm-A-simple-form-linked-to-a-BackgroundW</a>
+著作权声明：本文由<a href="http://leaver.me">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/10/09/c#%E7%BC%96%E5%86%99ftp%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6/" data-toggle="tooltip" data-placement="top" title="C#编写FTP客户端软件">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/10/11/%E8%87%AA%E5%AE%9A%E4%B9%89wpf-linklabel-%E6%8E%A7%E4%BB%B6/" data-toggle="tooltip" data-placement="top" title="自定义WPF LinkLabel 控件">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

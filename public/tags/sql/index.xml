@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sql on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/sql/</link>
+    <description>Recent content in Sql on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 26 Apr 2014 16:56:41 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/sql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>构建数据库连接的配置方法</title>
+      <link>https://leizhiyuan.github.io/2014/04/26/%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Sat, 26 Apr 2014 16:56:41 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/04/26/%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/</guid>
+      <description>以前我在写数据库连接的时候，都是在文件里写死的，或者一个简单地配置文件，只有一个数据库连接嘛，但是最近写一个测试工具的时候，需要很多数据库，而且有些还有分库规则，于是查找资料，完善了两个类，和xml的定义规则，分享出来。仅供参考，有任何指教请回复。不胜感谢
+首先xml的配置格式定义如下 &amp;lt;?xml version=&amp;ldquo;1.0&amp;rdquo; encoding=&amp;ldquo;UTF-8&amp;rdquo;?&amp;gt;
+&amp;lt;config&amp;gt;
+&amp;lt;db-info&amp;gt; &amp;lt;id&amp;gt;oracle-test&amp;lt;/id&amp;gt;
+&amp;lt;driver-name&amp;gt;oracle.jdbc.driver.OracleDriver&amp;lt;/driver-name&amp;gt;
+&amp;lt;url&amp;gt;jdbc:oracle:thin:@127.0.0.1:1521:test&amp;lt;/url&amp;gt;
+&amp;lt;user-name&amp;gt;admin&amp;lt;/user-name&amp;gt;
+&amp;lt;password&amp;gt;admin&amp;lt;/password&amp;gt;
+&amp;lt;/db-info&amp;gt;
+&amp;lt;db-info&amp;gt; &amp;lt;id&amp;gt;mysql-test&amp;lt;/id&amp;gt;
+&amp;lt;driver-name&amp;gt;com.mysql.jdbc.Driver&amp;lt;/driver-name&amp;gt;
+&amp;lt;url&amp;gt;jdbc:mysql://127.0.0.1:3306&amp;lt;/url&amp;gt;
+&amp;lt;user-name&amp;gt;root&amp;lt;/user-name&amp;gt;
+&amp;lt;password&amp;gt;root&amp;lt;/password&amp;gt;
+&amp;lt;/db-info&amp;gt; &amp;lt;/config&amp;gt; 然后我们有XmlConfigReader类，用来读取这个配置文件，并且返回对应的jdbcConfig对象。
+这个对象就是一个model类，对应xml的属性
+然后我们的DBUtil类会调用XmlConfigReader，通用的一般是传个 &amp;lt;id&amp;gt;mysql-test&amp;lt;/id&amp;gt; 值，然后XmlConfigReader来读取返回，对象，然后在DBUtil里用这个对象得知来构造连接，我添加了一个简单的方法 public static Connection getConnection(String dbId,String dbName) throws ClassNotFoundException { Connection conn = null;
+try { //新建jdbc配置类。 XmlConfigReader xcr=new XmlConfigReader(); JdbcConfig jdbcconfig = xcr.getConnection(dbId,dbName); Class.forName(jdbcconfig.getDriverName()); //取得连接对象。 conn = DriverManager.getConnection(jdbcconfig.getUrl(), jdbcconfig.getUserName(), jdbcconfig.getPassword()); } catch (ClassNotFoundException e) { // 抛出 exception e.printStackTrace(); }catch(SQLException e) { e.printStackTrace(); } return conn; }&amp;lt;/pre&amp;gt; 就是多传一个数据库名</description>
+    </item>
+    
+  </channel>
+</rss>

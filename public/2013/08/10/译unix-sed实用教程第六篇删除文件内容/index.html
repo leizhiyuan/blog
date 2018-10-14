@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>[译]Unix sed实用教程第六篇–删除文件内容</title>
+  <meta property="og:title" content="[译]Unix sed实用教程第六篇–删除文件内容" />
+  <meta name="twitter:title" content="[译]Unix sed实用教程第六篇–删除文件内容" />
+  <meta name="description" content="其实，删除和替换是由一些相同的，不过，这里我们单独列出来，通过25个例子穿插讲解sed删除文件的一些方法，使用的示例文件如下： $ cat file Cygwin Unix Linux Solaris AIX 1.删除第一行 $ sed &lsquo;1d&rsquo; file Unix Linux Solaris AIX d就是删除，1就是指第1行，记得哦，这不会影响到源文件，一般，做删除的时候一般要加-i参数，前面说过了 sed -i &lsquo;1d&rsquo; file 2.删除指定行，这里删除第3行 $ sed &lsquo;3d&rsquo; file Cygwin Unix Solaris AIX 3.删除最后一行 $ sed &lsquo;$d&rsquo; file Cygwin Unix Linux Solaris 4.删除范围行，这里删除2-4行 $ sed &lsquo;2,4d&rsquo; file Cygwin AIX 5.保留指定的行，这里保留2-4行 $ sed &lsquo;2,4!d&rsquo; file Unix Linux Solaris ！这个是对前面的2,4来操作，是非的意思，也就是不是2-4行的行，这样除去2-4行，其他的都删除了
+6.删除第一行和最后一行 $ sed &lsquo;1d;$d&rsquo; file Unix Linux Solaris 分号隔开两个命令，你懂的，也可以删除第二行和第三行等等. &rsquo;2d;3d&rsquo;
+7.删除以指定字符开头的行 $ sed &lsquo;/^L/d&rsquo; file Cygwin Unix Solaris AIX 这里就把以L开头的Linux这一行删除了">
+  <meta property="og:description" content="其实，删除和替换是由一些相同的，不过，这里我们单独列出来，通过25个例子穿插讲解sed删除文件的一些方法，使用的示例文件如下： $ cat file Cygwin Unix Linux Solaris AIX 1.删除第一行 $ sed &lsquo;1d&rsquo; file Unix Linux Solaris AIX d就是删除，1就是指第1行，记得哦，这不会影响到源文件，一般，做删除的时候一般要加-i参数，前面说过了 sed -i &lsquo;1d&rsquo; file 2.删除指定行，这里删除第3行 $ sed &lsquo;3d&rsquo; file Cygwin Unix Solaris AIX 3.删除最后一行 $ sed &lsquo;$d&rsquo; file Cygwin Unix Linux Solaris 4.删除范围行，这里删除2-4行 $ sed &lsquo;2,4d&rsquo; file Cygwin AIX 5.保留指定的行，这里保留2-4行 $ sed &lsquo;2,4!d&rsquo; file Unix Linux Solaris ！这个是对前面的2,4来操作，是非的意思，也就是不是2-4行的行，这样除去2-4行，其他的都删除了
+6.删除第一行和最后一行 $ sed &lsquo;1d;$d&rsquo; file Unix Linux Solaris 分号隔开两个命令，你懂的，也可以删除第二行和第三行等等. &rsquo;2d;3d&rsquo;
+7.删除以指定字符开头的行 $ sed &lsquo;/^L/d&rsquo; file Cygwin Unix Solaris AIX 这里就把以L开头的Linux这一行删除了">
+  <meta name="twitter:description" content="其实，删除和替换是由一些相同的，不过，这里我们单独列出来，通过25个例子穿插讲解sed删除文件的一些方法，使用的示例文件如下： $ cat file Cygwin Unix Linux Solaris AIX 1.删除第一行 $ sed &lsquo;1d&rsquo; file Unix Linux Solaris AIX d就是删除，1就是指第1行，记得哦，这不会影响到源文件，一般，做删除的时 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2013/08/10/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E5%85%AD%E7%AF%87%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2013/08/10/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E5%85%AD%E7%AF%87%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>[译]Unix sed实用教程第六篇–删除文件内容</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on August 10, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (284 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>其实，删除和替换是由一些相同的，不过，这里我们单独列出来，通过25个例子穿插讲解sed删除文件的一些方法，使用的示例文件如下：
+<pre class="lang:default decode:true">$ cat file
+Cygwin
+Unix
+Linux
+Solaris
+AIX</pre>
+<span style="color: #3366ff;">1.删除第一行</span>
+<pre>$ sed &lsquo;1d&rsquo; file
+Unix
+Linux
+Solaris
+AIX</pre>
+d就是删除，1就是指第1行，记得哦，这不会影响到源文件，一般，做删除的时候一般要加-i参数，前面说过了
+<pre>sed -i &lsquo;1d&rsquo; file</pre>
+<span style="color: #3366ff;">2.删除指定行，这里删除第3行</span>
+<pre>$ sed &lsquo;3d&rsquo; file
+Cygwin
+Unix
+Solaris
+AIX</pre>
+<span style="color: #3366ff;">3.删除最后一行</span>
+<pre>$ sed &lsquo;$d&rsquo; file
+Cygwin
+Unix
+Linux
+Solaris</pre>
+<span style="color: #3366ff;">4.删除范围行，这里删除2-4行</span>
+<pre>$ sed &lsquo;2,4d&rsquo; file
+Cygwin
+AIX</pre>
+<span style="color: #3366ff;">5.保留指定的行，这里保留2-4行</span>
+<pre>$ sed &lsquo;2,4!d&rsquo; file
+Unix
+Linux
+Solaris</pre>
+！这个是对前面的2,4来操作，是非的意思，也就是不是2-4行的行，这样除去2-4行，其他的都删除了</p>
+
+<p><span style="color: #3366ff;">6.删除第一行和最后一行</span>
+<pre>$ sed &lsquo;1d;$d&rsquo; file
+Unix
+Linux
+Solaris</pre>
+分号隔开两个命令，你懂的，也可以删除第二行和第三行等等. &rsquo;2d;3d&rsquo;</p>
+
+<p><span style="color: #3366ff;">7.删除以指定字符开头的行</span>
+<pre>$ sed &lsquo;/^L/d&rsquo; file
+Cygwin
+Unix
+Solaris
+AIX</pre>
+这里就把以L开头的Linux这一行删除了</p>
+
+<p><span style="color: #3366ff;">8.删除以指定字符结尾的行</span>
+<pre>$ sed &lsquo;/x$/d&rsquo; file
+Cygwin
+Solaris
+AIX</pre>
+这里就删除了，可以看到AIX没有删除，unix区分大小写你懂的</p>
+
+<p><span style="color: #3366ff;">9.忽略大小写，都删除</span>
+<pre>$ sed &lsquo;/[xX]$/d&rsquo; file
+Cygwin
+Solaris</pre>
+[xX]匹配x或X，所以就成功了嘛</p>
+
+<p><span style="color: #3366ff;">10.删除文件中的空行</span>
+<pre>$ sed &lsquo;/^$/d&rsquo; file
+Cygwin
+Unix
+Linux
+Solaris
+AIX</pre>
+^匹配开头，$匹配结果，中间啥都没有，这样就匹配了空行，但是注意哦，如果某一行全是空格，这个命令是不会删除这一行的。</p>
+
+<p><span style="color: #3366ff;">11.删除空行或是仅仅包含空格的行</span>
+<pre>$ sed &lsquo;/^ *$/d&rsquo; file
+Cygwin
+Unix
+Linux
+Solaris
+AIX</pre>
+如果你看我前面的文章，这个就不用我说了吧，0个或多个空格就是匹配了所有的空行了</p>
+
+<p><span style="color: #3366ff;">12.删除完全是大写字母的行</span>
+<pre>$ sed &lsquo;/<sup class="footnote-ref" id="fnref:A-Z"><a href="#fn:A-Z">1</a></sup>*$/d&rsquo; file
+Cygwin
+Unix
+Linux
+Solaris</pre>
+[A-Z]就匹配了26个大写字母的任意一个</p>
+
+<p><span style="color: #3366ff;">13.删除包含Unix匹配的行</span>
+<pre>$ sed &lsquo;/Unix/d&rsquo; file
+Cygwin
+Linux
+Solaris
+AIX</pre>
+<span style="color: #3366ff;">14.删除不包含Unix的行</span>
+<pre>$ sed &lsquo;/Unix/!d&rsquo; file
+Unix</pre>
+<span style="color: #3366ff;">15.删除包含Unix或Linux匹配的行</span>
+<pre>$ sed &lsquo;/Unix|Linux/d&rsquo; file
+Cygwin
+Solaris
+AIX</pre>
+这里要说的是|，这个本来是表示or，或的意思，但是在终端下，为了防止被认为是管道，所以要用\来转义</p>
+
+<p><span style="color: #3366ff;">16.删除从第一行到满足匹配的行</span>
+<pre>$ sed &lsquo;1,/Linux/d&rsquo; file
+Solaris
+AIX</pre>
+可以通过行号到模式，模式到行号等等组合来匹配</p>
+
+<p><span style="color: #3366ff;">17.删除从Linux匹配到末尾的行</span>
+<pre>$ sed &lsquo;/Linux/,$d&rsquo; file
+Cygwin
+Unix</pre>
+<span style="color: #3366ff;">18.如果最后一行匹配AIX就删除，否则就不删除</span>
+<pre>$ sed &lsquo;${/AIX/d;}&rsquo; file
+Cygwin
+Unix
+Linux
+Solaris</pre>
+$匹配了最后一行，也可以是行号，比如1，后面的大括号里就是条件和处理方式了，这样就在sed里实现了if条件了，再看一遍这个例子，熟悉一下这个规则</p>
+
+<p><span style="color: #3366ff;">19.所处最后一行如果满足两个匹配</span>
+<pre>$ sed &lsquo;${/AIX|HPUX/d;}&rsquo; file
+Cygwin
+Unix
+Linux
+Solaris</pre>
+<span style="color: #3366ff;">20.如果1-4行满足Solaris匹配就删除</span>
+<pre>$ sed &lsquo;1,4{/Solaris/d;}&rsquo; file
+Cygwin
+Unix
+Linux
+AIX</pre>
+<span style="color: #3366ff;">21.删除包含Unix匹配的行，同时删除下一行</span>
+<pre>$ sed &lsquo;/Unix/{N;d;}&rsquo; file
+Cygwin
+Solaris
+AIX</pre>
+N命令将下一行读入pattern space，什么。你忘了，看<a href="http://leaver.me/archives/3162.html">开篇</a>去，这个命令就删除了两行</p>
+
+<p><span style="color: #3366ff;">22.删除包含Unix的下一行</span>
+<pre>$ sed &lsquo;/Unix/{N;s/\n.*//;}&rsquo; file
+Cygwin
+Unix
+Solaris
+AIX</pre>
+作者这里没有说清楚，我讲一下，N读入了下一行，然后这时候pattern space里就相当于两行并作了一行，中间有一个换行符，所以pattern space里现在就是：
+<pre>Unix\nLinux</pre>
+然后通过s命令匹配了\nLinux，并且替换为空，就ok了哦。</p>
+
+<p><span style="color: #3366ff;">23.删除包含Linux模式的行，也包含上一行</span>
+<pre>$ sed -n &lsquo;/Linux/{s/.*//;x;d;};x;p;${x;p;}&rsquo; file | sed &lsquo;/^$/d&rsquo;
+Cygwin
+Solaris
+AIX</pre>
+少年，不要怕，我们一步步来</p>
+
+<p>首先，要知道，为了删除某一匹配的前一行，我们需要将文件的每一行放入到hold space里，一旦发现匹配，我们就开始删除连个缓冲区的内容，其中pattern space存储了当前行，hold space 存储了前一行</p>
+
+<p>而x;p;这是啥呢，这两个命令是对每一行都会执行的，x表示exchange，即是交换hold space 和pattern space中的内容，p则是print，打印pattern space中的内容，因此，每次当前行被存入hold space，然后打印出了前一行的内容</p>
+
+<p>当/Linux/匹配之后，我们使用s/.//来清空当前行，也就是pattern space为空了，当前行相当于被删了，然后使用x和hold space来交换，这样，就导致hold space为空了，然后使用d来删除pattern space的内容（此时pattern space里是交换过来的前一行的内容），因此，匹配Linnx的当前行和前一行都被删除了，</p>
+
+<p>然后呢${x;p;}表示如果最后一行还在hold space里，就把他换出来，打印出来。</p>
+
+<p>而后面的管道之后的命令呢，是吧第一部分sed命令之后产生的空行给删掉。</p>
+
+<p>再理解一下</p>
+
+<p><span style="color: #3366ff;">24.仅删除匹配Linux的前一行，不删除当前行</span>
+<pre>$  sed -n &lsquo;/Linux/{x;d;};1h;1!{x;p;};${x;p;}&rsquo; file
+Cygwin
+Linux
+Solaris
+AIX</pre>
+和23类似，当匹配到Linux的时候，hold space 存储了前一行的内容，所以我们交换一下他们，然后前一行就进入了pattern space，然后一个d，这样就把前一行删掉了。别急，还没完，这样，当前行就被留在hold space了。就无法被输出了</p>
+
+<p>1h;1!{x;p;}  1h是说，如果将第1行移动到hold space，也就是1h只对第一行操作，而后面的1!{x;p;}是说对于其他的行执行x;p;命令，</p>
+
+<p><span style="color: #3366ff;">25.删除匹配模式的前后两行</span>
+<pre>$ sed -n &lsquo;/Linux/{N;s/.*//;x;d;};x;p;${x;p;}&rsquo; file | sed &lsquo;/^$/d&rsquo;
+Cygwin
+AIX</pre>
+有了前面两个例子，自己试试理解一下，有问题留言讨论吧。</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:A-Z">A-Z <a class="footnote-return" href="#fnref:A-Z"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/linux/">linux</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/shell/">shell</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2013/08/10/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E4%BA%94%E7%AF%87%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%BB%AD/" data-toggle="tooltip" data-placement="top" title="[译]Unix sed实用教程第五篇–替换文件内容续">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2013/08/11/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E4%B8%83%E7%AF%87%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B910-demo/" data-toggle="tooltip" data-placement="top" title="[译]Unix sed实用教程第七篇–输出文件内容(10 Demo)">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

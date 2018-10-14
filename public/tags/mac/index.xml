@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mac on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/mac/</link>
+    <description>Recent content in Mac on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 05 Oct 2016 10:13:05 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/mac/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>mac日志批量查询配置</title>
+      <link>https://leizhiyuan.github.io/2016/10/05/mac%E6%97%A5%E5%BF%97%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Wed, 05 Oct 2016 10:13:05 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/10/05/mac%E6%97%A5%E5%BF%97%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E9%85%8D%E7%BD%AE/</guid>
+      <description>由于公司线下机器非常多,导致每次查日志变得非常痛苦.线下的trace平台大部分时候还是可用的.但是有时候需要本机来批量查询.方案就是批量分发ssh key,实现免登.然后luit实现编码转换,这个主要是公司的机器编码有差异.历史原因.
+0. 准备 先要安装pssh,expect,ssh-copy-id.
+brew install pssh brew install homebrew/dupes/expect brew install ssh-copy-id 另外安装luit的安装参考这里luit安装
+1. 生成ssh key ,并批量copy 生成ssh key比较简单.ssh-keygen -t rsa -C &amp;quot;your_email@example.com&amp;quot;,直接使用git的ssh key也是可以的.然后保存下面这个脚本为pscopy.sh,
+#!/bin/bash FILE=`cat ~/host.txt` for ip in $FILE;do expect -c &amp;#34; spawn ssh-copy-id $ipexpect { \&amp;#34;*yes/no*\&amp;#34; {send \&amp;#34;yes\r\&amp;#34;;exp_continue} \&amp;#34;*password*\&amp;#34; {send \&amp;#34;pass\r\&amp;#34;;exp_continue} \&amp;#34;*password*\&amp;#34; {send \&amp;#34;pass\r\&amp;#34;;} } &amp;#34; done 然后执行一下sh pscopy.sh,注意,host.txt要保证存在.格式是user@address.一行一个,中间的paas要改成user的密码,这样就会使用指定的用户密码,自动copy ssh key了. 完成上面的步骤之后,ssh user@address 就可以免登了.
+2. 写一个简单的pssh脚本 #!/bin/bash  encoding= key= command= file= usage() { echo &amp;#34;Usage: `basename $0` [-f filename] [-c encoding] [-k keyword]&amp;#34; exit 1 } while getopts :f:c:k: opt do case $opt in c) encoding=$OPTARG ;; :) echo &amp;#34;-$OPTARGneeds an argument&amp;#34; ;; k) key=$OPTARG ;; f) file=$OPTARG ;; *) echo &amp;#34;-$optnot recognized&amp;#34; usage ;; esac done if [ -z &amp;#34;$encoding&amp;#34; ]; then #该脚本必须提供-d选项  encoding=&amp;#34;gbk&amp;#34; fi if [ -z &amp;#34;$file&amp;#34; ]; then #该脚本必须提供-d选项  file=&amp;#34;~/hosts.</description>
+    </item>
+    
+  </channel>
+</rss>

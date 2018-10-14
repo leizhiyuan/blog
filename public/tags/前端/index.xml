@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>前端 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
+    <description>Recent content in 前端 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 17 Jul 2013 14:45:45 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用CSS3的自定义字体美化文字</title>
+      <link>https://leizhiyuan.github.io/2013/07/17/%E4%BD%BF%E7%94%A8css3%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93%E7%BE%8E%E5%8C%96%E6%96%87%E5%AD%97/</link>
+      <pubDate>Wed, 17 Jul 2013 14:45:45 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/07/17/%E4%BD%BF%E7%94%A8css3%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93%E7%BE%8E%E5%8C%96%E6%96%87%E5%AD%97/</guid>
+      <description>之前看到一些设计师的主题的字体很美，下载下来发现使用了css3的自定义字体，可以用来显示服务器上的字体，非常方便，学习了一下
+1.首先得到字体
+这个方法很多，本机的字体，一些国外的免费网站，比如这个：http://www.dafont.com，下载后的字体一般为ttf格式，ttf字体被很多浏览器支持，但是，IE不支持，为了兼容性，需要为IE单独设置字体文件，格式必须为eot，所以我们需要转换字体，使用在线工具，比如http://www.kirsle.net/wizards/ttf2eot.cgi，当然类似的网站有很多，根据个人爱好，随意。
+&amp;nbsp;
+2.添加内容
+这里，我写一个简单的html文件，内容为 &amp;lt;body&amp;gt; &amp;lt;p class=&amp;ldquo;test&amp;rdquo;&amp;gt;bystander&amp;lt;/p&amp;gt; &amp;lt;/body&amp;gt; 在没有设置customFont这个类的css之前，字体就是默认的字体了。
+&amp;nbsp;
+3.设置css样式 @font-face { font-family:myFont;/主流浏览器可用/ src:url(&amp;ldquo;PONCTUATION.ttf&amp;rdquo;); } @font-face { font-family:myFont;/兼容IE/ src:url(&amp;ldquo;PONCTUATION.eot&amp;rdquo;); } .test { font-family:myFont; font-size:40px; } 显示效果就是这样的了&amp;hellip;只是用来演示的一个字体。
+
+&amp;nbsp;
+因为浏览器是要自动下载这个字体文件的，所以对于英文字体没啥问题，英文字体一般这个字体文件在100k左右，和一张图片比起来，基本算不是问题，但是对于中文字体，包一般在10M-20M左右，这样是不现实的，我的想法是，可以自己制作字体包，这样只需要满足常用的一些汉字就行了，大大减少包的大小，然后去找了一下，发现了http://www.high-logic.com/font-editor/fontcreator.html这个软件，是可以直接编辑字体包的，也可以创建字体包，有空了用来试试.</description>
+    </item>
+    
+  </channel>
+</rss>

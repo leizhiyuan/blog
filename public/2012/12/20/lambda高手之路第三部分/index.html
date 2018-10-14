@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Lambda高手之路第三部分</title>
+  <meta property="og:title" content="Lambda高手之路第三部分" />
+  <meta name="twitter:title" content="Lambda高手之路第三部分" />
+  <meta name="description" content="背后的秘密-MSIL
+通过著名的LINQPad，我们可以更深入的查看MSIL代码而没有任何秘密。下图是一个LINQPad的使用截图 
+我们会看三个例子，第一个Lambda表达式如下：
+Action&lt;string&gt; DoSomethingLambda = (s) =&gt; { Console.WriteLine(s);// &#43; local }; 对应的普通函数是这样的
+Action&lt;string&gt; DoSomethingLambda = (s) =&gt; { Console.WriteLine(s);// &#43; local };  生成的MSIL代码片段如下：
+DoSomethingNormal: IL_0000: nop IL_0001: ldarg.1 IL_0002: call System.Console.WriteLine IL_0007: nop IL_0008: ret &lt;Main&gt;b__0: IL_0000: nop IL_0001: ldarg.0 IL_0002: call System.Console.WriteLine IL_0007: nop IL_0008: ret  最大的不同是方法的名称用法不同。而不是声明。事实上。声明是完全一样的。编译器在类里面创建了一个新的方法来实现这个方法。这没什么新东西，仅仅是为了我们使用Lambda表达式方便代码编写。从MSIL代码中，我们做了同样的事情。在当前对象里调用了一个方法。
+我们在下图里演示一下编译器所做的修改。在这个图例。我们可以看到编译器把Lambda表达式移动成了一个固定的方法。
+ 第二个例子将展示Lambda表达式真正的奇妙之处，在这个例子里。我们既使用了有着全局变量的普通方法也使用了有捕获变量的Lambda表达式。代码如下
+void Main() { int local = 5; Action&lt;string&gt; DoSomethingLambda = (s) =&gt; { Console.WriteLine(s &#43; local); }; global = local; DoSomethingLambda(&#34;">
+  <meta property="og:description" content="背后的秘密-MSIL
+通过著名的LINQPad，我们可以更深入的查看MSIL代码而没有任何秘密。下图是一个LINQPad的使用截图 
+我们会看三个例子，第一个Lambda表达式如下：
+Action&lt;string&gt; DoSomethingLambda = (s) =&gt; { Console.WriteLine(s);// &#43; local }; 对应的普通函数是这样的
+Action&lt;string&gt; DoSomethingLambda = (s) =&gt; { Console.WriteLine(s);// &#43; local };  生成的MSIL代码片段如下：
+DoSomethingNormal: IL_0000: nop IL_0001: ldarg.1 IL_0002: call System.Console.WriteLine IL_0007: nop IL_0008: ret &lt;Main&gt;b__0: IL_0000: nop IL_0001: ldarg.0 IL_0002: call System.Console.WriteLine IL_0007: nop IL_0008: ret  最大的不同是方法的名称用法不同。而不是声明。事实上。声明是完全一样的。编译器在类里面创建了一个新的方法来实现这个方法。这没什么新东西，仅仅是为了我们使用Lambda表达式方便代码编写。从MSIL代码中，我们做了同样的事情。在当前对象里调用了一个方法。
+我们在下图里演示一下编译器所做的修改。在这个图例。我们可以看到编译器把Lambda表达式移动成了一个固定的方法。
+ 第二个例子将展示Lambda表达式真正的奇妙之处，在这个例子里。我们既使用了有着全局变量的普通方法也使用了有捕获变量的Lambda表达式。代码如下
+void Main() { int local = 5; Action&lt;string&gt; DoSomethingLambda = (s) =&gt; { Console.WriteLine(s &#43; local); }; global = local; DoSomethingLambda(&#34;">
+  <meta name="twitter:description" content="背后的秘密-MSIL
+通过著名的LINQPad，我们可以更深入的查看MSIL代码而没有任何秘密。下图是一个LINQPad的使用截图 
+我们会看三个例子，第一个Lambda表达式如下：
+Action&lt;string&gt; DoSomethingLambda = (s) =&gt; { Console.WriteLine(s);// &#43; local }; …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/12/20/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/12/20/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Lambda高手之路第三部分</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 20, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (202 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>背后的秘密-MSIL</p>
+
+<p>通过著名的LINQPad，我们可以更深入的查看MSIL代码而没有任何秘密。下图是一个LINQPad的使用截图
+<a href="http://leaverimage.b0.upaiyun.com/30624_o.png"><img src="/images/2cc26ed754b0ac72d7caf372a917ef44d327d51a.png" alt="" /></a></p>
+
+<p>我们会看三个例子，第一个Lambda表达式如下：</p>
+
+<pre class="lang:default decode:true " >Action&lt;string&gt; DoSomethingLambda = (s) =&gt;
+{
+    Console.WriteLine(s);// + local
+};</pre> 
+
+<p>对应的普通函数是这样的</p>
+
+<pre class="lang:default decode:true " >Action&lt;string&gt; DoSomethingLambda = (s) =&gt;
+{
+    Console.WriteLine(s);// + local
+};
+</pre> 
+
+<p>生成的MSIL代码片段如下：</p>
+
+<pre class="lang:default decode:true " >DoSomethingNormal:
+IL_0000:  nop         
+IL_0001:  ldarg.1     
+IL_0002:  call        System.Console.WriteLine
+IL_0007:  nop         
+IL_0008:  ret         
+&lt;Main&gt;b__0:
+IL_0000:  nop         
+IL_0001:  ldarg.0     
+IL_0002:  call        System.Console.WriteLine
+IL_0007:  nop         
+IL_0008:  ret       </pre> 
+
+<p>最大的不同是方法的名称用法不同。而不是声明。事实上。声明是完全一样的。编译器在类里面创建了一个新的方法来实现这个方法。这没什么新东西，仅仅是为了我们使用Lambda表达式方便代码编写。从MSIL代码中，我们做了同样的事情。在当前对象里调用了一个方法。</p>
+
+<p>我们在下图里演示一下编译器所做的修改。在这个图例。我们可以看到编译器把Lambda表达式移动成了一个固定的方法。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/30625_o.png"><img src="/images/1500b574e9e4fd0cfb11b286eaff270102810b02.png" alt="" /></a>
+第二个例子将展示Lambda表达式真正的奇妙之处，在这个例子里。我们既使用了有着全局变量的普通方法也使用了有捕获变量的Lambda表达式。代码如下</p>
+
+<pre class="lang:default decode:true " >void Main()
+{
+    int local = 5;
+
+    Action&lt;string&gt; DoSomethingLambda = (s) =&gt; {
+        Console.WriteLine(s + local);
+    };
+
+    global = local;
+
+    DoSomethingLambda("Test 1");
+    DoSomethingNormal("Test 2");
+}
+
+int global;
+
+void DoSomethingNormal(string s)
+{
+    Console.WriteLine(s + global);
+}
+</pre> 
+
+<p>没什么不同的似乎。关键是：lambda表达式如何被编译器处理</p>
+
+<pre class="lang:default decode:true " >IL_0000:  newobj      UserQuery+&lt;&gt;c__DisplayClass1..ctor
+IL_0005:  stloc.1     
+IL_0006:  nop         
+IL_0007:  ldloc.1     
+IL_0008:  ldc.i4.5    
+IL_0009:  stfld       UserQuery+&lt;&gt;c__DisplayClass1.local
+IL_000E:  ldloc.1     
+IL_000F:  ldftn       UserQuery+&lt;&gt;c__DisplayClass1.&lt;Main&gt;b__0
+IL_0015:  newobj      System.Action&lt;System.String&gt;..ctor
+IL_001A:  stloc.0     
+IL_001B:  ldarg.0     
+IL_001C:  ldloc.1     
+IL_001D:  ldfld       UserQuery+&lt;&gt;c__DisplayClass1.local
+IL_0022:  stfld       UserQuery.global
+IL_0027:  ldloc.0     
+IL_0028:  ldstr       "Test 1"
+IL_002D:  callvirt    System.Action&lt;System.String&gt;.Invoke
+IL_0032:  nop         
+IL_0033:  ldarg.0     
+IL_0034:  ldstr       "Test 2"
+IL_0039:  call        UserQuery.DoSomethingNormal
+IL_003E:  nop         
+
+DoSomethingNormal:
+IL_0000:  nop         
+IL_0001:  ldarg.1     
+IL_0002:  ldarg.0     
+IL_0003:  ldfld       UserQuery.global
+IL_0008:  box         System.Int32
+IL_000D:  call        System.String.Concat
+IL_0012:  call        System.Console.WriteLine
+IL_0017:  nop         
+IL_0018:  ret         
+
+&lt;&gt;c__DisplayClass1.&lt;Main&gt;b__0:
+IL_0000:  nop         
+IL_0001:  ldarg.1     
+IL_0002:  ldarg.0     
+IL_0003:  ldfld       UserQuery+&lt;&gt;c__DisplayClass1.local
+IL_0008:  box         System.Int32
+IL_000D:  call        System.String.Concat
+IL_0012:  call        System.Console.WriteLine
+IL_0017:  nop         
+IL_0018:  ret         
+
+&lt;&gt;c__DisplayClass1..ctor:
+IL_0000:  ldarg.0     
+IL_0001:  call        System.Object..ctor
+IL_0006:  ret      
+</pre> 
+
+<p>和第一个例子一样。机制相同。编译器把lambda表达式移动到一个方法里。但是不同的是，编译器这次还生成了一个类。编译器为我们的lambda表达式生成的方法会放在类里，这就给了捕获的变量一个全局的作用域，通过这样。Lambda表达式可以访问局部变量。因为在MSIL里。它是类实例里面的一个全局变量。</p>
+
+<p>所有的变量因此就可以在新生成的类的对象里赋值/读取了。这解决了变量之间的引用问题。（其实就是只保留了对该类实例的引用。）编译器也足够智能之会把这些捕获的变量放到类里面。因此，当我们使用Lambda的时候才没有太大的性能问题。无论如何。注意。由于保持了对lambda表达式的引用，因此可能造成内存泄漏。只要方法还在。变量就仍然存活。显而易见。而现在我们知道了原因。</p>
+
+<p>我们再次用图示来说明。这这种闭包情况下里。不仅仅方法会被移动。捕获的变量也会被移动。所有被移动了的对象会被放到一个新生成的类里。因此一个没有名称的类就隐式的出现了。
+ <a href="http://leaverimage.b0.upaiyun.com/30626_o.png"><img src="/images/708c4bd6bea1fa2d592281cebf202af1b36b4e14.png" alt="" /></a></p>
+
+<p>下一节将是映射流行的JavaScrpit模式。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/12/19/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" data-toggle="tooltip" data-placement="top" title="Lambda高手之路第二部分">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/12/24/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/" data-toggle="tooltip" data-placement="top" title="Lambda高手之路第四部分">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

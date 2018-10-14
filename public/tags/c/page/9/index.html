@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>C</title>
+  <meta property="og:title" content="C" />
+  <meta name="twitter:title" content="C" />
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/tags/c/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/tags/c/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/tags/c/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="tags-heading">
+              
+                <h1>C</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/06/17/freeanony-%E4%BB%A3%E7%90%86%E9%87%87%E9%9B%86%E8%AE%BE%E7%BD%AE%E5%B7%A5%E5%85%B7/">
+                <h2 class="post-title">FreeAnony-代理采集设置工具</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on June 17, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (371 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  这个名字确实有点不太好。。因为刚开始我想到这个工具是在今天早上看到一个别人的代理工具的时候，突然想做的，没有好好规化，结果后来代码越写越多。。不过收获很大。
+先看界面，因为是简单实现一下，所以就不要吐槽界面了。。
+刚开始想的思路就是先去一个经常发布代理IP的网页去采集。然后解析成一条条的信息。然后显示出来。中途遇到几个问题，一个就是在做代理验证的时候，没有用多线程，导致直接界面无响应。另一个就是DataGridView控件要实现对一个数组的绑定，需要的一个实体对象。 public IPEntity[] GetIpInfo(string url) {
+//获得网页源码 string content = Get_Http(url); //定位代理ip位置 int start = content.IndexOf(&#34;&amp;lt;/strong&amp;gt;&amp;lt;/u&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;BR&amp;gt;&#34;); int end = content.LastIndexOf(&#34;&amp;lt;BR&amp;gt;&amp;lt;SCRIPT type=text/javascript&amp;gt;&#34;); //提取并去除一些冗余代码 string subContent = content.Substring(start, end - start).Substring(21); subContent = subContent.Replace(&#34;&amp;amp;nbsp; dn28.com&#34;, &#34;&#34;); //通过br标签分隔代理列表为数组 string[] sArray = Regex.Split(subContent, &#34;&amp;lt;br&amp;gt;&#34;, RegexOptions.IgnoreCase); IPEntity[] list = new IPEntity[sArray.Length]; int j = 0; foreach (string i in sArray) { int addrpos = i.IndexOf(&#34;:&#34;); string ipaddress = i.Substring(0, addrpos); int portpos = i.
+                  <a href="https://leizhiyuan.github.io/2012/06/17/freeanony-%E4%BB%A3%E7%90%86%E9%87%87%E9%9B%86%E8%AE%BE%E7%BD%AE%E5%B7%A5%E5%85%B7/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/06/15/gif%E5%8F%8D%E8%BD%AC%E5%B7%A5%E5%85%B7/">
+                <h2 class="post-title">gif反转工具</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on June 15, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (122 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  首先看下效果图：  然后是两张gif的对比  //原本图是正着走的  //处理后是倒着走的
+gif是动态的嘛。然后我昨天和一个朋友聊天的时候发了一串相同的gif图，然后看着千篇一律的东西。我想能不能写个程序实现gif的初始状态不同呢。什么意思呢。我们知道，gif是由帧构成的，我想实现的功能是比如一个gif共有十帧，那么我写出来的程序能够生成10个gif文件，分别对应不同的初始状态来进行循环。后来一想，gif帧太多的话，比较慢，而且也不实用，于是决定简化一下，只做一个反转工具，比如一个gif是从左到右播放的，通过这个成功可以生成一个相同的gif图，不过是倒着播放的。
+思路很简单，就是先把gif分解成很多帧，然后对帧进行合并，合并帧之前把帧的位置反转一下就可以了。因为我自己对图像处理的知识不懂，只想到了思路，所以这些功能都要找些资料，然后修改，测试。
+分割帧的代码如下 //解码gif图片 public List&lt;string&gt; GetFrames(string pPath, string pSavedPath) { Image gif = Image.FromFile(pPath); FrameDimension fd = new FrameDimension(gif.FrameDimensionsList[0]);
+//获取帧数(gif图片可能包含多帧，其它格式图片一般仅一帧) int count = gif.GetFrameCount(fd); List&amp;lt;string&amp;gt; gifList=new List&amp;lt;string&amp;gt;(); //以Jpeg格式保存各帧 for (int i = 0; i &amp;lt; count; i++) { gif.SelectActiveFrame(fd, i); gif.Save(pSavedPath + &#34;\\frame_&#34; + i + &#34;.png&#34;, ImageFormat.Png); gifList.Add(pSavedPath + &#34;\\frame_&#34; + i + &#34;.png&#34;); } return gifList; }&lt;/pre&gt; 可以看到，返回了一个包含所有生成的帧地址的list列表。然后就是使用gifList作为参数来合并了。 //获取系统临时目录存放解码后的png图片 string temppath = System.
+                  <a href="https://leizhiyuan.github.io/2012/06/15/gif%E5%8F%8D%E8%BD%AC%E5%B7%A5%E5%85%B7/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/18/%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84%E7%9A%84xml%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+                <h2 class="post-title">对象数组的Xml序列化和反序列化</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 18, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (125 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  使用Serialization来进行序列化和反序列化，因此需要引入System.Xml.Serialization；命名空间。
+为什么要做序列化和反序列化？ .Net程序执行时，对象都驻留在内存中；内存中的对象如果需要传递给其他系统使用；或者在关机时需要保存下来以便下次再次启动程序使用就需要序列化和反序列化。
+本文的原始例子在参考文中，但是参考文中没有给出反序列化的例子，且xml文件不清晰。于是修改了代码，同时实现对象数组序列化和反序列化。
+using System; using System.Collections.Generic; using System.Linq; using System.Text; using System.Xml.Serialization; using System.IO; namespace UseXmlSerialization { class Program { static void Main(string[] args) { //声明一个猫对象 var cWhite = new Cat { Color = "White", Speed = 10, Saying = "I am a good WHITE cat" }; var cBlack = new Cat { Color = "Black", Speed = 10, Saying = "I am a good BLACK cat" }; CatCollection cc = new CatCollection { Cats = new Cat[] { cWhite, cBlack } }; //序列化这个对象 XmlSerializer serializer = new XmlSerializer(typeof(CatCollection)); StringWriter sw = new StringWriter(); serializer.
+                  <a href="https://leizhiyuan.github.io/2012/05/18/%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84%E7%9A%84xml%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/05/.net%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84/">
+                <h2 class="post-title">.Net三层架构</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 5, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (113 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  本文来源：http://www.cnblogs.com/gaoweipeng/archive/2009/01/18/1377855.html
+老规矩。因为是非常不错的文章。所有有必要收藏下来备用。推荐。
+**三层体系结构的概念
+**
+ 用户界面表示层(USL) 业务逻辑层(BLL) 数据访问层(DAL) BLL将USL与DAL隔开了，并且加入了业务规则    各层的作用 1：数据数据访问层:主要是对原始数据（数据库或者文本文件等存放数据的形式）的操作层，而不是指原始数据，也就是说，是对数据的操作，而不是数据库,具体为业务逻辑层或表示层提供数据服务． 2：业务逻辑层:主要是针对具体的问题的操作，也可以理解成对数据层的操作,对数据业务逻辑处理，如果说数据层是积木，那逻辑层就是对这些积木的搭建。 3：表示层:主要表示WEB方式,也可以表示成WINFORM方式,WEB方式也可以表现成:aspx, 如果逻辑层相当强大和完善,无论表现层如何定义和更改,逻辑层都能完善地提供服务。  具体的区分方法
+1：数据数据访问层:主要看你的数据层里面有没有包含逻辑处理，实际上他的各个函数主要完成各个对数据文件的操作。而不必管其他操作。
+2：业务逻辑层:主要负责对数据层的操作。也就是说把一些数据层的操作进行组合。
+3：表示层:主要对用户的请求接受，以及数据的返回，为客户端提供应用程序的访问。 
+ 三层结构解释
+所谓三层体系结构，是在客户端与数据库之间加入了一个中间层，也叫组件层。这里所说的三层体系，不是指物理上的三层，不是简单地放置三台机器就是三层体系结构，也不仅仅有B/S应用才是三层体系结构，三层是指逻辑上的三层，即使这三个层放置到一台机器上。 三层体系的应用程序将业务规则、数据访问、合法性校验等工作放到了中间层进行处理。通常情况下，客户端不直接与数据库进行交互，而是通过COM/DCOM通讯与中间层建立连接，再经由中间层与数据库进行交换.
+开发人员可以将应用的商业逻辑放在中间层应用服务器上，把应用的业务逻辑与用户界面分开。在保证客户端功能的前提下，为用户提供一个简洁的界面。这意味着如果需要修改应用程序代码，只需要对中间层应用服务器进行修改，而不用修改成千上万的客户端应用程序。从而使开发人员可以专注于应用系统核心业务逻辑的分析、设计和开发，简化了应用系统的开发、更新和升级工作。 
+ 那么为什么要应用“中间业务层”呢？举些例子: 我们假设有一段登录代码，则可以这样处理Web程序，外观层负责接收前台页面的数据，然后传给中间层，中间层对数据进行处理，比如格式化，防SQL注入等等一些，这样的数据再传给数据访问层然后与数据库进行操作，比如与数据库的用户名和密码匹配等等一些代码。**
+  ** * “中间业务层”的用途有很多，例如：验证用户输入数据、缓存从数据库中读取的数据等等……但是，“中间业务层”的实际目的是将“数据访问层”的最基础的存储逻辑组合起来，形成一种业务规则。例如：“在一个购物网站中有这样的一个规则：在该网站第一次购物的用户，系统为其自动注册”。这样的业务逻辑放在中间层最合适： &gt; 在“数据访问层”中，最好不要出现任何“业务逻辑”！也就是说，要保证“数据访问层”的中的函数功能的原子性！即最小性和不可再分。“数据访问层”只管负责存储或读取数据就可以了。 &gt; ** &gt; **
+ ASP.NET中的三层结构说明
+完善的三层结构的要求是:修改表现层而不用修改逻辑层,修改逻辑层而不用修改数据层。否则你的应用是不是多层结构,或者说是层结构的划分和组织上是不是有问题就很难说.不同的应用有不同的理解，这只是一个概念的问题．
+   理解ASP.NET中的三层结构——为什么要分三层？
+我们用三层结构主要是使项目结构更清楚，分工更明确，有利于后期的维护和升级。它未必会提升性能，因为当子程序模块未执行结束时，主程序模块只能处于等待状态。这说明将应用程序划分层次，会带来其执行速度上的一些损失。但从团队开发效率角度上来讲却可以感受到大不相同的效果。
+  需要说明一下，三层结构不是.NET的专利，也不是专门用在数据库上的技术。它是一种更加普适的架构设计理念。  此种架构要在数据库设计上注意表之间的关系，尽力满足主与子的关系。在功能上对用户要有一定的限制，不要表现在对于子表的删除操作一定要慎重，以免造成主表与子表的数据在逻辑上出现的主表的外键在子表中没有相对应的值。
+ 对于表的综合查询方法是： 先对主表查询，调用主表所对应的DL。再根据主表的记录分别对每一个子表进行查询。将自表的查询结果添加的主表后，形成一个大的查询集合。 对于表的操作（增删改）： 此时只对主表进行操作，调用主表对应的DL中的操作方法。 RL层是逻辑判断层，主要是对页面上传入的数据进行逻辑判断。RL层之上就是UI 如何建立一个三层体系结构解决方案
+新建一个空白解决方案。然后： “添加”－“新建项目”－“其他项目”－“企业级模版项目”－“C#生成块”－“数据访问”（数据层，下简称D层） “添加”－“新建项目”－“其他项目”－“企业级模版项目”－“C#生成块”－“业务规则”（业务层，下简称C层） “添加”－“新建项目”－“其他项目”－“企业级模版项目”－“C#生成块”－“Web用户界面”（界面层，下简称U层） 右键点“解决方案”－“项目依赖项”，设置U依赖于D、C，C依赖于D。 对U添加引用D、C，对C添加引用D。 到此为止，一个三层的架子建立起来了。我上面说的很具体很“傻瓜”，知道的人觉得我废话，其实我这段时间很强烈的感觉到非常多的人其实对这个简单的过程完全不了解。虽然不反对建2个“空项目”和1个“Asp net Web应用程序项目”也可以作为3层的框架，而且相当多的人认为其实这些“企业级模板项目”其实就是个空项目，这是一个误区。没错，企业级模板项目你从解决方案资源管理器里看它是个什么也没有的，但是你可以用记事本打开项目文件，看见不同了吧？？有些东西在背后，你是看不见的，不过系统已经做好了。也就是说，如果你在C层里的某个类里“using System Data SqlClineit”，或者使用一个SqlConnection对象，编译时候不会出错，但是会在“任务列表”里生成一些“策略警告”，警告你在C层里不要放应该放在D层的东西（虽然就程序来说没错，但是可读性可维护性就打了折扣）而这种功能，空项目是无法給你的。
+                  <a href="https://leizhiyuan.github.io/2012/05/05/.net%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/04/%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7%E6%BA%90%E7%A0%81c/">
+                <h2 class="post-title">图片压缩工具源码（C#）</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 4, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (42 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>以前在用一个破解版的图片压缩工具。今天早上想想自己也试着做一个吧。查了一些资料。参考了一些代码。总算是写出来了。其实关键代码很简单。主要还是画界面，处理边界。。
+看下效果图
+<a href="http://leaverimage.b0.upaiyun.com/21131_o.jpg"><img src="/images/00f5221099dd3a813d09fbb95fe9a36e5268d652.jpg" alt="" /></a>
+处理图像的关键代码是这样的：
+<pre lang="java">
+    bmp = new Bitmap(width, height);  //创建一张空白画布
+    grap = Graphics.FromImage(bmp);  //以该画布创建一个绘图对象
+ //平滑的高品质，抗锯齿
+    grap.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+ //HighQualityBicubic 是质量最好的绘图模式
+    grap.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+    grap.DrawImage(img, new Rectangle(0, 0, width, height)); //用选中的原图在画布上绘图
+    bmp.Save(topath, System.Drawing.Imaging.ImageFormat.Jpeg);  //对图像压缩后保存
+</pre></p>
+
+<p>另外一个就是空间的tip功能，vs2010中貌似已经不支持直接使用属性来设置tip了。所以用到了ToolTip类，使用方法如下，你也可以先导入库，然后简写，ToolTip对象可以给窗体的控件设置提示。主要是第二句话，第一个参数是控件名，第二个参数是提示文本，最好将这两句放入窗体的Load方法中
+<pre lang="java">
+ToolTip toolTip = new System.Windows.Forms.ToolTip();
+toolTip.SetToolTip(this.lboxPicPath, &ldquo;双击可删除不需要的图片&rdquo;);
+</pre>
+<a href="http://leaverimage.b0.upaiyun.com/21132_o.jpg"><img src="/images/516b951c5df12c7569b3cfefd817a894d380c063.jpg" alt="" /></a></p>
+
+<p>还有一些边界，比如只接受数字数字之类的，我在代码里给出了详细的说明。实用工具的效果自行测试。对大图片效果最好。</p>
+
+<p>源码下载：<a href="http://pan.baidu.com/share/link?shareid=62101&amp;uk=1493685990">图片压缩工具源码</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/04/28/c#-%E6%B8%A9%E6%95%85%E8%80%8C%E7%9F%A5%E6%96%B0stream%E7%AF%87/">
+                <h2 class="post-title">C# 温故而知新：Stream篇</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on April 28, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (18 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>如果你在学习C#，那么对流的操作是非常基础重要的一步，而<a href="http://www.cnblogs.com/JimmyZheng/">JimmyZheng</a>的Stream系列文章估计是流操作最好的文章了。直接转过来，做一个收藏。也希望能够对学习的朋友有所帮助，本文可能会持续更新。</p>
+
+<ul>
+<li><a href="http://www.cnblogs.com/JimmyZheng/archive/2012/03/17/2402814.html">C# 温故而知新：Stream篇（—）Stream简单介绍</a></li>
+<li><a href="http://www.cnblogs.com/JimmyZheng/archive/2012/03/19/2405216.html">C# 温故而知新：Stream篇（二）TextReader 和StreamReader</a></li>
+<li><a href="http://www.cnblogs.com/JimmyZheng/archive/2012/03/25/2416841.html">C# 温故而知新：Stream篇（三）TextWriter 和 StreamWriter</a></li>
+<li><a href="http://www.cnblogs.com/JimmyZheng/archive/2012/04/03/2430585.html">C# 温故而知新：Stream篇（四）FileStream</a></li>
+<li><a href="http://www.cnblogs.com/JimmyZheng/archive/2012/04/14/2446507.html">C# 温故而知新：Stream篇（五）MemoryStream</a></li>
+<li><a href="http://www.cnblogs.com/JimmyZheng/archive/2012/04/25/2470277.html">C# 温故而知新：Stream篇（六）BufferedStream</a></li>
+<li><a href="http://www.cnblogs.com/JimmyZheng/archive/2012/05/17/2502727.html">C# 温故而知新：Stream篇（七）NetworkStream</a></li>
+</ul>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/04/20/%E4%BA%8C%E7%BA%A7%E5%9F%9F%E5%90%8D%E6%9F%A5%E6%89%BE-%E5%AE%9E%E7%8E%B0%E6%BC%94%E7%A4%BAgapi-json-c/">
+                <h2 class="post-title">二级域名查找 实现演示（GAPI&#43;Json&#43;C#）</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on April 20, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (91 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  昨天看到了李劼杰的检索一个域名下属所有子域名的两种方法很受启发。想用C#实现一些东西，本来是打算做的相对完整一点的，结果发现Google 开放的api貌似是有限制，段时间内不同提交太多。所以就简单实现一下，有需要的朋友自己扩展
+　刚开始的思路是想Google应该是有开放的api吧。。于是先Google C# 收集 Google搜索结果。翻了一会，看到了 此文 ，一看我去，返回的竟然是json格式。。只听过，从来没有接触过。。。不做总是不会的，试试。
+思路；访问该页面，得到字符串-》去掉多余部分-》解析成对象-》提取对象的字段 1.访问该http://ajax.googleapis.com/ajax/services/search/web?v=1.0&amp;q=hello，其实hello部分就是需要查找的字串，对于查找二级域名这种事，应用到Google的一个语法就是site:leaver.me。类似这样的，可以获取到所有leaver.me上的子站和内容。。 然后分析json数据。直接访问会发现格式很乱。使用http://jsonformatter.curiousconcept.com/这个工具进行格式化。最终结果如图  可以很清楚的看出json的结构，results是结果集，我需要的是需要的是[]之间的部分，包括[]，我理解的是这样。默认给出4个结果。
+　2.要去掉多余部分，得用正则表达式了， json = &ldquo;[&rdquo; + Regex.Match(json, @&ldquo;(?&lt;=[).+?(?=])&ldquo;, RegexOptions.IgnoreCase).Value + &ldquo;]&rdquo;; //得到一个数组[]中间的部分 json解析我在外国找到了json.net这个解析器，导入什么的就不说了，至于用法我是看的他的文档
+　3.List results = JsonConvert.DeserializeObject&gt;(json); //list 存放解析的结果，result为对应自写类 就是将一个json格式的字符串解析成一个list组，组内元素为一个对应的类，就是先分析json的格式。发现每个结果都有如下的格式 public string GsearchResultClass{ get; set; } public string unescapedUrl{ get; set; } public string url{ get; set; } public string visibleUrl{ get; set; } public string cacheUrl { get; set; } public string title: { get; set; } public string titleNoFormatting { get; set; } public string content { get; set; } 所以写一个类，来用于json数据的反序列号，其实就是解析啦。。这样通过对解析器的调用就能对应着吧json里面的值赋值给类对象了。
+                  <a href="https://leizhiyuan.github.io/2012/04/20/%E4%BA%8C%E7%BA%A7%E5%9F%9F%E5%90%8D%E6%9F%A5%E6%89%BE-%E5%AE%9E%E7%8E%B0%E6%BC%94%E7%A4%BAgapi-json-c/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+        </div>
+        
+          <ul class="pager main-pager">
+            
+              <li class="previous">
+                <a href="/tags/c/page/8/">&larr; Newer Posts</a>
+              </li>
+            
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/tags/c/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>操作系统知识点汇总(下)</title>
+  <meta property="og:title" content="操作系统知识点汇总(下)" />
+  <meta name="twitter:title" content="操作系统知识点汇总(下)" />
+  <meta name="description" content="太长了，还是分成两篇。此为下
+同时到达的作业使用短作业优先平均周转时间最短。
+系统调用和一般过程调用的区别： 1.运行状态不同 用户态/和心态 2.进入方式不同 过程调用/访问管中断 3.代码层次不同 用户级/系统级
+周转时间=完成时间-提交时间
+平均带权周转时间=周转时间/执行时间
+存储器分配的三种方式：1.直接分配，2.静态分配（连续），3.动态分配（需要用到重定位）
+地址空间是逻辑地址的集合，内存空间是物理地址的集合
+分区存储管理的策略： 分配策略有：首次适应算法、循环首次适应算法、最佳适应算法、最坏适应算法。 a.首次适应算法的优缺点：保留了高址部分的大空闲区，有利于后到来的大型作业的分配；低址部分不断被划分，留下许多难以利用的、小的空闲区，且每次分区分配查找时都是从低址部分开始，会增加查找时的系统开销。 b.循环首次适应算法的优缺点：使内存中的空闲分区分布得更为均匀，减少了查找时的系统开销；缺乏大的空闲分区，从而导致不能装入大型作业。 c.最佳适应算法的优缺点：每次分配给文件的都是最适合该文件大小的分区；内存中留下许多难以利用的小的空闲区。 d.最坏适应算法的优缺点：给文件分配分区后剩下的的空闲区不至于太小，产生碎片的几率最小，对中小型文件分配分区操作有利；使存储器中缺乏大的空闲区，对大型文件的分区分配不利。
+内部碎片是指分配给作业的存储空间未被使用的部分，外部碎片是指系统中无法利用的小存储块。 页面置换算法： 1.最佳置换算法 永远不需要，最长的时间后才能访问的页面被调出 2.先进先出 3.最近最久未使用 传说中的LRU，最近一段时间内没被访问的页面被调出
+采用分段式不会产生内部碎片，虚拟存储器的最大容量是由计算的地址结构决定的
+页面的大小与可能产生缺页中断的次数成反比
+作业在执行中发生了缺页中断，经操作系统处理后，应让其执行被中断的指令
+段页式存储器管理系统中，内存等分成块，然后程序按照逻辑模块划分成若干段。
+先进先出页面置换算法会产生Belady现象
+回收分区后造成空闲分区-1的原因是有有上邻和下邻空闲分区
+执行过程不能被修改的代码称为可重入代码。。 请求分页存储器管理中，地址变换可能因为地址越界，缺页，访问存在权限错误而产生中断
+交换技术是以CPU时间为代价的
+段页式管理中，作业分段，段内分页，页内分块，每条访问内存的指令需要三步 1.通过段号查段表。。得到页表地址 2.通过页号查页表。。得到物理块号 3.物理块号&#43;页内地址 访问真实地址
+固定分区分配和页式管理会产生内碎片，额可变分区和段式则产生外部碎片。
+输出输入控制方式 ①程序I/O控制方式:适用于结构简单，只需少量硬件的电路； ②中断驱动I/O控制方式：适用于高效场合； ③直接存储访问DMA I/O控制方式：适用于无须CPU介入的控制器来控制内存与外设之间的数据交流的场合； ④I/O通道控制方式：适用于以字节为单位的干预，同时实现CPU，通道和I/O设备三者并行操作的场合。
+设备处理程序又称为设备驱动程序，其主要任务是接收来自上层的与设备无关的输入输出请求，进行与设备相关的处理
+通道又称为I/0处理机，用来实现内存与外设之间的信息传输。
+为了使多个进程能够更有效的同时处理输入和输出请求，最好使用缓冲池结构的缓冲技术
+缺页中断属于外部中断，Ctrl&#43;C属于程序性中断
+设备分配时涉及到的主要数据结构设备控制表，控制器控制表，通道控制表，系统设备表
+从资源分配的角度可将I/0分为独享设备，共享设备，虚拟设备
+引入缓冲技术的原因： 1.缓和cpu和I/0之间的速度不匹配的矛盾 2.减少中断cpu的次数 3.提高cpu和I/o之间设备的并行性
+文件系统是指文件，管理文件的软件以及数据结构的总体
+文件系统的目的是为了实现对文件的按名存取。 逻辑文件的两种类型：记录式和流式
+二进制的那个位图表行号=（盘块号-1）/列数。 转载请注明：http://leaver.me/archives/328.html">
+  <meta property="og:description" content="太长了，还是分成两篇。此为下
+同时到达的作业使用短作业优先平均周转时间最短。
+系统调用和一般过程调用的区别： 1.运行状态不同 用户态/和心态 2.进入方式不同 过程调用/访问管中断 3.代码层次不同 用户级/系统级
+周转时间=完成时间-提交时间
+平均带权周转时间=周转时间/执行时间
+存储器分配的三种方式：1.直接分配，2.静态分配（连续），3.动态分配（需要用到重定位）
+地址空间是逻辑地址的集合，内存空间是物理地址的集合
+分区存储管理的策略： 分配策略有：首次适应算法、循环首次适应算法、最佳适应算法、最坏适应算法。 a.首次适应算法的优缺点：保留了高址部分的大空闲区，有利于后到来的大型作业的分配；低址部分不断被划分，留下许多难以利用的、小的空闲区，且每次分区分配查找时都是从低址部分开始，会增加查找时的系统开销。 b.循环首次适应算法的优缺点：使内存中的空闲分区分布得更为均匀，减少了查找时的系统开销；缺乏大的空闲分区，从而导致不能装入大型作业。 c.最佳适应算法的优缺点：每次分配给文件的都是最适合该文件大小的分区；内存中留下许多难以利用的小的空闲区。 d.最坏适应算法的优缺点：给文件分配分区后剩下的的空闲区不至于太小，产生碎片的几率最小，对中小型文件分配分区操作有利；使存储器中缺乏大的空闲区，对大型文件的分区分配不利。
+内部碎片是指分配给作业的存储空间未被使用的部分，外部碎片是指系统中无法利用的小存储块。 页面置换算法： 1.最佳置换算法 永远不需要，最长的时间后才能访问的页面被调出 2.先进先出 3.最近最久未使用 传说中的LRU，最近一段时间内没被访问的页面被调出
+采用分段式不会产生内部碎片，虚拟存储器的最大容量是由计算的地址结构决定的
+页面的大小与可能产生缺页中断的次数成反比
+作业在执行中发生了缺页中断，经操作系统处理后，应让其执行被中断的指令
+段页式存储器管理系统中，内存等分成块，然后程序按照逻辑模块划分成若干段。
+先进先出页面置换算法会产生Belady现象
+回收分区后造成空闲分区-1的原因是有有上邻和下邻空闲分区
+执行过程不能被修改的代码称为可重入代码。。 请求分页存储器管理中，地址变换可能因为地址越界，缺页，访问存在权限错误而产生中断
+交换技术是以CPU时间为代价的
+段页式管理中，作业分段，段内分页，页内分块，每条访问内存的指令需要三步 1.通过段号查段表。。得到页表地址 2.通过页号查页表。。得到物理块号 3.物理块号&#43;页内地址 访问真实地址
+固定分区分配和页式管理会产生内碎片，额可变分区和段式则产生外部碎片。
+输出输入控制方式 ①程序I/O控制方式:适用于结构简单，只需少量硬件的电路； ②中断驱动I/O控制方式：适用于高效场合； ③直接存储访问DMA I/O控制方式：适用于无须CPU介入的控制器来控制内存与外设之间的数据交流的场合； ④I/O通道控制方式：适用于以字节为单位的干预，同时实现CPU，通道和I/O设备三者并行操作的场合。
+设备处理程序又称为设备驱动程序，其主要任务是接收来自上层的与设备无关的输入输出请求，进行与设备相关的处理
+通道又称为I/0处理机，用来实现内存与外设之间的信息传输。
+为了使多个进程能够更有效的同时处理输入和输出请求，最好使用缓冲池结构的缓冲技术
+缺页中断属于外部中断，Ctrl&#43;C属于程序性中断
+设备分配时涉及到的主要数据结构设备控制表，控制器控制表，通道控制表，系统设备表
+从资源分配的角度可将I/0分为独享设备，共享设备，虚拟设备
+引入缓冲技术的原因： 1.缓和cpu和I/0之间的速度不匹配的矛盾 2.减少中断cpu的次数 3.提高cpu和I/o之间设备的并行性
+文件系统是指文件，管理文件的软件以及数据结构的总体
+文件系统的目的是为了实现对文件的按名存取。 逻辑文件的两种类型：记录式和流式
+二进制的那个位图表行号=（盘块号-1）/列数。 转载请注明：http://leaver.me/archives/328.html">
+  <meta name="twitter:description" content="太长了，还是分成两篇。此为下
+同时到达的作业使用短作业优先平均周转时间最短。
+系统调用和一般过程调用的区别： 1.运行状态不同 用户态/和心态 2.进入方式不同 过程调用/访问管中断 3.代码层次不同 用户级/系统级
+周转时间=完成时间-提交时间
+平均带权周转时间=周转时间/执行时间
+存储器分配的三种方式：1.直接分配，2.静态分配（连续），3.动态分配（需要用到重定位）
+地址空间是逻辑地址的集 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB%E4%B8%8B/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB%E4%B8%8B/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>操作系统知识点汇总(下)</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on April 18, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (62 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>太长了，还是分成两篇。此为下</p>
+
+<p>同时到达的作业使用短作业优先平均周转时间最短。</p>
+
+<p>系统调用和一般过程调用的区别：
+1.运行状态不同 用户态/和心态
+2.进入方式不同 过程调用/访问管中断
+3.代码层次不同 用户级/系统级</p>
+
+<p>周转时间=完成时间-提交时间</p>
+
+<p>平均带权周转时间=周转时间/执行时间</p>
+
+<p>存储器分配的三种方式：1.直接分配，2.静态分配（连续），3.动态分配（需要用到重定位）</p>
+
+<p>地址空间是逻辑地址的集合，内存空间是物理地址的集合</p>
+
+<p>分区存储管理的策略：
+分配策略有：首次适应算法、循环首次适应算法、最佳适应算法、最坏适应算法。
+a.首次适应算法的优缺点：保留了高址部分的大空闲区，有利于后到来的大型作业的分配；低址部分不断被划分，留下许多难以利用的、小的空闲区，且每次分区分配查找时都是从低址部分开始，会增加查找时的系统开销。
+b.循环首次适应算法的优缺点：使内存中的空闲分区分布得更为均匀，减少了查找时的系统开销；缺乏大的空闲分区，从而导致不能装入大型作业。
+c.最佳适应算法的优缺点：每次分配给文件的都是最适合该文件大小的分区；内存中留下许多难以利用的小的空闲区。
+d.最坏适应算法的优缺点：给文件分配分区后剩下的的空闲区不至于太小，产生碎片的几率最小，对中小型文件分配分区操作有利；使存储器中缺乏大的空闲区，对大型文件的分区分配不利。</p>
+
+<p>内部碎片是指分配给作业的存储空间未被使用的部分，外部碎片是指系统中无法利用的小存储块。
+页面置换算法：
+1.最佳置换算法 永远不需要，最长的时间后才能访问的页面被调出
+2.先进先出
+3.最近最久未使用 传说中的LRU，最近一段时间内没被访问的页面被调出</p>
+
+<p>采用分段式不会产生内部碎片，虚拟存储器的最大容量是由计算的地址结构决定的</p>
+
+<p>页面的大小与可能产生缺页中断的次数成反比</p>
+
+<p>作业在执行中发生了缺页中断，经操作系统处理后，应让其执行被中断的指令</p>
+
+<p>段页式存储器管理系统中，内存等分成块，然后程序按照逻辑模块划分成若干段。</p>
+
+<p>先进先出页面置换算法会产生Belady现象</p>
+
+<p>回收分区后造成空闲分区-1的原因是有有上邻和下邻空闲分区</p>
+
+<p>执行过程不能被修改的代码称为可重入代码。。
+请求分页存储器管理中，地址变换可能因为地址越界，缺页，访问存在权限错误而产生中断</p>
+
+<p>交换技术是以CPU时间为代价的</p>
+
+<p>段页式管理中，作业分段，段内分页，页内分块，每条访问内存的指令需要三步
+1.通过段号查段表。。得到页表地址
+2.通过页号查页表。。得到物理块号
+3.物理块号+页内地址 访问真实地址</p>
+
+<p>固定分区分配和页式管理会产生内碎片，额可变分区和段式则产生外部碎片。</p>
+
+<p>输出输入控制方式
+①程序I/O控制方式:适用于结构简单，只需少量硬件的电路；
+②中断驱动I/O控制方式：适用于高效场合；
+③直接存储访问DMA I/O控制方式：适用于无须CPU介入的控制器来控制内存与外设之间的数据交流的场合；
+④I/O通道控制方式：适用于以字节为单位的干预，同时实现CPU，通道和I/O设备三者并行操作的场合。</p>
+
+<p>设备处理程序又称为设备驱动程序，其主要任务是接收来自上层的与设备无关的输入输出请求，进行与设备相关的处理</p>
+
+<p>通道又称为I/0处理机，用来实现内存与外设之间的信息传输。</p>
+
+<p>为了使多个进程能够更有效的同时处理输入和输出请求，最好使用缓冲池结构的缓冲技术</p>
+
+<p>缺页中断属于外部中断，Ctrl+C属于程序性中断</p>
+
+<p>设备分配时涉及到的主要数据结构设备控制表，控制器控制表，通道控制表，系统设备表</p>
+
+<p>从资源分配的角度可将I/0分为独享设备，共享设备，虚拟设备</p>
+
+<p>引入缓冲技术的原因：
+1.缓和cpu和I/0之间的速度不匹配的矛盾
+2.减少中断cpu的次数
+3.提高cpu和I/o之间设备的并行性</p>
+
+<p>文件系统是指文件，管理文件的软件以及数据结构的总体</p>
+
+<p>文件系统的目的是为了实现对文件的按名存取。
+逻辑文件的两种类型：记录式和流式</p>
+
+<p>二进制的那个位图表行号=（盘块号-1）/列数。
+<strong>转载请注明：<a href="http://leaver.me/archives/328.html">http://leaver.me/archives/328.html</a></strong></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%AC%94%E8%AE%B0/">笔记</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB%E4%B8%8A/" data-toggle="tooltip" data-placement="top" title="操作系统知识点汇总(上)">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/04/18/wwwscan-gui%E7%89%88--webscan/" data-toggle="tooltip" data-placement="top" title="WWWScan GUI版--WebScan">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

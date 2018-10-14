@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>LR(1)项目集规范簇的构造</title>
+  <meta property="og:title" content="LR(1)项目集规范簇的构造" />
+  <meta name="twitter:title" content="LR(1)项目集规范簇的构造" />
+  <meta name="description" content="首先我们知道LR(0)的项目的形式是[A→α·β ]这样的.而在LR(1)中的项目形式是[A→α·β ，a ]，其中A→α·β 为LR(0)项目，称为心，a为终结符或#，称为向前搜索符。对归约项目[A→α·,a]，仅当前输入符号是a时，才能用A→α进行归约。一会将会看到具体的例子。
+　课本上给出的规则是：我将要对照着规则来说明，这里要强调一下，&rdquo;,&lsquo;在这里是分隔符。不是终结符。他是一个标志，
+　以S′→·S，#属于初始项目集中，把&rsquo;#&lsquo;号作为向前搜索符，表示活前缀为γ(若γ是有关S产生式的某一右部)要归约成S时，必须面临输入符为&rsquo;#&lsquo;号才行。因此对初始项目S′→·S，# 求闭包后再用转换函数逐步求出整个文法的LR(1)项目集族。具体构造步骤如下：
+　(1) 构造LR(1)项目集的闭包函数。
+　a) I 的任何项目都属于CLOSURE(I) b) 若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。 c) 重复b)直到CLOSURE(I)不再增大为止。
+　(2) 转换函数的构造
+　LR(1)转换函数的构造与LR(0)的相似，GO(I,X)＝CLOSURE(J)　其中I是LR(1)的项目集，X是文法符号： J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}
+　例如下列文法G′为：
+　(0) S′→S (1) S→aAd　(2) S→bAc　(3) S→aec (4) S→bed (5) A→e　构造他的LR(1)项目集规范簇。
+　以I0=CLOSURE（S′→·S，#）开始。运算。若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。此时，我们可以把S看成B，#看成a，然后需要求FIRST集合，此时没有β，a为#，所以FIRST（#）中只有一个b=#，而S有四个产生式。所有四个产生式加上#都是在I0中，最终求得的I0项目集为
+　{　S′→·S,#　S→·aAd,#　S→·bAc,#　S→·aec,#　S→·bed,#　}
+　然后使用GO函数来构造I1，从J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}我们可以知道I1的核（最初的产生式）就是这里的J，然后呢。X是I（也就是我们的I0）中的·后面的符号，也就是输入符。。可以看到在I0中，X可以为S，a，b，我们先以I1=GO(I0,S)=CLOSURE( S′→S·,# )，注意，·号已经前进了。因为J是I输入进一的项目，求I1，发现·后面没符号了，所以闭包就是他自己了。最终求得的I1的项目集为：
+　{S′→S·,# }
+　我们上一步是用的I1=GO(I0,S)来求得，我们求I2的时候使用GO（I0，a）来求，此时X就是a了。然后我们吧I0中符合的项目中的·后移一位得到J然后对J求闭包，就是I2了。此处J=S→a·Ad,# 和S→a·ec,#">
+  <meta property="og:description" content="首先我们知道LR(0)的项目的形式是[A→α·β ]这样的.而在LR(1)中的项目形式是[A→α·β ，a ]，其中A→α·β 为LR(0)项目，称为心，a为终结符或#，称为向前搜索符。对归约项目[A→α·,a]，仅当前输入符号是a时，才能用A→α进行归约。一会将会看到具体的例子。
+　课本上给出的规则是：我将要对照着规则来说明，这里要强调一下，&rdquo;,&lsquo;在这里是分隔符。不是终结符。他是一个标志，
+　以S′→·S，#属于初始项目集中，把&rsquo;#&lsquo;号作为向前搜索符，表示活前缀为γ(若γ是有关S产生式的某一右部)要归约成S时，必须面临输入符为&rsquo;#&lsquo;号才行。因此对初始项目S′→·S，# 求闭包后再用转换函数逐步求出整个文法的LR(1)项目集族。具体构造步骤如下：
+　(1) 构造LR(1)项目集的闭包函数。
+　a) I 的任何项目都属于CLOSURE(I) b) 若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。 c) 重复b)直到CLOSURE(I)不再增大为止。
+　(2) 转换函数的构造
+　LR(1)转换函数的构造与LR(0)的相似，GO(I,X)＝CLOSURE(J)　其中I是LR(1)的项目集，X是文法符号： J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}
+　例如下列文法G′为：
+　(0) S′→S (1) S→aAd　(2) S→bAc　(3) S→aec (4) S→bed (5) A→e　构造他的LR(1)项目集规范簇。
+　以I0=CLOSURE（S′→·S，#）开始。运算。若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。此时，我们可以把S看成B，#看成a，然后需要求FIRST集合，此时没有β，a为#，所以FIRST（#）中只有一个b=#，而S有四个产生式。所有四个产生式加上#都是在I0中，最终求得的I0项目集为
+　{　S′→·S,#　S→·aAd,#　S→·bAc,#　S→·aec,#　S→·bed,#　}
+　然后使用GO函数来构造I1，从J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}我们可以知道I1的核（最初的产生式）就是这里的J，然后呢。X是I（也就是我们的I0）中的·后面的符号，也就是输入符。。可以看到在I0中，X可以为S，a，b，我们先以I1=GO(I0,S)=CLOSURE( S′→S·,# )，注意，·号已经前进了。因为J是I输入进一的项目，求I1，发现·后面没符号了，所以闭包就是他自己了。最终求得的I1的项目集为：
+　{S′→S·,# }
+　我们上一步是用的I1=GO(I0,S)来求得，我们求I2的时候使用GO（I0，a）来求，此时X就是a了。然后我们吧I0中符合的项目中的·后移一位得到J然后对J求闭包，就是I2了。此处J=S→a·Ad,# 和S→a·ec,#">
+  <meta name="twitter:description" content="首先我们知道LR(0)的项目的形式是[A→α·β ]这样的.而在LR(1)中的项目形式是[A→α·β ，a ]，其中A→α·β 为LR(0)项目，称为心，a为终结符或#，称为向前搜索符。对归约项目[A→α·,a]，仅当前输入符号是a时，才能用A→α进行归约。一会将会看到具体的例子。
+　课本上给出的规则是：我将要对照着规则来说明，这里要强调一下，&rdquo;,&lsquo;在这里是分隔符。不是终结 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/06/02/lr1%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E7%B0%87%E7%9A%84%E6%9E%84%E9%80%A0/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/06/02/lr1%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E7%B0%87%E7%9A%84%E6%9E%84%E9%80%A0/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>LR(1)项目集规范簇的构造</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on June 2, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (104 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>首先我们知道LR(0)的项目的形式是[A→α·β ]这样的.而在LR(1)中的项目形式是[A→α·β ，a ]，其中A→α·β 为LR(0)项目，称为心，a为终结符或#，称为向前搜索符。对归约项目[A→α·,a]，仅当前输入符号是a时，才能用A→α进行归约。一会将会看到具体的例子。</p>
+
+<p>　　课本上给出的规则是：我将要对照着规则来说明，这里要强调一下，&rdquo;,&lsquo;在这里是分隔符。不是终结符。他是一个标志，</p>
+
+<p>　　以S′→·S，#属于初始项目集中，把&rsquo;#&lsquo;号作为向前搜索符，表示活前缀为γ(若γ是有关S产生式的某一右部)要归约成S时，必须面临输入符为&rsquo;#&lsquo;号才行。因此对初始项目S′→·S，# 求闭包后再用转换函数逐步求出整个文法的LR(1)项目集族。具体构造步骤如下：</p>
+
+<p>　(1) 构造LR(1)项目集的闭包函数。</p>
+
+<p>　　a) I 的任何项目都属于CLOSURE(I)
+　　b) 若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。
+　　c) 重复b)直到CLOSURE(I)不再增大为止。</p>
+
+<p>　　(2) 转换函数的构造</p>
+
+<p>　　LR(1)转换函数的构造与LR(0)的相似，GO(I,X)＝CLOSURE(J)　其中I是LR(1)的项目集，X是文法符号：
+　　J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}</p>
+
+<p>　　例如下列文法G′为：</p>
+
+<p>　　(0) S′→S
+　　(1) S→aAd　　
+　　(2) S→bAc　　
+　　(3) S→aec
+　　(4) S→bed
+　　(5) A→e　
+　　构造他的LR(1)项目集规范簇。</p>
+
+<p>　　以I0=CLOSURE（S′→·S，#）开始。运算。若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。此时，我们可以把S看成B，#看成a，然后需要求FIRST集合，此时没有β，a为#，所以FIRST（#）中只有一个b=#，而S有四个产生式。所有四个产生式加上#都是在I0中，最终求得的I0项目集为</p>
+
+<p>　　{　
+　　S′→·S,#　　
+　　S→·aAd,#　　
+　　S→·bAc,#　　
+　　S→·aec,#　　
+　　S→·bed,#　　
+　　}</p>
+
+<p>　　然后使用GO函数来构造I1，从J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}我们可以知道I1的核（最初的产生式）就是这里的J，然后呢。X是I（也就是我们的I0）中的·后面的符号，也就是输入符。。可以看到在I0中，X可以为S，a，b，我们先以I1=GO(I0,S)=CLOSURE( S′→S·,# )，注意，·号已经前进了。因为J是I输入进一的项目，求I1，发现·后面没符号了，所以闭包就是他自己了。最终求得的I1的项目集为：</p>
+
+<p>　　{S′→S·,# }</p>
+
+<p>　　我们上一步是用的I1=GO(I0,S)来求得，我们求I2的时候使用GO（I0，a）来求，此时X就是a了。然后我们吧I0中符合的项目中的·后移一位得到J然后对J求闭包，就是I2了。此处J=S→a·Ad,# 和S→a·ec,#</p>
+
+<p>　　I2=GO(I0,a)=CLOSURE(S→a·Ad,# S→a·ec,#)，然后又回到了求闭包了。</p>
+
+<p>　　对于S→a·ec,#，因为输入符下一位是一个终结符，也就是说没有B→γ这样的产生式，所以这个就不用继续向下求闭包了，闭包就是他自己嘛。然后关键是S→a·Ad,# 此处的A相当于规则中的B，d相当于规则中的β，A→e存在。为了确定这个心的向前搜索符，我们根据规则需要求b∈FIRST(βa)，这里也就是求First(d#),显然结果为b=d，规则中指出[B→·γ,b]也属于CLOSURE(I)，所以可以确定A→·e,d也在I2中。。</p>
+
+<p>　　最终I2的项目集为</p>
+
+<p>　　{
+　　S→a·Ad,#　　
+　　S→a·ec,#　　
+　　A→·e,d　　
+　　}</p>
+
+<p>　　到这里，关键点就说完了。只需要继续求GO(I0,b)，然后求GO（I1，X），GO（I2，X）等等。X的确定前面已经说了，就是I1，I2的·后面的符号。就行了。。当然像此处的I1，·后面已经没付好了，所以GO（I1，X）就不用求了。。</p>
+
+<p>　　这种东西还是要自己手动练习的。所以我给出最终的全部项目集规范簇，大家按照这个步骤来做一做。看看结果对不对吧。
+　　<table border="1px"  rules=all><tr><td>
+　  I0： S′→·S,#
+　　　 　S→·aAd,#
+　　　 　S→·bAc,#
+　　　 　S→·aec,#
+　　　 　S→·bed,#</td><td>
+　　I1： S′→S·,#</td><td>
+　　I2： S→a·Ad,#
+　　　 　S→a·ec,#
+　　　 　A→·e,d</td><td>
+　　I3： S→b·Ac,#
+　 　　　S→b·ed,#
+　 　　　A→·e,c</td><tr><td>
+　　I4： S→aA·d,#</td><td>
+   I5： S→ae·c,#
+　 　    A→e·,d </td><td>
+   I6： S→bA·c,# </td><td>
+   I7： S→be·d,#
+　 　   A→e·,c </td></tr><tr><td>
+   I8： S→aAd·,# </td><td>
+   I9： S→aec·,# </td><td>
+   I10：S→bAc·,# </td><td>
+   I11：S→bed·,# </td></tr></table></p>
+
+<p>　　构造的过程很繁琐。有点暴力计算的意思。不过，真正算起来步骤还是比较少的。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/06/01/%E6%88%91%E5%8F%AF%E4%BB%A5%E8%B9%B2%E4%B8%8B%E6%9D%A5%E9%99%AA%E4%BD%A0%E5%81%9A%E4%B8%80%E5%8F%AA%E8%98%91%E8%8F%87/" data-toggle="tooltip" data-placement="top" title="我可以蹲下来，陪你做一只蘑菇">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/06/02/turing%E6%9C%BA%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BB%A5%E5%8F%8A%E6%88%91%E4%BB%AC%E7%9A%84%E4%B8%96%E7%95%8C/" data-toggle="tooltip" data-placement="top" title="Turing机、人工智能以及我们的世界">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

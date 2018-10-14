@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>C</title>
+  <meta property="og:title" content="C" />
+  <meta name="twitter:title" content="C" />
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/tags/c/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/tags/c/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/tags/c/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="tags-heading">
+              
+                <h1>C</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/09/09/%E9%80%9A%E8%BF%87windows%E5%BA%94%E7%94%A8%E8%BF%9B%E8%A1%8C%E6%9C%8D%E5%8A%A1%E5%AF%84%E5%AE%BF%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/">
+                <h2 class="post-title">通过Windows应用进行服务寄宿示例代码</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 9, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (3 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>此程序部分源码来自《WCF技术剖析》。。但是。这本书上讲的非常不清楚。有些很小的地方没讲。。导致出现很多问题。。。比如ListView需要先添加列。默认的config需要删除。等等。。</p>
+
+<p>最终是成功了。
+<a href="http://leaverimage.b0.upaiyun.com/26808_o.jpg"><img src="/images/7390df89e6e155098b41900c68b850b956f79a4d.jpg" alt="" title="wCf" /></a></p>
+
+<p>源码下载：<a href="http://dl.vmall.com/c0d8askuak">Lazy.FormDemo</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/wcf/">WCF</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/09/07/wcf%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1%E7%A4%BA%E4%BE%8B/">
+                <h2 class="post-title">WCF双工通信示例</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 7, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (8 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>这两天在看WCF的书籍。就参考书上的代码写了这个例子。不得不说。书上有些错误的地方。。运行明显报错。改了一下。顺利通过。</p>
+
+<p>　　先运行Hosting。然后运行Client。可以看到效果。不过不知道为什么会有如下的一个提示：</p>
+
+<p>　　目标程序集不包含服务类型。可能需要调整此程序集的代码访问安全策略。</p>
+
+<p>　　点击确定后并不影响程序运行。。但是也是个问题。。找了一下解决方法。都没有解决。。可能是我新建契约服务的时候，删掉了默认的IService配置。</p>
+
+<p>//update:此问题解决了。是因为默认的app.config太多。对于典型的四层结构。需要删除契约和服务中的app.config。。</p>
+
+<p>　　暂时先放着吧。</p>
+
+<p>　　运行截图：</p>
+
+<p>　　<a href="http://leaverimage.b0.upaiyun.com/26775_o.jpg"><img src="/images/35cc6b919f9d513bf612503ffcac5b3448f20f37.jpg" alt="" title="wcfExample" /></a></p>
+
+<p>　　示例代码下载：<a href="http://dl.vmall.com/c0c44hq61p">Lazy.Duplex</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/wcf/">WCF</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/09/06/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B02/">
+                <h2 class="post-title">WCF读书笔记(2)</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 6, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (27 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p><strong>信道形状（Channel Shape）</strong></p>
+
+<p>　　用来表述不同的消息交换模式对消息交换双方信道（信息交换的管道）的不同要求，有什么IOutputChannel IReplyChannel IDuplexChannel之类的。。</p>
+
+<p>　　对于IReplyChannel，服务器返回一个RequestContext类型，作为请求和回复之间的一道桥梁，可以获取也可以返回消息。</p>
+
+<p><strong>会话信道（Session Channel）</strong></p>
+
+<p>　　从状态保持的角度，信道可以分为两种类型，Datagram Channel和Session Channel，前者不和客户端绑定，后者可以识别客户端。</p>
+
+<p>　　对于WCF的信道层来说，信道管理器在客户端和服务端扮演不同的角色。服务端的信道管理器用于监听来自客户端的请求，而客户端的信道仅仅是单纯创建用于请求发送和回复接收的信道，因此服务端的消息管理器又称为信道监听器（Channel Listener），客户端的信道管理器则称之为信道工厂（Channel Factory）</p>
+
+<p><strong>绑定元素（Binding Element）</strong></p>
+
+<p>　　构成一个绑定对象的元素，绑定实现了通信的所有细节，通过创建信道栈实现对消息的交换，系统绑定是指服务于某种类型场景的绑定元素的有序集合。 包括什么BaseHttpBinding之类的。</p>
+
+<p>　　<strong>一个程序集</strong>包括元数据，中间语言代码，和资源。程序集已经加载，将一直保存在内存中，直到应用程序域卸载。最好摒弃添加服务引用的服务调用方式，而是直接将包含服务契约的程序集部署到客户端。客户端以直接创建代理的方式进行调用。</p>
+
+<p>　　WCF可以看成是适配器，是CLR类型和XML两个不同世界的纽带。</p>
+
+<p>　　<strong>依赖倒置原则</strong>：即抽象不应该依赖细节，细节应该依赖于抽象；即要针对接口编程，不要对实现编程。高层模块不应该依赖低层模块。两个都应该依赖抽象。</p>
+
+<p>　　契约关心的是我能做到。而不在于我如何做到。</p>
+
+<p><strong>封送（Marshaling）</strong></p>
+
+<p>　　解决跨应用程序域对象访问的问题，需要采用一种特别的机制，那就是封送。分为按值封送和按引用封送</p>
+
+<p>　　按值封送实现了跨应用程序域的数据共享</p>
+
+<p>　　按引用封送则实现了跨应用程序域的远程调用。</p>
+
+<p>　　如果一个程序员频繁的使用复制粘贴编程。那就意味着设计需要重构</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/wcf/">WCF</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/09/04/%E4%BD%BF%E7%94%A8microsoft-web-deploy%E6%8A%80%E6%9C%AF%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/">
+                <h2 class="post-title">使用Microsoft Web Deploy技术自动部署</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 4, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (23 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>在前段时间使用WCF的时候。部署到服务器上一直不得要领。出现各种问题。最终搞定。原文图很多，我给个摘要，大家还是原文看。因为原文写于2010年。自动部署工具已经更新至第3版。所以有些按钮得好好找找。不过相信对大家都不是难事。</p>
+
+<p>　　本篇文章将提供一个循序渐进的教程，教你如何在一台Web服务期上安装和启用Web Deploy。接着我们演示如何使用Visual Studio通过Web Deploy直接（将文件）发布到服务器上，以及如何使用Visual Studio创建自动部署你的应用程序的安装包。</p>
+
+<p>　　<strong>Web Deploy—为什么你会喜欢它</strong></p>
+
+<p>　　部署一个Web应用程序或站点包含好几个步骤。您通常需要：</p>
+
+<p>　　1. 拷贝文件和文件夹；</p>
+
+<p>　　2. 提供数据库结构，或许还要生成一些数据库数据；</p>
+
+<p>　　3. 在文件和文件夹上设置相应的读写和安全访问控制列表；</p>
+
+<p>　　4. 安装和配置SSL认证；</p>
+
+<p>　　5. 部署其它杂七杂八的依赖项（事件日志，GAC库，COM对象等等）。</p>
+
+<p>　　手工执行上面的步骤又累又慢又危险（因为手工部署总是容易出错）。使用自动化流程，可以让你在一台服务器上快速维护和部署应用程序，减少出错的几率，并极大加快你在应用程序上的改动放到作业服务器上的周期。</p>
+
+<p>　　去原文看看吧。<a href="http://blog.joycode.com/scottgu/archives/2010/11/03/116148.joy">使用Microsoft Web Deploy技术自动部署</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/wcf/">WCF</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/08/09/c#%E8%B0%83%E7%94%A8matlab%E5%BC%95%E6%93%8E/">
+                <h2 class="post-title">C#调用Matlab引擎</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on August 9, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (47 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>最近在使用matlab的时候。求多元函数取得最小值的时候。变量的值。于是就用到了sym符号。结果在C#中调用时总是出错。后来Google了N久发现是符号工具箱是无法编译的。。后来找到了替代方法。就是调用matlab 引擎。当然要稍微麻烦一点。因为调用引擎这种方法参数传递比较麻烦。我只想到了通过C#把需要计算的值保存到文本中。然后matlab中load进来。计算完成后 save出去。。</p>
+
+<p>　　调用matlab引擎类似于在C#中新开了一个进程。然后执行一些命令。之前需要引用Matlab Application Type Library。这是个com组件</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/25657_o.jpg"><img src="/images/b938768405ede59db17f36bdc27e700bf3cbf1dc.jpg" alt="" title="type" /></a>
+然后在程序里使用 using语句</p>
+
+<pre class="lang:c# decode:true " >using MLApp;</pre> 
+然后就可以正常使用了。使用我试过的有两种方法
+
+<pre class="lang:default decode:true " >MLApp.MLAppClass matlab = new MLApp.MLAppClass();  
+matlab.Visible = 1;  
+string command="figure(1)";
+matlab.Execute(command);  
+matlab.Quit();</pre> 
+
+<p>很简单。Visible设置可见性。。command表示要执行的命令。</p>
+
+<p>另一种是</p>
+
+<pre class="lang:c# decode:true " >MLApp.DIMLApp matlab = null;  
+Type matlabAppType = System.Type.GetTypeFromProgID("Matlab.Application");  
+matlab = System.Activator.CreateInstance(matlabAppType) as MLApp.DIMLApp;  
+matlab.Visible = 1;  
+string command="figure(2)";
+matlab.Execute(command);  
+matlab.Quit();</pre> 
+
+<p>不知什么原因，第一种方法我没有调用成功。第二种调用成功。欢迎讨论。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%B7%A5%E4%BD%9C/">工作</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/07/27/wpf%E5%AE%9E%E7%8E%B0%E6%8E%A7%E4%BB%B6%E6%8B%96%E5%8A%A8%E6%95%88%E6%9E%9C/">
+                <h2 class="post-title">WPF实现控件拖动效果</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on July 27, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (59 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>首先很简单，当然是去添加两个控件了，这里我添加了两个控件，都是label，然后我想实现的是将label1拖动到label2上的时候，label1的内容会被复制到label2上。</p>
+
+<pre class="lang:c# decode:true " > &lt;Label Content="TestDrop" 
+Height ="28" HorizontalAlignment="Left" Margin="70,35,0,0" Name ="label1" 
+VerticalAlignment="Top" MouseDown="label1_MouseDown"  /&gt;
+
+&lt;Label Content ="ToHere" Height="28" HorizontalAlignment="Left" 
+Margin ="342,107,0,0" Name="label2" VerticalAlignment="Top" AllowDrop ="True"
+ Drop="tagert_drop"   /&gt;</pre> 
+
+<p>需要注意的代码是label1中的MouseDown事件。和label2中的AllowDrop =&ldquo;True&rdquo;  Drop=&ldquo;tagert_drop&rdquo;</p>
+
+<p>然后对应的处理事件</p>
+
+<pre class="lang:c# decode:true " >     private void label1_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Label lbl = (Label )sender;
+            DragDrop.DoDragDrop(lbl, lbl.Content, DragDropEffects .Copy);
+        }
+
+        private void tagert_drop(object sender, DragEventArgs e)
+        {
+            (( Label)sender).Content = e.Data.GetData(DataFormats.Text);
+        }</pre> 
+
+<p>其他的效果可以仿照这个来做。比如拖动以后的效果可以DragDropEffects来设置。。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/07/21/devexpress-dxperience-universal-12.1.5-%E7%A0%B4%E8%A7%A3%E8%A1%A5%E4%B8%81/">
+                <h2 class="post-title">DevExpress DXperience Universal 12.1.5 破解补丁</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on July 21, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (8 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>因为要用到wpf开发软件，而作为一个审美能力和制作美的能力完全不匹配的人。。需要有一个基本的主题框架来作为基础进行开发。。于是我找了找。。刚开始找的是<a href="http://www.telerik.com/这个商业库，不过这个用的不太顺手，于是还是试试DevExpress，，果断很不错，找到了破解补丁。">http://www.telerik.com/这个商业库，不过这个用的不太顺手，于是还是试试DevExpress，，果断很不错，找到了破解补丁。</a>
+给一个官方的Demo示例图：
+<a href="http://leaverimage.b0.upaiyun.com/25025_o.jpg"><img src="/images/5de045da9ce167999bd9e8df93580d0c93579daf.jpg" alt="" title="Demo" /></a>
+安装文件：<a href="http://downloads.devexpress.com/d0577ccc-5137-4622-b397-a128d153f2aa/0.0.0.0/DXperience/2012.1/5/DXperience-12.1.5.exe">DXperience-12.1.5安装包</a></p>
+
+<p>帮助文档：<a href="http://downloads.devexpress.com/24614371-d026-41ab-89c8-b2c3769f9059/0.0.0.0/DXperience/2012.1/Help/DXperienceHelp2010-12.1.5.exe">DXperience 12.1.5 Universal 帮助文档</a>：</p>
+
+<p>破解补丁：<a href="http://pan.baidu.com/share/link?shareid=34831&amp;uk=1493685990">DevExpress.Registration.Setup.v12.1.5.E3.msi</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/07/14/%E6%9C%AA%E8%83%BD%E5%8A%A0%E8%BD%BD%E6%96%87%E4%BB%B6%E6%88%96%E7%A8%8B%E5%BA%8F%E9%9B%86app_web_xxxx/">
+                <h2 class="post-title">未能加载文件或程序集“App_Web_xxxx”</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on July 14, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (13 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>今天在用WCF写服务的时候，服务一直连不上，直接查看svc文件，发现如下错误
+未能加载文件或程序集“&rsquo;App<em>Web</em>*<strong><em>, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null&rdquo;,</em></strong>*是一个随机字符串。</p>
+
+<p>解决方法中：</p>
+
+<p>　　在web.config里配置成这样子：
+<pre class="lang:c# decode:true"> &lt;compilation debug=&ldquo;true&rdquo; batch=&ldquo;false&rdquo;&gt;</pre>
+　　就好了。中午和下午一直在搞javascript连接WCF的demo，总算是晚上搞定了，，还是老样子，，最大的体会就是很多东西就是看着简单，写起来会有各种各样的问题，比如这次，即使照着微软的官方文档来，也会有错误。动手才是王道，不管做什么。这几天忙完了，写篇文章出来。</p>
+
+<p>　　最后分享一下微软官方的<a href="http://www.microsoft.com/china/msdn/events/webcasts/shared/webcast/Series/WCF_Ajax.aspx">WCF与Ajax开发实践系列课程</a>，我只能说WCF这东西没有哪一本书比微软官方的技术培训讲的更好了，非常建议学习。</p>
+
+<p>　　武汉最近下雨了，天气挺凉爽，过几天准备回家吧。。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/07/13/sqlserver%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E5%B7%B2%E5%88%B0%E8%A7%A3%E5%86%B3%E5%92%8C%E4%B8%80%E5%A5%97%E6%8E%A7%E4%BB%B6%E5%BA%93/">
+                <h2 class="post-title">SQLServer超时时间已到解决和一套控件库</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on July 13, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (17 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>在最近的一个程序中，因为频繁的操作数据库，莫名的出现了如下的错误：</p>
+
+<p>　　超时时间已到。超时时间已到，但是尚未从池中获取连接。出现这种情况可能是因为所有池连接均在使用，并且达到了最大池大小。</p>
+
+<p>　　说明: 执行当前 Web 请求期间，出现未处理的异常。请检查堆栈跟踪信息，以了解有关该错误以及代码中导致错误的出处的详细信息。</p>
+
+<p>　　异常详细信息: System.InvalidOperationException: 超时时间已到。超时时间已到，但是尚未从池中获取连接。出现这种情况可能是因为所有池连接均在使用，并且达到了最大池大小。</p>
+
+<p>　　按理说这应该是没有关闭数据库连接或者dataset，可是查了一下。发现都关了啊。遂可以表述为原因不明，但是通过在数据库连接字符串中添加max pool size=512  这个数字可以自己设。就可以了</p>
+
+<p>　　这篇文章短是短了点。。好吧。那顺带分享一套非常精美的C#控件。
+<a href="http://115.com/file/dptqnr63#RadControls-WinForms-2012-2-608-Dev.msi">RadControls-For-WinForms 控件2012</a>
+<a href="http://leaverimage.b0.upaiyun.com/24794_o.jpg"><img src="/images/35b3a6023ad34c4bab5564678dffabbcdd53a5da.jpg" alt="" title="wpf" /></a>
+<a href="http://115.com/file/e79q6pju#RadControls-for-WPF-2012-2-0607-Dev.msi">RadControls-for-WPF控件2012</a>
+<a href="http://leaverimage.b0.upaiyun.com/24793_o.jpg"><img src="/images/c3f1eeb8b01e38643d7ce0d2e2716bba20285943.jpg" alt="" title="winform" /></a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%B7%A5%E4%BD%9C/">工作</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/07/11/c#-%E7%BA%BF%E7%A8%8B%E4%BC%98%E7%A7%80%E6%96%87%E7%AB%A0%E6%B1%87%E6%80%BB/">
+                <h2 class="post-title">C# 线程优秀文章汇总</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on July 11, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (42 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  
+
+<p>最近在看线程的东西，整理一些文档以便学习。分享。</p>
+
+<h3 id="刚刚-http-www-cnblogs-com-xugang"><a href="http://www.cnblogs.com/xugang">刚刚</a></h3>
+
+<ol>
+<li><a href="http://kb.cnblogs.com/page/42528">C#多线程学习(一) 多线程的相关概念</a></li>
+<li><a href="http://kb.cnblogs.com/page/42529">C#多线程学习(二) 如何操纵一个线程</a></li>
+<li><a href="http://kb.cnblogs.com/page/42530">C#多线程学习(三) 生产者和消费者</a></li>
+<li><a href="http://kb.cnblogs.com/page/42531">C#多线程学习(四) 多线程的自动管理(线程池)</a></li>
+<li><a href="http://kb.cnblogs.com/page/42532">C#多线程学习(五) 多线程的自动管理(定时器)</a></li>
+<li><a href="http://kb.cnblogs.com/page/42533">C#多线程学习(六) 互斥对象</a></li>
+<li><a href="http://www.cnblogs.com/xugang/archive/2011/03/20/1989782.html">C# 实现多线程的同步方法详解</a></li>
+</ol>
+
+<h3 id="jimmyzheng-http-www-cnblogs-com-jimmyzheng"><a href="http://www.cnblogs.com/JimmyZheng">JimmyZheng</a></h3>
+
+<ol>
+<li><a href="http://www.cnblogs.com/JimmyZheng/archive/2012/06/10/2543143.html">C# 温故而知新： 线程篇(一)</a> <strong>Thread</strong></li>
+<li><a href="http://www.cnblogs.com/JimmyZheng/archive/2012/07/07/2580253.html">C# 温故而知新： 线程篇(二)</a> 线程池和异步线程</li>
+</ol>
+
+<h3 id="zhoufoxcn-http-blog-csdn-net-zhoufoxcn"><a href="http://blog.csdn.net/zhoufoxcn">zhoufoxcn</a></h3>
+
+<ol>
+<li><a href="http://blog.csdn.net/zhoufoxcn/article/details/4402999">C#多线程编程（1）：线程的启动</a></li>
+<li><a href="http://blog.csdn.net/zhoufoxcn/article/details/5170815">多线程编程(2)：线程的同步</a></li>
+<li><a href="http://blog.csdn.net/zhoufoxcn/article/details/5177579">多线程编程(3)：线程池ThreadPool</a></li>
+<li><a href="http://blog.csdn.net/zhoufoxcn/article/details/5205690">多线程编程(4)：多线程与UI操作</a></li>
+<li><a href="http://blog.csdn.net/zhoufoxcn/article/details/2453803">一个简单的C#多线程间同步的例子</a></li>
+</ol>
+
+<h3 id="老赵-http-www-cnblogs-com-jeffreyzhao"><a href="http://www.cnblogs.com/JeffreyZhao">老赵</a></h3>
+
+<ol>
+<li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html">浅谈线程池（上）：线程池的作用及CLR线程池</a></li>
+<li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/24/thread-pool-2-dedicate-pool-and-io-pool.html">浅谈线程池（中）：独立线程池的作用及IO线程池</a></li>
+<li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/10/20/thread-pool-3-lab.html">浅谈线程池（下）：相关试验及注意事项</a></li>
+</ol>
+
+<h3 id="bloodish-http-www-cnblogs-com-bloodish"><a href="http://www.cnblogs.com/bloodish">bloodish</a></h3>
+
+<ol>
+<li><a href="http://www.cnblogs.com/bloodish/archive/2011/03/21/1990025.html">C# Tip &ndash; 如何优雅的控制线程状态</a></li>
+</ol>
+
+<h3 id="autumoon-http-www-cnblogs-com-autumoon"><a href="http://www.cnblogs.com/Autumoon">Autumoon</a></h3>
+
+<ol>
+<li><a href="http://www.cnblogs.com/Autumoon/archive/2008/06/19/1225684.html">白话多线程</a></li>
+</ol>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+        </div>
+        
+          <ul class="pager main-pager">
+            
+              <li class="previous">
+                <a href="/tags/c/page/6/">&larr; Newer Posts</a>
+              </li>
+            
+            
+              <li class="next">
+                <a href="/tags/c/page/8/">Older Posts &rarr;</a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/tags/c/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

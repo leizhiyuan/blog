@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据库 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <description>Recent content in 数据库 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 30 Sep 2012 22:33:19 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CSV导入导出工具</title>
+      <link>https://leizhiyuan.github.io/2012/09/30/csv%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Sun, 30 Sep 2012 22:33:19 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/30/csv%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E5%B7%A5%E5%85%B7/</guid>
+      <description>介绍
+本文介绍并且实现了在平面文件CSV和SQL server之间的导入导出功能。使用VS2005写的。使用了.net 2.0
+本文基于前一篇文章：从CSV导入数据并存储到数据库，本文包含了新功能，比如，导出功能，在数据库创建表，批量拷贝。接下来的例子中有很多注释。
+导入
+通过ODBC驱动连接到一个CSV文件，然后把文件读到一张表了（基于前面提到的那篇文章） 使用不同的编码和不同的行分隔符（基于前文） 加载CSV文件到DataSet（基于前文） 如何显示对CSV文件的预览（基于前文） 通过SqlBulkCopy的对象向SQL server转移数据，原始数据是DataSet实例
+使用结构表，基于CSV文件，创建一个新表 使用事件来处理批量拷贝的进程 导出
+浏览SQL 数据库中的用户表 使用不同的编码和分隔符 使用SqlDataReader读取数据，使用StreamWriter转移数据到平面文件
+ 使用 1. 下载工程 2. 新建一个数据库，或者使用一个存在的数据库 3. 修改软件中的数据库连接字符串，在prop.cs文件中
+public static string sqlConnString = &#34;server=(local); database=Test_CSV_impex;Trusted_Connection=True&#34;;  运行工程  一些代码段 加载CSV到DataSet中 /* *加载CSV到DataSet. * * 如果numberOfRows parameter 是 -1, 就加载所有行, 否则就加载指定数目的行 */
+public DataSet LoadCSV(int numberOfRows) { DataSet ds = new DataSet(); try { // 创建并打开ODBC连接 string strConnString = &amp;ldquo;Driver={Microsoft Text Driver (*.</description>
+    </item>
+    
+    <item>
+      <title>从数据库读取图片发生“无效的参数”异常</title>
+      <link>https://leizhiyuan.github.io/2012/09/27/%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BB%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%91%E7%94%9F%E6%97%A0%E6%95%88%E7%9A%84%E5%8F%82%E6%95%B0%E5%BC%82%E5%B8%B8/</link>
+      <pubDate>Thu, 27 Sep 2012 19:47:39 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/27/%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BB%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%91%E7%94%9F%E6%97%A0%E6%95%88%E7%9A%84%E5%8F%82%E6%95%B0%E5%BC%82%E5%B8%B8/</guid>
+      <description>介绍 我发现对于很多人来说，当从数据库里载入一张图片然后重新创建成一张图片显示的话会有这样一个问题&amp;mdash;-当他们尝试重新创建新的图片的时候，会抛出一个“无效的参数”异常
+因此，本文介绍该异常如何产生。并且我希望未来当我或是你发生这个错误的时候还能有所帮助。。
+背景 存储图片到数据库里面是一个很有效的想法。很多人在一些场合都会这样做。的确，这是一个很好的想法。在图片很小的情况下，或者图片不是太多。在这两种情况下，当你需要图片的时候，你会实时去加载它们。而当你不需要的时候如果从数据库里加载图片会浪费很多带宽。并使得你的程序有一些慢。
+但问题是这种方法也很容易发生错误。&amp;ndash;尤其是你使用字符串连接，然后组合到你的SQL语句里面—并且这个错误只有当你打算使用存储的信息的时候才会发生。然后，看起来似乎是你的读取代码写错了&amp;mdash;不可能—它是正常的。我在其他地方都可以的。。
+从数据库里加载图片 重数据库里读取一张图片然后转换成图片显示是很简单的。 using (SqlConnection con = DBAccess.DBCon) { using (SqlCommand cmd = new SqlCommand(&amp;ldquo;SELECT picture FROM Pictures WHERE Id=@ID&amp;rdquo;, con)) { cmd.Parameters.AddWithValue(&amp;ldquo;@ID&amp;rdquo;, Id); SqlDataReader reader = cmd.ExecuteReader(); if (reader.Read()) { byte[] data = (byte[])reader[&amp;ldquo;Picture&amp;rdquo;]; using (MemoryStream stream = new MemoryStream(bytes)) { myImage = new Bitmap(stream); } } } } 但是-如果data因为一些原因不是有效的图片，那么这一行 myImage = new Bitmap(stream); 将会抛出一个异常—无效的参数
+只有当你真正看了从数据库里返回到data里的数据-而不是简单的瞄了一眼调试器，你才能注意到是什么原因。。 {byte[21]} [0] 83 [1] 121 [2] 115 [3] 116 [4] 101 [5] 109 [6] 46 [7] 68 [8] 114 [9] 97 [10] 119 [11] 105 [12] 110 [13] 103 [14] 46 &amp;hellip; 它看起来不像是错的，所以它可能就是你想要的。-虽然21字节是一个很大的线索：你的图片可能只有21字节长？那图片可真小。。</description>
+    </item>
+    
+    <item>
+      <title>《商务智能与数据挖掘-谢邦昌》第三章读书笔记</title>
+      <link>https://leizhiyuan.github.io/2012/09/21/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%B8%89%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Fri, 21 Sep 2012 08:16:06 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/21/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%B8%89%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>3.数据挖掘
+3.1定义
+　数据挖掘是指找寻隐藏在数据中的信息，如趋势。特征及相关性的过程。也就是从数据中发掘信息或知识（Knowledge Discovery in Database）。也有人称之为数据考古学。。记住，它不是一个无所不能的软件或是一种技术，他是一种结合数种专业技术的应用。数据挖掘工具从数据中发掘出个各种假设。但是并不帮你查证。确认这些假设。也不帮你判断这些假设是否有价值。
+3.2数据挖掘的功能
+　1.分类（Classification），按照分析对象的属性进行分门别类加以定义。建立类组（Class）。例如划分银行信用申请者的风险属性，使用的技术有决策树（Decision Tree），记忆基础推理（memory-based reasoning）
+　2.估计（Estimation），根据既有连续性数值的相关属性数据。以获知某一属性未知值。。例如按照信用申请者的教育程度，行为估计其的信用卡缴费量。使用的技术包括相关分析，回归分析及神经网络算法。
+　3.预测（Prediction）根据对象属性的过去观察值来估计该属性未来值。比如根据顾客过去刷卡消费量来预测其未来刷卡消费量。使用的技术包括回归分析，时间序列分析，神经网络。
+　4.关联分组（Affinity Grouping）从所有对象决定哪些相关对象放在一起销售。比如那个啤酒和尿不湿。。在客户营销系统上，此功能用来确定交叉销售。。
+　5.聚类（Clustering)，将异质总体中区分为特征相近的同质类组。目的是将组和组之间的差异辨识出来。并对个别组内相似样本进行挑选。
+3.3数据挖掘的步骤
+　1.理解数据和数据所代表的含义（Data Understanding）
+　2.获取相关知识和技术（Domain Knowledge Acquisition）
+　3.整合和检查数据（Integration and Checking）
+　4.去除错误或不一致的数据（Data Cleaning)
+　5.建模与假设（Model and Hypothesis Development）
+　6.数据挖掘运行（Running)
+　7.测试与验证所挖掘的数据（Testing and Verification）
+　8.解释与使用数据（Interpretation and Use）
+3.4数据挖掘建模的标准CRISP-DM
+　CRISP-DM模型强调完整的数据挖掘过程，不能只针对数据整理、数据呈现、数据分析以及构建模型，还需要对企业的需求问题进行了解，同时，后期对模型进行评价和模型的延伸应用，也是一个完整的数据挖掘过程不可或缺的要素。
+　CRISP-DM分为六个阶段（phase）和四个层次（level），分别简介如下：
+　1. 商业理解（Business Understanding）
+　本阶段主要的工作是要针对企业问题以及企业需求进行了解确认，针对不同的需求做深入的了解，将其转换成数据挖掘的问题，并拟定初步构想。在此阶段中，需要与企业进行讨论，以确定分析者可以对于问题有非常清楚的了解，只有这样才可以正确地针对问题拟定分析过程。
+　2. 数据理解（Data Understanding）
+　这部分包含建立数据库与分析数据。在此阶段必须收集初步数据，然后了解数据的内涵与特性，选择要进行数据挖掘所必须的数据，然后进行数据整理及评估数据的质量，必要时再将分属不同数据库的数据加以合并及整合。数据库建立完成后再进行数据分析，找出影响预测最大的数据。
+　3. 数据预处理（Data Preparation）</description>
+    </item>
+    
+    <item>
+      <title>《商务智能与数据挖掘-谢邦昌》第二章读书笔记</title>
+      <link>https://leizhiyuan.github.io/2012/09/20/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Thu, 20 Sep 2012 08:47:36 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/20/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>2.数据仓库
+　数据仓库名字上来看是很好理解的。他与传统的数据库的不同在于。传统的数据库是未经整理后的一大堆数据集。而数据仓库是从数据库中萃取出来。经过整理，规划，建构而成的一个有系统的数据库的子集合。
+2.1数据仓库特点：
+　数据仓库的四个特点。
+　1.面向主题（Subject Orient）。数据建立的着重点就是在于以重要的主题组件作为核心。作为建构的方向。数据需求者只要把谣言觉得相关主题数据，从数据库中攫取，整合之后就可以做研究之用。
+　2.整合性（Integrated）各应用系统的数据需经过整合。以便利执行相关分析操作
+　3.长期性（Time Variance） 为了执行趋势的分析。数据仓库系统需保留1-10年的历史数据。这与数据库为日常性的数据有所不同。
+　4.稳定性（Non-Volatile）数据库可以被随时修改，但数据仓库基本上不会大动。只有内部人员会定期修改。但频率不会太多。也不允许用户做更新的动作。
+　由于以上的几个特点。数据仓库必须通过一连串的程序才可建立。而不是说即买即用。。
+2.2数据仓库架构
+　数据源-&amp;gt;整体数据仓库-&amp;gt;部门性数据仓库-&amp;gt;查询工具-&amp;gt;终端用户
+　数据仓库的建设过程：
+　专业顾问通过与企业进行需求访谈，建立数据仓库的model，然后将企业内各种数据整合到数据库中，并建立前端分析数据的工具以及管理工具，这样的过程即为建立数据仓库的基本过程。
+　1.设计（Design） 即数据仓库的数据Model设计，这部分是最重要的，若Model设计的不够周全或布里希那个，不管之后的报表设计如何精美，也可能跑出错误的信息。这也是需要有经验的专业顾问建立数据仓库的一个重要原因。
+　2.整合（Integrate）即数据的整合转换过程，包含数据解释（Data Extraction） ，数据转换（Data Transformation）数据清理（Data Cleaning），数据加载（Data Loading）将各种来源的数据整理，转换并加载数据仓库中，程序编写较为繁杂，自动化处理困难，经常需要人工参与操作，大约占掉该项目60-70%的时间和人力。
+　3.可视化（Visualize）即前端呈现给用户看的形式，例如数据挖掘（Data Mining） 即OLAP工具，用以呈现分析过的数据形式。
+　4.调度（Administration）为管理的工具。
+2.3建立数据仓库的原因和目的
+　提高企业的竞争能力，降低成本，提高客户满意度。创造利润。</description>
+    </item>
+    
+    <item>
+      <title>《商务智能与数据挖掘-谢邦昌》第一章读书笔记</title>
+      <link>https://leizhiyuan.github.io/2012/09/19/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%B8%80%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 19 Sep 2012 08:00:34 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/19/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%B8%80%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>1.绪论
+　商务智能的含义就是指通过企业所拥有的数据和数据仓库的汇总，结合联机分析及数据挖掘技术挖掘出潜藏在数据库中的有用信息，并将其提供给决策者或部门主管作为平时运营的决策依据。而当企业面临危机时或必须立即做出重大决策时，也能依据数据仓库所提供的正确数据及时作出正确的决策。协助企业顺利解决问题。化危机为转机。更可见商务智能的重要性。
+　商务智能应用的几个方面
+　对于一般企业来说，商务智能主要应用在以下几个方面。1.了解运营状况，2.衡量绩效。3.改善关系。4.创造获利机会。
+　企业引用商务智能的流程
+　
+　商务智能的核心：根据企业数据库整合成可以作为分析用的数据仓库。再进一步通过分析技术来探索数据。
+　《Building the Data Warehouse》的作者William Inmon认为数据仓库必须具有面对主题，整合性，时间转化，不易变化四个特性。
+　联机分析简单来说就是能让用户根据本身决策需求来浏览数据。动态且实时的产生其所需的报表，以提高分析效率的技术。事实上，他除了能提供在线实时数据分析模块外，更重要的是能展示多维度的数据。
+　商务智能的另一项重要技术：数据挖掘：是指在大量数据库中寻找有意义或是有价值的信息的过程。通过机器学习技术或是统计分析方法论。根据整合的数据加以分析探索，发掘出隐含在数据中的特性。通过专业领域知识整合及分析。从中找出合理且有用的信息，经过相关部门针对该模型的评估后，再提供给相关决策单位加以运用。
+　企业间的竞争模式，从传统的“红海策略”，即采取压低成本与价格的杀价流血竞争。到近来倡导以创新为核心竞争力的“蓝海策略”，不论哪一种策略模式，都是不断地从研发，制造，营销，客服或资源配置等运营的相关问题上。寻求问题的发生原因，并尝试找出解决方案，而运营阶段中，陆续积累的庞大数据，往往就是答案的隐身之处。这也是数据挖掘的目的。
+　数据库仓库强大而实用，但有一个局限性。就是他实质上反映的过去的历史，由于数据仓库经常在特定周期或时间点进行加载和处理。因此他只是表示一个时间点上的快照。即使构建了实时或是近似实时的数据仓库，其数据仍然只表示当前和历史的数据。无法达到预测的需要。与传统的统计分析方法不同的是，数据挖掘不是让人提出假设。然后据此去找相关数据。而是让数据仓库确定数据相关性。并允许采用与以往不同的模式对数据进行分析。</description>
+    </item>
+    
+    <item>
+      <title>超时时间已到，但是尚未从池中获取连接</title>
+      <link>https://leizhiyuan.github.io/2012/09/03/%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E5%B7%B2%E5%88%B0%E4%BD%86%E6%98%AF%E5%B0%9A%E6%9C%AA%E4%BB%8E%E6%B1%A0%E4%B8%AD%E8%8E%B7%E5%8F%96%E8%BF%9E%E6%8E%A5/</link>
+      <pubDate>Mon, 03 Sep 2012 08:47:31 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/03/%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E5%B7%B2%E5%88%B0%E4%BD%86%E6%98%AF%E5%B0%9A%E6%9C%AA%E4%BB%8E%E6%B1%A0%E4%B8%AD%E8%8E%B7%E5%8F%96%E8%BF%9E%E6%8E%A5/</guid>
+      <description>前段时间数据库的时候，出现这个问题。一般是读到20多万条的时候。会出现这个问题。
+　找了一下。主要是这两个问题：
+　一、看所有open的连接是否都close了。
+　二、如果访问量很大，加上Max Pool Size=512这一句，当然这是要以损失系统性能为代价的！
+　我查了一下。数据库连接所有的open都关闭了。 max pool size也确实加上了。但是。问题依旧。。
+　哦，还有的说在数据库连接字串中添加Connect Timeout=500，也就是设置连接超时更长一些。问题依旧。。
+　后来看到一篇文章中说：
+　DataReader是独占连接 的，每个DataReader都要占用一个连接。当然这个情况是偶尔出现的，所以会很长时间出现一次，因为只有同时有超过连接池最大连接数量的并发操作才 会发生。而且你加大并发数量只能暂时缓解问题。
+　文中建议用使用dataset来读取。然后我就把读取数据中使用DataReader的地方全部用DataAdapter和DataSet来获取数据库数据，因为DataSet非独占。会将数据保存在内存中，一次连接后释放，问题解决。
+　记录一下。</description>
+    </item>
+    
+  </channel>
+</rss>

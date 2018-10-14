@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stackoverflow on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/stackoverflow/</link>
+    <description>Recent content in Stackoverflow on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 22 May 2012 11:28:27 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/stackoverflow/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>c &amp; c&#43;&#43;中sizeof返回值不同?</title>
+      <link>https://leizhiyuan.github.io/2012/05/22/c--c--%E4%B8%ADsizeof%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%8D%E5%90%8C/</link>
+      <pubDate>Tue, 22 May 2012 11:28:27 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/22/c--c--%E4%B8%ADsizeof%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%8D%E5%90%8C/</guid>
+      <description>问题: A character array is defined globally and a structure with same name is defined within a function. 一个字符数组被定义为全局变量，一个相同名字的结构体被定义在一个函数内部。
+Why sizeof operator returns different values for c &amp;amp; c++ ? 为什么sizeof操作符对于C和C++返回了不同的值呢？ char S[13]; void fun() { struct S { int v; }; int v1 = sizeof(S); } // returns 4 in C++ and 13 in C 答案： Because in C++, the struct you defined is named S, while in C, 因为在C++中，你定义的结构体的名称是S，而在C中，</description>
+    </item>
+    
+  </channel>
+</rss>

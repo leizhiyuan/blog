@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>理解并实现生成器模式</title>
+  <meta property="og:title" content="理解并实现生成器模式" />
+  <meta name="twitter:title" content="理解并实现生成器模式" />
+  <meta name="description" content="介绍 本文讨论生成器设计模式，讨论该模式什么情况下使用，怎么实现。并且。最后会有一个简单的生成器模式的实现。
+&nbsp;
+背景 当我们的程序需要创建一个对象。而这个对象必须由很多不同的对象来构造的时候。为了构造最后的对象。我们不得不组合那些部分对象。最后我们会发现我们的代码被各种各样的部分对象的细节所弄的难以理解
+&nbsp;
+为了说明上面的情况。我们做一个手机生产制造系统的例子。假定我们我们有一个已经安装在手机供应商那块的一个系统。现在供应商系那个要根据一些参数来创造一个新手机。比如触屏，操作系统，电池等。如果我们已经有了这些部分的对象，那么上述部分的任意组合将会导致客户端代码复杂难以管理。比如决定生产哪种手机的模块。
+&nbsp;
+生成器模式目的就是解决上述问题的。GoF定义生成器模式如下：
+Separate the construction of a complex object from its representation so that the same construction process can create different representations.
+将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
+&nbsp;
+&nbsp;
+这个定义意味着我们不得不设计这个系统。通过一种客户端仅仅定义参数，而生成器则接管创建复杂对象 的方式。我们看一下生成器模式的类图。
+
+然后看看上图中的每一个类都表示什么
+ConcreteBuilder: 创建复杂产品的具体类.将会知道他已经创建的Product（产品），也就是他已经装配了的Product， 客户端通过该类得到Product对象.
+Builder: 创建Product的接口
+Director: 客户端代码，定义了哪些部分应该被组合在一起来创建具体的Product
+Product: 这是通过组合很多部分创建的对象
+&nbsp;
+使用代码 我们现在跟随上述的定义，然后试着去实现一个基本的生成器模式
+&nbsp;
+我们先在合适的地方定义Product的不同部分，我们简单的定义一些枚举类型，那么我们就可以通过组合不同的部分创建Product了。
+&nbsp; // 一些helper枚举定义各种零件
+public enum ScreenType
+{
+ScreenType_TOUCH_CAPACITIVE, ScreenType_TOUCH_RESISTIVE, ScreenType_NON_TOUCH };
+public enum Battery
+{
+MAH_1000, MAH_1500, MAH_2000 };">
+  <meta property="og:description" content="介绍 本文讨论生成器设计模式，讨论该模式什么情况下使用，怎么实现。并且。最后会有一个简单的生成器模式的实现。
+&nbsp;
+背景 当我们的程序需要创建一个对象。而这个对象必须由很多不同的对象来构造的时候。为了构造最后的对象。我们不得不组合那些部分对象。最后我们会发现我们的代码被各种各样的部分对象的细节所弄的难以理解
+&nbsp;
+为了说明上面的情况。我们做一个手机生产制造系统的例子。假定我们我们有一个已经安装在手机供应商那块的一个系统。现在供应商系那个要根据一些参数来创造一个新手机。比如触屏，操作系统，电池等。如果我们已经有了这些部分的对象，那么上述部分的任意组合将会导致客户端代码复杂难以管理。比如决定生产哪种手机的模块。
+&nbsp;
+生成器模式目的就是解决上述问题的。GoF定义生成器模式如下：
+Separate the construction of a complex object from its representation so that the same construction process can create different representations.
+将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
+&nbsp;
+&nbsp;
+这个定义意味着我们不得不设计这个系统。通过一种客户端仅仅定义参数，而生成器则接管创建复杂对象 的方式。我们看一下生成器模式的类图。
+
+然后看看上图中的每一个类都表示什么
+ConcreteBuilder: 创建复杂产品的具体类.将会知道他已经创建的Product（产品），也就是他已经装配了的Product， 客户端通过该类得到Product对象.
+Builder: 创建Product的接口
+Director: 客户端代码，定义了哪些部分应该被组合在一起来创建具体的Product
+Product: 这是通过组合很多部分创建的对象
+&nbsp;
+使用代码 我们现在跟随上述的定义，然后试着去实现一个基本的生成器模式
+&nbsp;
+我们先在合适的地方定义Product的不同部分，我们简单的定义一些枚举类型，那么我们就可以通过组合不同的部分创建Product了。
+&nbsp; // 一些helper枚举定义各种零件
+public enum ScreenType
+{
+ScreenType_TOUCH_CAPACITIVE, ScreenType_TOUCH_RESISTIVE, ScreenType_NON_TOUCH };
+public enum Battery
+{
+MAH_1000, MAH_1500, MAH_2000 };">
+  <meta name="twitter:description" content="介绍 本文讨论生成器设计模式，讨论该模式什么情况下使用，怎么实现。并且。最后会有一个简单的生成器模式的实现。
+&nbsp;
+背景 当我们的程序需要创建一个对象。而这个对象必须由很多不同的对象来构造的时候。为了构造最后的对象。我们不得不组合那些部分对象。最后我们会发现我们的代码被各种各样的部分对象的细节所弄的难以理解
+&nbsp;
+为了说明上面的情况。我们做一个手机生产制造系统的例子。假定我们我们有 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/10/08/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E7%94%9F%E6%88%90%E5%99%A8%E6%A8%A1%E5%BC%8F/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/10/08/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E7%94%9F%E6%88%90%E5%99%A8%E6%A8%A1%E5%BC%8F/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>理解并实现生成器模式</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 8, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (465 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<h1 id="介绍">介绍</h1>
+
+<p>本文讨论生成器设计模式，讨论该模式什么情况下使用，怎么实现。并且。最后会有一个简单的生成器模式的实现。</p>
+
+<p>&nbsp;</p>
+
+<h1 id="背景">背景</h1>
+
+<p>当我们的程序需要创建一个对象。而这个对象必须由很多不同的对象来构造的时候。为了构造最后的对象。我们不得不组合那些部分对象。最后我们会发现我们的代码被各种各样的部分对象的细节所弄的难以理解</p>
+
+<p>&nbsp;</p>
+
+<p>为了说明上面的情况。我们做一个手机生产制造系统的例子。假定我们我们有一个已经安装在手机供应商那块的一个系统。现在供应商系那个要根据一些参数来创造一个新手机。比如触屏，操作系统，电池等。如果我们已经有了这些部分的对象，那么上述部分的任意组合将会导致客户端代码复杂难以管理。比如决定生产哪种手机的模块。</p>
+
+<p>&nbsp;</p>
+
+<p>生成器模式目的就是解决上述问题的。GoF定义生成器模式如下：</p>
+
+<p><strong><em>Separate the construction of a complex object from its representation so that the same construction process can create different representations</em></strong><em>.</em></p>
+
+<p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>这个定义意味着我们不得不设计这个系统。通过一种客户端仅仅定义参数，而生成器则接管创建复杂对象 的方式。我们看一下生成器模式的类图。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/27924_o.jpg"><img src="/images/489ad862ea61f21ae79e749c31fb0aef3c0eea45.jpg" alt="" title="gof" /></a></p>
+
+<p>然后看看上图中的每一个类都表示什么</p>
+
+<p>ConcreteBuilder: 创建复杂产品的具体类.将会知道他已经创建的Product（产品），也就是他已经装配了的Product， 客户端通过该类得到Product对象.</p>
+
+<p>Builder: 创建Product的接口</p>
+
+<p>Director: 客户端代码，定义了哪些部分应该被组合在一起来创建具体的Product</p>
+
+<p>Product: 这是通过组合很多部分创建的对象</p>
+
+<p>&nbsp;</p>
+
+<h1 id="使用代码">使用代码</h1>
+
+<p>我们现在跟随上述的定义，然后试着去实现一个基本的生成器模式</p>
+
+<p>&nbsp;</p>
+
+<p>我们先在合适的地方定义Product的不同部分，我们简单的定义一些枚举类型，那么我们就可以通过组合不同的部分创建Product了。</p>
+
+<p>&nbsp;
+<pre class="lang:default decode:true">// 一些helper枚举定义各种零件</p>
+
+<p>public enum ScreenType</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">ScreenType_TOUCH_CAPACITIVE,
+
+ScreenType_TOUCH_RESISTIVE,
+
+ScreenType_NON_TOUCH</pre></div>
+<p>};</p>
+
+<p>public enum Battery</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">MAH_1000,
+
+MAH_1500,
+
+MAH_2000</pre></div>
+<p>};</p>
+
+<p>public enum OperatingSystem</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">ANDROID,
+
+WINDOWS_MOBILE,
+
+WINDOWS_PHONE,
+
+SYMBIAN</pre></div>
+<p>};</p>
+
+<p>public enum Stylus</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">YES,
+
+NO</pre></div>
+<p>};</pre>
+&nbsp;</p>
+
+<p>然后，我们看一下Product类，我们需要有一个可以通过装配创建的Product类，这里我们定义一个MobilePhone类，也就是概念里的Product类了。</p>
+
+<p>&nbsp;
+<pre class="lang:default decode:true">// 这是 &ldquo;Product&rdquo; 类</p>
+
+<p>class MobilePhone</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">// 不同部分的字段
+
+string phoneName;      
+
+ScreenType phoneScreen;
+
+Battery phoneBattery;
+
+OperatingSystem phoneOS;
+
+Stylus phoneStylus;
+
+public MobilePhone(string name)
+
+{
+
+    phoneName = name;
+
+}
+
+//公有属性访问这些部分
+
+public string PhoneName
+
+{
+
+    get { return phoneName; }           
+
+}
+
+public ScreenType PhoneScreen
+
+{
+
+    get { return phoneScreen; }
+
+    set { phoneScreen = value; }
+
+}       
+
+public Battery PhoneBattery
+
+{
+
+    get { return phoneBattery; }
+
+    set { phoneBattery = value; }
+
+}       
+
+public OperatingSystem PhoneOS
+
+{
+
+    get { return phoneOS; }
+
+    set { phoneOS = value; }
+
+}      
+
+public Stylus PhoneStylus
+
+{
+
+    get { return phoneStylus; }
+
+    set { phoneStylus = value; }
+
+}
+
+// 显示手机相关信息的方法
+
+public override string ToString()
+
+{
+
+    return string.Format(&#34;Name: {0}\nScreen: {1}\nBattery {2}\nOS: {3}\nStylus: {4}&#34;,
+
+        PhoneName, PhoneScreen, PhoneBattery, PhoneOS, PhoneStylus);
+
+}</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>既然我们已经有了Product类，我们来创建Builder吧。Builder类应该提供一些方法可以手机的任何部分。这样我们创建IPhoneBuilder ，也就是概念里的Builder,然后看代码:</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;
+<pre class="lang:default decode:true">// 这是 &ldquo;Builder&rdquo; 类</p>
+
+<p>interface IPhoneBuilder</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">void BuildScreen();
+
+void BuildBattery();
+
+void BuildOS();
+
+void BuildStylus();
+
+MobilePhone Phone { get;}</pre></div>
+<p>}</pre>
+现在我们的Builder接口也准备好了。下一步就是创建ConcreteBuilder了。我们假定供应商事项要一个android手机和一个WP手机。我们就需要两个ConcreteBuilder了。AndroidPhoneBuilder 和 WindowsPhoneBuilder. 在这两个Builder里。我们可以指定每个手机需要的零件类型
+<pre class="lang:default decode:true">// 这是 &ldquo;ConcreteBuilder&rdquo; 类</p>
+
+<p>class AndroidPhoneBuilder : IPhoneBuilder</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">MobilePhone phone;
+
+public AndroidPhoneBuilder()
+
+{
+
+    phone = new MobilePhone(&#34;Android Phone&#34;);
+
+}
+
+#region IPhoneBuilder Members
+
+public void BuildScreen()
+
+{
+
+    phone.PhoneScreen = ScreenType.ScreenType_TOUCH_RESISTIVE;
+
+}
+
+public void BuildBattery()
+
+{
+
+    phone.PhoneBattery = Battery.MAH_1500;
+
+}
+
+public void BuildOS()
+
+{
+
+    phone.PhoneOS = OperatingSystem.ANDROID;
+
+}
+
+public void BuildStylus()
+
+{
+
+    phone.PhoneStylus = Stylus.YES;
+
+}
+
+// 返回创建的手机对象
+
+public MobilePhone Phone
+
+{
+
+    get { return phone; }
+
+}
+
+#endregion</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>&nbsp;
+<pre class="lang:default decode:true">//这是 &ldquo;ConcreteBuilder&rdquo; 类</p>
+
+<p>class WindowsPhoneBuilder : IPhoneBuilder</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">MobilePhone phone;
+
+public WindowsPhoneBuilder()
+
+{
+
+    phone = new MobilePhone(&#34;Windows Phone&#34;);
+
+}
+
+#region IPhoneBuilder Members
+
+public void BuildScreen()
+
+{
+
+    phone.PhoneScreen = ScreenType.ScreenType_TOUCH_CAPACITIVE;
+
+}
+
+public void BuildBattery()
+
+{
+
+    phone.PhoneBattery = Battery.MAH_2000;
+
+}
+
+public void BuildOS()
+
+{
+
+    phone.PhoneOS = OperatingSystem.WINDOWS_PHONE;
+
+}
+
+public void BuildStylus()
+
+{
+
+    phone.PhoneStylus = Stylus.NO;
+
+}
+
+//返回创建的手机对象
+
+public MobilePhone Phone
+
+{
+
+    get { return phone; }
+
+}
+
+#endregion</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>最后我们来创建Director类，我们创建的Director类将会有一个组合函数接受一个IPhoneBuilder 参数，然后调用各自ConcreteBuilder内部的对应方法
+<pre class="lang:default decode:true">// 这是&rdquo;Director&rdquo; 类</p>
+
+<p>class Manufacturer</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">public void Construct(IPhoneBuilder phoneBuilder)
+
+{
+
+    phoneBuilder.BuildBattery();
+
+    phoneBuilder.BuildOS();
+
+    phoneBuilder.BuildScreen();
+
+    phoneBuilder.BuildStylus();
+
+}</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>现在我们已经以标准的生成器模式封装了生产复杂Products的方法。现在我们看一下客户端要创建一个Product的时候有多简单。</p>
+
+<p>&nbsp;
+<pre class="lang:default decode:true">class Program</p>
+
+<p>{</p>
+<div class="highlight"><pre class="chroma">static void Main(string[] args)
+
+{
+
+    // 首先创建Director
+
+    Manufacturer newManufacturer = new Manufacturer();
+
+    // 然后创建 Builder
+
+    IPhoneBuilder phoneBuilder = null;
+
+    // 创建一个Android手机吧
+
+    phoneBuilder = new AndroidPhoneBuilder();
+
+    newManufacturer.Construct(phoneBuilder);
+
+    Console.WriteLine(&#34;A new Phone built:\n\n{0}&#34;, phoneBuilder.Phone.ToString());
+
+    // 再创建一个WP手机
+
+    phoneBuilder = new WindowsPhoneBuilder();
+
+    newManufacturer.Construct(phoneBuilder);
+
+    Console.WriteLine(&#34;A new Phone built:\n\n{0}&#34;, phoneBuilder.Phone.ToString());
+
+}</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>现在啊，我们如果还要创建更多的对象，仅仅再需要一个ConcreteBuilder类，其他的代码一点都不会动。客户端代码也更容易来创建复杂Product了。我们看看程序输出。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/27926_o.jpg"><img src="/images/69c571edfe5ccff32e0b8f46110c333ef2ef8f89.jpg" alt="" title="output" /></a></p>
+
+<p>最后看一下我们通过生成器模式写的程序的类图。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/27925_o.jpg"><img src="/images/d63c65a5e77e6a23a26e6db483f6a960d5d41570.jpg" alt="" title="my" /></a></p>
+
+<h1 id="demo下载">Demo下载</h1>
+
+<p><a href="http://pan.baidu.com/share/link?shareid=76582&amp;amp;uk=1493685990">Builder Pattern </a></p>
+
+<p>&nbsp;</p>
+
+<h1 id="许可">许可</h1>
+
+<p>本文包括源代码和文件在CPOL下授权</p>
+
+<p>原文地址：<a href="http://www.codeproject.com/Articles/470476/Understanding-and-Implementing-Builder-Pattern-in">Understanding-and-Implementing-Builder-Pattern-in</a></p>
+
+<p>&nbsp;</p>
+
+<p>著作权声明：本文由<a href="http://leaver.me/">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/10/07/%E6%8E%A5%E5%8F%A3vs-%E5%A7%94%E6%89%98/" data-toggle="tooltip" data-placement="top" title="接口VS 委托">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/10/09/c#%E7%BC%96%E5%86%99ftp%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6/" data-toggle="tooltip" data-placement="top" title="C#编写FTP客户端软件">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

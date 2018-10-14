@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>中文编码杂谈</title>
+  <meta property="og:title" content="中文编码杂谈" />
+  <meta name="twitter:title" content="中文编码杂谈" />
+  <meta name="description" content="本文来自http://www.searchtb.com/2012/04/chinese_encode.html,讲的不错。收藏分享。
+编码问题的例子
+在Windows自带的Notepad（记事本）程序中输入“联通”两个字，保存后再次打开，会发现“联通”不见了，代之以“��ͨ”的乱码。这是Windows平台上典型的中文编码问题。即文件保存的时候是按照ANSI编码（其实就是GB2312，后面会详细介绍）保存，打开的时候程序按照UTF-8方式对内容解释，于是就出现了乱码。避免乱码的方式很简单，在“文件”菜单中选择“打开”命令，选择保存的文件，然后选择“ANSI”编码，此时就能看到久违的“联通”两个字了。
+在Linux平台上如果使用cat等命令查看文件中的中文内容时，可能出现乱码。这也是编码的问题。简单的说是文件时按照A编码保存，但是cat命令按照当前Locale设定的B编码去查看，在B和A不兼容的时候就出现了乱码。
+为什么写这篇文章
+中文编码由于历史原因牵扯到不少标准，在不了解的时候感觉一头雾水；但其实理解编码问题并不需要你深入了解各个编码标准，只要你明白了来龙去脉，了解了关键的知识点，就能分析和解决日常开发工作中碰到的大部分编码问题。有感于我看过的资料和文章要么不够全面，要么略显枯燥，所以通过这篇文章记录下笔者在日常工作中碰到的中文编码原理相关问题，目的主要是自我总结，如果能给读者提供一些帮助那就算是意外之喜了。由于严谨的编码标准对我来说是无趣的，枯燥的，难以记忆的，本文尝试用浅显易懂的生活语言解释中文编码相关的（也可能不相关的）一些问题，这也是为什么取名杂谈的原因。本文肯定存在不规范不全面的地方，我会在参考资料里给出官方文档的链接，也欢迎读者在评论中提出更好的表达方式&amp;指出错误，不胜感激。
+对编码问题的理解我认为分为三个层次，第一个层次：概念，知道各个编码标准的应用场景，了解之间的差异，能分析和解决常见的一些编码问题。第二个层次：标准，掌握编码的细节，如编码范围，编码转换规则，知道这些就能自行开发编码转换工具。第三个层次，使用，了解中文的编码二进制存储，在程序开发过程中选择合理的编码并处理中文。为了避免让读者陷入编码标准的黑洞无法脱身（不相信？看看unicode的规范就明白我的意思了），同时由于编码查询&amp;转换工具等都有现成工具可以使用，本文只涉及第一个层次，不涉及第二层次，在第三层次上会做一些尝试。在本文的最后提供了相关链接供对标准细节感兴趣的同学继续学习。最后，本文不涉及具体软件的乱码问题解决，如ssh，shell，vim，screen等，这些话题留给剑豪同学专文阐述。
+一切都是因为电脑不识字
+电脑很聪明，可以帮我们做很多事情，最开始主要是科学计算，这也是为什么电脑别名计算机。电脑又很笨，在她的脑子里只有数字，即所有的数据在存储和运算时都要使用二进制数表示。这在最初电脑主要用来处理大量复杂的科学计算时不是什么大问题，但是当电脑逐步走入普通人的生活时，情况开始变糟了。办公自动化等领域最主要的需求就是文字处理，电脑如何来表示文字呢？这个问题当然难不倒聪明的计算机科学家们，用数字来代表字符呗。这就是“编码”。
+英文的终极解决方案：ASCII
+每个人都可以约定自己的一套编码，只要使用方之间了解就ok了。比如说咱俩约定0×10表示a，0×11表示b。在一开始也的确是这样的，出现了各式各样的编码。这样有两个问题：1. 各个编码的字符集不一样，有的多，有的少。2. 相同字符的编码也不一样。你这里a是0×10，他那里a可能是0×30。于是你保存的文件他就不能直接用，必须要转换编码。随着沟通范围的扩大，采用不同编码的人们互相通信就乱套了，这就是我们常说的：鸡同鸭讲。如果要避免这种混乱，那么大家就必须使用相同的编码规则，于是美国有关的标准化组织就出台了ASCII（American Standard Code for Information Interchange）编码，统一规定了英文常用符号用哪些二进制数来表示。ASCII是标准的单字节字符编码方案，用于基于文本的数据。
+ASCII最初是美国国家标准，供不同计算机在相互通信时用作共同遵守的西文字符编码标准，已被国际标准化组织（International Organization for Standardization, ISO）定为国际标准，称为ISO 646标准。适用于所有拉丁文字字母。ASCII 码使用指定的7位或8位二进制数组合来表示128或256种可能的字符。标准ASCII 码也叫基础ASCII码，使用7位二进制数来表示所有的大写和小写字母，数字0 到9、标点符号， 以及在美式英语中使用的特殊控制字符。而最高位为1的另128个字符（80H—FFH）被称为“扩展ASCII”，一般用来存放英文的制表符、部分音标字符等等的一些其它符号。
+其中：0～31及127(共33个)是控制字符或通信专用字符（其余为可显示字符），32～126(共95个)是字符(32是空格），其中48～57为0到9十个阿拉伯数字，65～90为26个大写英文字母，97～122号为26个小写英文字母，其余为一些标点符号、运算符号等。
+现在所有使用英文的电脑终于可以用同一种编码来交流了。理解了ASCII编码，其他字母型的语言编码方案就触类旁通了。
+一波三折的中文编码
+第一次尝试：GB2312
+ASCII这种字符编码规则显然用来处理英文没有什么问题，它的出现极大的促进了信息在西方尤其是美国的传播和交流。但是对于中文，常用汉字就有6000以上，ASCII 单字节编码显然是不够用。为了粉碎美帝国主义通过编码限制中国人民使用电脑的无耻阴谋，中国国家标准总局发布了GB2312码即中华人民共和国国家汉字信息交换用编码，全称《信息交换用汉字编码字符集——基本集》，1981年5月1日实施，通行于大陆。GB2312字符集中除常用简体汉字字符外还包括希腊字母、日文平假名及片假名字母、俄语西里尔字母等字符，未收录繁体中文汉字和一些生僻字。 EUC-CN可以理解为GB2312的别名，和GB2312完全相同。
+GB2312是基于区位码设计的，在区位码的区号和位号上分别加上A0H就得到了GB2312编码。这里第一次提到了“区位码”，我就连带把下面这几个让人摸不到头脑的XX码一锅端了吧：
+区位码，国标码，交换码，内码，外码
+区位码：就是把中文常用的符号，数字，汉字等分门别类进行编码。区位码把编码表分为94个区，每个区对应94个位，每个位置就放一个字符（汉字，符号，数字都属于字符）。这样每个字符的区号和位号组合起来就成为该汉字的区位码。区位码一般用10进制数来表示，如4907就表示49区7位，对应的字符是“学”。区位码中01-09区是符号、数字区，16-87区是汉字区，10-15和88-94是未定义的空白区。它将收录的汉字分成两级：第一级是常用汉字计3755个，置于16-55区，按汉语拼音字母/笔形顺序排列；第二级汉字是次常用汉字计3008个，置于56-87区，按部首/笔画顺序排列。在网上搜索“区位码查询系统”可以很方便的找到汉字和对应区位码转换的工具。为了避免广告嫌疑和死链，这里就不举例了。
+国标码： 区位码无法用于汉字通信，因为它可能与通信使用的控制码（00H~1FH）（即0~31，还记得ASCII码特殊字符的范围吗？）发生冲突。于是ISO2022规定每个汉字的区号和位号必须分别加上32（即二进制数00100000，16进制20H），得到对应的国标交换码，简称国标码，交换码，因此，“学”字的国标交换码计算为：   00110001 00000111 &#43; 00100000 00100000
+01010001 00100111  用十六进制数表示即为5127H。
+交换码：即国标交换码的简称，等同上面说的国标码。
+内码：由于文本中通常混合使用汉字和西文字符，汉字信息如果不予以特别标识，就会与单字节的ASCII码混淆。此问题的解决方法之一是将一个汉字看成是两个扩展ASCII码，使表示GB2312汉字的两个字节的最高位都为1。即国标码加上128（即二进制数10000000,16进制80H）这种高位为1的双字节汉字编码即为GB2312汉字的机内码，简称为内码。20H&#43;80H=A0H。这也就是常说的在区位码的区号和位号上分别加上A0H就得到了GB2312编码的由来。   00110001 00000111 &#43; 10100000 10100000
+11010001 10100111  用十六进制数表示即为D1A7H。
+外码：机外码的简称，就是汉字输入码，是为了通过键盘字符把汉字输入计算机而设计的一种编码。 英文输入时，相输入什么字符便按什么键，外码和内码一致。汉字输入时，可能要按几个键才能输入一个汉字。 汉字输入方案有成百上千个，但是这千差万别的外码输入进计算机后都会转换成统一的内码。
+最后总结一下上面的概念。中国国家标准总局把中文常用字符编码为94个区，每个区对应94个位，每个字符的区号和位号组合起来就是该字符的区位码, 区位码用10进制数来表示，如4907就表示49区7位，对应的字符是“学”。 由于区位码的取值范围与通信使用的控制码（00H~1FH）（即0~31）发生冲突。每个汉字的区号和位号分别加上32（即16进制20H）得到国标码，交换码。“学”的国标码为5127H。由于文本中通常混合使用汉字和西文字符，为了让汉字信息不会与单字节的ASCII码混淆，将一个汉字看成是两个扩展ASCII码，即汉字的两个字节的最高位置为1，得到的编码为GB2312汉字的内码。“学”的内码为D1A7H。无论你使用什么输入法，通过什么样的按键组合把“学”输入计算机，“学”在使用GB2312（以及兼容GB2312）编码的计算机里的内码都是D1A7H。">
+  <meta property="og:description" content="本文来自http://www.searchtb.com/2012/04/chinese_encode.html,讲的不错。收藏分享。
+编码问题的例子
+在Windows自带的Notepad（记事本）程序中输入“联通”两个字，保存后再次打开，会发现“联通”不见了，代之以“��ͨ”的乱码。这是Windows平台上典型的中文编码问题。即文件保存的时候是按照ANSI编码（其实就是GB2312，后面会详细介绍）保存，打开的时候程序按照UTF-8方式对内容解释，于是就出现了乱码。避免乱码的方式很简单，在“文件”菜单中选择“打开”命令，选择保存的文件，然后选择“ANSI”编码，此时就能看到久违的“联通”两个字了。
+在Linux平台上如果使用cat等命令查看文件中的中文内容时，可能出现乱码。这也是编码的问题。简单的说是文件时按照A编码保存，但是cat命令按照当前Locale设定的B编码去查看，在B和A不兼容的时候就出现了乱码。
+为什么写这篇文章
+中文编码由于历史原因牵扯到不少标准，在不了解的时候感觉一头雾水；但其实理解编码问题并不需要你深入了解各个编码标准，只要你明白了来龙去脉，了解了关键的知识点，就能分析和解决日常开发工作中碰到的大部分编码问题。有感于我看过的资料和文章要么不够全面，要么略显枯燥，所以通过这篇文章记录下笔者在日常工作中碰到的中文编码原理相关问题，目的主要是自我总结，如果能给读者提供一些帮助那就算是意外之喜了。由于严谨的编码标准对我来说是无趣的，枯燥的，难以记忆的，本文尝试用浅显易懂的生活语言解释中文编码相关的（也可能不相关的）一些问题，这也是为什么取名杂谈的原因。本文肯定存在不规范不全面的地方，我会在参考资料里给出官方文档的链接，也欢迎读者在评论中提出更好的表达方式&amp;指出错误，不胜感激。
+对编码问题的理解我认为分为三个层次，第一个层次：概念，知道各个编码标准的应用场景，了解之间的差异，能分析和解决常见的一些编码问题。第二个层次：标准，掌握编码的细节，如编码范围，编码转换规则，知道这些就能自行开发编码转换工具。第三个层次，使用，了解中文的编码二进制存储，在程序开发过程中选择合理的编码并处理中文。为了避免让读者陷入编码标准的黑洞无法脱身（不相信？看看unicode的规范就明白我的意思了），同时由于编码查询&amp;转换工具等都有现成工具可以使用，本文只涉及第一个层次，不涉及第二层次，在第三层次上会做一些尝试。在本文的最后提供了相关链接供对标准细节感兴趣的同学继续学习。最后，本文不涉及具体软件的乱码问题解决，如ssh，shell，vim，screen等，这些话题留给剑豪同学专文阐述。
+一切都是因为电脑不识字
+电脑很聪明，可以帮我们做很多事情，最开始主要是科学计算，这也是为什么电脑别名计算机。电脑又很笨，在她的脑子里只有数字，即所有的数据在存储和运算时都要使用二进制数表示。这在最初电脑主要用来处理大量复杂的科学计算时不是什么大问题，但是当电脑逐步走入普通人的生活时，情况开始变糟了。办公自动化等领域最主要的需求就是文字处理，电脑如何来表示文字呢？这个问题当然难不倒聪明的计算机科学家们，用数字来代表字符呗。这就是“编码”。
+英文的终极解决方案：ASCII
+每个人都可以约定自己的一套编码，只要使用方之间了解就ok了。比如说咱俩约定0×10表示a，0×11表示b。在一开始也的确是这样的，出现了各式各样的编码。这样有两个问题：1. 各个编码的字符集不一样，有的多，有的少。2. 相同字符的编码也不一样。你这里a是0×10，他那里a可能是0×30。于是你保存的文件他就不能直接用，必须要转换编码。随着沟通范围的扩大，采用不同编码的人们互相通信就乱套了，这就是我们常说的：鸡同鸭讲。如果要避免这种混乱，那么大家就必须使用相同的编码规则，于是美国有关的标准化组织就出台了ASCII（American Standard Code for Information Interchange）编码，统一规定了英文常用符号用哪些二进制数来表示。ASCII是标准的单字节字符编码方案，用于基于文本的数据。
+ASCII最初是美国国家标准，供不同计算机在相互通信时用作共同遵守的西文字符编码标准，已被国际标准化组织（International Organization for Standardization, ISO）定为国际标准，称为ISO 646标准。适用于所有拉丁文字字母。ASCII 码使用指定的7位或8位二进制数组合来表示128或256种可能的字符。标准ASCII 码也叫基础ASCII码，使用7位二进制数来表示所有的大写和小写字母，数字0 到9、标点符号， 以及在美式英语中使用的特殊控制字符。而最高位为1的另128个字符（80H—FFH）被称为“扩展ASCII”，一般用来存放英文的制表符、部分音标字符等等的一些其它符号。
+其中：0～31及127(共33个)是控制字符或通信专用字符（其余为可显示字符），32～126(共95个)是字符(32是空格），其中48～57为0到9十个阿拉伯数字，65～90为26个大写英文字母，97～122号为26个小写英文字母，其余为一些标点符号、运算符号等。
+现在所有使用英文的电脑终于可以用同一种编码来交流了。理解了ASCII编码，其他字母型的语言编码方案就触类旁通了。
+一波三折的中文编码
+第一次尝试：GB2312
+ASCII这种字符编码规则显然用来处理英文没有什么问题，它的出现极大的促进了信息在西方尤其是美国的传播和交流。但是对于中文，常用汉字就有6000以上，ASCII 单字节编码显然是不够用。为了粉碎美帝国主义通过编码限制中国人民使用电脑的无耻阴谋，中国国家标准总局发布了GB2312码即中华人民共和国国家汉字信息交换用编码，全称《信息交换用汉字编码字符集——基本集》，1981年5月1日实施，通行于大陆。GB2312字符集中除常用简体汉字字符外还包括希腊字母、日文平假名及片假名字母、俄语西里尔字母等字符，未收录繁体中文汉字和一些生僻字。 EUC-CN可以理解为GB2312的别名，和GB2312完全相同。
+GB2312是基于区位码设计的，在区位码的区号和位号上分别加上A0H就得到了GB2312编码。这里第一次提到了“区位码”，我就连带把下面这几个让人摸不到头脑的XX码一锅端了吧：
+区位码，国标码，交换码，内码，外码
+区位码：就是把中文常用的符号，数字，汉字等分门别类进行编码。区位码把编码表分为94个区，每个区对应94个位，每个位置就放一个字符（汉字，符号，数字都属于字符）。这样每个字符的区号和位号组合起来就成为该汉字的区位码。区位码一般用10进制数来表示，如4907就表示49区7位，对应的字符是“学”。区位码中01-09区是符号、数字区，16-87区是汉字区，10-15和88-94是未定义的空白区。它将收录的汉字分成两级：第一级是常用汉字计3755个，置于16-55区，按汉语拼音字母/笔形顺序排列；第二级汉字是次常用汉字计3008个，置于56-87区，按部首/笔画顺序排列。在网上搜索“区位码查询系统”可以很方便的找到汉字和对应区位码转换的工具。为了避免广告嫌疑和死链，这里就不举例了。
+国标码： 区位码无法用于汉字通信，因为它可能与通信使用的控制码（00H~1FH）（即0~31，还记得ASCII码特殊字符的范围吗？）发生冲突。于是ISO2022规定每个汉字的区号和位号必须分别加上32（即二进制数00100000，16进制20H），得到对应的国标交换码，简称国标码，交换码，因此，“学”字的国标交换码计算为：   00110001 00000111 &#43; 00100000 00100000
+01010001 00100111  用十六进制数表示即为5127H。
+交换码：即国标交换码的简称，等同上面说的国标码。
+内码：由于文本中通常混合使用汉字和西文字符，汉字信息如果不予以特别标识，就会与单字节的ASCII码混淆。此问题的解决方法之一是将一个汉字看成是两个扩展ASCII码，使表示GB2312汉字的两个字节的最高位都为1。即国标码加上128（即二进制数10000000,16进制80H）这种高位为1的双字节汉字编码即为GB2312汉字的机内码，简称为内码。20H&#43;80H=A0H。这也就是常说的在区位码的区号和位号上分别加上A0H就得到了GB2312编码的由来。   00110001 00000111 &#43; 10100000 10100000
+11010001 10100111  用十六进制数表示即为D1A7H。
+外码：机外码的简称，就是汉字输入码，是为了通过键盘字符把汉字输入计算机而设计的一种编码。 英文输入时，相输入什么字符便按什么键，外码和内码一致。汉字输入时，可能要按几个键才能输入一个汉字。 汉字输入方案有成百上千个，但是这千差万别的外码输入进计算机后都会转换成统一的内码。
+最后总结一下上面的概念。中国国家标准总局把中文常用字符编码为94个区，每个区对应94个位，每个字符的区号和位号组合起来就是该字符的区位码, 区位码用10进制数来表示，如4907就表示49区7位，对应的字符是“学”。 由于区位码的取值范围与通信使用的控制码（00H~1FH）（即0~31）发生冲突。每个汉字的区号和位号分别加上32（即16进制20H）得到国标码，交换码。“学”的国标码为5127H。由于文本中通常混合使用汉字和西文字符，为了让汉字信息不会与单字节的ASCII码混淆，将一个汉字看成是两个扩展ASCII码，即汉字的两个字节的最高位置为1，得到的编码为GB2312汉字的内码。“学”的内码为D1A7H。无论你使用什么输入法，通过什么样的按键组合把“学”输入计算机，“学”在使用GB2312（以及兼容GB2312）编码的计算机里的内码都是D1A7H。">
+  <meta name="twitter:description" content="本文来自http://www.searchtb.com/2012/04/chinese_encode.html,讲的不错。收藏分享。
+编码问题的例子
+在Windows自带的Notepad（记事本）程序中输入“联通”两个字，保存后再次打开，会发现“联通”不见了，代之以“��ͨ”的乱码。这是Windows平台上典型的中文编码问题。即文件保存的时候是按照ANSI编码（其实就是GB2312，后面会详细介 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/05/02/%E4%B8%AD%E6%96%87%E7%BC%96%E7%A0%81%E6%9D%82%E8%B0%88/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/05/02/%E4%B8%AD%E6%96%87%E7%BC%96%E7%A0%81%E6%9D%82%E8%B0%88/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>中文编码杂谈</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 2, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (459 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>本文来自<a href="http://www.searchtb.com/2012/04/chinese_encode.html">http://www.searchtb.com/2012/04/chinese_encode.html</a>,讲的不错。收藏分享。</p>
+
+<p><strong>编码问题的例子</strong></p>
+
+<p>在Windows自带的Notepad（记事本）程序中输入“联通”两个字，保存后再次打开，会发现“联通”不见了，代之以“��ͨ”的乱码。这是Windows平台上典型的中文编码问题。即文件保存的时候是按照ANSI编码（其实就是GB2312，后面会详细介绍）保存，打开的时候程序按照UTF-8方式对内容解释，于是就出现了乱码。避免乱码的方式很简单，在“文件”菜单中选择“打开”命令，选择保存的文件，然后选择“ANSI”编码，此时就能看到久违的“联通”两个字了。</p>
+
+<p>在Linux平台上如果使用cat等命令查看文件中的中文内容时，可能出现乱码。这也是编码的问题。简单的说是文件时按照A编码保存，但是cat命令按照当前Locale设定的B编码去查看，在B和A不兼容的时候就出现了乱码。</p>
+
+<p><strong>为什么写这篇文章</strong></p>
+
+<p>中文编码由于历史原因牵扯到不少标准，在不了解的时候感觉一头雾水；但其实理解编码问题并不需要你深入了解各个编码标准，只要你明白了来龙去脉，了解了关键的知识点，就能分析和解决日常开发工作中碰到的大部分编码问题。有感于我看过的资料和文章要么不够全面，要么略显枯燥，所以通过这篇文章记录下笔者在日常工作中碰到的中文编码原理相关问题，目的主要是自我总结，如果能给读者提供一些帮助那就算是意外之喜了。由于严谨的编码标准对我来说是无趣的，枯燥的，难以记忆的，本文尝试用浅显易懂的生活语言解释中文编码相关的（也可能不相关的）一些问题，这也是为什么取名杂谈的原因。本文肯定存在不规范不全面的地方，我会在参考资料里给出官方文档的链接，也欢迎读者在评论中提出更好的表达方式&amp;指出错误，不胜感激。</p>
+
+<p>对编码问题的理解我认为分为三个层次，第一个层次：概念，知道各个编码标准的应用场景，了解之间的差异，能分析和解决常见的一些编码问题。第二个层次：标准，掌握编码的细节，如编码范围，编码转换规则，知道这些就能自行开发编码转换工具。第三个层次，使用，了解中文的编码二进制存储，在程序开发过程中选择合理的编码并处理中文。为了避免让读者陷入编码标准的黑洞无法脱身（不相信？看看unicode的规范就明白我的意思了），同时由于编码查询&amp;转换工具等都有现成工具可以使用，本文只涉及第一个层次，不涉及第二层次，在第三层次上会做一些尝试。在本文的最后提供了相关链接供对标准细节感兴趣的同学继续学习。最后，本文不涉及具体软件的乱码问题解决，如ssh，shell，vim，screen等，这些话题留给剑豪同学专文阐述。</p>
+
+<p><strong>一切都是因为电脑不识字</strong></p>
+
+<p>电脑很聪明，可以帮我们做很多事情，最开始主要是科学计算，这也是为什么电脑别名计算机。电脑又很笨，在她的脑子里只有数字，即所有的数据在存储和运算时都要使用二进制数表示。这在最初电脑主要用来处理大量复杂的科学计算时不是什么大问题，但是当电脑逐步走入普通人的生活时，情况开始变糟了。办公自动化等领域最主要的需求就是文字处理，电脑如何来表示文字呢？这个问题当然难不倒聪明的计算机科学家们，用数字来代表字符呗。这就是“编码”。</p>
+
+<p><strong>英文的终极解决方案：ASCII</strong></p>
+
+<p>每个人都可以约定自己的一套编码，只要使用方之间了解就ok了。比如说咱俩约定0×10表示a，0×11表示b。在一开始也的确是这样的，出现了各式各样的编码。这样有两个问题：1. 各个编码的字符集不一样，有的多，有的少。2. 相同字符的编码也不一样。你这里a是0×10，他那里a可能是0×30。于是你保存的文件他就不能直接用，必须要转换编码。随着沟通范围的扩大，采用不同编码的人们互相通信就乱套了，这就是我们常说的：鸡同鸭讲。如果要避免这种混乱，那么大家就必须使用相同的编码规则，于是美国有关的标准化组织就出台了ASCII（American Standard Code for Information Interchange）编码，统一规定了英文常用符号用哪些二进制数来表示。ASCII是标准的单字节字符编码方案，用于基于文本的数据。</p>
+
+<p>ASCII最初是美国国家标准，供不同计算机在相互通信时用作共同遵守的西文字符编码标准，已被国际标准化组织（International Organization for Standardization, ISO）定为国际标准，称为ISO 646标准。适用于所有拉丁文字字母。ASCII 码使用指定的7位或8位二进制数组合来表示128或256种可能的字符。标准ASCII 码也叫基础ASCII码，使用7位二进制数来表示所有的大写和小写字母，数字0 到9、标点符号， 以及在美式英语中使用的特殊控制字符。而最高位为1的另128个字符（80H—FFH）被称为“扩展ASCII”，一般用来存放英文的制表符、部分音标字符等等的一些其它符号。</p>
+
+<p>其中：<strong>0</strong><strong>～</strong><strong>31</strong><strong>及</strong><strong>127(</strong><strong>共</strong><strong>33</strong><strong>个</strong><strong>)</strong><strong>是控制字符或通信专用字符（其余为可显示字符），</strong>32～126(共95个)是字符(32是空格），其中48～57为0到9十个阿拉伯数字，65～90为26个大写英文字母，97～122号为26个小写英文字母，其余为一些标点符号、运算符号等。</p>
+
+<p><img src="/images/f4718a7f6f7773857d978c65f5a676848ca450d7.jpg" alt="" /></p>
+
+<p>现在所有使用英文的电脑终于可以用同一种编码来交流了。理解了ASCII编码，其他字母型的语言编码方案就触类旁通了。</p>
+
+<p><strong>一波三折的中文编码</strong></p>
+
+<p><strong>第一次尝试：GB2312</strong></p>
+
+<p>ASCII这种字符编码规则显然用来处理英文没有什么问题，它的出现极大的促进了信息在西方尤其是美国的传播和交流。但是对于中文，常用汉字就有6000以上，ASCII 单字节编码显然是不够用。为了粉碎美帝国主义通过编码限制中国人民使用电脑的无耻阴谋，中国国家标准总局发布了GB2312码即中华人民共和国国家汉字信息交换用编码，全称《信息交换用汉字编码字符集——基本集》，1981年5月1日实施，通行于大陆。GB2312字符集中除常用简体汉字字符外还包括希腊字母、日文平假名及片假名字母、俄语西里尔字母等字符，未收录繁体中文汉字和一些生僻字。 EUC-CN可以理解为GB2312的别名，和GB2312完全相同。</p>
+
+<p>GB2312是基于区位码设计的，在区位码的区号和位号上分别加上A0H就得到了GB2312编码。这里第一次提到了“区位码”，我就连带把下面这几个让人摸不到头脑的XX码一锅端了吧：</p>
+
+<p><strong>区位码，国标码，交换码，内码，外码</strong></p>
+
+<p><strong>区位码</strong>：就是把中文常用的符号，数字，汉字等分门别类进行编码。区位码把编码表分为94个区，每个区对应94个位，每个位置就放一个字符（汉字，符号，数字都属于字符）。这样每个字符的区号和位号组合起来就成为该汉字的区位码。区位码一般用10进制数来表示，如4907就表示49区7位，对应的字符是“学”。区位码中01-09区是符号、数字区，16-87区是汉字区，10-15和88-94是未定义的空白区。它将收录的汉字分成两级：第一级是常用汉字计3755个，置于16-55区，按汉语拼音字母/笔形顺序排列；第二级汉字是次常用汉字计3008个，置于56-87区，按部首/笔画顺序排列。在网上搜索“区位码查询系统”可以很方便的找到汉字和对应区位码转换的工具。为了避免广告嫌疑和死链，这里就不举例了。</p>
+
+<p><strong>国标码</strong>： 区位码无法用于汉字通信，因为它可能与通信使用的控制码（00H~1FH）（即0~31，还记得ASCII码特殊字符的范围吗？）发生冲突。于是ISO2022规定每个汉字的区号和位号必须分别加上32（即二进制数00100000，16进制20H），得到对应的国标交换码，简称<strong>国标码，交换码</strong>，因此，“学”字的国标交换码计算为：
+<div>
+<pre>  00110001 00000111
++ 00100000 00100000</p>
+
+<hr />
+
+<p>01010001 00100111</pre>
+</div>
+用十六进制数表示即为5127H。</p>
+
+<p><strong>交换码</strong>：即国标交换码的简称，等同上面说的国标码。</p>
+
+<p><strong>内码</strong>：由于文本中通常混合使用汉字和西文字符，汉字信息如果不予以特别标识，就会与单字节的ASCII码混淆。此问题的解决方法之一是将一个汉字看成是两个扩展ASCII码，使表示GB2312汉字的两个字节的最高位都为1。即国标码加上128（即二进制数10000000,16进制80H）这种高位为1的双字节汉字编码即为GB2312汉字的机内码，简称为内码。20H+80H=A0H。这也就是常说的在区位码的区号和位号上分别加上A0H就得到了GB2312编码的由来。
+<div>
+<pre>  00110001 00000111
++ 10100000 10100000</p>
+
+<hr />
+
+<p>11010001 10100111</pre>
+</div>
+用十六进制数表示即为D1A7H。</p>
+
+<p><strong>外码</strong>：机外码的简称，就是汉字输入码，是为了通过键盘字符把汉字输入计算机而设计的一种编码。 英文输入时，相输入什么字符便按什么键，外码和内码一致。汉字输入时，可能要按几个键才能输入一个汉字。 汉字输入方案有成百上千个，但是这千差万别的外码输入进计算机后都会转换成统一的内码。</p>
+
+<p>最后总结一下上面的概念。中国国家标准总局把中文常用字符编码为94个区，每个区对应94个位，每个字符的区号和位号组合起来就是该字符的<strong>区位码</strong>, 区位码用10进制数来表示，如4907就表示49区7位，对应的字符是“学”。 由于区位码的取值范围与通信使用的控制码（00H~1FH）（即0~31）发生冲突。每个汉字的区号和位号分别加上32（即16进制20H）得到<strong>国标码，交换码。</strong>“学”的国标码为5127H。由于文本中通常混合使用汉字和西文字符，为了让汉字信息不会与单字节的ASCII码混淆，将一个汉字看成是两个扩展ASCII码，即汉字的两个字节的最高位置为1，得到的编码为GB2312汉字的<strong>内码</strong>。“学”的内码为D1A7H。无论你使用什么输入法，通过什么样的按键组合把“学”输入计算机，“学”在使用GB2312（以及兼容GB2312）编码的计算机里的内码都是D1A7H。</p>
+
+<p><strong>第二次尝试：GBK</strong></p>
+
+<p>GB2312的出现基本满足了汉字的计算机处理需要，但由于上面提到未收录繁体字和生僻字，从而不能处理人名、古汉语等方面出现的罕用字，这导致了1995年《汉字编码扩展规范》（GBK）的出现。GBK编码是GB2312编码的超集，向下完全兼容GB2312，兼容的含义是不仅字符兼容，而且相同字符的编码也相同，同时在字汇一级支持ISO/IEC10646—1和GB 13000—1的全部中、日、韩（CJK）汉字，共计20902字。GBK还收录了GB2312不包含的汉字部首符号、竖排标点符号等字符。CP936和GBK的有些许差别，绝大多数情况下可以把CP936当作GBK的别名。</p>
+
+<p><strong>第三次尝试：GB18030</strong></p>
+
+<p>GB18030编码向下兼容GBK和GB2312。GB18030收录了所有Unicode3.1中的字符，包括中国少数民族字符，GBK不支持的韩文字符等等，也可以说是世界大多民族的文字符号都被收录在内。GBK和GB2312都是双字节等宽编码，如果算上和ASCII兼容所支持的单字节，也可以理解为是单字节和双字节混合的变长编码。GB18030编码是变长编码，有单字节、双字节和四字节三种方式。</p>
+
+<p>其实，这三个标准并不需要死记硬背，只需要了解是根据应用需求不断扩展编码范围即可。从GB2312到GBK再到GB18030收录的字符越来越多即可。万幸的是一直是向下兼容的，也就是说一个汉字在这三个编码标准里的编码是一模一样的。这些编码的共性是变长编码，单字节ASCII兼容，对其他字符GB2312和GBK都使用双字节等宽编码，只有GB18030还有四字节编码的方式。这些编码最大的问题是2个。1. 由于低字节的编码范围和ASCII有重合，所以不能根据一个字节的内容判断是中文的一部分还是一个独立的英文字符。2. 如果有两个汉字编码为A1A2B1B2，存在A2B1也是一个有效汉字编码的特殊情况。这样就不能直接使用标准的字符串匹配函数来判断一个字符串里是否包含某一个汉字，而需要先判断字符边界然后才能进行字符匹配判断。</p>
+
+<p>最后，提一个小插曲，上面讲的都是大陆推行的汉字编码标准，使用繁体的中文社群中最常用的电脑<a href="http://baike.baidu.com/view/1712.htm">汉字</a><a href="http://baike.baidu.com/view/51987.htm">字符集</a>标准叫大五码（Big5），共收录13,060个中文字，其中有二字为重覆编码(实在是不应该)。Big5虽普及于中国的台湾、香港与澳门等繁体中文通行区，但长期以来并非当地的国家标准，而只是业界标准。倚天中文系统、Windows等主要系统的字符集都是以Big5为基准，但厂商又各自增删，衍生成多种不同版本。2003年，Big5被收录到台湾官方标准的附录当中，取得了较正式的地位。这个最新版本被称为Big5-2003。</p>
+
+<p><strong>天下归一Unicode</strong></p>
+
+<p>看了上面的多个中文编码是不是有点头晕了呢？如果把这个问题放到全世界n多个国家n多语种呢？各国和各地区自己的文字编码规则互相冲突的情况全球信息<a href="http://www.edenw.com/tech/net/switch/">交换</a>带来了很大的麻烦。</p>
+
+<p>要真正彻底解决这个问题，上面介绍的那些通过扩展ASCII修修补补的方式已经走不通了，而必须有一个全新的编码系统，这个系统要可以将中文、日文、法文、德文……等等所有的文字统一起来考虑，为每一个文字都分配一个单独的编码。于是，Unicode诞生了。Unicode（统一码、万国码、单一码）为地球上（以后会包括火星，金星，喵星等）每种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求。在Unicode里，所有的字符被一视同仁，汉字不再使用“两个扩展ASCII”，而是使用“1个Unicode”来表示，也就是说，所有的文字都按一个字符来处理，它们都有一个唯一的Unicode码。Unicode用数字0-0x10FFFF来映射这些字符，最多可以容纳1114112个字符，或者说有1114112个码位（码位就是可以分配给字符的数字）。</p>
+
+<p>提到Unicode不能不提UCS（通用字符集Universal Character Set）。UCS是由ISO制定的ISO 10646（或称ISO/IEC 10646）标准所定义的标准字符集。UCS-2用两个字节编码，UCS-4用4个字节编码。Unicode是由unicode.org制定的编码机制，ISO与unicode.org是两个不同的组织， 虽然最初制定了不同的标准; 但目标是一致的。所以自从Unicode 2.0开始， Unicode采用了与ISO 10646-1相同的字库和字码， ISO也承诺ISO10646将不会给超出0x10FFFF的UCS-4编码赋值， 使得两者保持一致。大家简单认为UCS等同于Unicode就可以了。</p>
+
+<p>在Unicode中：汉字“字”对应的数字是23383。在Unicode中，我们有很多方式将数字23383表示成程序中的数据，包括：UTF-8、UTF-16、UTF-32。UTF是“UCS Transformation Format”的缩写，可以翻译成Unicode字符集转换格式，即怎样将Unicode定义的数字转换成程序数据。例如，“汉字”对应的数字是0x6c49和0x5b57，而编码的程序数据是：
+<div>
+<pre>BYTE data_utf8[] = {0xE6, 0xB1, 0x89, 0xE5, 0xAD, 0x97}; // UTF-8编码
+WORD data_utf16[] = {0x6c49, 0x5b57}; // UTF-16编码
+DWORD data_utf32[] = {0x6c495b57}; // UTF-32编码</pre>
+</div>
+这里用BYTE、WORD、DWORD分别表示无符号8位整数，无符号16位整数和无符号32位整数。UTF-8、UTF-16、UTF-32分别以BYTE、WORD、DWORD作为编码单位。“汉字”的UTF-8编码需要6个字节。“汉字”的UTF-16编码需要两个WORD，大小是4个字节。“汉字”的UTF-32编码需要两个DWORD，大小是8个字节。根据字节序的不同，UTF-16可以被实现为UTF-16LE或UTF-16BE，UTF-32可以被实现为UTF-32LE或UTF-32BE。</p>
+
+<p>下面介绍UTF-8、UTF-16、UTF-32、BOM。</p>
+
+<p><strong><em>UTF-8</em></strong></p>
+
+<p>UTF-8以字节为单位对Unicode进行编码。从Unicode到UTF-8的编码方式如下：
+<table border="1">
+<tbody>
+<tr>
+<td>Unicode编码(16进制)</td>
+<td>UTF-8 字节流(二进制)</td>
+</tr>
+<tr>
+<td>000000 – 00007F</td>
+<td>0xxxxxxx</td>
+</tr>
+<tr>
+<td>000080 – 0007FF</td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>000800 – 00FFFF</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>010000 – 10FFFF</td>
+<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody>
+</table>
+UTF-8的特点是对不同范围的字符使用不同长度的编码。对于0×00-0x7F之间的字符，UTF-8编码与ASCII编码完全相同。UTF-8编码的最大长度是4个字节。从上表可以看出，4字节模板有21个x，即可以容纳21位二进制数字。Unicode的最大码位0x10FFFF也只有21位。总结了一下规律：UTF-8的第一个字节开始的1的个数代表了总的编码字节数，后续字节都是以10开始。由上面的规则可以清晰的看出UTF-8编码克服了中文编码的两个问题。</p>
+
+<p>例1：“汉”字的Unicode编码是0x6C49。0x6C49在0×0800-0xFFFF之间，使用3字节模板了：1110xxxx 10xxxxxx 10xxxxxx。将0x6C49写成二进制是：0110 1100 0100 1001， 用这个比特流依次代替模板中的x，得到：11100110 10110001 10001001，即E6 B1 89。</p>
+
+<p>例2：Unicode编码0x20C30在0×010000-0x10FFFF之间，使用用4字节模板了：11110xxx 10xxxxxx 10xxxxxx 10xxxxxx。将0x20C30写成21位二进制数字（不足21位就在前面补0）：0 0010 0000 1100 0011 0000，用这个比特流依次代替模板中的x，得到：11110000 10100000 10110000 10110000，即F0 A0 B0 B0。</p>
+
+<p><strong><em>UTF-16</em></strong></p>
+
+<p>UTF-16编码以16位无符号整数为单位。我们把Unicode编码记作U。编码规则如下：如果U&lt;0×10000，U的UTF-16编码就是U对应的16位无符号整数（为书写简便，下文将16位无符号整数记作WORD）。中文范围 4E00-9FBF，所以在UTF-16编码里中文2个字节编码。如果U≥0×10000，我们先计算U’=U-0×10000，然后将U’写成二进制形式：yyyy yyyy yyxx xxxx xxxx，U的UTF-16编码（二进制）就是：110110yyyyyyyyyy 110111xxxxxxxxxx。</p>
+
+<p><strong><em>UTF-32</em></strong></p>
+
+<p>UTF-32编码以32位无符号整数为单位。Unicode的UTF-32编码就是其对应的32位无符号整数。</p>
+
+<p><strong><em>字节序</em></strong></p>
+
+<p>根据字节序(对字节序不太了解的同学请参考<a href="http://en.wikipedia.org/wiki/Endianness">http://en.wikipedia.org/wiki/Endianness</a>)的不同，UTF-16可以被实现为UTF-16LE（Little Endian）或UTF-16BE（Big Endian），UTF-32可以被实现为UTF-32LE或UTF-32BE。例如：
+<table border="1">
+<tbody>
+<tr>
+<td>Unicode编码</td>
+<td>UTF-16LE</td>
+<td>UTF-16BE</td>
+<td>UTF-32LE</td>
+<td>UTF-32BE</td>
+</tr>
+<tr>
+<td>0x006C49</td>
+<td>49 6C</td>
+<td>6C 49</td>
+<td>49 6C 00 00</td>
+<td>00 00 6C 49</td>
+</tr>
+<tr>
+<td>0x020C30</td>
+<td>43 D8 30 DC</td>
+<td>D8 43 DC 30</td>
+<td>30 0C 02 00</td>
+<td>00 02 0C 30</td>
+</tr>
+</tbody>
+</table>
+那么，怎么判断字节流的字节序呢？Unicode标准建议用BOM（Byte Order Mark）来区分字节序，即在传输字节流前，先传输被作为BOM的字符”零宽无中断空格”。这个字符的编码是FEFF，而反过来的FFFE（UTF-16）和FFFE0000（UTF-32）在Unicode中都是未定义的码位，不应该出现在实际传输中。下表是各种UTF编码的BOM：
+<table border="1">
+<tbody>
+<tr>
+<td>UTF编码</td>
+<td>Byte Order Mark</td>
+</tr>
+<tr>
+<td>UTF-8</td>
+<td>EF BB BF</td>
+</tr>
+<tr>
+<td>UTF-16LE</td>
+<td>FF FE</td>
+</tr>
+<tr>
+<td>UTF-16BE</td>
+<td>FE FF</td>
+</tr>
+<tr>
+<td>UTF-32LE</td>
+<td>FF FE 00 00</td>
+</tr>
+<tr>
+<td>UTF-32BE</td>
+<td>00 00 FE FF</td>
+</tr>
+</tbody>
+</table>
+总结一下，ISO与unicode.org都敏锐的意识到只有为世界上每种语言中的每个字符设定统一并且唯一的二进制编码才能彻底解决计算机世界信息交流中编码冲突的问题。由此诞生了UCS和Unicode，而这两个规范是一致的。在Unicode里，所有的字符被一视同仁，也就是说，所有的文字都按一个字符来处理，它们都有一个唯一的Unicode码。UTF-8、UTF-16、UTF-32分别定义了怎样将Unicode定义的数字转换成程序数据。UTF-8以字节为单位对Unicode进行编码，一个英文字符占1个字节，汉字占3个字节；UTF-16以16位无符号整数为单位对Unicode进行编码，中文英文都占2个字节；UTF-32以32位无符号整数为单位对Unicode进行编码，中文英文都占4个字节。可以在<a href="http://www.unicode.org/charts/unihan.html">http://www.unicode.org/charts/unihan.html</a> 查看汉字的unicode码以及UTF-8、UTF-16、UTF-32编码。</p>
+
+<p><strong>中文二进制存储</strong></p>
+
+<p>介绍了这么多的编码知识，真正的文件内容是什么样子的呢？下面我们就通过实验看看在笔者Linux机器上 “中文”这两个字在不同的编码下保存的文件内容。下面是我的实验过程，有兴趣的同学可以在自己的机器上重做一下。Window平台上的情况类似这里就不赘述了。</p>
+
+<p>实验需要需要使用2个工具：</p>
+
+<ol>
+<li>od 查看文件内容：<a href="http://www.gnu.org/software/coreutils/manual/html_node/od-invocation.html">http://www.gnu.org/software/coreutils/manual/html_node/od-invocation.html</a></li>
+<li>iconv 编码转换工具：<a href="http://www.gnu.org/software/libiconv/">http://www.gnu.org/software/libiconv/</a>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="75">汉字</td>
+<td valign="top" width="90">Unicode（ucs-2）10进制表示</td>
+<td valign="top" width="75">Utf-8</td>
+<td valign="top" width="75">Utf-16</td>
+<td valign="top" width="75">Utf32</td>
+<td valign="top" width="75">区位码</td>
+<td valign="top" width="90">GB2312/GBK/GB18030</td>
+</tr>
+<tr>
+<td valign="top" width="75">中</td>
+<td valign="top" width="90">20013</td>
+<td valign="top" width="75">E4 B8 AD</td>
+<td valign="top" width="75">4E2D</td>
+<td valign="top" width="75">00004E2D</td>
+<td valign="top" width="75">5448</td>
+<td valign="top" width="90">D6D0</td>
+</tr>
+<tr>
+<td valign="top" width="75">文</td>
+<td valign="top" width="90">25991</td>
+<td valign="top" width="75">E6 96 87</td>
+<td valign="top" width="75">6587</td>
+<td valign="top" width="75">00006587</td>
+<td valign="top" width="75">4636</td>
+<td valign="top" width="90">CEC4</td>
+</tr>
+</tbody>
+</table>
+机器环境：</li>
+</ol>
+
+<p>OS: Red Hat Enterprise Linux AS release 4</p>
+
+<p>CPU: Intel&reg; Xeon&reg; CPU</p>
+
+<p>Locale：LC_ALL=zh_CN.utf-8
+<div>
+<pre>//生成utf8编码下的文件
+echo –n &ldquo;中文&rdquo; &gt; foo.utf8
+//检查foo的内容：
+od -t x1 foo.utf8
+0000000 e4 b8 ad e6 96 87
+//转换为utf16编码
+iconv -f utf-8 -t utf-16 foo.utf8 &gt; foo.utf16
+//查看foo.utf16内容
+od -t x1 foo.utf16
+0000000 ff fe 2d 4e 87 65
+Ff fe是BOM（还记得吗？通过BOM来字节流的字节序），其余部分的确是UTF-16LE编码的内容
+//转换为utf32编码
+iconv -f utf-16 -t utf-32 foo.utf16 &gt; foo.utf32
+//查看foo.utf32内容
+od -t x1 foo.utf32
+0000000 ff fe 00 00 2d 4e 00 00 87 65 00 00
+Ff fe是BOM，的确是UTF-32LE编码的内容
+//转换为gb2312编码
+iconv -f utf-8 -t gb2312 foo.txt &gt; foo.gb2312
+od -t x1 foo.gb2312
+0000000 d6 d0 ce c4
+//转换为GBK编码
+iconv -f utf-8 -t gbk foo.txt &gt; foo.gbk
+od -t x1 foo.gbk
+0000000 d6 d0 ce c4
+//转换为GB18030编码
+iconv -f utf-8 -t gb18030 foo.txt &gt; foo.gb18030
+od -t x1 foo.gb18030
+0000000 d6 d0 ce c4</pre>
+</div>
+<strong>C语言中文处理</strong></p>
+
+<p>先明确一个概念：程序内部编码和程序外部编码。程序内部编码指的是中文字符在程序运行时在内存中的编码形式。程序外部编码则是中文字符在存储或者传输时的编码形式。程序外部编码的最直观的例子就是当把中文存储到硬盘文件中时选择的编码。</p>
+
+<p>根据程序内部编码和程序外部编码是否一致，C/C++的中文处理有两种常见的方式：</p>
+
+<ol>
+<li>内外编码相同。输入输出时不需要考虑编码转换，程序内部处理时把中文字符当做普通的2进制数据流进行处理。</li>
+<li>内外编码不同。输入输出的时候根据应用需要选择合适的编码格式进行编码转换；程序内部统一编码处理。
+方法1的优点不言而喻，由于内外统一，不需要进行转换。不足是如果不是C标准库支持的编码方式，那么字符串处理函数需要自己实现。比如说标准strlen函数不能计算中文编码&amp;UTF-8等的字符串长度，而需要根据编码标准自行实现。GBK等中文编码除了计算字符串长度的函数外，字符串匹配函数也要自己实现（原因看上文中文编码总结）。当需要支持的编码格式不断增多时，处理函数的开发和维护就需要付出更大的代价。</li>
+</ol>
+
+<p>方法2针对方法1的不足加以改进。在程序内部可以优先选择C标准库支持的编码方式，或者根据需要自己实现对某一特定编码格式的完整支持，这样任何编码都可以先转换为支持的编码，代码通用性比较好。</p>
+
+<p>那么C标准库对中文编码的支持如何呢？目前Linux平台一般使用GNU C library，内建了对单字节的char和宽字符wchar_t的支持。Char大家都很熟悉了，处理中文需要的wchar_t要重点介绍一下。从实现上来说在Linux平台上可以认为wchar_t是4byte的int，内部存储字符的UTF32编码。由于标准库已经内建了对wchar_t比较完备的支持，如使用wcslen 计算字符串长度，使用wcscmp进行字符串比较等等。所以比较简单的方式是使用上面的方法2，同时选择wchar_t作为内部字符的表示。做到这一点还是比较容易的，在输入输出的时候通过mbrtowc/wcrtomb 进行单个字符的内外编码转换，以及通过mbsrtowcs/wcsrtombs 进行字符串的内外编码转换即可。这里需要注意两点：</p>
+
+<ol>
+<li>代码中字符串常量的表示不同。举例说明：Char c=’a’; Wchar_t wc=L’中’;</li>
+<li>上面两组函数的转换是依赖locale设置的，即locale决定了外部编码的类型。确切的说是LC_CTYPE决定了外部编码的类型。默认情况下程序启动时使用标准“C”locale，而不是LC系列的环境变量指定的。所以需要首先调用下面的函数：setlocale (LC_ALL, “”);这样程序就使用了用户通过设置LC系列环境变量选择的Locale。
+关于locale的话题比较大，这里就不深入了，留待下一篇文章吧.</li>
+</ol>
+
+<p>上面的方法很完美，是吗？不是吗？得到这么多的好处不是无代价的，最明显的代价就是内存，任何一个字符，不管中文还是英文如果保持在wchar_t里就需要4个byte，就这一个理由就足以限制了这个方案在关注内存使用的应用场景下的使用。</p>
+
+<p><strong>Python的中文处理</strong></p>
+
+<p>对Python来说由于内建Unicode的支持，所以采用输入输出的时候进行转换，内部保持Unicode的方式使用是个不错的方案。<a href="http://docs.python.org/tutorial/introduction.html#unicode-strings">http://docs.python.org/tutorial/introduction.html#unicode-strings</a>这里作为起点，有兴趣的同学自学吧。</p>
+
+<p><strong>编码选择建议：</strong></p>
+
+<ol>
+<li>只有英文：毫不犹豫选择内外编码都选择ASCII，通用且存储代价小。</li>
+<li>主要存中文，对存储大小比较敏感：内外部编码根据文字使用范围选择GB2312或者GBK，自行实现使用到的字符串处理函数。</li>
+<li>通用性第一，处理简单：外部选择UTF-8，内部可以使用UTF-8或者UTF-32（即wchar_t）
+<strong>参考资料：</strong></li>
+</ol>
+
+<p><a href="http://baike.baidu.com/view/25492.htm">http://baike.baidu.com/view/25492.htm</a></p>
+
+<p><a href="http://baike.baidu.com/view/25421.htm">http://baike.baidu.com/view/25421.htm</a></p>
+
+<p><a href="http://baike.baidu.com/view/40801.htm">http://baike.baidu.com/view/40801.htm</a></p>
+
+<p><a href="http://www.sac.gov.cn/SACSearch/search?channelid=160591&amp;amp;templet=gjcxjg_detail.jsp&amp;amp;searchword=STANDARD_CODE=%27GB%202312-1980%27&amp;amp;XZ=Q">http://www.sac.gov.cn/SACSearch/search?channelid=160591&amp;templet=gjcxjg_detail.jsp&amp;searchword=STANDARD_CODE=’GB%202312-1980′&amp;XZ=Q</a></p>
+
+<p><a href="http://www.sac.gov.cn/SACSearch/search?channelid=160591&amp;amp;templet=gjcxjg_detail.jsp&amp;amp;searchword=STANDARD_CODE=%27GB%2018030-2005%27&amp;amp;XZ=Q">http://www.sac.gov.cn/SACSearch/search?channelid=160591&amp;templet=gjcxjg_detail.jsp&amp;searchword=STANDARD_CODE=’GB%2018030-2005′&amp;XZ=Q</a></p>
+
+<p><a href="http://www.sac.gov.cn/SACSearch/search?channelid=160591&amp;amp;templet=gjcxjg_detail.jsp&amp;amp;searchword=STANDARD_CODE=%27GB%2013000-2010%27&amp;amp;XZ=Q">http://www.sac.gov.cn/SACSearch/search?channelid=160591&amp;templet=gjcxjg_detail.jsp&amp;searchword=STANDARD_CODE=’GB%2013000-2010′&amp;XZ=Q</a></p>
+
+<p><a href="http://www.unicode.org/standard/WhatIsUnicode.html">http://www.unicode.org/</a></p>
+
+<p><a href="http://www.ibm.com/developerworks/cn/linux/i18n/unicode/linuni/">http://www.ibm.com/developerworks/cn/linux/i18n/unicode/linuni/</a></p>
+
+<p><a href="http://www.gnu.org/software/libc/manual/html_node/index.html">http://www.gnu.org/software/libc/manual/html_node/index.html</a></p>
+
+<p><a href="http://www.gnu.org/software/libiconv/">http://www.gnu.org/software/libiconv/</a></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/04/28/c#-%E6%B8%A9%E6%95%85%E8%80%8C%E7%9F%A5%E6%96%B0stream%E7%AF%87/" data-toggle="tooltip" data-placement="top" title="C# 温故而知新：Stream篇">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/05/03/%E8%AF%B4%E8%AF%B4%E9%82%AE%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%8A%84%E9%80%81%E5%92%8C%E5%AF%86%E9%80%81/" data-toggle="tooltip" data-placement="top" title="说说邮件中的抄送和密送">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>wordpress 实现404个性跳转页面</title>
+  <meta property="og:title" content="wordpress 实现404个性跳转页面" />
+  <meta name="twitter:title" content="wordpress 实现404个性跳转页面" />
+  <meta name="description" content="这个就不多说了，直接贴代码，使用方法就是把这些代码全部拷贝进你的404.php这个文件。后台点击外观-编辑-选择404.php，开始编辑，
+完成后然后就可以自己测试下效果了，你也可以先访问http://leaver.me/test404查看效果 &lt;title&gt;404&lt;/title&gt; &lt;style type=&ldquo;text/css&rdquo;&gt; body{ margin:0; padding:0; font:14px/1.6 Arial,Sans-serif; background:#fff url(img/body.png) repeat-x; } a:link,a:visited{ color:#007ab7; text-decoration:none; } h1{ position:relative; z-index:2; width:540px; height:0; margin:110px auto 15px; padding:230px 0 0; overflow:hidden; xxxxborder:1px solid; background-image: url(http://leaverimage.b0.upaiyun.com/20346_o.jpg); background-repeat: no-repeat; } h2{ position:absolute; top:17px; left:187px; margin:0; font-size:0; text-indent:-999px; -moz-user-select:none; -webkit-user-select:none; user-select:none; cursor:default; width: 534px; } h2 em{ display:block; font:italic bold 200px/120px &ldquo;Times New Roman&rdquo;,Times,Serif; text-indent:0; letter-spacing:-5px; color:rgba(216,226,244,0.3); } .link a{margin-right:1em;} .link,.texts{ width:540px; margin:0 auto 15px; color:#505050; } .">
+  <meta property="og:description" content="这个就不多说了，直接贴代码，使用方法就是把这些代码全部拷贝进你的404.php这个文件。后台点击外观-编辑-选择404.php，开始编辑，
+完成后然后就可以自己测试下效果了，你也可以先访问http://leaver.me/test404查看效果 &lt;title&gt;404&lt;/title&gt; &lt;style type=&ldquo;text/css&rdquo;&gt; body{ margin:0; padding:0; font:14px/1.6 Arial,Sans-serif; background:#fff url(img/body.png) repeat-x; } a:link,a:visited{ color:#007ab7; text-decoration:none; } h1{ position:relative; z-index:2; width:540px; height:0; margin:110px auto 15px; padding:230px 0 0; overflow:hidden; xxxxborder:1px solid; background-image: url(http://leaverimage.b0.upaiyun.com/20346_o.jpg); background-repeat: no-repeat; } h2{ position:absolute; top:17px; left:187px; margin:0; font-size:0; text-indent:-999px; -moz-user-select:none; -webkit-user-select:none; user-select:none; cursor:default; width: 534px; } h2 em{ display:block; font:italic bold 200px/120px &ldquo;Times New Roman&rdquo;,Times,Serif; text-indent:0; letter-spacing:-5px; color:rgba(216,226,244,0.3); } .link a{margin-right:1em;} .link,.texts{ width:540px; margin:0 auto 15px; color:#505050; } .">
+  <meta name="twitter:description" content="这个就不多说了，直接贴代码，使用方法就是把这些代码全部拷贝进你的404.php这个文件。后台点击外观-编辑-选择404.php，开始编辑，
+完成后然后就可以自己测试下效果了，你也可以先访问http://leaver.me/test404查看效果 &lt;title&gt;404&lt;/title&gt; &lt;style type=&ldquo;text/css&rdquo;&gt; …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/04/28/wordpress-%E5%AE%9E%E7%8E%B0404%E4%B8%AA%E6%80%A7%E8%B7%B3%E8%BD%AC%E9%A1%B5%E9%9D%A2/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/04/28/wordpress-%E5%AE%9E%E7%8E%B0404%E4%B8%AA%E6%80%A7%E8%B7%B3%E8%BD%AC%E9%A1%B5%E9%9D%A2/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>wordpress 实现404个性跳转页面</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on April 28, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (209 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>这个就不多说了，直接贴代码，使用方法就是把这些代码全部拷贝进你的404.php这个文件。后台点击外观-编辑-选择404.php，开始编辑，</p>
+
+<p>完成后然后就可以自己测试下效果了，你也可以先访问<a href="http://leaver.me/test404">http://leaver.me/test404</a>查看效果
+<pre lang="xml" escaped="true">
+&lt;title&gt;404&lt;/title&gt;
+&lt;style type=&ldquo;text/css&rdquo;&gt;
+body{
+    margin:0;
+    padding:0;
+    font:14px/1.6 Arial,Sans-serif;
+    background:#fff url(img/body.png) repeat-x;
+}
+a:link,a:visited{
+   color:#007ab7;
+   text-decoration:none;
+}
+h1{
+   position:relative;
+   z-index:2;
+   width:540px;
+   height:0;
+   margin:110px auto 15px;
+   padding:230px 0 0;
+   overflow:hidden;
+   xxxxborder:1px solid;
+   background-image: url(<a href="http://leaverimage.b0.upaiyun.com/20346_o.jpg">http://leaverimage.b0.upaiyun.com/20346_o.jpg</a>);
+   background-repeat: no-repeat;
+}
+h2{
+   position:absolute;
+   top:17px;
+   left:187px;
+   margin:0;
+   font-size:0;
+   text-indent:-999px;
+   -moz-user-select:none;
+   -webkit-user-select:none;
+   user-select:none;
+   cursor:default;
+   width: 534px;
+}
+h2 em{
+   display:block;
+   font:italic bold 200px/120px &ldquo;Times New Roman&rdquo;,Times,Serif;
+   text-indent:0;
+   letter-spacing:-5px;
+   color:rgba(216,226,244,0.3);
+}
+.link a{margin-right:1em;}
+.link,.texts{
+   width:540px;
+   margin:0 auto 15px;
+   color:#505050;
+}
+.texts{line-height:2;}
+.texts dd{margin:0;padding:0 0 0 15px;}
+.texts ul{margin:0;padding:0;}
+.portal{
+   color:#505050;
+   text-align:center;
+   white-space:nowrap;
+   word-spacing:0.45em;
+}
+.portal a:link,.portal a:visited{
+   color:#505050;
+   word-spacing:0;
+}
+.portal a:hover,.portal a:active{color:#007ab7;}
+.portal span{
+   display:inline-block;
+   height:38px;
+   line-height:35px;
+   background:url(img/portal.png) repeat-x;
+}
+.portal span span{
+   padding:0 0 0 20px;
+   background:url(img/portal.png) no-repeat 0 -40px;
+}
+.portal span span span{padding:0 20px 0 0;background-position:100% -80px;}
+.STYLE1 {
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 65px;
+}
+&lt;/style&gt;
+&lt;!&ndash;[if lte IE 8]&gt;
+&lt;style type=&ldquo;text/css&rdquo;&gt;
+h2 em{color:#e4ebf8;}
+&lt;/style&gt;
+&lt;![endif]&ndash;&gt;</p>
+
+<p>&lt;script type=&ldquo;text/javascript&rdquo;&gt;
+var i = 5;
+var intervalid;
+intervalid = setInterval(&ldquo;fun()&rdquo;, 1000);
+function fun() {
+  if (i == 0) {
+   window.location.href = &ldquo;&lt;?php bloginfo(&lsquo;url&rsquo;); ?&gt;&rdquo;;
+   clearInterval(intervalid);
+}
+document.getElementById(&ldquo;secondsDisplay&rdquo;).innerHTML = i;
+i&ndash;;
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;&lt;/h1&gt;
+&lt;h2&gt;&lt;em&gt;&lt;span class=&ldquo;STYLE1&rdquo;&gt;404 Error&amp;nbsp;&amp;nbsp; &lt;/span&gt;&lt;/em&gt;: 您所查找的页面不存在,可能已被删除或您输错了网址!&lt;/h2&gt;
+&lt;p class=&ldquo;link&rdquo;&gt;
+   &lt;a href=&ldquo;/&rdquo;&gt;&amp;#9666;返回首页&lt;/a&gt;
+   &lt;a href=&ldquo;javascript:history.go(-1);&rdquo;&gt;&amp;#9666;返回上一页&lt;/a&gt;
+&lt;/p&gt;
+&lt;dl class=&ldquo;texts&rdquo;&gt;
+  &lt;dt&gt;我正在联系火星总部查找您所需要的页面.请返回等待信息..&lt;/dt&gt;
+  &lt;dd&gt;
+&lt;ul&gt;
+  &lt;li&gt;不要返回吗?&lt;/li&gt;
+  &lt;li&gt;确定不要返回吗?&lt;/li&gt;
+  &lt;li&gt;真的真的确定不要返回吗?&lt;/li&gt;
+  &lt;li&gt;系统在 &lt;span id=&ldquo;secondsDisplay&rdquo; style=&ldquo;font-size:20px;color:red;&rdquo;&gt;5&lt;/span&gt; 秒钟之后带你返回地球。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/body&gt;</pre></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/wordpress/">wordpress</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%AC%94%E8%AE%B0/">笔记</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/04/26/win7%E4%BD%BF%E7%94%A8putty%E8%BF%9E%E6%8E%A5vitualbox%E4%B8%8B%E7%9A%84ubuntu/" data-toggle="tooltip" data-placement="top" title="Win7使用Putty连接VitualBox下的Ubuntu">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/04/28/c#-%E6%B8%A9%E6%95%85%E8%80%8C%E7%9F%A5%E6%96%B0stream%E7%AF%87/" data-toggle="tooltip" data-placement="top" title="C# 温故而知新：Stream篇">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

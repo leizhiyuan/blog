@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mysql on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/mysql/</link>
+    <description>Recent content in Mysql on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 03 Mar 2013 07:53:24 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>详细讲解双查询注入</title>
+      <link>https://leizhiyuan.github.io/2013/03/03/%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3%E5%8F%8C%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5/</link>
+      <pubDate>Sun, 03 Mar 2013 07:53:24 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/03/03/%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3%E5%8F%8C%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5/</guid>
+      <description>上一篇文章中，http://leaver.me/archives/2726.html
+我说双查询很难讲清楚，这次就试着讲一下。读了一些原理性的东西。然后尽量通俗的给大家讲清楚。。
+在此之前，我们理解一下子查询，查询的关键字是select，这个大家都知道。子查询可以简单的理解在一个select语句里还有一个select。里面的这个select语句就是子查询。
+看一个简单的例子：
+Select concat((select database())); 真正执行的时候，先从子查询进行。因此执行select database() 这个语句就会把当前的数据库查出来，然后把结果传入到concat函数。这个函数是用来连接的。比如 concat(‘a’,’b’)那结果就是ab了。
+原理：
+双注入查询需要理解四个函数/语句 1. Rand() //随机函数 2. Floor() //取整函数 3. Count() //汇总函数 4. Group by clause //分组语句
+简单的一句话原理就是有研究人员发现，当在一个聚合函数，比如count函数后面如果使用分组语句就会把查询的一部分以错误的形式显示出来。
+以本地一个名为Security的数据库为例 首先在bt5下的命令行下输入
+mysql -u root –p toor 就会连接上数据库了。 然后通过use security； 就可以切换到security数据库了。因为一个服务器上可能有多个数据库嘛。 
+然后我们执行一下前面那个简单的子查询的例子
+SELECT concat((select database())); 就能显示security，也就是显示了当前数据库的名字了。 然后我们测试一下concat的用法。输入
+SELECT concat(&#39;string1&#39;,&#39;string2&#39;); 显然结果就是string1string2了
+ 然后我们测试一下rand()这个随机函数是干嘛的
+Select rand(); 我们多执行几次  可以看到，这个函数就是返回大于0，小于1之间的数 然后看看取整函数
+Select floor(1.1123456); [![](/images/4477acaba79cf1464c028cab96e32534d81af2e5.png)](http://leaverimage.b0.upaiyun.com/33520_o.png) 这个函数就是返回小于等于你输入的数的整数。 然后我们看看双注入查询中的一个简单组合。大家从我的上一篇文章中应该也看到了有一个子查询是 SELECT floor(rand()*2); 我们从里向外看。rand() 返回大于0小于1的小数，乘以2之后就成了小于0小于2了。然后对结果进行取证。就只能是0或1了。也就是这个查询的结果不是1，就是0 我们稍微加大一点难度。看这个查询
+SELECT CONCAT((SELECT database()), FLOOR(RAND()*2)); 不要怕。先看最里面的SELECT database() 这个就返回数据库名，这里就是security了。然后FLOOR(RAND()*2)这个上面说过了。不是0，就是1.</description>
+    </item>
+    
+    <item>
+      <title>MySQL ERROR 1005: Can&#39;t create table  (errno: 150)解决办法</title>
+      <link>https://leizhiyuan.github.io/2012/06/10/mysql-error-1005-cant-create-table--errno-150%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+      <pubDate>Sun, 10 Jun 2012 20:02:31 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/10/mysql-error-1005-cant-create-table--errno-150%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+      <description>最近在做数据库大作业，采用mysql建立数据库的时候出现了这个情况，查了一下，解决了。
+出现问题的大致可能情况
+1、外键的引用类型不一样，如主键是int外键是char
+2、找不到主表中引用的列
+3、主键和外键的字符编码不一致，也可能存储引擎不一样
+对于第一个问题，检查一下自己的主外键记录数据类型是否一样，改了就行了，对于第二个问题，同样的道理，确定你主表中有对应的列。对于第三个问题 create table pw_test( uid int unsigned not null, primary key (uid), foreign key (uid) references pw_other(uid) on delete cascade on update cascade )ENGINE = MYISAM; &amp;nbsp;
+括号外面的语句设置了引擎。实战过程中通过。中间的外键设置了delete 和update约束。uid引用了pw_other表中的uid键 记下语法，出现问题的时候就可以用了。</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 安装phpmyadmin</title>
+      <link>https://leizhiyuan.github.io/2012/04/21/ubuntu-%E5%AE%89%E8%A3%85phpmyadmin/</link>
+      <pubDate>Sat, 21 Apr 2012 12:06:44 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/21/ubuntu-%E5%AE%89%E8%A3%85phpmyadmin/</guid>
+      <description>在lamp环境搭建这篇文章中，使用apt-get安装了lamp环境，可能你会发现mysql命令行操作不方便。那么需要安装web版的phpmyadmin来辅助了。两步； 1.打开终端 输入 sudo apt-get install phpmyadmin  执行过程中我记得会让输入msql的密码。和设置phpmyadmin的密码。phpmyadmin的用户名是root 然后直接访问 http://localhost/phpmyadmin，会发现不能用。因为phpmyadmin被安装在了/usr/share/phpmyadmin/目录。
+2. sudo ln -s /usr/share/phpmyadmin/ /var/www/
+建立一个软连接，不喜欢的话，你也把phpmyadmin直接复制到 /var/www/的文件夹下面也可以。
+在Ubuntu下面就可以通过http://localhost/phpmyadmin正常使用phpmyadmin了。</description>
+    </item>
+    
+    <item>
+      <title>Mysql ERROR 1064 (42000) 问题</title>
+      <link>https://leizhiyuan.github.io/2012/04/21/mysql-error-1064-42000-%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 21 Apr 2012 11:59:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/21/mysql-error-1064-42000-%E9%97%AE%E9%A2%98/</guid>
+      <description>昨天在lamp环境下写sql语句的时候，其中有一条语句是这样的，看着没什么错啊。。然后执行会报ERROR 1064这个错误。 create table book (id unsigned primary key auto_increment);  后来解决了原来是是类型不全。必须写成 create table book (id int unsigned primary key auto_increment);
+很诡异。。因为理论上unsigned应该是被识别成int unsigned。。还有其他一些情况，反正就是只要报1064.可能语法错误。可能是拼写。或者是分号，mysql的错误提示是很差的。如果把 auto_increment 自增属性加到非主键上。也会报1064的诡异错误。。
+参考：stackoverflow</description>
+    </item>
+    
+  </channel>
+</rss>

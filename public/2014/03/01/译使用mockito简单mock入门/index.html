@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>[译]使用Mockito简单mock入门</title>
+  <meta property="og:title" content="[译]使用Mockito简单mock入门" />
+  <meta name="twitter:title" content="[译]使用Mockito简单mock入门" />
+  <meta name="description" content="我们在写单元测试的时候，面临的一个挑战就是要测试的内容总是依赖于其他组件，要是我们还得先配置好其他组件，未免有点不如意，那么我们可以使用Mocks来代替那些依赖的组件
+本文问了展示这个过程，我会创建一个DAL，数据访问层，这是一个类，提供了一个通用的api来访问和修改数据仓库的数据，然后，我们要测试这个api，而不用配置连接某个本地的数据库，，或者一个远程的数据库，或者是一个文件系统，反正就是任何放数据的东西，DAL层的好处就是隔离开了数据访问和应用程序代码
+首先使用maven来创建一个工程 mvn archetype:generate -DgroupId=info.sanaulla -DartifactId=MockitoDemo -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 执行之后，本地生成MockitoDemo 文件夹，然后整个工程的目录结构与生成好了。
+然后，我们写这样一个model类，表示book类型 package info.sanaulla.models;
+import java.util.List;
+/** * Model class for the book details. */ public class Book {
+private String isbn; private String title; private List&lt;String&gt; authors; private String publication; private Integer yearOfPublication; private Integer numberOfPages; private String image;
+public Book(String isbn, String title, List&lt;String&gt; authors, String publication, Integer yearOfPublication, Integer numberOfPages, String image){
+this.isbn = isbn; this.title: = title; this.">
+  <meta property="og:description" content="我们在写单元测试的时候，面临的一个挑战就是要测试的内容总是依赖于其他组件，要是我们还得先配置好其他组件，未免有点不如意，那么我们可以使用Mocks来代替那些依赖的组件
+本文问了展示这个过程，我会创建一个DAL，数据访问层，这是一个类，提供了一个通用的api来访问和修改数据仓库的数据，然后，我们要测试这个api，而不用配置连接某个本地的数据库，，或者一个远程的数据库，或者是一个文件系统，反正就是任何放数据的东西，DAL层的好处就是隔离开了数据访问和应用程序代码
+首先使用maven来创建一个工程 mvn archetype:generate -DgroupId=info.sanaulla -DartifactId=MockitoDemo -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 执行之后，本地生成MockitoDemo 文件夹，然后整个工程的目录结构与生成好了。
+然后，我们写这样一个model类，表示book类型 package info.sanaulla.models;
+import java.util.List;
+/** * Model class for the book details. */ public class Book {
+private String isbn; private String title; private List&lt;String&gt; authors; private String publication; private Integer yearOfPublication; private Integer numberOfPages; private String image;
+public Book(String isbn, String title, List&lt;String&gt; authors, String publication, Integer yearOfPublication, Integer numberOfPages, String image){
+this.isbn = isbn; this.title: = title; this.">
+  <meta name="twitter:description" content="我们在写单元测试的时候，面临的一个挑战就是要测试的内容总是依赖于其他组件，要是我们还得先配置好其他组件，未免有点不如意，那么我们可以使用Mocks来代替那些依赖的组件
+本文问了展示这个过程，我会创建一个DAL，数据访问层，这是一个类，提供了一个通用的api来访问和修改数据仓库的数据，然后，我们要测试这个api，而不用配置连接某个本地的数据库，，或者一个远程的数据库，或者是一个文件系统，反正就是任何 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2014/03/01/%E8%AF%91%E4%BD%BF%E7%94%A8mockito%E7%AE%80%E5%8D%95mock%E5%85%A5%E9%97%A8/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2014/03/01/%E8%AF%91%E4%BD%BF%E7%94%A8mockito%E7%AE%80%E5%8D%95mock%E5%85%A5%E9%97%A8/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>[译]使用Mockito简单mock入门</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on March 1, 2014
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (628 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p>我们在写单元测试的时候，面临的一个挑战就是要测试的内容总是依赖于其他组件，要是我们还得先配置好其他组件，未免有点不如意，那么我们可以使用Mocks来代替那些依赖的组件</p>
+
+<p>本文问了展示这个过程，我会创建一个DAL，数据访问层，这是一个类，提供了一个通用的api来访问和修改数据仓库的数据，然后，我们要测试这个api，而不用配置连接某个本地的数据库，，或者一个远程的数据库，或者是一个文件系统，反正就是任何放数据的东西，DAL层的好处就是隔离开了数据访问和应用程序代码</p>
+
+<p>首先使用maven来创建一个工程
+<pre class="lang:default decode:true">mvn archetype:generate -DgroupId=info.sanaulla -DartifactId=MockitoDemo -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false</pre>
+执行之后，本地生成MockitoDemo 文件夹，然后整个工程的目录结构与生成好了。</p>
+
+<p>然后，我们写这样一个model类，表示book类型
+<pre class="lang:java decode:true">package info.sanaulla.models;</p>
+
+<p>import java.util.List;</p>
+
+<p>/**
+* Model class for the book details.
+*/
+public class Book {</p>
+
+<p>private String isbn;
+  private String title;
+  private List&lt;String&gt; authors;
+  private String publication;
+  private Integer yearOfPublication;
+  private Integer numberOfPages;
+  private String image;</p>
+
+<p>public Book(String isbn,
+              String title,
+              List&lt;String&gt; authors,
+              String publication,
+              Integer yearOfPublication,
+              Integer numberOfPages,
+              String image){</p>
+<div class="highlight"><pre class="chroma">this.isbn = isbn;
+this.title: = title;
+this.authors = authors;
+this.publication = publication;
+this.yearOfPublication = yearOfPublication;
+this.numberOfPages = numberOfPages;
+this.image = image;</pre></div>
+<p>}</p>
+
+<p>public String getIsbn() {
+    return isbn;
+  }</p>
+
+<p>public String getTitle() {
+    return title;
+  }</p>
+
+<p>public List&lt;String&gt; getAuthors() {
+    return authors;
+  }</p>
+
+<p>public String getPublication() {
+    return publication;
+  }</p>
+
+<p>public Integer getYearOfPublication() {
+    return yearOfPublication;
+  }</p>
+
+<p>public Integer getNumberOfPages() {
+    return numberOfPages;
+  }</p>
+
+<p>public String getImage() {
+    return image;
+  }
+}</pre>
+然后，我们访问Book model的DAL类会如下
+<pre class="lang:java decode:true">package info.sanaulla.dal;</p>
+
+<p>import info.sanaulla.models.Book;</p>
+
+<p>import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;</p>
+
+<p>/**
+* API layer for persisting and retrieving the Book objects.
+*/
+public class BookDAL {</p>
+
+<p>private static BookDAL bookDAL = new BookDAL();</p>
+
+<p>public List&lt;Book&gt; getAllBooks(){
+      return Collections.EMPTY_LIST;
+  }</p>
+
+<p>public Book getBook(String isbn){
+      return null;
+  }</p>
+
+<p>public String addBook(Book book){
+      return book.getIsbn();
+  }</p>
+
+<p>public String updateBook(Book book){
+      return book.getIsbn();
+  }</p>
+
+<p>public static BookDAL getInstance(){
+      return bookDAL;
+  }
+}</pre>
+DAL层现在还没啥功能，我们要通过TDD来测试，实际中，DAL可能和ORM来交互，也可能和数据库API交互，但是我们设计DAL的时候，不用关心</p>
+
+<p>准备测试</p>
+
+<p>我倾向于用junit做单元测试，而Mockito做mock。首先更新一下pom文件。添加依赖
+<pre class="lang:default decode:true">&lt;project xmlns=&ldquo;<a href="http://maven.apache.org/POM/4.0.0&quot;">http://maven.apache.org/POM/4.0.0&quot;</a> xmlns:xsi=&ldquo;<a href="http://www.w3.org/2001/XMLSchema-instance&quot;">http://www.w3.org/2001/XMLSchema-instance&quot;</a>
+       xsi:schemaLocation=&ldquo;<a href="http://maven.apache.org/POM/4.0.0">http://maven.apache.org/POM/4.0.0</a> <a href="http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;">http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</a>
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;info.sanaulla&lt;/groupId&gt;
+  &lt;artifactId&gt;MockitoDemo&lt;/artifactId&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;name&gt;MockitoDemo&lt;/name&gt;
+  &lt;url&gt;<a href="http://maven.apache.org&lt;/url&gt;">http://maven.apache.org&lt;/url&gt;</a>
+  &lt;dependencies&gt;
+    &lt;!&ndash; Dependency for JUnit &ndash;&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.10&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;!&ndash; Dependency for Mockito &ndash;&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.mockito&lt;/groupId&gt;
+      &lt;artifactId&gt;mockito-all&lt;/artifactId&gt;
+      &lt;version&gt;1.9.5&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</pre>
+下面，我们要测试啦，我们会在单元测试中把mock数据注入到BookDAL中，这样我们就不要依赖任何数据源就可以完成测试
+<pre class="lang:default decode:true">public class BookDALTest {
+  public void setUp() throws Exception {</p>
+
+<p>}</p>
+
+<p>public void testGetAllBooks() throws Exception {</p>
+
+<p>}</p>
+
+<p>public void testGetBook() throws Exception {</p>
+
+<p>}</p>
+
+<p>public void testAddBook() throws Exception {</p>
+
+<p>}</p>
+
+<p>public void testUpdateBook() throws Exception {</p>
+
+<p>}
+}</pre>
+我们当然对应测试DAL类的每个方法嘛。</p>
+
+<p>然后我们会在setup（这个方法是在测试类执行测试前执行的，用于准备数据啦）
+<pre class="lang:default decode:true">public class BookDALTest {</p>
+
+<p>private static BookDAL mockedBookDAL;
+  private static Book book1;
+  private static Book book2;</p>
+
+<p>@BeforeClass
+  public static void setUp(){
+    //创建BookDAL类的一个mock对象
+    mockedBookDAL = mock(BookDAL.class);</p>
+<div class="highlight"><pre class="chroma">//创建Book类.
+book1 = new Book(&#34;8131721019&#34;,&#34;Compilers Principles&#34;,
+        Arrays.asList(&#34;D. Jeffrey Ulman&#34;,&#34;Ravi Sethi&#34;, &#34;Alfred V. Aho&#34;, &#34;Monica S. Lam&#34;),
+        &#34;Pearson Education Singapore Pte Ltd&#34;, 2008,1009,&#34;BOOK_IMAGE&#34;);
+
+book2 = new Book(&#34;9788183331630&#34;,&#34;Let Us C 13th Edition&#34;,
+        Arrays.asList(&#34;Yashavant Kanetkar&#34;),&#34;BPB PUBLICATIONS&#34;, 2012,675,&#34;BOOK_IMAGE&#34;);
+
+//用mock数据来stub对应的方法
+when(mockedBookDAL.getAllBooks()).thenReturn(Arrays.asList(book1, book2));
+when(mockedBookDAL.getBook(&#34;8131721019&#34;)).thenReturn(book1);
+when(mockedBookDAL.addBook(book1)).thenReturn(book1.getIsbn());
+when(mockedBookDAL.updateBook(book1)).thenReturn(book1.getIsbn());</pre></div>
+<p>}</p>
+
+<p>public void testGetAllBooks() throws Exception {}</p>
+
+<p>public void testGetBook() throws Exception {}</p>
+
+<p>public void testAddBook() throws Exception {}</p>
+
+<p>public void testUpdateBook() throws Exception {}
+}</pre>
+在setup()方法中</p>
+
+<p>1.首先我创建BookDAL的对象
+<pre class="lang:default decode:true">BookDAL mockedBookDAL = mock(BookDAL.class);</pre>
+2.然后stub,存根。。用mock的数据。这样当对应的方法被调用的时候就返回我mock的数据
+<pre class="lang:default decode:true">//当被getAllBooks调用的时候就返回我book1，和book2
+when(mockedBookDAL.getAllBooks()).thenReturn(Arrays.asList(book1, book2));
+when(mockedBookDAL.getBook(&ldquo;8131721019&rdquo;)).thenReturn(book1);
+when(mockedBookDAL.addBook(book1)).thenReturn(book1.getIsbn());
+when(mockedBookDAL.updateBook(book1)).thenReturn(book1.getIsbn());</pre>
+然后，我们执行一下</p>
+
+<p>mvn test就可以看到结果了
+<pre class="lang:default decode:true ">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-</p>
+
+<h2 id="t-e-s-t-s">T E S T S</h2>
+
+<p>Running info.sanaulla.AppTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.029 sec
+Running info.sanaulla.dal.BookDALTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.209 sec</p>
+
+<p>Results :</p>
+
+<p>Tests run: 5, Failures: 0, Errors: 0, Skipped: 0</pre>
+&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;
+<pre class="lang:default decode:true">package info.sanaulla.dal;</p>
+
+<p>import info.sanaulla.models.Book;
+import org.junit.BeforeClass;
+import org.junit.Test;</p>
+
+<p>import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;</p>
+
+<p>import java.util.Arrays;
+import java.util.List;</p>
+
+<p>public class BookDALTest {</p>
+
+<p>private static BookDAL mockedBookDAL;
+  private static Book book1;
+  private static Book book2;</p>
+
+<p>@BeforeClass
+  public static void setUp(){
+    mockedBookDAL = mock(BookDAL.class);
+    book1 = new Book(&ldquo;8131721019&rdquo;,&ldquo;Compilers Principles&rdquo;,
+            Arrays.asList(&ldquo;D. Jeffrey Ulman&rdquo;,&ldquo;Ravi Sethi&rdquo;, &ldquo;Alfred V. Aho&rdquo;, &ldquo;Monica S. Lam&rdquo;),
+            &ldquo;Pearson Education Singapore Pte Ltd&rdquo;, 2008,1009,&ldquo;BOOK_IMAGE&rdquo;);</p>
+<div class="highlight"><pre class="chroma">book2 = new Book(&#34;9788183331630&#34;,&#34;Let Us C 13th Edition&#34;,
+        Arrays.asList(&#34;Yashavant Kanetkar&#34;),&#34;BPB PUBLICATIONS&#34;, 2012,675,&#34;BOOK_IMAGE&#34;);
+
+when(mockedBookDAL.getAllBooks()).thenReturn(Arrays.asList(book1, book2));
+when(mockedBookDAL.getBook(&#34;8131721019&#34;)).thenReturn(book1);
+when(mockedBookDAL.addBook(book1)).thenReturn(book1.getIsbn());
+
+when(mockedBookDAL.updateBook(book1)).thenReturn(book1.getIsbn());</pre></div>
+<p>}</p>
+
+<p>@Test
+  public void testGetAllBooks() throws Exception {</p>
+<div class="highlight"><pre class="chroma">List&amp;lt;Book&amp;gt; allBooks = mockedBookDAL.getAllBooks();
+assertEquals(2, allBooks.size());
+Book myBook = allBooks.get(0);
+assertEquals(&#34;8131721019&#34;, myBook.getIsbn());
+assertEquals(&#34;Compilers Principles&#34;, myBook.getTitle());
+assertEquals(4, myBook.getAuthors().size());
+assertEquals((Integer)2008, myBook.getYearOfPublication());
+assertEquals((Integer) 1009, myBook.getNumberOfPages());
+assertEquals(&#34;Pearson Education Singapore Pte Ltd&#34;, myBook.getPublication());
+assertEquals(&#34;BOOK_IMAGE&#34;, myBook.getImage());</pre></div>
+<p>}</p>
+
+<p>@Test
+  public void testGetBook(){</p>
+<div class="highlight"><pre class="chroma">String isbn = &#34;8131721019&#34;;
+
+Book myBook = mockedBookDAL.getBook(isbn);
+
+assertNotNull(myBook);
+assertEquals(isbn, myBook.getIsbn());
+assertEquals(&#34;Compilers Principles&#34;, myBook.getTitle());
+assertEquals(4, myBook.getAuthors().size());
+assertEquals(&#34;Pearson Education Singapore Pte Ltd&#34;, myBook.getPublication());
+assertEquals((Integer)2008, myBook.getYearOfPublication());
+assertEquals((Integer)1009, myBook.getNumberOfPages());</pre></div>
+<p>}</p>
+
+<p>@Test
+  public void testAddBook(){
+    String isbn = mockedBookDAL.addBook(book1);
+    assertNotNull(isbn);
+    assertEquals(book1.getIsbn(), isbn);
+  }</p>
+
+<p>@Test
+  public void testUpdateBook(){</p>
+<div class="highlight"><pre class="chroma">String isbn = mockedBookDAL.updateBook(book1);
+assertNotNull(isbn);
+assertEquals(book1.getIsbn(), isbn);</pre></div>
+<p>}
+}</pre>
+很简单。。。没有配置任何实际的数据源。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/java/">java</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%B7%A5%E4%BD%9C/">工作</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2014/02/11/%E5%B0%9D%E8%AF%95javafx%E5%BC%80%E5%8F%91/" data-toggle="tooltip" data-placement="top" title="尝试JavaFX开发">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2014/03/03/%E8%97%8F%E8%BF%90%E7%94%A8-boxlayout-%E8%BF%9B%E8%A1%8C-swing-%E6%8E%A7%E4%BB%B6%E5%B8%83%E5%B1%80/" data-toggle="tooltip" data-placement="top" title="[藏]运用 BoxLayout 进行 Swing 控件布局">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>实现IEnumerable接口&amp;理解yield关键字</title>
+  <meta property="og:title" content="实现IEnumerable接口&amp;理解yield关键字" />
+  <meta name="twitter:title" content="实现IEnumerable接口&amp;理解yield关键字" />
+  <meta name="description" content="本文讨论题目的内容。然后讨论IEnumerable接口如何使得foreach语句可以使用。之后会展示如果实现自定义的集合类，该集合类实现了IEnumerable接口。Yield关键字和遍历集合后面也讨论。
+背景
+一使用集合。就发现遍历集合就跟着来了。遍历集合最好的方式是实现迭代器模式-Understanding and Implementing the Iterator Pattern in C# and C&#43;&#43;(这篇文章我过几天翻译一下) ，C#提供foreach来以一种优雅的方式遍历
+只要集合实现了IEnumerable 接口就可以用foreach来遍历。
+使用代码
+首先先看一下内置的集合类如何使用foreach来遍历的。ArrayList实现了IEnumerable 接口。我们看一下 // 看一下实现了IEnumerable 接口的集合如何遍历 ArrayList list = new ArrayList();
+list.Add(&ldquo;1&rdquo;); list.Add(2); list.Add(&ldquo;3&rdquo;); list.Add(&lsquo;4&rsquo;);
+foreach (object s in list) { Console.WriteLine(s); } &nbsp;
+遍历泛型集合类
+Arraylist 是一个通用集合类，遍历泛型集合类也可以。因为这些泛型集合类实现了IEnumerable&lt;T&gt;接口，看一下吧。 // 遍历实现了IEnumerable&lt;T&gt;接口的泛型类 List&lt;string&gt; listOfStrings = new List&lt;string&gt;();
+listOfStrings.Add(&ldquo;one&rdquo;); listOfStrings.Add(&ldquo;two&rdquo;); listOfStrings.Add(&ldquo;three&rdquo;); listOfStrings.Add(&ldquo;four&rdquo;);
+foreach (string s in listOfStrings) { Console.WriteLine(s); } &nbsp;
+发现了吧。我们自定义的集合类或是泛型集合类应该实现IEnumerable和IEnumerable&lt;T&gt;接口。这样就可以遍历了。
+&nbsp;
+理解yield关键字
+在写个实现接口的例子之前，先理解一下yield关键字，yield会记录集合位置。当从一个函数返回一个值的时候，yield可以用。
+如下的普通的方法。不论调用多少次，都只会返回一个return static int SimpleReturn() { return 1; return 2; return 3; }">
+  <meta property="og:description" content="本文讨论题目的内容。然后讨论IEnumerable接口如何使得foreach语句可以使用。之后会展示如果实现自定义的集合类，该集合类实现了IEnumerable接口。Yield关键字和遍历集合后面也讨论。
+背景
+一使用集合。就发现遍历集合就跟着来了。遍历集合最好的方式是实现迭代器模式-Understanding and Implementing the Iterator Pattern in C# and C&#43;&#43;(这篇文章我过几天翻译一下) ，C#提供foreach来以一种优雅的方式遍历
+只要集合实现了IEnumerable 接口就可以用foreach来遍历。
+使用代码
+首先先看一下内置的集合类如何使用foreach来遍历的。ArrayList实现了IEnumerable 接口。我们看一下 // 看一下实现了IEnumerable 接口的集合如何遍历 ArrayList list = new ArrayList();
+list.Add(&ldquo;1&rdquo;); list.Add(2); list.Add(&ldquo;3&rdquo;); list.Add(&lsquo;4&rsquo;);
+foreach (object s in list) { Console.WriteLine(s); } &nbsp;
+遍历泛型集合类
+Arraylist 是一个通用集合类，遍历泛型集合类也可以。因为这些泛型集合类实现了IEnumerable&lt;T&gt;接口，看一下吧。 // 遍历实现了IEnumerable&lt;T&gt;接口的泛型类 List&lt;string&gt; listOfStrings = new List&lt;string&gt;();
+listOfStrings.Add(&ldquo;one&rdquo;); listOfStrings.Add(&ldquo;two&rdquo;); listOfStrings.Add(&ldquo;three&rdquo;); listOfStrings.Add(&ldquo;four&rdquo;);
+foreach (string s in listOfStrings) { Console.WriteLine(s); } &nbsp;
+发现了吧。我们自定义的集合类或是泛型集合类应该实现IEnumerable和IEnumerable&lt;T&gt;接口。这样就可以遍历了。
+&nbsp;
+理解yield关键字
+在写个实现接口的例子之前，先理解一下yield关键字，yield会记录集合位置。当从一个函数返回一个值的时候，yield可以用。
+如下的普通的方法。不论调用多少次，都只会返回一个return static int SimpleReturn() { return 1; return 2; return 3; }">
+  <meta name="twitter:description" content="本文讨论题目的内容。然后讨论IEnumerable接口如何使得foreach语句可以使用。之后会展示如果实现自定义的集合类，该集合类实现了IEnumerable接口。Yield关键字和遍历集合后面也讨论。
+背景
+一使用集合。就发现遍历集合就跟着来了。遍历集合最好的方式是实现迭代器模式-Understanding and Implementing the Iterator Pattern in C# …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/10/19/%E5%AE%9E%E7%8E%B0ienumerable%E6%8E%A5%E5%8F%A3%E7%90%86%E8%A7%A3yield%E5%85%B3%E9%94%AE%E5%AD%97/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/10/19/%E5%AE%9E%E7%8E%B0ienumerable%E6%8E%A5%E5%8F%A3%E7%90%86%E8%A7%A3yield%E5%85%B3%E9%94%AE%E5%AD%97/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>实现IEnumerable接口&amp;理解yield关键字</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 19, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (337 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>本文讨论题目的内容。然后讨论IEnumerable接口如何使得foreach语句可以使用。之后会展示如果实现自定义的集合类，该集合类实现了IEnumerable接口。Yield关键字和遍历集合后面也讨论。</p>
+
+<p><strong>背景</strong></p>
+
+<p>一使用集合。就发现遍历集合就跟着来了。遍历集合最好的方式是实现迭代器模式-<a href="http://www.codeproject.com/Articles/362986/Understanding-and-Implementing-the-Iterator-Patter">Understanding and Implementing the Iterator Pattern in C# and C++</a>(这篇文章我过几天翻译一下) ，C#提供foreach来以一种优雅的方式遍历</p>
+
+<p>只要集合实现了IEnumerable 接口就可以用foreach来遍历。</p>
+
+<p><strong>使用代码</strong></p>
+
+<p>首先先看一下内置的集合类如何使用foreach来遍历的。ArrayList实现了IEnumerable 接口。我们看一下
+<pre class="lang:default decode:true">// 看一下实现了IEnumerable 接口的集合如何遍历
+ArrayList list = new ArrayList();</p>
+
+<p>list.Add(&ldquo;1&rdquo;);
+list.Add(2);
+list.Add(&ldquo;3&rdquo;);
+list.Add(&lsquo;4&rsquo;);</p>
+
+<p>foreach (object s in list)
+{
+    Console.WriteLine(s);
+}</pre>
+&nbsp;</p>
+
+<p><strong>遍历泛型集合类</strong></p>
+
+<p>Arraylist 是一个通用集合类，遍历泛型集合类也可以。因为这些泛型集合类实现了IEnumerable&lt;T&gt;接口，看一下吧。
+<pre class="lang:default decode:true">// 遍历实现了IEnumerable&lt;T&gt;接口的泛型类
+List&lt;string&gt; listOfStrings = new List&lt;string&gt;();</p>
+
+<p>listOfStrings.Add(&ldquo;one&rdquo;);
+listOfStrings.Add(&ldquo;two&rdquo;);
+listOfStrings.Add(&ldquo;three&rdquo;);
+listOfStrings.Add(&ldquo;four&rdquo;);</p>
+
+<p>foreach (string s in listOfStrings)
+{
+    Console.WriteLine(s);
+}</pre>
+&nbsp;</p>
+
+<p>发现了吧。我们自定义的集合类或是泛型集合类应该实现IEnumerable和IEnumerable&lt;T&gt;接口。这样就可以遍历了。</p>
+
+<p>&nbsp;</p>
+
+<p><strong>理解yield关键字</strong></p>
+
+<p>在写个实现接口的例子之前，先理解一下yield关键字，yield会记录集合位置。当从一个函数返回一个值的时候，yield可以用。</p>
+
+<p>如下的普通的方法。不论调用多少次，都只会返回一个return
+<pre class="lang:default decode:true">static int SimpleReturn()
+{
+    return 1;
+    return 2;
+    return 3;
+}</p>
+
+<p>static void Main(string[] args)
+{
+    // 看看
+    Console.WriteLine(SimpleReturn());
+    Console.WriteLine(SimpleReturn());
+    Console.WriteLine(SimpleReturn());
+    Console.WriteLine(SimpleReturn());
+}</pre>
+&nbsp;</p>
+
+<p>原因就是普通的return语句不保留函数的返回状态。每一次都是新的调用。然后返回第一个值。</p>
+
+<p>但是使用下面的语句替换后就不一样。当函数第二次调用的时候。会从上次返回的地方继续调用
+<pre class="lang:default decode:true">static IEnumerable&lt;int&gt; YieldReturn()
+{
+    yield return 1;
+    yield return 2;
+    yield return 3;
+}
+static void Main(string[] args)</p>
+
+<p>{
+    // 看看yield return的效果
+    foreach (int i in YieldReturn())
+    {
+        Console.WriteLine(i);
+    }
+}</pre>
+显然返回1，2，3，唯一要注意的就是函数需要返回IEnumerable。，然后通过foreach调用。</p>
+
+<p><strong>在自定义的集合类里实现Ienumerable接口</strong></p>
+
+<p>现在如果我们在我们的自定义集合里定义一个方法。来迭代所有元素。然后通过使用yield返回。我们就可以成功了。</p>
+
+<p>好。我们定义MyArrayList 类，实现IEnumerable 接口，该接口就会强制我们实现GetEnumerator 函数。这里我们就要使用yield了。
+<pre class="lang:default decode:true">class MyArrayList : IEnumerable
+{
+    object[] m_Items = null;
+    int freeIndex = 0;</p>
+<div class="highlight"><pre class="chroma">public MyArrayList()
+{
+    // 对了方便我直接用数组了，其实应该用链表
+   m_Items = new object[100];
+}
+
+public void Add(object item)
+{
+    // 考虑添加元素的时候
+    m_Items[freeIndex] = item;
+    freeIndex++;
+}
+
+// IEnumerable 函数
+public IEnumerator GetEnumerator()</pre></div>
+<p>{
+       foreach (object o in m_Items)
+        {
+           // 检查是否到了末尾。数组的话。。。没写好
+            if(o == null)
+            {
+                break;
+            }</p>
+<div class="highlight"><pre class="chroma">        // 返回当前元素。然后前进一步
+        yield return o;
+    }
+}</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>之后你就可以用foreach遍历了。
+<pre class="lang:default decode:true">static void Main(string[] args)
+{
+    //看看调用部分
+    MyArrayList myList = new MyArrayList();</p>
+<div class="highlight"><pre class="chroma">myList.Add(&#34;1&#34;);
+myList.Add(2);
+myList.Add(&#34;3&#34;);
+myList.Add(&#39;4&#39;);
+
+foreach (object s in myList)
+{
+    Console.WriteLine(s);
+}</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>这个类啊。没写好。也不完整。只要是让你理解。。模拟一下而已。</p>
+
+<p>自定义泛型类里实现Ienumerable&lt;T&gt;接口
+<pre class="lang:default decode:true">class MyList&lt;T&gt; : IEnumerable&lt;T&gt;
+{
+    T[] m_Items = null;
+    int freeIndex = 0;</p>
+<div class="highlight"><pre class="chroma">public MyList()
+{
+    // 为了方便。使用数组
+    m_Items = new T[100];
+}
+
+public void Add(T item)
+{
+    //添加元素
+    m_Items[freeIndex] = item;
+    freeIndex++;
+}
+
+#region IEnumerable&amp;lt;T&amp;gt; Members 
+
+public IEnumerator&amp;lt;T&amp;gt; GetEnumerator()
+{
+    foreach (T t in m_Items)
+    {
+        //检查是否到了末尾。数组的话。。。没写好
+        if (t == null) // 如果T不是一个可空类型。就中断
+        {
+            break;
+        }
+
+        // 返回当前元素，然后前进一步
+        yield return t;
+    }
+}
+
+#endregion
+
+ #region IEnumerable Members
+System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+{
+    // 此处调用泛型版本
+    return this.GetEnumerator();
+}
+
+#endregion</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>之后就可以使用foreach了。
+<pre class="lang:default decode:true">static void Main(string[] args)
+{
+    // 使用示例
+    MyList&lt;string&gt; myListOfStrings = new MyList&lt;string&gt;();</p>
+<div class="highlight"><pre class="chroma">myListOfStrings.Add(&#34;one&#34;);
+myListOfStrings.Add(&#34;two&#34;);
+myListOfStrings.Add(&#34;three&#34;);
+myListOfStrings.Add(&#34;four&#34;);
+
+foreach (string s in myListOfStrings)
+{
+    Console.WriteLine(s);
+}</pre></div>
+<p>}</pre>
+<strong> 源代码下载</strong></p>
+
+<p>[downloadicon href=<a href="http://pan.baidu.com/share/link?shareid=86013&amp;uk=1493685990]EnumerableDemo.7z[/downloadicon">http://pan.baidu.com/share/link?shareid=86013&amp;uk=1493685990]EnumerableDemo.7z[/downloadicon</a>]</p>
+
+<p>原文地址： <a href="http://www.codeproject.com/Articles/474678/A-Beginners-Tutorial-on-Implementing-IEnumerable-I">A-Beginners-Tutorial-on-Implementing-IEnumerable-I</a></p>
+
+<p>著作权声明：本文由<a href="http://leaver.me/">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/10/18/%E5%88%86%E4%BA%AB%E5%87%A0%E4%B8%AA%E7%94%B5%E5%AD%90%E4%B9%A6%E8%B5%84%E6%BA%90%E7%AB%99%E7%82%B9/" data-toggle="tooltip" data-placement="top" title="分享几个电子书资源站点">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/10/19/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E5%AE%9E%E7%8E%B0icloneable%E6%8E%A5%E5%8F%A3.%E7%90%86%E8%A7%A3%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" data-toggle="tooltip" data-placement="top" title="理解并实现原型模式-实现ICloneable接口.理解深浅拷贝">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

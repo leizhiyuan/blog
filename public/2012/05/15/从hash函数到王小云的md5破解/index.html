@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>从hash函数到王小云的MD5破解</title>
+  <meta property="og:title" content="从hash函数到王小云的MD5破解" />
+  <meta name="twitter:title" content="从hash函数到王小云的MD5破解" />
+  <meta name="description" content="以前一直纳闷不是说md5是不可逆的吗，那王小云怎么能破解呢。看到此文，豁然开朗，所谓的破解只是可以获得一个碰撞，使得两个文件的md5值一样。并不是说给定一个md5，能够得到原文。
+　密码学是理论计算机的一个很大的方向。之前准备先写密码学概论再提在hash函数破解上做出重大贡献的王小云教授的工作，不过前两天王小云获得求是杰出科学家奖以及100万奖金，在媒体上又掀起了一轮宣传狂潮，但是有些报道极端弱智，错误百出，所以我趁机纠正一下，并介绍密码学的一个组成部分——hash函数，以及王小云在这上面的工作。
+　王小云的主要工作是关于hash函数的破解工作。她在2005一个密码学会议上宣布破解了SHA-1，震惊了全世界。所以要介绍和理解她的工作，先看一下hash函数具体是怎么回事。
+　简单的说，hash函数就是把任意长的输入字符串变化成固定长的输出字符串的一种函数。通俗得说，hash函数用来生成信息的摘要。输出字符串的长度称为hash函数的位数。
+　目前应用最为广泛的hash函数是SHA-1和MD5，大多是128位和更长。
+　hash函数在现实生活中应用十分广泛。很多下载网站都提供下载文件的MD5码校验，可以用来判别文件是否完整。另外，比如在WordPress的数据库，所有密码都是保存的MD5码，这样即使数据库的管理员也无法知道用户的原始密码，避免隐私泄露（很多人在不同地方都是用的同一个密码）。
+　如果两个输入串的hash函数的值一样，则称这两个串是一个碰撞(Collision)。既然是把任意长度的字符串变成固定长度的字符串，所以，必有一个输出串对应无穷多个输入串，碰撞是必然存在的。
+　一个“优良”的hash函数 _f _应当满足以下三个条件：　　1.任意y，找x，使得f(x)=y，非常困难。 2.给定x1，找x2，使得f(x1)=f(x2)，非常困难。 3.找x1，x2，使得f(x1)=f(x2)，非常困难。
+　上面的“非常困难”的意思是除了枚举外不可能有别的更快的方法。比如第3条，根据生日定理，要想找到这样的x1，x2，理论上需要大约2^(n/2)的枚举次数。
+　几乎所有的hash函数的破解，都是指的破坏上面的第三条性质，即找到一个碰撞（前两条都能被破坏的hash函数也太弱了点，早就被人抛弃了）。在密码学上还有一个概念是理论破解，指的是提出一个算法，使得可以用低于理论值得枚举次数找到碰撞。
+　王小云的主要工作是给出了MD5，SHA-0的碰撞，以及SHA-1的理论破解，她证明了160位SHA-1，只需要大约2^69次计算就能找出来，而理论值是2^80次。她的寻找MD5碰撞的方法是极端高效的。传说王小云当时在会议上把碰撞写出来，结果被下面的人验证发现不对，原来她把MD5算法的一个步骤弄错了。但是她立马联系她的当时留在中国的学生，修正算法，并找到一个新的碰撞。这一个是对的。
+　看到这里，那些认为中国国安局应该将这些结果封存作为秘密武器甚至幻想用这些成果来袭击美国之徒可以停住你们的YY了。这种形式上的破解，在大多数情况下没有实际性的作用。更别提MD5早就被美国人抛弃了。
+　但是，说这种破解一点实际意义都没有，那就侮辱了广大密码学家的智商，密码学家不会无缘无故的弄出碰撞这么一个概念来。下面简单的介绍一下在特定情况下，怎么利用给定的碰撞来做坏事(翻译自Attacking Hash Functions)：
+　Caesar给实习生Alice叫写了一封推荐信(letter)。同一天，Alice叫Caesar在推荐信上数字签名，并提供了一份推荐信的电子板。Caesar打开文件，发现和原件一模一样。所以他在文件上签了名。
+　几个月后，Caesar发现他的秘密文件被非法察看。这到底是怎么回事呢？
+
+　　a25f7f0b 29ee0b39 68c86073 8533a4b9
+　事实上，Alice要求Caesar签名的文件letter已经被Alice做了手脚，准确地说，Alice还准备了另外一个文件order，它们的MD5码完全一致。而Caesar的数字签名还依赖于MD5算法，所以Alice用order文件替换Letter文件之后，Caesar的数字签名依然有效。那封order给Alice提供了察看秘密文件的权限。
+　具体的实现方法可见Hash Functions and the Blind Passenger Attack。我在这里简单的解释一下(只是大致思路，具体实现方式，需要对文件结构信息有所了解)：
+　letter文件的内容是： if(x1==x1) show &ldquo;letter&rdquo; else show &ldquo;order&rdquo; order文件的内容是：　if(x2==x1) show &ldquo;letter&rdquo; else show &ldquo;order&rdquo; 其中字符串&rdquo;letter&rdquo;和&rdquo;order&rdquo;代表两封信实际显示的内容。x1，x2是一个MD5的碰撞。">
+  <meta property="og:description" content="以前一直纳闷不是说md5是不可逆的吗，那王小云怎么能破解呢。看到此文，豁然开朗，所谓的破解只是可以获得一个碰撞，使得两个文件的md5值一样。并不是说给定一个md5，能够得到原文。
+　密码学是理论计算机的一个很大的方向。之前准备先写密码学概论再提在hash函数破解上做出重大贡献的王小云教授的工作，不过前两天王小云获得求是杰出科学家奖以及100万奖金，在媒体上又掀起了一轮宣传狂潮，但是有些报道极端弱智，错误百出，所以我趁机纠正一下，并介绍密码学的一个组成部分——hash函数，以及王小云在这上面的工作。
+　王小云的主要工作是关于hash函数的破解工作。她在2005一个密码学会议上宣布破解了SHA-1，震惊了全世界。所以要介绍和理解她的工作，先看一下hash函数具体是怎么回事。
+　简单的说，hash函数就是把任意长的输入字符串变化成固定长的输出字符串的一种函数。通俗得说，hash函数用来生成信息的摘要。输出字符串的长度称为hash函数的位数。
+　目前应用最为广泛的hash函数是SHA-1和MD5，大多是128位和更长。
+　hash函数在现实生活中应用十分广泛。很多下载网站都提供下载文件的MD5码校验，可以用来判别文件是否完整。另外，比如在WordPress的数据库，所有密码都是保存的MD5码，这样即使数据库的管理员也无法知道用户的原始密码，避免隐私泄露（很多人在不同地方都是用的同一个密码）。
+　如果两个输入串的hash函数的值一样，则称这两个串是一个碰撞(Collision)。既然是把任意长度的字符串变成固定长度的字符串，所以，必有一个输出串对应无穷多个输入串，碰撞是必然存在的。
+　一个“优良”的hash函数 _f _应当满足以下三个条件：　　1.任意y，找x，使得f(x)=y，非常困难。 2.给定x1，找x2，使得f(x1)=f(x2)，非常困难。 3.找x1，x2，使得f(x1)=f(x2)，非常困难。
+　上面的“非常困难”的意思是除了枚举外不可能有别的更快的方法。比如第3条，根据生日定理，要想找到这样的x1，x2，理论上需要大约2^(n/2)的枚举次数。
+　几乎所有的hash函数的破解，都是指的破坏上面的第三条性质，即找到一个碰撞（前两条都能被破坏的hash函数也太弱了点，早就被人抛弃了）。在密码学上还有一个概念是理论破解，指的是提出一个算法，使得可以用低于理论值得枚举次数找到碰撞。
+　王小云的主要工作是给出了MD5，SHA-0的碰撞，以及SHA-1的理论破解，她证明了160位SHA-1，只需要大约2^69次计算就能找出来，而理论值是2^80次。她的寻找MD5碰撞的方法是极端高效的。传说王小云当时在会议上把碰撞写出来，结果被下面的人验证发现不对，原来她把MD5算法的一个步骤弄错了。但是她立马联系她的当时留在中国的学生，修正算法，并找到一个新的碰撞。这一个是对的。
+　看到这里，那些认为中国国安局应该将这些结果封存作为秘密武器甚至幻想用这些成果来袭击美国之徒可以停住你们的YY了。这种形式上的破解，在大多数情况下没有实际性的作用。更别提MD5早就被美国人抛弃了。
+　但是，说这种破解一点实际意义都没有，那就侮辱了广大密码学家的智商，密码学家不会无缘无故的弄出碰撞这么一个概念来。下面简单的介绍一下在特定情况下，怎么利用给定的碰撞来做坏事(翻译自Attacking Hash Functions)：
+　Caesar给实习生Alice叫写了一封推荐信(letter)。同一天，Alice叫Caesar在推荐信上数字签名，并提供了一份推荐信的电子板。Caesar打开文件，发现和原件一模一样。所以他在文件上签了名。
+　几个月后，Caesar发现他的秘密文件被非法察看。这到底是怎么回事呢？
+
+　　a25f7f0b 29ee0b39 68c86073 8533a4b9
+　事实上，Alice要求Caesar签名的文件letter已经被Alice做了手脚，准确地说，Alice还准备了另外一个文件order，它们的MD5码完全一致。而Caesar的数字签名还依赖于MD5算法，所以Alice用order文件替换Letter文件之后，Caesar的数字签名依然有效。那封order给Alice提供了察看秘密文件的权限。
+　具体的实现方法可见Hash Functions and the Blind Passenger Attack。我在这里简单的解释一下(只是大致思路，具体实现方式，需要对文件结构信息有所了解)：
+　letter文件的内容是： if(x1==x1) show &ldquo;letter&rdquo; else show &ldquo;order&rdquo; order文件的内容是：　if(x2==x1) show &ldquo;letter&rdquo; else show &ldquo;order&rdquo; 其中字符串&rdquo;letter&rdquo;和&rdquo;order&rdquo;代表两封信实际显示的内容。x1，x2是一个MD5的碰撞。">
+  <meta name="twitter:description" content="以前一直纳闷不是说md5是不可逆的吗，那王小云怎么能破解呢。看到此文，豁然开朗，所谓的破解只是可以获得一个碰撞，使得两个文件的md5值一样。并不是说给定一个md5，能够得到原文。
+　密码学是理论计算机的一个很大的方向。之前准备先写密码学概论再提在hash函数破解上做出重大贡献的王小云教授的工作，不过前两天王小云获得求是杰出科学家奖以及100万奖金，在媒体上又掀起了一轮宣传狂潮，但是有些报道极端弱 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/05/15/%E4%BB%8Ehash%E5%87%BD%E6%95%B0%E5%88%B0%E7%8E%8B%E5%B0%8F%E4%BA%91%E7%9A%84md5%E7%A0%B4%E8%A7%A3/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/05/15/%E4%BB%8Ehash%E5%87%BD%E6%95%B0%E5%88%B0%E7%8E%8B%E5%B0%8F%E4%BA%91%E7%9A%84md5%E7%A0%B4%E8%A7%A3/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>从hash函数到王小云的MD5破解</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 15, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (80 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>以前一直纳闷不是说md5是不可逆的吗，那王小云怎么能破解呢。看到此文，豁然开朗，所谓的破解只是可以获得一个碰撞，使得两个文件的md5值一样。并不是说给定一个md5，能够得到原文。</p>
+
+<p>　　密码学是理论计算机的一个很大的方向。之前准备先写密码学概论再提在hash函数破解上做出重大贡献的王小云教授的工作，不过前两天<a href="http://www.cast.org.cn/n435777/n435799/n928596/n930124/35475.html">王小云获得求是杰出科学家奖以及100万奖金</a>，在媒体上又掀起了一轮宣传狂潮，但是有些报道极端弱智，错误百出，所以我趁机纠正一下，并介绍密码学的一个组成部分——hash函数，以及王小云在这上面的工作。</p>
+
+<p>　　王小云的主要工作是关于hash函数的破解工作。她在2005一个密码学会议上宣布破解了SHA-1，震惊了全世界。所以要介绍和理解她的工作，先看一下hash函数具体是怎么回事。</p>
+
+<p>　　简单的说，<strong>hash函数</strong>就是<span style="color: #ff0000;">把任意长的输入字符串变化成固定长的输出字符串</span>的一种函数。通俗得说，hash函数用来生成信息的摘要。输出字符串的长度称为hash函数的<strong>位数</strong>。</p>
+
+<p>　　目前应用最为广泛的hash函数是<strong><a href="http://en.wikipedia.org/wiki/SHA_hash_functions">SHA-1</a></strong>和<strong><a href="http://en.wikipedia.org/wiki/Md5">MD5</a></strong>，大多是128位和更长。</p>
+
+<p>　　hash函数在现实生活中应用十分广泛。很多下载网站都提供下载文件的MD5码校验，可以用来判别文件是否完整。另外，比如在WordPress的数据库，所有密码都是保存的MD5码，这样即使数据库的管理员也无法知道用户的原始密码，避免隐私泄露（很多人在不同地方都是用的同一个密码）。</p>
+
+<p>　　如果两个输入串的hash函数的值一样，则称这两个串是一个<strong>碰撞</strong>(<strong>Collision</strong>)。既然是把任意长度的字符串变成固定长度的字符串，所以，必有一个输出串对应无穷多个输入串，碰撞是必然存在的。</p>
+
+<p>　　一个“优良”的hash函数 _f _应当满足以下三个条件：　</p>
+
+<p>　　1.任意y，找x，使得f(x)=y，非常困难。</li>
+　　2.给定x1，找x2，使得f(x1)=f(x2)，非常困难。</li>
+　　3.找x1，x2，使得f(x1)=f(x2)，非常困难。</li></p>
+
+<p>　　上面的“非常困难”的意思是除了枚举外不可能有别的更快的方法。比如第3条，根据<a href="http://en.wikipedia.org/wiki/Birthday_paradox">生日定理</a>，要想找到这样的x1，x2，理论上需要大约2^(n/2)的枚举次数。</p>
+
+<p>　　几乎所有的hash函数的破解，都是指的破坏上面的第三条性质，即找到一个碰撞（前两条都能被破坏的hash函数也太弱了点，早就被人抛弃了）。在密码学上还有一个概念是<strong>理论破解</strong>，指的是提出一个算法，使得可以用低于理论值得枚举次数找到碰撞。</p>
+
+<p>　　王小云的主要工作是给出了MD5，<a href="http://en.wikipedia.org/wiki/SHA_hash_functions">SHA-0</a>的碰撞，以及SHA-1的理论破解，她证明了160位SHA-1，只需要大约2^69次计算就能找出来，而理论值是2^80次。她的寻找MD5碰撞的方法是极端高效的。传说王小云当时在会议上把碰撞写出来，结果被下面的人验证发现不对，原来她把MD5算法的一个步骤弄错了。但是她立马联系她的当时留在中国的学生，修正算法，并找到一个新的碰撞。这一个是对的。</p>
+
+<p>　　看到这里，那些认为中国国安局应该将这些结果封存作为秘密武器甚至幻想用这些成果来袭击美国之徒可以停住你们的YY了。这种形式上的破解，在大多数情况下没有实际性的作用。更别提MD5早就被美国人抛弃了。</p>
+
+<p>　　但是，说这种破解一点实际意义都没有，那就侮辱了广大密码学家的智商，密码学家不会无缘无故的弄出碰撞这么一个概念来。下面简单的介绍一下在特定情况下，怎么利用给定的碰撞来做坏事(翻译自<a href="http://th.informatik.uni-mannheim.de/people/lucks/HashCollisions/">Attacking Hash Functions</a>)：</p>
+
+<p>　　Caesar给实习生Alice叫写了一封推荐信(letter)。同一天，Alice叫Caesar在推荐信上数字签名，并提供了一份推荐信的电子板。Caesar打开文件，发现和原件一模一样。所以他在文件上签了名。</p>
+
+<p>　　几个月后，Caesar发现他的秘密文件被非法察看。这到底是怎么回事呢？</p>
+
+<p><a href="http://www.cits.rub.de/imperia/md/content/magnus/letter_of_rec.ps"><img src="/images/867e9ee66a7ab1aed4342dcb1a98489a6ab17134.png" alt="letter" /> </a><a href="http://www.cits.rub.de/imperia/md/content/magnus/order.ps"><img src="/images/1a84f3c37a7c98c13605362aa25991c19b6d2d7b.png" alt="order" /></a></p>
+
+<p>　　<img src="/images/bf67e539f3da6867fc8a9070b940b83ff6daed5d.png" alt="(apply MD5 to both documents)" /></p>
+
+<p>　　a25f7f0b 29ee0b39 68c86073 8533a4b9</p>
+
+<p>　　事实上，Alice要求Caesar签名的文件<a href="http://www.cits.rub.de/imperia/md/content/magnus/letter_of_rec.ps">letter</a>已经被Alice做了手脚，准确地说，Alice还准备了另外一个文件<a href="http://www.cits.rub.de/imperia/md/content/magnus/order.ps">order</a>，它们的MD5码完全一致。而Caesar的数字签名还依赖于MD5算法，所以Alice用order文件替换Letter文件之后，Caesar的数字签名依然有效。那封order给Alice提供了察看秘密文件的权限。</p>
+
+<p>　　具体的实现方法可见<a href="http://www.cits.rub.de/imperia/md/content/magnus/rump_ec05.pdf">Hash Functions and the Blind Passenger Attack</a>。我在这里简单的解释一下(只是大致思路，具体实现方式，需要对文件结构信息有所了解)：</p>
+
+<p>　　letter文件的内容是：
+　　　　if(x1==x1) show &ldquo;letter&rdquo; else show &ldquo;order&rdquo;
+　　order文件的内容是：　　　
+　　　　if(x2==x1) show &ldquo;letter&rdquo; else show &ldquo;order&rdquo;
+　　其中字符串&rdquo;letter&rdquo;和&rdquo;order&rdquo;代表两封信实际显示的内容。x1，x2是一个MD5的碰撞。</p>
+
+<p>　　上面的方法，只供参考和学术用途，实际使用所引起的后果概不负责。　　
+　　参考：
+　　１.<a href="http://th.informatik.uni-mannheim.de/people/lucks/HashCollisions/">Attacking Hash Functions by Poisoned Messages &ldquo;The Story of Alice and her Boss&rdquo;</a>
+　　２.<a href="http://en.wikipedia.org/wiki/Hash_function">Hash function</a>, wikipedia　
+　　３.<a href="http://en.wikipedia.org/wiki/SHA_hash_functions">SHA</a>, wikipedia
+　　４.Interview with Yiqun Lisa Yin concerning the attack on SHA-1　</p>
+
+<p>　　原文来自：<a href="http://zhiqiang.org/blog/science/computer-science/preliminary-computer-theory-xiao-yun-wang-from-the-hash-function-to-crack-md5.html">http://zhiqiang.org</a></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AE%89%E5%85%A8/">安全</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/05/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B%E7%9A%84lr%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B/" data-toggle="tooltip" data-placement="top" title="一个简单实例的LR分析过程">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/05/16/%E4%BA%B2%E5%AF%86%E8%A1%8C%E4%B8%BA%E4%B9%A6%E8%AF%84/" data-toggle="tooltip" data-placement="top" title="《亲密行为》书评">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

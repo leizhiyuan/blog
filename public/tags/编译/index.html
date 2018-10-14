@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>编译</title>
+  <meta property="og:title" content="编译" />
+  <meta name="twitter:title" content="编译" />
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/tags/%E7%BC%96%E8%AF%91/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/tags/%E7%BC%96%E8%AF%91/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/tags/%E7%BC%96%E8%AF%91/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="tags-heading">
+              
+                <h1>编译</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/09/27/javacc%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B%E5%8F%8A%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90/">
+                <h2 class="post-title">JavaCC入门教程及相关资源</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 27, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (10 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>今天下午翻译了一篇简单的文章后。就去看JavaCC的东西了。。然后就找到了一篇<a href="http://www.engr.mun.ca/~theo/JavaCC-Tutorial/javacc-tutorial.pdf">入门教程</a></p>
+
+<p>然后之前我是找到了一篇翻译过来的的<a href="https://sites.google.com/site/beariceshome/the-javacc-tutorial">某熊的战略储备基地</a></p>
+
+<p>从头到尾读了一遍英文的。感觉还是英文的写的要好一些。建议对照着翻译看英文。JavaCC也就那么回事。。</p>
+
+<p>同时在在这目测百慕大群岛的什么工程与应用科学学院找到了一些其他的文档。其中一篇是<a href="http://www.engr.mun.ca/~theo/JavaCC-FAQ/javacc-screen-faq.pdf">JavaCC-FAQ</a>很好。基本上有关JavaCC的问题都有解释。</p>
+
+<p>在FAQ里，看到了一个关于<a href="http://www.j-paine.org/jjtree.html">JJTree</a>的介绍，写的不错。建议看看。</p>
+
+<p>还有一个是国外某学校的编译原理课程的<a href="http://scg.unibe.ch/download/lectures/cc/">ppt下载</a>，好象是以JavaCC作为工具的。还没认真看。</p>
+
+<p>还有一篇<a href="http://www.cnblogs.com/Gavin_Liu/archive/2009/03/07/1405029.html">JavaCC 研究与应用</a>    ，写的平常。不过是中文版的。</p>
+
+<p>最后。千万不要忘了<a href="http://javacc.java.net/doc/">官方文档</a>。也包括你下载的JavaCC里面的Demo。。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/09/17/eclipse%E5%AE%89%E8%A3%85javacc/">
+                <h2 class="post-title">Eclipse安装JavaCC</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 17, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (21 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>今年的编译原理课程上机实践是讲这个的。。要求用JavaCC来做一个简单的解释器。今天总算是有点时间找找文档先把这个安装了。安装过程很简单。。</p>
+
+<p>　　1.希望你已经安装了Eclipse。。。</p>
+
+<p>　　2.去<a href="http://sourceforge.net/projects/eclipse-javacc/">sourceforge</a>该项目主页下载javaCC压缩包</p>
+
+<p>　　3.下载完成后解压到你的Eclipse根目录。会提示覆盖plugins和features。直接覆盖即可。</p>
+
+<p>　　4.测试一下是否成功。具体步骤就是，打开eclipse，新建一个空java项目。然后对着项目点击右键new-&gt;other-&gt;javaCC-&gt;javaCC template file。然后选择命名空间。包名。和文件名就可以了。这个地方的什么的是由你建立的java项目决定的。所以你可以先把java项目设置好，然后直接选就可以了。。</p>
+
+<p>　　5.点击运行。选择java application。控制台输出　　
+　　<pre class="lang:java decode:true " >Reading from standard input&hellip;　　
+　　Enter an expression like &ldquo;1+(2+3)*4;&rdquo;:</pre></p>
+
+<p>　　完成。。。</p>
+
+<p>Update:其实吧。这里安装的是JavaCC的插件。但是已经可以进行开发了。可能你需要一个例子来开始。或者你不喜欢eclipse。那么去<a href="http://javacc.java.net">JavaCC</a>的项目下载你喜欢的即可。我下的是javacc-5.0.zip 里面有例子。可以参考。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/java/">java</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/07/13/sqlserver%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E5%B7%B2%E5%88%B0%E8%A7%A3%E5%86%B3%E5%92%8C%E4%B8%80%E5%A5%97%E6%8E%A7%E4%BB%B6%E5%BA%93/">
+                <h2 class="post-title">SQLServer超时时间已到解决和一套控件库</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on July 13, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (17 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>在最近的一个程序中，因为频繁的操作数据库，莫名的出现了如下的错误：</p>
+
+<p>　　超时时间已到。超时时间已到，但是尚未从池中获取连接。出现这种情况可能是因为所有池连接均在使用，并且达到了最大池大小。</p>
+
+<p>　　说明: 执行当前 Web 请求期间，出现未处理的异常。请检查堆栈跟踪信息，以了解有关该错误以及代码中导致错误的出处的详细信息。</p>
+
+<p>　　异常详细信息: System.InvalidOperationException: 超时时间已到。超时时间已到，但是尚未从池中获取连接。出现这种情况可能是因为所有池连接均在使用，并且达到了最大池大小。</p>
+
+<p>　　按理说这应该是没有关闭数据库连接或者dataset，可是查了一下。发现都关了啊。遂可以表述为原因不明，但是通过在数据库连接字符串中添加max pool size=512  这个数字可以自己设。就可以了</p>
+
+<p>　　这篇文章短是短了点。。好吧。那顺带分享一套非常精美的C#控件。
+<a href="http://115.com/file/dptqnr63#RadControls-WinForms-2012-2-608-Dev.msi">RadControls-For-WinForms 控件2012</a>
+<a href="http://leaverimage.b0.upaiyun.com/24794_o.jpg"><img src="/images/35b3a6023ad34c4bab5564678dffabbcdd53a5da.jpg" alt="" title="wpf" /></a>
+<a href="http://115.com/file/e79q6pju#RadControls-for-WPF-2012-2-0607-Dev.msi">RadControls-for-WPF控件2012</a>
+<a href="http://leaverimage.b0.upaiyun.com/24793_o.jpg"><img src="/images/c3f1eeb8b01e38643d7ce0d2e2716bba20285943.jpg" alt="" title="winform" /></a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%B7%A5%E4%BD%9C/">工作</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/06/08/%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95/">
+                <h2 class="post-title">属性文法</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on June 8, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (40 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>我们知道，许多编译程序采用属性文法和语法制导翻译方法对语义处理工作进行比较规范和抽象的描述。</p>
+
+<p>　　而一个属性文法包含一个上下文无关文法和一系列文法规则，语义规则是指：对于文法的每个产生式都配备了一组属性的计算规则</p>
+
+<p>　　语义规则附在文法的每个产生式上，而语法制导翻译是指在语法分析过程中，完成附加在所使用的产生式上的语义规则描述的动作。</p>
+
+<p>　　·语法制导：基于语法分析中用到的文法产生式</p>
+
+<p>　　·翻译：完成语义分析的各项功能，不仅指生成中间代码</p>
+
+<p>　　形式上讲，一个属性文法是一个三元组，A＝（G，V，F），其中G是一个上下文无关文法；V是有穷的属性集，每个属性与文法的一个终结符或非终结符关联，属性加工的过程即是语义处理的过程。F是关于属性的属性断言或一组属性的计算规则（称为语义规则）。断言或语义规则与一个规则式关联，只引用该规则式左端或右端的终结符或非终结符关联的属性。形式化的东西看看就好，后面给出具体例子分析。</p>
+
+<p>　　<div>既然称之为属性文法，那么什么属性呢。这些属性代表与文法符号相关信息，比如它的类型、值、代码序列、符号表内容等等。属性与变量一样，可以进行计算和传递。可以类比我们平时写代码时候一些成员变量。。属性又分为综合属性和继承属性。</div></p>
+
+<p>　　<div>n在一个属性文法中，对应于每个产生式A→a都有一套与之相关联的语义规则，每条规则的形式为：</div></p>
+
+<p>　　b:=f(c1,c2,…,ck)，只有在已知 c1-ck 值的基础上，才能计算属性值 b， 称属性 b 依赖于属性 c1-ck，至于c1-ck依赖于哪个，就得看由c1-ck在左侧的规则了。也就是看下面的规则了。</p>
+
+<p>　　这里，f是一个函数，而且或者</p>
+
+<p>　　1. b是A的一个综合属性并且c1,c2,…,ck是产生式右边文法符号的属性，或者</p>
+
+<p>　　2. b是产生式右边某个文法符号的一个继承属性并且c1,c2,…,ck 是A或产生式右边任何文法符号的属性。  属性b依赖于属性c1,c2,…,ck。</p>
+
+<p>　　属性文法中常用记号N·t表示与非终结符号N相关联的属性t。</p>
+
+<p>　　<div>注意：¨终结符只有综合属性，由词法分析器提供</div></p>
+
+<p>　　<div>¨非终结符既可有综合属性也可有继承属性，文法开始符号的所有继承属性作为属性计算前的初始值</div></p>
+
+<p>　　¨在语法树中，一个结点的综合属性的值由其子结点的属性值确定。一个结点的继承属性由此结点的父结点和/或兄弟结点的某些属性确定</p>
+
+<p>　　根据包含的属性类型，属性文法分为：S-属性文法和L-属性文法</p>
+
+<p>　　S-属性文法是仅包括综合属性的属性文法；L -属性文法是包括综合属性和继承属性的属性文法。</p>
+
+<p>　　给出一个简单的实例说明上面的内容：</p>
+
+<p>　　<div>考虑非终结符A，B和C，其中，A有一个继承属性a和一个综合属性b，B有综合属性c，C有继承属性d。产生式A→BC可能有规则</div></p>
+
+<p>　　C.d:=B.c+1</p>
+
+<p>　　A.b:=A.a+B.c</p>
+
+<p>　　而属性A.a和B.c在其它地方计算</p>
+
+<p>　　为什么是这样的，因为此时A就是A，B是X1，C是X2，对于d来说，他是产生式右部C的一个属性，c是右部B的属性，属性d依赖于属性c，和1，所以它是C的继承属性，对于c来说，他是产生式右部B的一个属性，但是c不依赖于d，而是d依赖于c所以c属性类型无法确定，对于b，他是A的一个属性，并且a是A的属性，c是产生式右部的属性，所以b是A的综合属性，而对于a，因为不能确定a属性依赖于那个属性，所以。无法得知。从上面我可以得出一个规律，对于一个属性规则来说，一条规则只能确定其左侧的属性类型，而右侧的属性需要由一个由他在左侧的规则来确定。比如，可以看到上面的规则中，c和a都不能确定，就是因为在规则右侧。</p>
+
+<p>　　此部分可能理解不够深刻，如有错误欢迎指正。</p>
+
+<p>　　参考：</p>
+
+<p>　　<a href="http://jpkc.hdu.edu.cn/computer/byyl/online/5-2.htm">http://jpkc.hdu.edu.cn/computer/byyl/online/5-2.htm</a></p>
+
+<p>　　<a href="http://metc.gdut.edu.cn/compile/nandian/n-8.htm">http://metc.gdut.edu.cn/compile/nandian/n-8.htm</a>
+　　</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/06/02/lr1%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E7%B0%87%E7%9A%84%E6%9E%84%E9%80%A0/">
+                <h2 class="post-title">LR(1)项目集规范簇的构造</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on June 2, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (104 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  首先我们知道LR(0)的项目的形式是[A→α·β ]这样的.而在LR(1)中的项目形式是[A→α·β ，a ]，其中A→α·β 为LR(0)项目，称为心，a为终结符或#，称为向前搜索符。对归约项目[A→α·,a]，仅当前输入符号是a时，才能用A→α进行归约。一会将会看到具体的例子。
+　课本上给出的规则是：我将要对照着规则来说明，这里要强调一下，&rdquo;,&lsquo;在这里是分隔符。不是终结符。他是一个标志，
+　以S′→·S，#属于初始项目集中，把&rsquo;#&lsquo;号作为向前搜索符，表示活前缀为γ(若γ是有关S产生式的某一右部)要归约成S时，必须面临输入符为&rsquo;#&lsquo;号才行。因此对初始项目S′→·S，# 求闭包后再用转换函数逐步求出整个文法的LR(1)项目集族。具体构造步骤如下：
+　(1) 构造LR(1)项目集的闭包函数。
+　a) I 的任何项目都属于CLOSURE(I) b) 若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。 c) 重复b)直到CLOSURE(I)不再增大为止。
+　(2) 转换函数的构造
+　LR(1)转换函数的构造与LR(0)的相似，GO(I,X)＝CLOSURE(J)　其中I是LR(1)的项目集，X是文法符号： J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}
+　例如下列文法G′为：
+　(0) S′→S (1) S→aAd　(2) S→bAc　(3) S→aec (4) S→bed (5) A→e　构造他的LR(1)项目集规范簇。
+　以I0=CLOSURE（S′→·S，#）开始。运算。若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。此时，我们可以把S看成B，#看成a，然后需要求FIRST集合，此时没有β，a为#，所以FIRST（#）中只有一个b=#，而S有四个产生式。所有四个产生式加上#都是在I0中，最终求得的I0项目集为
+　{　S′→·S,#　S→·aAd,#　S→·bAc,#　S→·aec,#　S→·bed,#　}
+　然后使用GO函数来构造I1，从J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}我们可以知道I1的核（最初的产生式）就是这里的J，然后呢。X是I（也就是我们的I0）中的·后面的符号，也就是输入符。。可以看到在I0中，X可以为S，a，b，我们先以I1=GO(I0,S)=CLOSURE( S′→S·,# )，注意，·号已经前进了。因为J是I输入进一的项目，求I1，发现·后面没符号了，所以闭包就是他自己了。最终求得的I1的项目集为：
+　{S′→S·,# }
+　我们上一步是用的I1=GO(I0,S)来求得，我们求I2的时候使用GO（I0，a）来求，此时X就是a了。然后我们吧I0中符合的项目中的·后移一位得到J然后对J求闭包，就是I2了。此处J=S→a·Ad,# 和S→a·ec,#
+                  <a href="https://leizhiyuan.github.io/2012/06/02/lr1%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E7%B0%87%E7%9A%84%E6%9E%84%E9%80%A0/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/24/vs2010-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85boost%E5%BA%93/">
+                <h2 class="post-title">VS2010 编译安装boost库</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 24, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (140 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  实践是最好的办法。。学习C++，想试试线程，然后打算用boost库，结果boost库编译差点吓到我。。没看到比较完整的安装教程。。一直耽搁。今天动手。完成了。方法记录如下： 1.下载boost 从boost官网( http://www.boost.org )上下载最新的boost版本，现在最新是1.49版本，解压到自定义目录(我解压到了D:/program files,最终的目录结构是D:\Program Files\boost_1_49_0)
+2.编译安装
+在D:\Program Files\boost_1_49_0的目录下，有一个bootstrap.bat文件，直接双击运行。就会在同目录生成b2.exe；bjam.exe两个文件。
+3.设定编译环境 修改user-config.jam (D:\Program Files\boost_1_49_0\tools\build\v2\user-config.jam) 的MSVC configuration
+MSVC configuration Configure msvc (default version, searched for in standard locations and PATH). using msvc ; 在上面这段的下面直接添加如下的文字。 using msvc : 10.0 : :/wd4819/D_CRT_SECURE_NO_DEPRECATE/D_SCL_SECURE_NO_DEPRECATE/D_SECURE_SCL=0 ; 保存关闭。
+4.开始编译 点击开始-&gt;所有程序-&gt;“Microsoft Visual Studio 2010”，指向“Visual Studio tools(工具)”，然后单击“Visual Studio 2010 command prompt（命令提示）” 使用cd切换到D:\Program Files\boost_1_49_0目录。这个就不说了 然后输入如下的代码： b2 toolset=msvc-10.0 architecture=x86 instruction-set=i686 address-model=32 link=static variant=debug,release threading=multi runtime-link=shared &ndash;without-python &ndash;without-mpi &ndash;without-wave &ndash;without-graph &ndash;without-math &ndash;without-serialization stage &nbsp;
+                  <a href="https://leizhiyuan.github.io/2012/05/24/vs2010-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85boost%E5%BA%93/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B%E7%9A%84lr%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B/">
+                <h2 class="post-title">一个简单实例的LR分析过程</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 14, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (74 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  经过前面两篇文章。已经讲清楚了LR语法分析中最重要的分析表的构造过程。先补充一个小问题，就是LR(0)项目的分类
+　根据圆点所在的位置和圆点后是终结符还是非终结符或为空把项目分为以下几种：
+　移进项目： 形如 A→α .a β ，a是终结符, a ,b∈V* 以下同 待约项目：A→α .B β , 其中B是非终结符　归约项目：A→α . 表明产生式已分析完成。　接受项目：形如 S’→S .　特别的。A→ε的LR(0)项目只有A→ • 是归约项目
+　因为LR分析表的构造前面两篇文章已经讲的很清楚了，所以这个题目重要是解释一下如何使用分析表来构造，分析表的构造也许你得自己参考前面两篇文章来构造了。题目来自网络。
+　好，下面看题目，已知文法G[S]：
+　(1) S → aAcBe (2) A → b　(3) A → Ab　(4) B → d
+　写出对输入串 abbcde#的LR分析 过程。
+　在分析的时候，因为我们的手工分析，所以还需要一个表来记录我们的步骤。否则记不住啊。该表共需7列。行数不定。做到哪是哪。
+　步骤 符号栈 输入符号栈 动作 状态栈 ACTION GOTO 
+　其中，步骤就是从1向下递增。符号栈用来保存运算中的结果，初始为#，输入符号栈保存输入串，初始值为给定的。动作里面就是用来注释是进行移进，还是规约。状态栈就是保持LR分析表的那个状态了。Action 和Goto同理
+　通过前两篇文章的步骤，此题可以构造出如下的一张LR分析表
+                  <a href="https://leizhiyuan.github.io/2012/05/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B%E7%9A%84lr%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/13/lr0%E5%92%8Cslr%E5%88%86%E6%9E%90%E8%A1%A8%E7%9A%84%E6%9E%84%E9%80%A0/">
+                <h2 class="post-title">LR(0)和SLR分析表的构造</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 13, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (79 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  上篇文章中，我已经说到了，LR(0)分析表是LR(0)分析器的重要组成部分，它是总控程序分析动作的依据，他是由LR(0)项目集规范族来进行构造的。他的结构主要有两个部分ACTION 和GOTO
+　先看看指导原则，可以直接跳过，看例题的时候可以返回来对照参考。
+　假设已构造出LR(0)项目集规范族为：C={I0,I1, … , In}，其中Ik为项目集的名字，k为状态名，令包含S′→·S项目的集合Ik的下标k为分析器的初始状态。那么分析表的ACTION表和GOTO表构造步骤为：
+　① 若项目A→α·aβ属于Ik且转换函数GO(Ik,a)= Ij，当a为终结符时则置ACTION[k,a]为Sj。　② 若项目A→α· 属于Ik，则对任何终结符a 和&rsquo;#&lsquo;号置ACTION[k,a]和ACTION[k,#]为&rdquo;rj&rdquo;，j为在文法G′中某产生式A→α的序号。 ③ 若GO(Ik,A)＝Ij，则置GOTO[k,A]为&rdquo;j&rdquo;，其中A为非终结符。　④ 若项目S′→S·属于Ik，则置ACTION[k,#]为&rdquo;acc&rdquo;，表示接受。 ⑤ 凡不能用上述方法填入的分析表的元素，均应填上&rdquo;报错标志&rdquo;。为了表的清晰我们仅用空白表示错误标志。
+　上篇文章的例题是这样的：LR（0）项目集规范簇也已经算出来了，共有6个I，从I0-I5，最终构造的LR(0)的分析表共7行，包括标题行，也就是ACTION和GOTO，然后是状态行，状态行和ACTION的交处分割成三列，分别是终结符号，和#终结符。也就是分割多少列取决于终结符的数目，GOTO列是非终结符，分割多少列也取决于非终结符的数目。，然后就是具体的6个状态了，画出表的结构后，如下，先不用管表的内容怎么写。
+　
+　然后对照构造原则来填写表，这时你会发现要一个个从那么多的GO函数和I项目组中找对应的式子实在太难了，看不清楚，这时候，我们用GO函数把LR(0)项目集规范族连成一个识别该文法所产生的活前缀的DFA，有点像流程图了，首先把各个I项目画出来，然后需要把他们的关系表示出来，关系由GO函数确定，比如I5=GO(I2, S)，则在I2和I5之间画一个箭头，由I2指向I5，线上写上S，由括号里的第二个值确定，此题构造的DFA如下图，很简单吧。
+　
+　然后我们正式开始吧。第一条指导规则说到， 若项目A→α·aβ属于Ik且转换函数GO(Ik,a)= Ij，当a为终结符时则置ACTION[k,a]为Sj，我们先考察对于I0，发现S-&gt;·aS属于I0，且GO(I0,a)=I1,所有我们ACTION[0,a]置为S1.同理S-&gt;·bS属于I0，GO(I0,b)=I2，所以ACTION[0,b]置为S2。
+　再来看第二条规则，若项目A→α· 属于Ik，则对任何终结符a 和&rsquo;#&lsquo;号置ACTION[k,a]和ACTION[k,#]为&rdquo;rj&rdquo;，j为在文法G′中某产生式A→α的序号，也就是说这里的j可不是I项目的标号，而是增广文法
+　(0)S’→S　(1)S→aS　(2)S→bS (3)S→a
+　的标号，从0-3啦。我们考察I1，发现S→·aS属于I1，且GO(I1,a)=I1，所以应该置1和a的交的格子为S1，但是此时运用第二条规则会发现S-&gt;a·也属于I1，则又应该置ACTION[1,a]为=r3，ACTION[1,#]为r3，这样就发生了冲突。这是因为大多数文法不能满足LR(0)文法的条件，对于此冲突，我们不能确定看到S-&gt;a的时候是规约还是移进，有些文法是可以直接构造的，为此，此处不能够早LR(0)分析表了，我们构造经过改进后得到了一种新的SLR(1)文法，并没有什么太大差别，主要就是解决冲突。
+　解决冲突的指导原则如下：
+　* 假设一个LR（0）项目集规范族中有如下项目集合：
+　{X → α.bβ，A → γ.，B → δ.}
+　即存在移进-归约冲突和归约-归约冲突
+　* 如果FOLLOW（A）∩ FOLLOW（B）∩ {b} =ф，则可以如下来解决冲突（假设当前符号是 a ）：　1、若 a = b，则移进 2、若 a∈ FOLLOW（A），则用产生式 A → γ归约　3、若 a∈ FOLLOW（B），则用产生式 B → δ归约　4、否则，报错
+                  <a href="https://leizhiyuan.github.io/2012/05/13/lr0%E5%92%8Cslr%E5%88%86%E6%9E%90%E8%A1%A8%E7%9A%84%E6%9E%84%E9%80%A0/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%94%9F%E6%B4%BB/">生活</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/12/lr0%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E6%97%8F%E7%9A%84%E6%9E%84%E9%80%A0/">
+                <h2 class="post-title">LR(0)项目集规范族的构造</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 12, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (127 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  此文略长。我也没想到这写起来这么多，但对构造过程绝对清楚，一步步慢慢看吧。
+　LR的第一个L和LL的第一个L含义相同，即从左到右扫描句子 ，第二个R表示Right most最右推导。
+　在通常的描述中，后面还有一个括号里面的数字如，LR(0)、LR(1)这样，括号里面的数字表示用于决策所需的后续token分词数。
+　首先看一下LR分析器的模型图
+　
+　可惜看出，LR分析器最关键的部分就是 LR分析表了，而LR分析表的构建是由已构造出的LR(0)项目集规范族来进行构造的。LR分析法貌似是不要求掌握的，而且这部分比我想象的还要复杂，今天看了好多。才勉强搞清楚这个项目集规范族的构造，但是用来锻炼思维确实不错啊。
+　项目集，那么字面上看就是项目的集合了，项目是什么呢。这个也确实不好说，书上是说在文法G中每个产生式的右部适当位置添加一个圆点构成LR(0)项目，举个例子吧。
+　比如对于
+　A-&gt;xyz
+　这条产生式可以构造的LR(0)项目就有4个
+　A-&gt;.xyz A-&gt;x.yz A-&gt;xy.z A-&gt;xyz.
+　这样很清楚了吧，就是用.分割。这个分割产生的四个项目在进行真正的语法分析的时候对应不同的操作，比如规约还是移位。这里不讨论。重点是项目集规范族的构造，
+　在知道了LR(0)项目后，可以来看看项目集规范族的定义，
+　对于构成识别一个文法活前缀的DFA项目集(状态)的全体我们称之为这个文法的LR(0)项目集规范族。至于什么是活前缀呢，定义如下
+　对于任一文法G[S]，若S’经过任意次推导得到αAω，继续经过一次推导得到![]}/images/6b23dd171a1f672514a2dbb29175df032a1f63d4.gif)αβω，若γ是αβ的前缀，则称γ是G的一个活前缀。
+　现在知道了LR(0)项目，了解了活前缀，和项目集规范族的定义，还须引入LR(0)项目集的闭包函数CLOSURE和状态转换函数GO两个概念，先给出数学上的定义，如果你觉得麻烦可以跳过，后面会给出一道例题。
+　① 闭包函数CLOSURE(I)的定义如下：
+　a）I的项目均在CLOSURE(I)中。
+　b）若A→α·Bβ属于CLOSURE(I)，则每一形如B→·γ的项目也属于CLOSURE(I)。
+　c）重复b)直到不出现新的项目为止。即CLOSURE(I)不再扩大。
+　② 转换函数GO(I，X)的定义：
+　GO(I，X)＝CLOSURE(J)
+　其中：I为包含某一项目的状态，就是前面我们说的那四个了。，X为一文法符号，X∈(VN∪VT)，J＝{任何形如A→αX·β的项目| A→α·Xβ属于I}。
+　这样就可以使用闭包函数和转换函数构造文法G′的LR(0)项目集规范族，其步骤如下：
+　a）置项目S′→·S为初态集的核，然后对核求闭包，CLOSURE({S′→·S}）得到初态的项目集。 b）对初态集或其它所构造的项目集应用转换函数GO(I，X)=CLOSURE(J)，求出新状态J的项目集。 c）重复b）直到不出现新的项目为止。
+　开始拿个例题来说明，定义没例题看起来看难了。
+　例题：对于下列文法，S→aS|bS|a，构造该文法的LR(0)项目集规范族
+　思路就是利用闭包函数CLOSURE和转换函数GO来构造。通过计算函数CLOSURE和GO得到文法的LR(0)项目集规范族，而GO函数则把LR(0)项目集规范族连成一个识别该文法所产生的活前缀的DFA。DFA大家都知道，有穷自动机。
+　(1)将文法G(S)拓广为G(S’)也就是该文法的增广文法，目的是使语法分析器知道何时应该停止并接受该串，也就是说当使用S&rsquo;-&gt;S进行规约的时候，就结束。
+　(0)S’→S (1)S→aS　(2)S→bS　(3)S→a
+                  <a href="https://leizhiyuan.github.io/2012/05/12/lr0%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E6%97%8F%E7%9A%84%E6%9E%84%E9%80%A0/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%AC%94%E8%AE%B0/">笔记</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/04/25/%E6%AD%A3%E8%A7%84%E5%BC%8F-%E6%9C%80%E5%B0%8F%E5%8C%96dfa%E8%AF%B4%E6%98%8E/">
+                <h2 class="post-title">正规式-&gt;最小化DFA说明</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on April 25, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (40 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>今天早上去图书馆，去看编译原理，想把这部分搞清楚，看着龙书+国产的某一本不知什么的习题与解析，猜过程。。猜原理。。终于是看懂了。。
+整体的步骤是三步：
+一，先把正规式转换为NFA（非确定有穷自动机）,
+二，在把NFA通过“子集构造法”转化为DFA，
+三，在把DFA通过“分割法”进行最小化。</p>
+
+<p>　　　<strong>一步很简单，就是反复运用下图的规则，</strong>图1
+<a href="http://leaverimage.b0.upaiyun.com/20920_o.png"><img src="/images/6807123f3c419d9d4ae9c8bc7833f940ddd2cd83.png" alt="" /></a></p>
+
+<p>　　这样就能转换到NFA了。
+给出一个例题，来自Google book。本文主要根据这个例题来讲，图2
+<a href="http://leaverimage.b0.upaiyun.com/20924_o.jpg"><img src="/images/1816f6c4b5eac34b7a8ee5a44400ea8ace103722.jpg" alt="" /></a>
+　　　<strong>二.子集构造法。</strong>
+同样的例题，把转换好的NFA确定化，图3
+<a href="http://leaverimage.b0.upaiyun.com/20921_o.jpg"><img src="/images/29683c76cbf62ad4420a384cdb4a6902818d49db.jpg" alt="" /></a></p>
+
+<p>　　这个表是从NFA到DFA的时候必须要用到的。第一列第一行I的意思是从NFA的起始节点经过任意个ε所能到达的结点集合。Ia表示从该集合开始经过一个a所能到达的集合，经过一个a的意思是可以略过前后的ε。同样Ib也就是经过一个b，可以略过前后任意个ε。
+至于第二行以及后面的I是怎么确定的。我参考了一些题目才明白，原来就是看上面的Ia和Ib哪个还没出现在I列，就拿下来进行运算，该列对应的Ia和Ib就是前面我说的那样推导。</p>
+
+<p>　　如果还不太明白，看图就是了。你会发现I中的几个项目都在Ia和Ib中出现了。而且是完全出现</p>
+
+<p>　　这步做完以后，为了画出最后的DFA，那么肯定得标出一些号来，比如1.2.3.。或者A。 B。c，我一般标的方法是先把I列全部标上1.2.3.递增。然后看1表示的集合和Ia和Ib中的哪个集合一样，就把那个集合也表示为1.继续向下做。最后会得到这样一个表格。图4
+<a href="http://leaverimage.b0.upaiyun.com/20922_o.jpg"><img src="/images/cfd89b33da236d53885bb7ff781a33633c15e072.jpg" alt="" /></a></p>
+
+<p>　　至此，就可以表示出DFA了。就对照上面那个表，从0节点开始经过a到1.经过b到2，就这样画就行了。。</p>
+
+<p>　　最后的DFA如下图，图5
+<a href="http://leaverimage.b0.upaiyun.com/20925_o.jpg"><img src="/images/26ef020ce54f209ce93f988ab6af15e1daf0f131.jpg" alt="" /></a></p>
+
+<p>　　双圈的表示终态，这个是怎么来的呢。去看看图4，会发现有些项之前有双圈标志，这个是因为在NFA图2中，9为终态，所以所有包含9的集合都被认为是终态集，改成1.2.3.。。方便画节点后就需要把这些点作为终态了。。</p>
+
+<p>　　　<strong>三.最小化，分割法。</strong></p>
+
+<p>FA的最小化就是寻求最小状态DFA</p>
+
+<p>　　最小状态DFA的含义:
+1.没有多余状态(死状态)2. 没有两个状态是互相等价（不可区别）
+两个状态s和t等价的条件：
+兼容性（一致性）条件——同是终态或同是非终态
+传播性（蔓延性）条件——从s出发读入某个a和从t出发经过某个a并且经过某个b到达的状态等价。就是相同。</p>
+
+<p>　　DFA的最小化—例子，第一步都是固定的。分成终态和非终态</p>
+
+<p>１．将Ｍ的状态分为两个子集一个由终态k1=｛Ｃ，Ｄ，Ｅ，Ｆ｝组成，一个由非终态k2=｛Ｓ，Ａ，Ｂ｝组成，</p>
+
+<p>２．考察｛Ｓ，Ａ，Ｂ｝是否可分．</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/20927_o.jpg"><img src="/images/4bf93ce8a42fb3161b1d288da5697a5745effc23.jpg" alt="" /></a></p>
+
+<p>因为Ａ经过a到达C属于k1.而S经过a到达A属于k2.B经过a到达A属于k2，所以K2继续划分为{S，B},{A},</p>
+
+<p>３．考察｛Ｓ，Ｂ｝是否可再分：</p>
+
+<p>B经过b到达D属于k1.S经过b到达B属于k2，所以S，B可以划分。划分为{S},{B}</p>
+
+<p>４．考察｛Ｃ，Ｄ，Ｅ，Ｆ｝是否可再分：
+因为Ｃ，Ｄ，Ｅ，Ｆ经过a和b到达的状态都属于｛Ｃ，Ｄ，Ｅ，Ｆ｝=k1所以相同，所以不可再分：</p>
+
+<p>５．｛Ｃ，Ｄ，Ｅ，Ｆ｝以｛Ｄ｝来代替则，因为CDEF相同，你也可以用C来代替。无所谓的最小化的ＤＦＡ如图，：
+<a href="http://leaverimage.b0.upaiyun.com/20928_o.jpg"><img src="/images/573e265f308413f9398a0f05b240403b07cff10f.jpg" alt="" /></a></p>
+
+<p>真麻烦啊。。心里清楚，还得找些图来说明。。额。。基本上感觉自己讲清楚了。。。不清楚的地方。。请留言互相讨论。。谢谢。。</p>
+
+<p>参考：</p>
+
+<p><a href="http://www.worldcat.org/title/bian-yi-yuan-li-xue-xi-fu-dao/oclc/302301738">http://www.worldcat.org/title/bian-yi-yuan-li-xue-xi-fu-dao/oclc/302301738</a></p>
+
+<p><a href="http://metc.gdut.edu.cn/compile/cmpl3/3-3.htm">http://metc.gdut.edu.cn/compile/cmpl3/3-3.htm</a></p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/tags/%E7%BC%96%E8%AF%91/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

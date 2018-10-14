@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>一个简单实例的LR分析过程</title>
+  <meta property="og:title" content="一个简单实例的LR分析过程" />
+  <meta name="twitter:title" content="一个简单实例的LR分析过程" />
+  <meta name="description" content="经过前面两篇文章。已经讲清楚了LR语法分析中最重要的分析表的构造过程。先补充一个小问题，就是LR(0)项目的分类
+　根据圆点所在的位置和圆点后是终结符还是非终结符或为空把项目分为以下几种：
+　移进项目： 形如 A→α .a β ，a是终结符, a ,b∈V* 以下同 待约项目：A→α .B β , 其中B是非终结符　归约项目：A→α . 表明产生式已分析完成。　接受项目：形如 S’→S .　特别的。A→ε的LR(0)项目只有A→ • 是归约项目
+　因为LR分析表的构造前面两篇文章已经讲的很清楚了，所以这个题目重要是解释一下如何使用分析表来构造，分析表的构造也许你得自己参考前面两篇文章来构造了。题目来自网络。
+　好，下面看题目，已知文法G[S]：
+　(1) S → aAcBe (2) A → b　(3) A → Ab　(4) B → d
+　写出对输入串 abbcde#的LR分析 过程。
+　在分析的时候，因为我们的手工分析，所以还需要一个表来记录我们的步骤。否则记不住啊。该表共需7列。行数不定。做到哪是哪。
+　步骤 符号栈 输入符号栈 动作 状态栈 ACTION GOTO 
+　其中，步骤就是从1向下递增。符号栈用来保存运算中的结果，初始为#，输入符号栈保存输入串，初始值为给定的。动作里面就是用来注释是进行移进，还是规约。状态栈就是保持LR分析表的那个状态了。Action 和Goto同理
+　通过前两篇文章的步骤，此题可以构造出如下的一张LR分析表">
+  <meta property="og:description" content="经过前面两篇文章。已经讲清楚了LR语法分析中最重要的分析表的构造过程。先补充一个小问题，就是LR(0)项目的分类
+　根据圆点所在的位置和圆点后是终结符还是非终结符或为空把项目分为以下几种：
+　移进项目： 形如 A→α .a β ，a是终结符, a ,b∈V* 以下同 待约项目：A→α .B β , 其中B是非终结符　归约项目：A→α . 表明产生式已分析完成。　接受项目：形如 S’→S .　特别的。A→ε的LR(0)项目只有A→ • 是归约项目
+　因为LR分析表的构造前面两篇文章已经讲的很清楚了，所以这个题目重要是解释一下如何使用分析表来构造，分析表的构造也许你得自己参考前面两篇文章来构造了。题目来自网络。
+　好，下面看题目，已知文法G[S]：
+　(1) S → aAcBe (2) A → b　(3) A → Ab　(4) B → d
+　写出对输入串 abbcde#的LR分析 过程。
+　在分析的时候，因为我们的手工分析，所以还需要一个表来记录我们的步骤。否则记不住啊。该表共需7列。行数不定。做到哪是哪。
+　步骤 符号栈 输入符号栈 动作 状态栈 ACTION GOTO 
+　其中，步骤就是从1向下递增。符号栈用来保存运算中的结果，初始为#，输入符号栈保存输入串，初始值为给定的。动作里面就是用来注释是进行移进，还是规约。状态栈就是保持LR分析表的那个状态了。Action 和Goto同理
+　通过前两篇文章的步骤，此题可以构造出如下的一张LR分析表">
+  <meta name="twitter:description" content="经过前面两篇文章。已经讲清楚了LR语法分析中最重要的分析表的构造过程。先补充一个小问题，就是LR(0)项目的分类
+　根据圆点所在的位置和圆点后是终结符还是非终结符或为空把项目分为以下几种：
+　移进项目： 形如 A→α .a β ，a是终结符, a ,b∈V* 以下同 待约项目：A→α .B β , 其中B是非终结符　归约项目：A→α . 表明产生式已分析完成。　接受项目：形如 S’→S .　特别 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/05/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B%E7%9A%84lr%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/05/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B%E7%9A%84lr%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>一个简单实例的LR分析过程</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 14, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (74 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>经过前面两篇文章。已经讲清楚了LR语法分析中最重要的分析表的构造过程。先补充一个小问题，就是LR(0)项目的分类</p>
+
+<p>　　根据圆点所在的位置和圆点后是终结符还是非终结符或为空把项目分为以下几种：</p>
+
+<p>　　移进项目： 形如 A→α .a β ，a是终结符, a ,b∈V* 以下同
+　　待约项目：A→α .B β , 其中B是非终结符　
+　　归约项目：A→α . 表明产生式已分析完成。　
+　　接受项目：形如 S’→S .　　
+　　特别的。A→ε的LR(0)项目只有A→ • 是归约项目</p>
+
+<p>　　因为LR分析表的构造前面两篇文章已经讲的很清楚了，所以这个题目重要是解释一下如何使用分析表来构造，分析表的构造也许你得自己参考前面两篇文章来构造了。题目来自网络。</p>
+
+<p>　　好，下面看题目，已知文法G[S]：</p>
+
+<p>　　(1) S → aAcBe
+　　(2) A → b　
+　　(3) A → Ab　　
+　　(4) B → d</p>
+
+<p>　　写出对输入串 abbcde#的LR分析 过程。</p>
+
+<p>　　在分析的时候，因为我们的手工分析，所以还需要一个表来记录我们的步骤。否则记不住啊。该表共需7列。行数不定。做到哪是哪。</p>
+
+<p>　　<pre lang="php"> 步骤   符号栈   输入符号栈     动作   状态栈    ACTION    GOTO </pre></p>
+
+<p>　　其中，步骤就是从1向下递增。符号栈用来保存运算中的结果，初始为#，输入符号栈保存输入串，初始值为给定的。动作里面就是用来注释是进行移进，还是规约。状态栈就是保持LR分析表的那个状态了。Action 和Goto同理</p>
+
+<p>　　通过前两篇文章的步骤，此题可以构造出如下的一张LR分析表</p>
+
+<p>　　<a href="http://leaverimage.b0.upaiyun.com/21467_o.jpg"><img src="/images/5b2465bb8d435fab286faf6634217380656ce008.jpg" alt="" title="lr分析表" /></a></p>
+
+<p>　　分析表中有Si和rj大家都知道的。s是shift的缩写，也就是移进，r是reduce的缩写，也就是规约。规约是推导的逆操作，大家都懂。</p>
+
+<p>　　先来看看在进行分析的时候s和j操作的规则</p>
+
+<p>　　Si:移进，把i移入到状态栈，把a移入到文法符号栈。其中i，j表示状态号。</p>
+
+<p>　　ri:归约，用第i个产生式归约，同时状态栈与符号栈退出相应个符号，并把GOTO表相应状态和第i个产生式的左部非终结符入栈。</p>
+
+<p>　　文法中有A→β的产生式，若β的长度为r(即|β|=r)，则从状态栈和文法符号栈中自栈顶向下去掉r个符号，即栈指针P减去r。并把A移入文法符号栈内，Sj=GOTO[Si，A]移进状态栈，其中Si为修改指针后的栈顶状态。</p>
+
+<p>　　当归约到文法符号栈中只剩文法的开始符号S时，并且输入符号串已结束即当前输入符是&rsquo;#&lsquo;，则为分析成功。</p>
+
+<p>　　然后使用我们将要使用的辅助表来分析吧，为了简单。我还是直接给出答案。然后分析一下典型的情况。</p>
+
+<p>　　<a href="http://leaverimage.b0.upaiyun.com/21466_o.jpg"><img src="/images/d6565babf03f2f230fb9d8933518bc1cb55bf7cc.jpg" alt="" title="分析结果" /></a></p>
+
+<p>　　第一步，符号栈中是#，输入符号串就是给定的要分析的串，状态栈因为从0开始，所以状态栈直接填0，大家都知道，LR分析是从左到右扫描的。所以心里想着一根指针p，p首先指向输入串的a，然后我们查分析表的（0，a）,0就是状态0，a就是指针的当前字符。分析表中的（0，a）是s2，填入第一步的action，并且动作列填入移进，根据规则，将2入状态栈，a入符号栈，</p>
+
+<p>　　进入第二步，指针p肯定要前进一步了，所以输入符号串就进入b了。此步同上一步，不多解释。</p>
+
+<p>　　关键是进入第三步后，此时，符号栈中为#ab，输入符号串是bcde#，状态栈是024，此时去查表，差的是（4，b），4是状态栈顶，b是p指针的当前位置。发现是r2，根据规则，用第二条产生式(2) A → b来规约。把动作栏先填了，同时状态栈与符号栈退出相应个符号，也即是说，把状态栏的栈顶4，退出来，同时符号栈的b也退出，心里想着，不填表，并把GOTO表相应状态和第i个产生式的左部非终结符入栈。Goto表需要查的是(2,A)=3,2是r2的2，A是第二个产生式的左部嘛。所以，就把3入状态栈，A入符号栈。</p>
+
+<p>　　后面的都是一样的。不解释了。要想学懂编译原理。多动手是必需的。你也手工试试吧。</p>
+
+<p>参考：
+　　 <a href="http://leaver.me/archives/574.html">http://leaver.me/archives/574.html</a>
+　　 <a href="http://leaver.me/archives/548.html">http://leaver.me/archives/548.html</a></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/05/13/lr0%E5%92%8Cslr%E5%88%86%E6%9E%90%E8%A1%A8%E7%9A%84%E6%9E%84%E9%80%A0/" data-toggle="tooltip" data-placement="top" title="LR(0)和SLR分析表的构造">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/05/15/%E4%BB%8Ehash%E5%87%BD%E6%95%B0%E5%88%B0%E7%8E%8B%E5%B0%8F%E4%BA%91%E7%9A%84md5%E7%A0%B4%E8%A7%A3/" data-toggle="tooltip" data-placement="top" title="从hash函数到王小云的MD5破解">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

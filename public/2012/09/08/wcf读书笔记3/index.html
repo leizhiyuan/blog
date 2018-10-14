@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>WCF读书笔记(3)</title>
+  <meta property="og:title" content="WCF读书笔记(3)" />
+  <meta name="twitter:title" content="WCF读书笔记(3)" />
+  <meta name="description" content="WCF的四大行为
+　契约行为（Contract Behavior），操作行为（Operation Behavior），服务行为（Service Behavior），终结点行为（Endpoint Behavior）。
+　如果把WCF看做是消息处理，对象激活与操作执行的管道，那么我们可以通过相应的行为来改变这个管道中某个环节的工作方式。比如加个密啊。什么的。
+单向模式（One-Way）
+　单向模式不需要服务器执行后返回一个回复，多用于不要求服务执行后返回一个回复，并且能够容忍日志记录的失败，只有返回类型为void的才允许设置为true，同理，ref和out参数作为另一种类型的输出。也是不允许的。
+WCF的三种异步操作
+　1.异步信道调用：客户端可以通过代理对象进行异步调用信道。
+　2.One-Way消息交换：单向的消息交换一旦抵达传输层，马上返回，从而实现异步
+　3.异步服务实现：服务端在具体实现服务操作的时候。采用异步调用的方式。
+序列化：
+　XMLSerializer序列化对象时，必须是公有，可读可写的属性，才能序列化。
+WCF的四大契约
+　服务契约（Service Contract），数据契约（Data Contract），消息契约（Message Contract），错误契约（Fault Contract）
+信道：
+　信道是为了便利WCF中客户端和服务的通信来设置的。ServiceHost为每个断点创建一个信道侦听器，侦听器产生通信通道，代理则产生一个信道发生器，发生器产生客户端的信道，两种信道相互兼容并且能有效处理之间的信息。
+　实际上，通信信道是有一个分层的信道栈组成-栈中的每一个信道都在消息处理过程中负责实施一个特定动作，信道栈包含一个传输信道，一个消息编码信道，和任意数量的消息处理信道，绑定则将决定了哪些信道留在信道栈中。当行为穿过信道栈时，消息处理方式将会有所改变。。">
+  <meta property="og:description" content="WCF的四大行为
+　契约行为（Contract Behavior），操作行为（Operation Behavior），服务行为（Service Behavior），终结点行为（Endpoint Behavior）。
+　如果把WCF看做是消息处理，对象激活与操作执行的管道，那么我们可以通过相应的行为来改变这个管道中某个环节的工作方式。比如加个密啊。什么的。
+单向模式（One-Way）
+　单向模式不需要服务器执行后返回一个回复，多用于不要求服务执行后返回一个回复，并且能够容忍日志记录的失败，只有返回类型为void的才允许设置为true，同理，ref和out参数作为另一种类型的输出。也是不允许的。
+WCF的三种异步操作
+　1.异步信道调用：客户端可以通过代理对象进行异步调用信道。
+　2.One-Way消息交换：单向的消息交换一旦抵达传输层，马上返回，从而实现异步
+　3.异步服务实现：服务端在具体实现服务操作的时候。采用异步调用的方式。
+序列化：
+　XMLSerializer序列化对象时，必须是公有，可读可写的属性，才能序列化。
+WCF的四大契约
+　服务契约（Service Contract），数据契约（Data Contract），消息契约（Message Contract），错误契约（Fault Contract）
+信道：
+　信道是为了便利WCF中客户端和服务的通信来设置的。ServiceHost为每个断点创建一个信道侦听器，侦听器产生通信通道，代理则产生一个信道发生器，发生器产生客户端的信道，两种信道相互兼容并且能有效处理之间的信息。
+　实际上，通信信道是有一个分层的信道栈组成-栈中的每一个信道都在消息处理过程中负责实施一个特定动作，信道栈包含一个传输信道，一个消息编码信道，和任意数量的消息处理信道，绑定则将决定了哪些信道留在信道栈中。当行为穿过信道栈时，消息处理方式将会有所改变。。">
+  <meta name="twitter:description" content="WCF的四大行为
+　契约行为（Contract Behavior），操作行为（Operation Behavior），服务行为（Service Behavior），终结点行为（Endpoint Behavior）。
+　如果把WCF看做是消息处理，对象激活与操作执行的管道，那么我们可以通过相应的行为来改变这个管道中某个环节的工作方式。比如加个密啊。什么的。
+单向模式（One-Way）
+　单向模式不需 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/09/08/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/09/08/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>WCF读书笔记(3)</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 8, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (24 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><strong>WCF的四大行为</strong></p>
+
+<p>　　契约行为（Contract Behavior），操作行为（Operation Behavior），服务行为（Service Behavior），终结点行为（Endpoint Behavior）。</p>
+
+<p>　　如果把WCF看做是消息处理，对象激活与操作执行的管道，那么我们可以通过相应的行为来改变这个管道中某个环节的工作方式。比如加个密啊。什么的。</p>
+
+<p><strong>单向模式（One-Way）</strong></p>
+
+<p>　　单向模式不需要服务器执行后返回一个回复，多用于不要求服务执行后返回一个回复，并且能够容忍日志记录的失败，只有返回类型为void的才允许设置为true，同理，ref和out参数作为另一种类型的输出。也是不允许的。</p>
+
+<p><strong>WCF的三种异步操作</strong></p>
+
+<p>　　1.异步信道调用：客户端可以通过代理对象进行异步调用信道。</p>
+
+<p>　　2.One-Way消息交换：单向的消息交换一旦抵达传输层，马上返回，从而实现异步</p>
+
+<p>　　3.异步服务实现：服务端在具体实现服务操作的时候。采用异步调用的方式。</p>
+
+<p><strong>序列化：</strong></p>
+
+<p>　　XMLSerializer序列化对象时，必须是公有，可读可写的属性，才能序列化。</p>
+
+<p><strong>WCF的四大契约</strong></p>
+
+<p>　　服务契约（Service Contract），数据契约（Data Contract），消息契约（Message Contract），错误契约（Fault Contract）</p>
+
+<p><strong>信道：</strong></p>
+
+<p>　　信道是为了便利WCF中客户端和服务的通信来设置的。ServiceHost为每个断点创建一个信道侦听器，侦听器产生通信通道，代理则产生一个信道发生器，发生器产生客户端的信道，两种信道相互兼容并且能有效处理之间的信息。</p>
+
+<p>　　实际上，通信信道是有一个分层的信道栈组成-栈中的每一个信道都在消息处理过程中负责实施一个特定动作，信道栈包含一个传输信道，一个消息编码信道，和任意数量的消息处理信道，绑定则将决定了哪些信道留在信道栈中。当行为穿过信道栈时，消息处理方式将会有所改变。。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/wcf/">WCF</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%8E%9F%E5%88%9B/">原创</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/09/07/wcf%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1%E7%A4%BA%E4%BE%8B/" data-toggle="tooltip" data-placement="top" title="WCF双工通信示例">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/09/09/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/" data-toggle="tooltip" data-placement="top" title="WCF读书笔记(4)">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

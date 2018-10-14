@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>VS扩展故障,错误码:80131515</title>
+  <meta property="og:title" content="VS扩展故障,错误码:80131515" />
+  <meta name="twitter:title" content="VS扩展故障,错误码:80131515" />
+  <meta name="description" content="介绍 如果你给VS安装了Web Search扩展，如果第一次运行就出现了错误代码是80131515的问题。那么本文对你是有用的。。 
+背景 当我远程试图运行Web Search的时候出现了这个错误。我用本文第一种方法解决了。。
+解决方法 这个错误发生在当我远程以dll的方式调用的时候提示我说权限不够。。 为了解决这个问题，我们需要给devenv.exe.config文件添加loadFromRemoteSources 元素 首先使用管理员权限从下面的路径打开devenv.exe.config文件。 具体路径：你的VS安装目录\Common7\IDE\devenv.exe.config 并且添加loadFromRemoteSources 元素，并设为true。如下：
+&lt;configuration&gt; &lt;runtime&gt; &lt;loadFromRemoteSources enabled=&#34;true&#34;/&gt; &lt;/runtime&gt; &lt;/configuration&gt;  有时候windows会把下载的文件标记为“此文件来自一个不同的位置” ，然后对这些文件进行了很多的限制，这部分就是解锁下载的zip或是dll文件
+为了解锁这些文件，只要右键点击这些文件，属性，选择常规，然后点击解锁按钮。如下图：  如果你还有其他的解决方法请告诉我哦。
+许可 本文，包括源代码和文件，在CPOL下授权。
+原文地址：Visual-Studio-Add-in-Troubleshooting-Error-Number 著作权声明：本文由http://leaver.me 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！">
+  <meta property="og:description" content="介绍 如果你给VS安装了Web Search扩展，如果第一次运行就出现了错误代码是80131515的问题。那么本文对你是有用的。。 
+背景 当我远程试图运行Web Search的时候出现了这个错误。我用本文第一种方法解决了。。
+解决方法 这个错误发生在当我远程以dll的方式调用的时候提示我说权限不够。。 为了解决这个问题，我们需要给devenv.exe.config文件添加loadFromRemoteSources 元素 首先使用管理员权限从下面的路径打开devenv.exe.config文件。 具体路径：你的VS安装目录\Common7\IDE\devenv.exe.config 并且添加loadFromRemoteSources 元素，并设为true。如下：
+&lt;configuration&gt; &lt;runtime&gt; &lt;loadFromRemoteSources enabled=&#34;true&#34;/&gt; &lt;/runtime&gt; &lt;/configuration&gt;  有时候windows会把下载的文件标记为“此文件来自一个不同的位置” ，然后对这些文件进行了很多的限制，这部分就是解锁下载的zip或是dll文件
+为了解锁这些文件，只要右键点击这些文件，属性，选择常规，然后点击解锁按钮。如下图：  如果你还有其他的解决方法请告诉我哦。
+许可 本文，包括源代码和文件，在CPOL下授权。
+原文地址：Visual-Studio-Add-in-Troubleshooting-Error-Number 著作权声明：本文由http://leaver.me 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！">
+  <meta name="twitter:description" content="介绍 如果你给VS安装了Web Search扩展，如果第一次运行就出现了错误代码是80131515的问题。那么本文对你是有用的。。 
+背景 当我远程试图运行Web Search的时候出现了这个错误。我用本文第一种方法解决了。。
+解决方法 这个错误发生在当我远程以dll的方式调用的时候提示我说权限不够。。 为了解决这个问题，我们需要给devenv.exe.config文件添 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/09/24/vs%E6%89%A9%E5%B1%95%E6%95%85%E9%9A%9C%E9%94%99%E8%AF%AF%E7%A0%8180131515/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/09/24/vs%E6%89%A9%E5%B1%95%E6%95%85%E9%9A%9C%E9%94%99%E8%AF%AF%E7%A0%8180131515/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>VS扩展故障,错误码:80131515</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 24, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (29 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<h3 id="介绍">介绍</h3>
+
+<p>如果你给VS安装了<a href="http://www.codeproject.com/Articles/446955/Web-Search-Visual-Studio-Add-in-Search-Google-Yaho">Web Search</a>扩展，如果第一次运行就出现了错误代码是80131515的问题。那么本文对你是有用的。。
+<a href="http://leaverimage.b0.upaiyun.com/27488_o.png"><img src="/images/31f5dde58ae04aa01469671b23b71a15d328c51c.png" alt="" title="question" /></a></p>
+
+<h3 id="背景">背景</h3>
+
+<p>当我远程试图运行<a href="http://www.codeproject.com/Articles/446955/Web-Search-Visual-Studio-Add-in-Search-Google-Yaho">Web Search</a>的时候出现了这个错误。我用本文第一种方法解决了。。</p>
+
+<h3 id="解决方法">解决方法</h3>
+
+<p>这个错误发生在当我远程以dll的方式调用的时候提示我说权限不够。。
+为了解决这个问题，我们需要给devenv.exe.config文件添加loadFromRemoteSources 元素
+首先使用管理员权限从下面的路径打开devenv.exe.config文件。
+具体路径：你的VS安装目录\Common7\IDE\devenv.exe.config
+并且添加loadFromRemoteSources 元素，并设为true。如下：</p>
+
+<pre class="lang:xhtml decode:true " >&lt;configuration&gt;
+   &lt;runtime&gt;
+      &lt;loadFromRemoteSources enabled="true"/&gt;
+   &lt;/runtime&gt;
+&lt;/configuration&gt; </pre> 
+
+<p>有时候windows会把下载的文件标记为“此文件来自一个不同的位置” ，然后对这些文件进行了很多的限制，这部分就是解锁下载的zip或是dll文件</p>
+
+<p>为了解锁这些文件，只要右键点击这些文件，属性，选择常规，然后点击解锁按钮。如下图：
+<a href="http://leaverimage.b0.upaiyun.com/27489_o.png"><img src="/images/c889da920a47f1e60ef6d7140d69f20c61374388.png" alt="" title="answer" /></a>
+如果你还有其他的解决方法请告诉我哦。</p>
+
+<h3 id="许可">许可</h3>
+
+<p>本文，包括源代码和文件，在CPOL下授权。</p>
+
+<p>原文地址：<a href="http://www.codeproject.com/Tips/463777/Visual-Studio-Add-in-Troubleshooting-Error-Number">Visual-Studio-Add-in-Troubleshooting-Error-Number</a>
+著作权声明：本文由<a href="http://leaver.me">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%AD%A6%E6%B1%89/">武汉</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/09/24/wpf%E6%AF%9B%E7%8E%BB%E7%92%83%E6%95%88%E6%9E%9Cdemo%E5%92%8C%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/" data-toggle="tooltip" data-placement="top" title="WPF毛玻璃效果Demo和一个问题">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/09/24/c#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B9%E5%88%B0%E5%9B%9E%E6%94%B6%E7%AB%99/" data-toggle="tooltip" data-placement="top" title="C#删除文件和文件夹到回收站">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

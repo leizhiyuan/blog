@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>System.Web中不存在类型或命名空间名称UI解决</title>
+  <meta property="og:title" content="System.Web中不存在类型或命名空间名称UI解决" />
+  <meta name="twitter:title" content="System.Web中不存在类型或命名空间名称UI解决" />
+  <meta name="description" content="今天打算用C#写个模拟登录的程序。从类库里找到一个HTMLHelper的类。用来处理html的请求接收等处理。为了让类能够先运行起来，先把该类拖入解决方案，引用就不用添加了，因为该类没写命名空间，可以直接用，我测试其中一个最简单的函数 private void btnGet_Click(object sender, EventArgs e) { txtContent.Text=HTMLHelper.Get_Http(&ldquo;http://leaver.me&quot;); } 获取我网站的首页源代码。到TextBox控件 编译，运行。出现如题错误。
+ 命名空间“System.Web”中不存在类型或命名空间名称“UI”。是否缺少程序集引用? E:\project\C#\GTest\GTest\HTMLHelper.cs 直接对着错误点右键，复制。然后删掉后面的路径。使关键字包括前面几个就行了，到Google中搜索。大部分人给的说明都是 原因是缺少System.web的引用，只要右键单击项目，添加引用就行了！ 那咱就添加呗 对着工程点击引用-&gt;添加引用
+ 悲剧发生了。。 
+根本就没有该dll文件。。泪奔了。。于是Google之。。发现没有一个讲清楚的。都是夸夸其谈。。没有任何实质性方案。于是换英语搜。 关键字：Cannot add System.Web.dll reference  第一个是stackoverflow，大名鼎鼎的栈溢出啊。。进去看看。 &gt; For people that cant find &ldquo;System.Web&rdquo; at .Net References, this might be the answer: &gt; &gt; &ldquo;you need to right-click the project -&gt; properties -&gt; then change the &ldquo;Target framework&rdquo; which will probably be &ldquo;.NET Framework 4 Client Profile&rdquo; to just &ldquo;.">
+  <meta property="og:description" content="今天打算用C#写个模拟登录的程序。从类库里找到一个HTMLHelper的类。用来处理html的请求接收等处理。为了让类能够先运行起来，先把该类拖入解决方案，引用就不用添加了，因为该类没写命名空间，可以直接用，我测试其中一个最简单的函数 private void btnGet_Click(object sender, EventArgs e) { txtContent.Text=HTMLHelper.Get_Http(&ldquo;http://leaver.me&quot;); } 获取我网站的首页源代码。到TextBox控件 编译，运行。出现如题错误。
+ 命名空间“System.Web”中不存在类型或命名空间名称“UI”。是否缺少程序集引用? E:\project\C#\GTest\GTest\HTMLHelper.cs 直接对着错误点右键，复制。然后删掉后面的路径。使关键字包括前面几个就行了，到Google中搜索。大部分人给的说明都是 原因是缺少System.web的引用，只要右键单击项目，添加引用就行了！ 那咱就添加呗 对着工程点击引用-&gt;添加引用
+ 悲剧发生了。。 
+根本就没有该dll文件。。泪奔了。。于是Google之。。发现没有一个讲清楚的。都是夸夸其谈。。没有任何实质性方案。于是换英语搜。 关键字：Cannot add System.Web.dll reference  第一个是stackoverflow，大名鼎鼎的栈溢出啊。。进去看看。 &gt; For people that cant find &ldquo;System.Web&rdquo; at .Net References, this might be the answer: &gt; &gt; &ldquo;you need to right-click the project -&gt; properties -&gt; then change the &ldquo;Target framework&rdquo; which will probably be &ldquo;.NET Framework 4 Client Profile&rdquo; to just &ldquo;.">
+  <meta name="twitter:description" content="今天打算用C#写个模拟登录的程序。从类库里找到一个HTMLHelper的类。用来处理html的请求接收等处理。为了让类能够先运行起来，先把该类拖入解决方案，引用就不用添加了，因为该类没写命名空间，可以直接用，我测试其中一个最简单的函数 private void btnGet_Click(object sender, EventArgs e) { …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/04/13/system.web%E4%B8%AD%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%B1%BB%E5%9E%8B%E6%88%96%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%90%8D%E7%A7%B0ui%E8%A7%A3%E5%86%B3/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/04/13/system.web%E4%B8%AD%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%B1%BB%E5%9E%8B%E6%88%96%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%90%8D%E7%A7%B0ui%E8%A7%A3%E5%86%B3/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>System.Web中不存在类型或命名空间名称UI解决</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on April 13, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (122 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>今天打算用C#写个模拟登录的程序。从类库里找到一个HTMLHelper的类。用来处理html的请求接收等处理。为了让类能够先运行起来，先把该类拖入解决方案，引用就不用添加了，因为该类没写命名空间，可以直接用，我测试其中一个最简单的函数
+<pre lang="C#"> private void btnGet_Click(object sender, EventArgs e)
+        {
+            txtContent.Text=HTMLHelper.Get_Http(&ldquo;<a href="http://leaver.me&quot;">http://leaver.me&quot;</a>);
+        }</pre>
+获取我网站的首页源代码。到TextBox控件
+编译，运行。出现如题错误。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/20479_o.png"><img src="/images/54e8c1e1dd772294c6666aa9a404276089188b20.png" alt="" />
+</a>
+命名空间“System.Web”中不存在类型或命名空间名称“UI”。是否缺少程序集引用? E:\project\C#\GTest\GTest\HTMLHelper.cs
+直接对着错误点右键，复制。然后删掉后面的路径。使关键字包括前面几个就行了，到Google中搜索。大部分人给的说明都是
+原因是缺少System.web的引用，只要右键单击项目，添加引用就行了！
+那咱就添加呗 对着工程点击引用-&gt;添加引用</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/20480_o.png"><img src="/images/a0a47e17fbab5a4472ba94d77e51f8d372c64121.png" alt="" /></a>
+悲剧发生了。。
+<a href="http://leaverimage.b0.upaiyun.com/20481_o.png"><img src="/images/64261ab1e4ed043cf5aa5c973c324795405e4201.png" alt="" /></a></p>
+
+<p>根本就没有该dll文件。。泪奔了。。于是Google之。。发现没有一个讲清楚的。都是夸夸其谈。。没有任何实质性方案。于是换英语搜。
+关键字：Cannot add System.Web.dll reference
+<a href="http://leaverimage.b0.upaiyun.com/20482_o.png"><img src="/images/d2f3cc95979d5c583471580599b36d269791eae4.png" alt="" />
+</a>
+第一个是stackoverflow，大名鼎鼎的栈溢出啊。。进去看看。
+&gt; For people that cant find &ldquo;System.Web&rdquo; at .Net References, this might be the answer:
+&gt;
+&gt; &ldquo;you need to right-click the project -&gt; properties -&gt; then change the &ldquo;Target framework&rdquo; which will probably be &ldquo;.NET Framework 4 Client Profile&rdquo; to just &ldquo;.NET Framework 4&rdquo;.
+&gt;
+&gt; The answer was given by Tinister (thanks) as a reply to a previuos post. But I thought it was a little bit hidden at his original post. So i put it here to make it easer to be seen. Hope it helps.
+大牛的我就不翻译了，很简单。项目-&gt;项目属性-&gt;目标框架 改成.net framework 4
+<a href="http://leaverimage.b0.upaiyun.com/20483_o.png"><img src="/images/457f4431088a7cb6b474f3d36cbc9ec738499ab1.png" alt="" /></a></p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/20484_o.png"><img src="/images/a7ba54a6e73b0b536554c04415d6a72d4cd89491.png" alt="" /></a></p>
+
+<p>这个步骤完成后，重复前面的添加引用的步骤就会发现已经有了System.Web引用了
+<a href="http://leaverimage.b0.upaiyun.com/20487_o.png"><img src="/images/9379ef1ef5dba7bad0d039ce91ea9174d1610f65.png" alt="" /></a>
+编译运行。一切ok
+<a href="http://leaverimage.b0.upaiyun.com/20485_o.png"><img src="/images/8e5ae5c835f250b1bceca5e8d3a8bda384df2bab.png" alt="" /></a></p>
+
+<p>如果你遇到了这样的问题也可以试试吧。</p>
+
+<p>转自请注明：<a href="http://leaver.me/archives/177.html">http://leaver.me/archives/177.html</a></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/04/12/%E5%A4%96%E9%83%A8%E5%9B%BE%E7%89%87%E4%BD%BF%E7%94%A8%E7%81%AF%E7%AE%B1%E6%95%88%E6%9E%9C/" data-toggle="tooltip" data-placement="top" title="外部图片使用灯箱效果">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/04/15/lamp%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%AE%80%E5%8D%95%E6%90%AD%E5%BB%BA/" data-toggle="tooltip" data-placement="top" title="lamp开发环境简单搭建">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

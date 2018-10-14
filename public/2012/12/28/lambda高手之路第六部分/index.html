@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Lambda高手之路第六部分</title>
+  <meta property="og:title" content="Lambda高手之路第六部分" />
+  <meta name="twitter:title" content="Lambda高手之路第六部分" />
+  <meta name="description" content="今天武汉地铁通车了，今天介绍一些新的Lambda设计模式，应该是最后一部分了。
+本节介绍一些核心有lambda表达式的模式，我不认为他们完全是新的模式，但是至少我还没有看到有人给他们起过名字，我于是决定尝试取个可能好，也可能不好的名字，这样我起码能很容易的给别人描述，有话在先，许多模式相当强大，但是可能会引入潜在的bug，所以小心为上
+复杂的多态
+Lambda表达式也可以被用来创建一些多态（override），而不用使用abstract或者virtual关键字（当然这并不意味着就不能用），考虑如下的代码片段
+class MyBaseClass { public Action SomeAction { get; protected set; } public MyBaseClass() { SomeAction = () =&gt; { //Do something! }; } } 看起来没什么新的知识，我们创建一个类，里面有一个属性（一个lambda表达式），又一次JavaScript化了，有趣的地方是：属性暴露的这个部分不只是本类可以改变，子类也可以改变，看代码
+class MyInheritedClass : MyBaseClass { public MyInheritedClass { SomeAction = () =&gt; { //Do something different! }; } }  看到了。我们可以改变这个方法。或者进行更精确的操作，这种方法的缺点是我们不能直接访问父类的实现，也就缺乏了基类的能力，因为，这个父类的属性会有同样的值，如果程序员真的需要这样写，我建议你遵循 pattern
+class MyBaseClass { public Action SomeAction { get; private set; } Stack&lt;Action&gt; previousActions; protected void AddSomeAction(Action newMethod) { previousActions.Push(SomeAction); SomeAction = newMethod; } protected void RemoveSomeAction() { if(previousActions.">
+  <meta property="og:description" content="今天武汉地铁通车了，今天介绍一些新的Lambda设计模式，应该是最后一部分了。
+本节介绍一些核心有lambda表达式的模式，我不认为他们完全是新的模式，但是至少我还没有看到有人给他们起过名字，我于是决定尝试取个可能好，也可能不好的名字，这样我起码能很容易的给别人描述，有话在先，许多模式相当强大，但是可能会引入潜在的bug，所以小心为上
+复杂的多态
+Lambda表达式也可以被用来创建一些多态（override），而不用使用abstract或者virtual关键字（当然这并不意味着就不能用），考虑如下的代码片段
+class MyBaseClass { public Action SomeAction { get; protected set; } public MyBaseClass() { SomeAction = () =&gt; { //Do something! }; } } 看起来没什么新的知识，我们创建一个类，里面有一个属性（一个lambda表达式），又一次JavaScript化了，有趣的地方是：属性暴露的这个部分不只是本类可以改变，子类也可以改变，看代码
+class MyInheritedClass : MyBaseClass { public MyInheritedClass { SomeAction = () =&gt; { //Do something different! }; } }  看到了。我们可以改变这个方法。或者进行更精确的操作，这种方法的缺点是我们不能直接访问父类的实现，也就缺乏了基类的能力，因为，这个父类的属性会有同样的值，如果程序员真的需要这样写，我建议你遵循 pattern
+class MyBaseClass { public Action SomeAction { get; private set; } Stack&lt;Action&gt; previousActions; protected void AddSomeAction(Action newMethod) { previousActions.Push(SomeAction); SomeAction = newMethod; } protected void RemoveSomeAction() { if(previousActions.">
+  <meta name="twitter:description" content="今天武汉地铁通车了，今天介绍一些新的Lambda设计模式，应该是最后一部分了。
+本节介绍一些核心有lambda表达式的模式，我不认为他们完全是新的模式，但是至少我还没有看到有人给他们起过名字，我于是决定尝试取个可能好，也可能不好的名字，这样我起码能很容易的给别人描述，有话在先，许多模式相当强大，但是可能会引入潜在的bug，所以小心为上
+复杂的多态
+Lambda表达式也可以被用来创建一些多 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/12/28/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%85%AD%E9%83%A8%E5%88%86/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/12/28/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%85%AD%E9%83%A8%E5%88%86/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Lambda高手之路第六部分</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 28, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (464 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>今天武汉地铁通车了，今天介绍一些新的Lambda设计模式，应该是最后一部分了。</p>
+
+<p>本节介绍一些核心有lambda表达式的模式，我不认为他们完全是新的模式，但是至少我还没有看到有人给他们起过名字，我于是决定尝试取个可能好，也可能不好的名字，这样我起码能很容易的给别人描述，有话在先，许多模式相当强大，但是可能会引入潜在的bug，所以小心为上</p>
+
+<p><strong>复杂的多态</strong></p>
+
+<p>Lambda表达式也可以被用来创建一些多态（override），而不用使用abstract或者virtual关键字（当然这并不意味着就不能用），考虑如下的代码片段</p>
+
+<pre class="lang:default decode:true " >class MyBaseClass
+{
+    public Action SomeAction { get; protected set; }
+
+    public MyBaseClass()
+    {
+        SomeAction = () =&gt; {
+            //Do something!
+        };
+    }
+}</pre> 
+
+<p>看起来没什么新的知识，我们创建一个类，里面有一个属性（一个lambda表达式），又一次JavaScript化了，有趣的地方是：属性暴露的这个部分不只是本类可以改变，子类也可以改变，看代码</p>
+
+<pre class="lang:default decode:true " >class MyInheritedClass : MyBaseClass
+{
+    public MyInheritedClass
+    {
+        SomeAction = () =&gt; {
+            //Do something different!
+        };
+    }
+}
+</pre> 
+
+<p>看到了。我们可以改变这个方法。或者进行更精确的操作，这种方法的缺点是我们不能直接访问父类的实现，也就缺乏了基类的能力，因为，这个父类的属性会有同样的值，如果程序员真的需要这样写，我建议你遵循 <em>pattern</em></p>
+
+<pre class="lang:default decode:true " >class MyBaseClass
+{
+    public Action SomeAction { get; private set; }
+
+    Stack&lt;Action&gt; previousActions;
+
+    protected void AddSomeAction(Action newMethod)
+    {
+        previousActions.Push(SomeAction);
+        SomeAction = newMethod;
+    }
+
+    protected void RemoveSomeAction()
+    {
+        if(previousActions.Count == 0)
+            return;
+
+        SomeAction = previousActions.Pop();
+    }
+
+    public MyBaseClass()
+    {
+        previousActions = new Stack&lt;Action&gt;();
+
+        SomeAction = () =&gt; {
+            //Do something!
+        };
+    }
+}
+</pre> 
+
+<p>这样的话，子类就不得不拥有了 AddSomeAction()  方法，而这个方法是吧当前的方法压入堆栈，那样我们可以恢复之前的状态。</p>
+
+<p>这种模式我起了一个名字叫做Lambda属性多态模式（LP3），它简单的描述了可以在属性里捕获任何方法。之后可以被子类所设置，栈是这个模式的一个附加品，没有改变我们使用属性来完成的模式目标</p>
+
+<p>为什么要用这种模式？有几个理由。地一个，因为我们可以用。但是等一等。如果你使用当中不同的属性，这个模式会变得相当棘手，突然，多态变成了一个完全的新方法。但是这也许是一个不同的模式，现在我想说这个模式完成了以前人们认为不可能的事情</p>
+
+<p>举个例子，你想要（不建议，但是也许对该问题是最优雅的解决方法了。）重写一个静态方法，好吧。静态不可能被继承，原因很简单，师承是对实例对象来说的。而静态方法不属于任何一个实例，对于所有的实例都是一样的。这会引发一个警告，下面的例子也许并不如你所想的结果，因此，除非你非常清楚。否则不要乱用。
+看代码</p>
+
+<pre class="lang:default decode:true " >void Main()
+{
+    var mother = HotDaughter.Activator().Message;
+    //mother = "I am the mother"
+    var create = new HotDaughter();
+    var daughter = HotDaughter.Activator().Message;
+    //daughter = "I am the daughter"
+}
+
+class CoolMother
+{
+    public static Func&lt;CoolMother&gt; Activator { get; protected set; }
+
+    //此处是防止空引用
+    static CoolMother()
+    {
+        Activator = () =&gt; new CoolMother();
+    }
+
+    public CoolMother()
+    {
+        //Message of every mother
+        Message = "I am the mother";
+    }
+
+    public string Message { get; protected set; }
+}
+
+class HotDaughter : CoolMother
+{
+    public HotDaughter()
+    {
+        //一进入构造函数我们设置Activator ...
+        Activator = () =&gt; new HotDaughter();
+        //Message of every daughter
+        Message = "I am the daughter";
+    }
+}
+</pre> 
+
+<p>这很简单，希望没有对你产生误导，这种模式有时候会让事情变得异常复杂，这也是为什么我总是避免使用它。不过他很有用。（可以通过该方法构造所有的静态属性和方法，并且可以使你总是获得你感兴趣的那个）只要你不感到头疼，这是解决静态多态性的一个好方法。是的。静态多态性是可能的。</p>
+
+<p><strong>简单请求一个方法</strong></p>
+
+<p>之前我已经介绍过这个方法了。但是我没有说名字，这就是方法字典模式，这个模式的一个基础就是一个哈希表或是一个字典，包含一个keys（通常是字符串，但取决于具体的情况），这些keys对应一些特定的方法，这个模式也指定了一个特殊的方法构造这些字典，否则，一个简单的switch-case就搞定了，看代码</p>
+
+<pre class="lang:default decode:true " >public Action GetFinalizer(string input)
+{
+    switch
+    {
+        case "random":
+            return () =&gt; { /* ... */ };
+        case "dynamic":
+            return () =&gt; { /* ... */ };
+        default:
+            return () =&gt; { /* ... */ };
+    }
+}
+</pre> 
+
+<p>这哪里需要字典？好像不需要。事实上我们写的更好一些。</p>
+
+<pre class="lang:default decode:true " >Dictionary&lt;string, Action&gt; finalizers;
+
+public void BuildFinalizers()
+{
+    finalizers = new Dictionary&lt;string, Action&gt;();
+    finalizers.Add("random", () =&gt; { /* ... */ });
+    finalizers.Add("dynamic", () =&gt; { /* ... */ });
+} 
+
+public Action GetFinalizer(string input)
+{
+    if(finalizers.ContainsKey(input))
+        return finalizers[input];
+
+    return () =&gt; { /* ... */ };
+}
+</pre> 
+
+<p>等等，这个模式现在没有优点了。。事实上，这个模式并不特别好写，她还需要多写写代码，但是我们可以使用反射来自动化这个字典的构造，这样我们就会和switch-case一样搞笑了。但是我们的代码更加健壮，并且维护更简单，如果你写switch-case。。你就需要手工添加很多分支语句了。。</p>
+
+<p>我们看一种可能的实现方法。我通常更倾向于添加一些类型转换，这样就可以方便的使用keys对应的值了。当然，你也可以通过其他方法实现，比如使用一致的方法签名，这里我还是用转换。</p>
+
+<pre class="lang:default decode:true " >static Dictionary&lt;string, Action&gt; finalizers;
+
+//此方法应有静态方法调用
+public static void BuildFinalizers()
+{
+    finalizers = new Dictionary&lt;string, Action&gt;();
+
+    //获得当前程序集的所有类型
+    var types = Assembly.GetExecutingAssembly().GetTypes();
+
+    foreach(var type in types)
+    {
+        //检查是否是一个确定类型
+        if(type.IsSubclassOf(typeof(MyMotherClass)))
+        {
+            //获取构造函数
+            var m = type.GetConstructor(Type.EmptyTypes);
+
+            //如果默认构造函数就调用
+            if(m != null)
+            {
+                var instance = m.Invoke(null) as MyMotherClass;
+                //使用转换得到名称
+                var name = type.Name.Remove("Mother");
+                //名称可能不同，假定是MyMethod
+                var method = instance.MyMethod;
+
+                finalizers.Add(name, method);
+            }
+        }
+    }
+} 
+
+public Action GetFinalizer(string input)
+{
+    if(finalizers.ContainsKey(input))
+        return finalizers[input];
+
+    return () =&gt; { /* ... */ };
+}</pre> 
+
+<p>现在看起来好多了，事实上。这个模式节省了我很多时间。这个模式最好的就是：它使你可以写出优雅的插件。通过不同的库扩充功能。为什么。你可以使用该方法来扫描未知的库，这些库符合一些确定的模式。然后包含他们进入你的代码，这样。没有任何问题。其他库的方法就会继承成你的代码里。你所需要做的仅仅如下：</p>
+
+<pre class="lang:default decode:true " >//The start is the same
+
+internal static void BuildInitialFinalizers()
+{
+    finalizers = new Dictionary&lt;string, Action&gt;();
+    LoadPlugin(Assembly.GetExecutingAssembly());
+}
+
+public static void LoadPlugin(Assembly assembly)
+{
+    //This line has changed
+    var types = assembly.GetTypes();
+
+    //The rest is identical! Perfectly refactored and obtained a new useful method
+    foreach(var type in types)
+    {
+        if(type.IsSubclassOf(typeof(MyMotherClass)))
+        {
+            var m = type.GetConstructor(Type.EmptyTypes);
+
+            if(m != null)
+            {
+                var instance = m.Invoke(null) as MyMotherClass;
+                var name = type.Name.Remove("Mother");
+                var method = instance.MyMethod;
+                finalizers.Add(name, method);
+            }
+        }
+    }
+} 
+
+//The call is the same</pre> 
+
+<p>现在，我们所需要做的就是确定加载的插件，并且添加一些方法来处理这些事事情。最后。可以通过调用LoadPlugin()方法从给定的程序集实例上加载方法。这只是这个模式的一个应用。而我其实还可以做很多。。。比如我们也在JavaScript里面使用。那里可是没有内置的反射的。。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/12/27/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86/" data-toggle="tooltip" data-placement="top" title="Lambda高手之路第五部分">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2013/01/04/%E8%BF%9C%E7%A8%8B%E7%AE%A1%E7%90%86democ/" data-toggle="tooltip" data-placement="top" title="远程管理Demo(C#)">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>技术 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E6%8A%80%E6%9C%AF/</link>
+    <description>Recent content in 技术 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 31 May 2016 20:00:45 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>motan源码阅读-客户端服务引用</title>
+      <link>https://leizhiyuan.github.io/2016/05/31/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%95%E7%94%A8/</link>
+      <pubDate>Tue, 31 May 2016 20:00:45 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/05/31/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%95%E7%94%A8/</guid>
+      <description>一旦服务器启动,服务开始提供,并且在配置中心注册了(配置中心可以是本地的地址,也可以是zk,也可以是其他的实现),那么客户端就要开始调用了
+点击看大图
+服务引用 RefererConfig.getRef()
+先是获取集群支持(先忽略,主要是配置中心相关的)
+configHandler.refer(interfaceClass, clusters, proxy) 开始获取接口代理
+1.一旦知道接口名,Class.forName加载接口类,就开始通过proxy工厂来为服务端接口创建代理了
+2.jdk的Proxy类,直接来创建代理.同时代理要传入RefererInvocationHandler 这个类可以看错是真正的stub,封装了rpc调用请求.当在客户端获取到服务接口的bean的时候,实际上调用过程被这个类拦截,进行封装发送rpc
+1.当接口被调用的时候,这个拦截器险根据拦截到的请求构造一个rpc请求
+2.这里就会存在一个策略.该调用哪个,以FailoverHaStrategy为例
+1.选择一个服务提供方
+1.如果是jvm服务,那么直接从本地的服务map中取出一个调用就行
+2.如果是真正的远程服务,这时候就进入nettyClient部分了
+把请求向netty的Channel中写就行了.服务端会从Channel中取进行处理,然后放回来.这样客户端就拿到结果了</description>
+    </item>
+    
+    <item>
+      <title>motan源码阅读-服务的发布</title>
+      <link>https://leizhiyuan.github.io/2016/05/30/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8F%91%E5%B8%83/</link>
+      <pubDate>Mon, 30 May 2016 20:42:06 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/05/30/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8F%91%E5%B8%83/</guid>
+      <description>这一篇继续从这个demo开始,分析一下这个服务是怎么发布出去的.关键的代码从motanDemoService.export();开始.
+一图胜千言.
+点击看大图
+服务发布ServiceConfig.export()
+1.加载有的配置中心url列表/新建
+2.doExport(ProtocolConfig,port,registryURLs) //配置中心地址列表
+2.1导出的时候,会先判断是否存在.其实就是根据协议名,ip,接口,参数来生成一个唯一key.
+2.2ConfigHandler.export(Class interfaceClass, T ref, List registryUrls) //接口.实现.配置中心url列表
+2.2.1.根据协议名创建协议,这里ProtocolFilterDecorator
+2.2.2.根据接口,实现类,serviceUrl,构造一个Provider,用来提供服务
+2.2.3.使用协议进行导出Provider, export(Provider provider, URL url)
+2.2.3.1创建一个Exporter
+2.2.3.1.1.创建的时候会将服务提供方Provider和url有个映射关系,这样当一个url请求过来的时候,就知道改调用谁了.ProviderMessageRouter,讲一个请求路由注册到server上,同时包装了一个心跳包
+2.2.3.2进行导出 导出就是一个服务器打开的过程/server.open();
+2.2.3.2.1进入nettyServer初始化,主要就是添加handler,编码解码.和一个rpc处理的 相当于一个请求过来的时候,先进行解码,然后调用业务处理handler进行处理,处理完成后,进行编码,然后返回给客户端
+服务器启动后,相当于这个服务就发布了
+2.2.4.注册register(registryUrls, serviceUrl) //这一步就是将serviceUrl,向对应的jvm/rpc服务中心注册url,本地注册就是LocalRegistryService类里一个map..zk的.就是向zk写node.等等</description>
+    </item>
+    
+    <item>
+      <title>motan源码阅读-入门和运行demo</title>
+      <link>https://leizhiyuan.github.io/2016/05/29/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%85%A5%E9%97%A8%E5%92%8C%E8%BF%90%E8%A1%8Cdemo/</link>
+      <pubDate>Sun, 29 May 2016 15:13:48 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/05/29/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%85%A5%E9%97%A8%E5%92%8C%E8%BF%90%E8%A1%8Cdemo/</guid>
+      <description>工作中一直在使用rpc,但是只是对简单的原理比较熟悉.最近看到有motan的一个介绍,代码拉下来看了看,除了测试用例比较少之外.其他还是不错的,和阿里的rpc框架比起来,还是弱了一些,好处就是方便用来学习. motan 是weibo的一个rpc框架,据说已经在线上使用了.
+在学习rpc框架之前,建议看一个hello world级别的文章RPC框架几行代码就够了,写的非常好,看完基本就知道rpc的核心了.
+Remote Procedure Calls中最关键的那个图,就能说明了.
+本地client调用本地client stub,stub对消息进行封装,通过socket发送,服务端的server stub接收到,然后解包,将里面传递的方法名,方法参数.等等信息,识别出来,调用服务端对应的服务,然后得到结果后,又通过socket返回,本地client又进行解包.就行了.
+这里面会涉及到,封装,封装就是吧对象序列化,这样才能在网络中传递.
+而生产环境的rpc框架需要考虑的有:
+stub怎么生成,序列化怎么最高效,如何统一不同机器之前的调用,(大小端的机器等),如何识别该调用哪个机器,负载均衡.socket通信.等等.
+先跑个demo熟悉一下.
+下载motan源码,导入ide,然后先启动服务端,MotanApiExportDemo,这个类,然后控制台会打出服务已经启动.然后运行MotanApiClientDemo,会发现一个控制台打出motan,服务端打出hello motan.就说明跑起来了.
+如果控制台日志没有.修改对应resources下面的log4j.properties文件.首行添加log4j.rootLogger=debug,stdout ,会设置默认日志级别为debug,并且在控制台输出. 或者直接fork我这个
+后面会逐步分析,希望坚持下来.</description>
+    </item>
+    
+    <item>
+      <title>eclipse插件开发-tycho使用</title>
+      <link>https://leizhiyuan.github.io/2016/05/21/eclipse%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91-tycho%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sat, 21 May 2016 18:55:27 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/05/21/eclipse%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91-tycho%E4%BD%BF%E7%94%A8/</guid>
+      <description>不说废话，直接上。本文主要包括tycho的使用，版本号的自动更新。
+eclipse插件开发中，依赖的管理是个问题。如果采用常规的搞个lib目录，然后加到MF文件中。一旦依赖越来越多。或者要更换版本号就变得非常麻烦。所以要用到tycho
+首先说明一下目录结构。一个parent的maven工程，一个plugin工程，。两个features。一个是deps的。一个是plugin的，这个依赖deps是独立的mvn项目。可以先不用管。一个deps依赖工程（这个依赖工程独立）。 在主pom下。
+步骤如下。
+关于依赖部分
+ 新建一个普通的mvn工程,比如deps。打包类型写成&amp;lt;packaging&amp;gt;bundle&amp;lt;/packaging&amp;gt;,同时在pom.xml中添加build部分  &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.apache.felix&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;maven-bundle-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.0.1&amp;lt;/version&amp;gt; &amp;lt;extensions&amp;gt;true&amp;lt;/extensions&amp;gt; &amp;lt;configuration&amp;gt; &amp;lt;niceManifest&amp;gt;true&amp;lt;/niceManifest&amp;gt; &amp;lt;manifestLocation&amp;gt;META-INF&amp;lt;/manifestLocation&amp;gt; &amp;lt;instructions&amp;gt; &amp;lt;Bundle-SymbolicName&amp;gt;${project.artifactId}&amp;lt;/Bundle-SymbolicName&amp;gt; &amp;lt;Embed-Dependency&amp;gt;*&amp;lt;/Embed-Dependency&amp;gt; &amp;lt;Embed-Transitive&amp;gt;true&amp;lt;/Embed-Transitive&amp;gt; &amp;lt;Embed-Directory&amp;gt;lib&amp;lt;/Embed-Directory&amp;gt; &amp;lt;Bundle-ClassPath&amp;gt;{maven-dependencies}&amp;lt;/Bundle-ClassPath&amp;gt; &amp;lt;_exportcontents&amp;gt;*&amp;lt;/_exportcontents&amp;gt; &amp;lt;_failok&amp;gt;true&amp;lt;/_failok&amp;gt; &amp;lt;_nouses&amp;gt;true&amp;lt;/_nouses&amp;gt; &amp;lt;Import-Package&amp;gt;&amp;lt;/Import-Package&amp;gt; &amp;lt;/instructions&amp;gt; &amp;lt;/configuration&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;/plugins&amp;gt; &amp;lt;/build&amp;gt; 然后正常添加一些依赖到这个工程中。然后执行一下mvn clean install ，你就会发现本地mvn仓库生成了一个jar包，这个jar里直接打包了所有的jar
+关于插件部分
+ 新建一个类型为pom的parent工程。用来包含下面的子工程，通过  &amp;lt;modules&amp;gt; &amp;lt;module&amp;gt;xxx.plugin.1&amp;lt;/module&amp;gt; &amp;lt;module&amp;gt;xxx.plugin.2&amp;lt;/module&amp;gt; &amp;lt;/modules&amp;gt;  来管理。同时 添加如下的插件  &amp;lt;properties&amp;gt; &amp;lt;tycho.version&amp;gt;0.24.0&amp;lt;/tycho.version&amp;gt; &amp;lt;/properties&amp;gt; &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;maven-source-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;executions&amp;gt; &amp;lt;execution&amp;gt; &amp;lt;id&amp;gt;attach-sources&amp;lt;/id&amp;gt; &amp;lt;phase&amp;gt;none&amp;lt;/phase&amp;gt; &amp;lt;/execution&amp;gt; &amp;lt;/executions&amp;gt; &amp;lt;version&amp;gt;2.4&amp;lt;/version&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.eclipse.tycho&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;tycho-maven-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${tycho.version}&amp;lt;/version&amp;gt; &amp;lt;extensions&amp;gt;true&amp;lt;/extensions&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.</description>
+    </item>
+    
+  </channel>
+</rss>

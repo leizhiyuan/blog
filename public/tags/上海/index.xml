@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>上海 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E4%B8%8A%E6%B5%B7/</link>
+    <description>Recent content in 上海 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 11 Mar 2014 08:28:38 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E4%B8%8A%E6%B5%B7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[藏]深入理解Java内存模型</title>
+      <link>https://leizhiyuan.github.io/2014/03/11/%E8%97%8F%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Tue, 11 Mar 2014 08:28:38 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/03/11/%E8%97%8F%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</guid>
+      <description> 深入理解java内存模型（一）——基础 深入理解java内存模型（二）——重排序 深入理解java内存模型（三）——顺序一致性 深入理解java内存模型（四）——volatile 深入理解java内存模型（五）——锁 深入理解java内存模型（六）——final 深入理解java内存模型（七）——总结  </description>
+    </item>
+    
+    <item>
+      <title>linux的CPU负载均值</title>
+      <link>https://leizhiyuan.github.io/2014/03/08/linux%E7%9A%84cpu%E8%B4%9F%E8%BD%BD%E5%9D%87%E5%80%BC/</link>
+      <pubDate>Sat, 08 Mar 2014 17:19:30 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/03/08/linux%E7%9A%84cpu%E8%B4%9F%E8%BD%BD%E5%9D%87%E5%80%BC/</guid>
+      <description>当运行在Linux上的程序有问题之后，我们通常要看一下当前CPU和内存的使用情况来分析一下问题
+对于CPU的使用率，通常用Load Average，也就是负载均值来度量
+负载均值是啥？
+负载是啥，负载就是对CPU使用率的一个计量，均值就是某一段时间内的一个平均值。
+怎么看啊？
+直接输入w命令 # w 20:02:51 up 23 days, 8:10, 2 users, load average: 1.20, 1.28, 1.29 第一位1.20：表示最近1分钟平均负载 第二位1.28：表示最近5分钟平均负载 第三位1.29：表示最近15分钟平均负载
+或者uptime命令 $ uptime 09:50:21 up 200 days, 15:07, 1 user, load average: 0.27, 0.33, 0.37 我们一般认为0.00表示无负载，可以理解为CPU空闲，1.00表示CPU满负载，但是注意，1.00是对于单cpu来说的，也就是说，如果是双核，那么这个满负载显示的值应该是2.00，以此类推。
+怎么看我是几核啊 grep &amp;lsquo;model name&amp;rsquo; /proc/cpuinfo | wc -l 通过统计cpuinfo的model name信息来算的
+这三个值哪个重要？
+一分钟内突然负载很大没关系，当然如果你要排查也没人拦着，如果15分钟的负载均值超过cpu的数目，就要关注了。
+那什么就是理想负载呢？
+以单个cpu为例，1.00表示cpu满负载运行，没有一点点浪费，实际上，有些管理员认为0.7也许是理想的状态。如果你的经常超过0.7，那么最好查一查。</description>
+    </item>
+    
+    <item>
+      <title>eclipse管理多个workplace</title>
+      <link>https://leizhiyuan.github.io/2014/03/08/eclipse%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAworkplace/</link>
+      <pubDate>Sat, 08 Mar 2014 16:34:34 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/03/08/eclipse%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAworkplace/</guid>
+      <description>由于eclipse用的比较多，管理多个workplace很麻烦，经常需要打开以后再切换，简单介绍个方法。
+一
+1.进入Eclipse的安装目录，鼠标点击eclipse.exe，右键菜单&amp;ndash;&amp;gt;发送到&amp;ndash;&amp;gt;桌面快捷方式
+2.到桌面上找到“eclipse.exe - 快捷方式”，鼠标右键点击查看属性，弹出菜单中选择“快捷方式”标签，然后在“目标”中增加内容：-data e:\workspace，保存后即可
+3.双击这个快捷方式，eclipse就会使用e:\workspace作为工作空间启动。
+这样你多复制几个，就好了。
+二
+1.找个目录，新建一个文件夹，名称为workspace_aaa
+2.然后在当前目录下新建一个txt文件
+3.输入内容为：
+start E:\eclipse\eclipse.exe -data workspace1 说明：前面是eclipse的路径，中间加上&amp;rdquo;-data” ，后面为工作空间的路径，start要有，不然打开eclipse之后，命令行窗口不会自动消失的，很是碍眼。
+4.将这个txt保存为workspace1.bat
+5.双击这个workspace1.bat，eclipse就会使用workspace1.bat 作为工作空间启动。
+&amp;nbsp;
+对launchy党来说，新建个目录，然后创建好多个bat，以后直接快速启动真是太方便了</description>
+    </item>
+    
+    <item>
+      <title>尝试JavaFX开发</title>
+      <link>https://leizhiyuan.github.io/2014/02/11/%E5%B0%9D%E8%AF%95javafx%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Tue, 11 Feb 2014 20:40:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/02/11/%E5%B0%9D%E8%AF%95javafx%E5%BC%80%E5%8F%91/</guid>
+      <description>曾经有报道说JavaFX将使java在桌面开发上大有作为，感觉好像是很高端的样子，今天尝试了一下，界面对于自用的工具来说，本来也不多重要，只是一个简单的尝试
+简单说下大致的步骤和一些思路，可能有错误。
+javafx需要sdk支持，java7之后的都有的。设计思路是数据和代码分离，界面通过xml或json数据来描述，这样就把业务逻辑代码和界面实现代码分开了
+一个简单的开发过程应该是这样的
+1.使用JavaFX Scene Builder来绘制界面，保存为xml/json格式
+画的话没啥要说的，了解一下基本的整体概念就行。
+2.在eclipse里新建工程，可以是普通工程，将1中的文件放到资源目录，在代码里加载，然后界面就加载成功了。 Node topNode = FXMLLoader.load(AFI.class.getResource(&amp;ldquo;/afimain.fxml&amp;rdquo;)); 逻辑代码，比如一个简单的按钮事件可以通过 Node node = topNode.lookup(&amp;ldquo;#paneRightBottom&amp;rdquo;); 来查找到id为paneRightBottom的元素，然后就可以通过对node添加事件监听器来完成一些功能了
+主要想说的是：
+JavaFX和WPF其实思路是一模一样的，恰好WPF我也用过，感觉两个都没搞起来，虽然界面炫，然后我去维基看了下： &amp;gt; 该产品于2007年5月在JavaOne大会上首次对外公布。JavaFX技术主要应用于创建Rich Internet application（RIAs）。JavaFX期望能够在桌面应用的开发领域与Adobe公司的AIR、OpenLaszlo以及微软公司的Silverlight相竞争 已经7年了，用户数应该是非常少的，成熟的商业型产品也没几个，在尝试的过程中，我在stackoverflow，以及一些很不错的java博客上，大量查找基本也没有太多的信息，都是一些很浅的应用，包括stackoverflow上的回答数，基本还是能反映出来的，主要应用于RIA，而当前RIA已经出html5的天下了。SL早都不更新了，这种坑爹的所谓新技术。
+&amp;nbsp;
+Oracle还是好好把Swing搞好吧。。不建议尝试。
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>[藏]隐藏在PNG图像元数据中的新iFrame注入攻击</title>
+      <link>https://leizhiyuan.github.io/2014/02/09/%E8%97%8F%E9%9A%90%E8%97%8F%E5%9C%A8png%E5%9B%BE%E5%83%8F%E5%85%83%E6%95%B0%E6%8D%AE%E4%B8%AD%E7%9A%84%E6%96%B0iframe%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/</link>
+      <pubDate>Sun, 09 Feb 2014 09:23:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/02/09/%E8%97%8F%E9%9A%90%E8%97%8F%E5%9C%A8png%E5%9B%BE%E5%83%8F%E5%85%83%E6%95%B0%E6%8D%AE%E4%B8%AD%E7%9A%84%E6%96%B0iframe%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/</guid>
+      <description>这个攻击方式很旧了，但手法相当不错，来自乐嵌网
+我们一直在努力保持领先的最新趋势，今天我们发现了一个非常有趣的事，这或者是我们之前没有发现，或者是刚发生的。 我们只能说这是新发现的。
+&amp;nbsp;
+我们都了解的iFrame注入攻击，对吧？
+&amp;nbsp;
+了解一个iFrame注入
+今天的iFrame 是非常标准的HTML标记，它是在自己网页中嵌入其他网站内容的简单方式。 被几乎所有的浏览器支持和百万计的网站使用，使用AdSense吗？ 那么你的网站中就有一个iFrame。
+我知道这东西很好，然而总是福祸相惜。
+今天的攻击，特别是当我们谈论路过式下载，首选是利用IFRAME标记。 它简单方便，只需简单的属性修改，攻击者可以稳妥的从另一个站点嵌入代码，并通过客户的浏览器不知不觉的加载。
+&amp;nbsp;
+像这样：
+
+&amp;nbsp;
+攻击者通常从其他网站嵌入的恶意文件，通常是一个PHP文件或类似的形式。 当然，这并不是唯一的方法，但是是最普遍的。 从检测和修复的角度来看，这往往很容易修复。
+&amp;nbsp;
+新的iFrame注入法
+然而今天，我们发现一个有趣的iFrame注入类型。
+它的特殊之处不是在iframe标签中嵌入的内容，而是它分发恶意软件的方式。 你会看到，攻击者将威胁隐藏在PNG文件中。
+我几乎可以听到很多你的窃笑，PFF .. 这不是新的…. 但问题是在细节上我的朋友。
+&amp;nbsp;
+如下，iFrame加载了一个有效的文件，没有什么恶意，一个叫jquery.js的JavaScript文件。这一切看上去都很好。你要细细的找：
+
+起初，很多人会说我们傻。 这些代码很好，没看见什么问题，对不对？ 然后，我们注意到了这个小函数，loadFile（）。 函数本身并不奇怪，但事实上，它是装载一个PNG-var strFile = ‘./dron.png。 你会被它惊讶良久，它才是一个真正的黑手。
+&amp;nbsp;
+自然，下一步就是好奇的打开dron.png文件。 会有什么可怕的事情发生吗？
+&amp;nbsp;
+噢，什么都没有，太无聊了，这纯粹是浪费时间。
+
+但是，请等一下，我发现这里有个有趣的小循环。
+
+嗯，这是确实挺奇怪的，这是一个解码循环。 为什么要一个循环的解码PNG文件呢？
+&amp;nbsp;
+作为一个优秀的研究人员，采取最简单的方式，我可以将它加载到简单的测试页上 并提取图像内容。搞定！
+&amp;nbsp;
+测试页上加载它之后这，我们获得了strData变量：
+
+&amp;nbsp;
+看到它在干嘛了吗？
+它做了个iFrame注入，并把它嵌入到PNG的元数据中，像一个新的分配机制。
+&amp;nbsp;
+有两点需要特别注意了，它使用createElement做了一个iFrame标签，然后设置elm.style.position.left 和 elm.style.position.top 属性的值为-1000px，把iframe放到可视区域之外。这些值都是负值，在浏览器中根本看不到。但是你知道谁能看到吗？只有浏览器和Google能看到。这就是下载驱动和搜索引擎感染（SEP)攻击的小伎俩。
+&amp;nbsp;
+最后我们在elm.src元素中发现了真正的威胁。
+&amp;nbsp;
+做的这么独特到底有什么用呢？
+它尽力隐藏真正的威胁的水平是独特的。现在的杀毒软件不会解码图像元数据，直到JavaScript文件加载完毕就停止扫描。不会追踪cookie文件，对于攻击者来说，这太好了，使它们很难被发现。</description>
+    </item>
+    
+    <item>
+      <title>[笔记]写代码遇到的一些问题汇总下</title>
+      <link>https://leizhiyuan.github.io/2014/02/08/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8B/</link>
+      <pubDate>Sat, 08 Feb 2014 11:06:51 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/02/08/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8B/</guid>
+      <description>本篇是用来填上一篇 挖下的坑的。
+1.java调用webservice
+有一些已有的webservice服务，由xfire生成发布，有些有参数，有些无参数，无参数的直接我直接使用org.codehaus.xfire这个包里的Client来动态生成客户端。然后调用就可以了。非常简单 Client client = null; try { client = new Client( new URL( &amp;ldquo;http://leaver.me/testService?wsdl&amp;quot;)); client.invoke(&amp;ldquo;refreshAllCache&amp;rdquo;, new Object[0]);
+} catch (MalformedURLException e) { e.printStackTrace(); } catch (Exception e) { e.printStackTrace(); }&amp;lt;/pre&amp;gt; 但对于有参的，且是服务器自定义的类作为参数的时候，实在是搞不定。。不管是把自定义的类放到本地，包名一致，在invoke的时候生成这个对象还是其他什么方法。都无法完成。
+最终换了直接发送soap报文来完成。dirty hack啊。如果你有一些好的方法希望不吝赐教。
+解决方案来源自stackoverflow，因为stackoverflow现在国内好像有时候打不开。因此把代码贴过来。有疑问的话留言讨论。 import javax.xml.soap.; import javax.xml.transform.; import javax.xml.transform.stream.*;
+public class SOAPClientSAAJ {
+/** * Starting point for the SAAJ - SOAP Client Testing */ public static void main(String args[]) { try { // Create SOAP Connection SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.</description>
+    </item>
+    
+    <item>
+      <title>[笔记]写代码遇到的一些问题汇总上</title>
+      <link>https://leizhiyuan.github.io/2014/02/04/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8A/</link>
+      <pubDate>Tue, 04 Feb 2014 19:13:26 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/02/04/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8A/</guid>
+      <description>今天大雪，天冷，不能出去玩了。把保存在pocket里的一些记录总结一下，太懒了。。下篇等我去了上海用我电脑写吧
+1.java模拟https登陆
+首先我要登陆，然后保存cookie，然后利用cookie来访问后续的网页，发包，处理包这样，然后，为了方便，我选择了 org.apache.http 这个库，典型的一个登陆场景应该是这样的，以后遇到问题一定先要去看官方的例子，别人给出的例子一般要么是不能用，要么是用的方法都是一些过时的，虽然能用，但看到警告还是不舒服。 public static BasicCookieStore cookieStore; //整个过程用一个client public static CloseableHttpClient httpclient; cookieStore = new BasicCookieStore(); httpclient = HttpClients.custom().setDefaultCookieStore(cookieStore).build(); //先访问一下首页，然后cookie、会填充进来 HttpGet httpget = new HttpGet(&amp;ldquo;https://leaver.me/index.htm&amp;quot;); httpclient.execute(httpget); CloseableHttpResponse responseCookie = null; //然后post请求登陆 HttpPost httpost = new HttpPost(&amp;ldquo;https://leaver.me/login.htm&amp;quot;); //通过键值对来作为post参数 List &amp;lt; NameValuePair &amp;gt; nameValuePairs = new ArrayList &amp;lt; NameValuePair &amp;gt; (1); nameValuePairs.add(new BasicNameValuePair(&amp;ldquo;loginType&amp;rdquo;, &amp;ldquo;1&amp;rdquo;)); nameValuePairs.add(new BasicNameValuePair(&amp;ldquo;loginName&amp;rdquo;, username)); nameValuePairs.add(new BasicNameValuePair(&amp;ldquo;Password&amp;rdquo;, password)); httpost.setEntity(new UrlEncodedFormEntity(nameValuePairs, Consts.UTF_8)); CloseableHttpResponse responLogin = null; responLogin = httpclient.execute(httpost); 但是，这个过程报了如下的错 e: sun.</description>
+    </item>
+    
+    <item>
+      <title>前路月光</title>
+      <link>https://leizhiyuan.github.io/2014/01/28/%E5%89%8D%E8%B7%AF%E6%9C%88%E5%85%89/</link>
+      <pubDate>Tue, 28 Jan 2014 15:35:43 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/01/28/%E5%89%8D%E8%B7%AF%E6%9C%88%E5%85%89/</guid>
+      <description>火影片头曲想知道中文，没找到翻译，于是译之，感谢@sepith  。
+今夜月光 不知为何 比往日温柔 崎岖泥泞的来时路 何时才能有同行之人
+我沉默 为即将而来的眼泪 泪水中努力 悲伤着变得更强
+很多时候，伤痕累累 忘掉了痛苦 流过血泪 王者归来是使命所及 哪管一路秋叶萧萧
+我仰望星空 孤独从来不是虚假的幻想 你的过去我无法参与 我想要的的是现在和未来
+昨日月光 无论是明亮，还是黯淡 我用双手铸造 始于生而终于死 一定错过了 诸多美好
+我的同伴 虽然时过境迁 可是，你住过的地方 经年难忘 如果你想对我说 我还是会在你身边 舍命相陪
+很多时候，伤痕累累 星空暗淡 假使黎明 也悄然消失 我一定再一次 为了梦想努力拼搏
+痛到难以承受 迷惘前路崎岖 我轻轻闭上双眼 感受月光温柔 前路相伴 岂敢轻易迷失
+如果欺骗了内心 失去了自己 莫忘星空璀璨 凝视遥远的未来 固执地努力
+很多时候，伤痕累累 忘掉了痛苦 流过血泪， 王者归来是使命所及 哪管一路秋叶萧萧
+我仰望星空 真正强大的是 心怀梦想的人 有着爱的人</description>
+    </item>
+    
+    <item>
+      <title>[藏]跨行清算系统的实现原理</title>
+      <link>https://leizhiyuan.github.io/2013/12/14/%E8%97%8F%E8%B7%A8%E8%A1%8C%E6%B8%85%E7%AE%97%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Sat, 14 Dec 2013 18:24:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/12/14/%E8%97%8F%E8%B7%A8%E8%A1%8C%E6%B8%85%E7%AE%97%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</guid>
+      <description>本文来自God Is Coder，通过这篇文章我算是理解了跨行清算系统逻辑，非常非常好。
+最近看了很多银联方面的清算系统的设计原理，对于跨行清算系统有了很大的了解，写这篇文章的目的是在于从一个程序员的角度去思考一个跨行清算系统的架构是如何实现的以及整个过程中我们有哪些思想是可以借鉴的。由于金融里面涉及到太多的专业名词，包括借贷，备付金，头寸，调拨等等，这里不会涉及到这些，取而代之的是以大家可以理解的概念去解释。
+下面简单的介绍一下两种跨行清算系统的实现原理以及特点。一种跨清算系统是我们最熟悉的银联，还有一种是越来越流行的第三方支付系统，比较典型的是快钱。
+首先来拿生活中的一个非常常见的例子来说明跨行清算的整个过程，这里面不涉及交易费等其他概念。
+跨行取款流程 张三是工行的持卡人，他需要取现金，但是找不到工行的ATM机器，发现附近有建行的ATM机器，他只能去建行取款，整个过程就是跨行清算的过程，我们以这个场景为例，分析一下业务流程，具体交互流程见下面一张图。
+
+&amp;nbsp;
+工行持卡人张三在建行ATM机器取款100，ATM请求建行主机，由于是工行的卡，建行不识别，只能请求工行去处理，工行识别持卡人账户并扣款100，然后通知建行，建行则通知atm吐钱。
+这里整个系统要解决两个问题：
+1 建行如何与工行通信
+2 建行和工行之间如何清算，如上图结果，工行欠建行100.
+整个系统的分析基于以上两个问题，下面首先解决是通信问题
+&amp;nbsp;
+跨行通信的两种模式 我们先假设工行提供接口，只需要建行发送指约定格式的报文，即可于工行通信，这种相当于建行直接通过接口方式与工行通信。如果是这种方式，只能解决建行和工行的单向通信，如果工行和建行通信，则工行要发送建行指定的通信报文格式。可是大家想想，如果银行更多怎么办，下面是三家银行间的通信
+
+当有三家银行的时候，通信链路就有3*2=6条，当银行越来越多的时候，这种点对点的通信变的越来越复杂，每新增一家银行，他要做之前银行都要做的很多重复性的劳动，这样的成本非常高，也不经济，那么必须出现一个网络，它能够接入所有的银行，新的银行只需要接入这个网络，就可以和其他所有的银行进行通信。
+先把这个网络成为通信网络，这种通信网络有两种方式可以连接所有的银行
+ 1 这个通信网络定义标准接口，所有的银行都必须实现这个通信网络定义的api，新的银行如果想要接入这个通信网络，必须实现通信接口约定的协议。简称公共接口模式 2 这个通信网络主动去连接所有的银行的接口，把所有银行的接口信息都接入里面，就像一个适配器，新的银行如果想要接入这个通信网络，这个通信网络必须主动联系银行，按照银行的接口协议实现通信，简称适配器模式。 下面一幅图演示了这两种模式的不同：  
+对于这两模式，主要博弈就在于谁强谁弱。显然第三方支付公司属于适配器模式，需要一家一家银行去接入，至于银联，个人认为应该是第一种模式，这种对于银联这种需要稳定的系统来说是最具有优势的。
+&amp;nbsp;
+跨行清算保证金模式 解决了通信问题，下面就看如何解决资金的清算问题。一种简单的方案就是工行在建行里面开设一个保证金账户，用这个账户去偿还在整个跨行交易中应付给建行的资金。
+
+&amp;nbsp;
+从上图来看，这种方案确实可行。只需要工行在建行里面放足额的保证金，就可以满足跨行的费用。但是这里面实际上存在非常多的问题，
+ 1 如果银行越来也多，每个银行都要在其他银行存钱，太不经济了 2 保证金需要放多少资金？如果一直都没有发生跨行交易，工行就亏大发了 3 如果保证金不够怎么办？交易失败还是记应收款？ 对于第一个问题假设银行越来越多，会导致工行需要在其他每个银行里面都开设保证金账户（见下图），是一个很不经济的方案。  说明这个在其他银行存保证金的方案是不可行的，和之前通信的问题一样，是不是可以把所有的银行保证金账户单独管理起来，统一放置在一起，方便各个银行之间的清算。我们暂时把这个系统称之为保证金系统。
+保证金系统 保证金就是方便各个银行之间的清算，需要单独由一个系统进行管理，解决了跨行之间保证金存放的问题。每个银行只需要在保证金系统中存点钱就可以了。保证金系统也有两种模式。先看看比较好理解的第一种模式：
+
+在这种模式下，银行先把一部分钱存放在保证金系统里面，同时银行内部建立一个虚拟账户，记录存放了多少钱，主要是方便对账，万一这个保证金系统钱算错了怎么办。你可以想象一下，银行是很小气的，为啥愿意把钱存放到这保证金系统里面，这部分钱干啥不好，能够银行这么干的只有国家了，这个系统就是央行的备付金管理系统。每个新增的银行都要存一份钱在这里。
+另外一种方案是倒过来思考，既然没有牛逼的央行作支撑，那可以在每个商业银行都建立一个账户，用这个账户负责和银行进行清算。每新增一家银行，就在那个银行里面开一个保证金账户。
+
+这两种方式有本质的不同，一个是银行把资金的一部分转出到保证金，银行建立虚拟账户和保证金里面真实的资金映射。一个是保证金系统把资金转出到各个银行，自己内部建立一个虚拟账户和银行中真实的资金账户进行映射。这个间接的银行了后续的对账机制，这里先不叙述。
+所有的第三方支付公司跨行清算的流程都是第二种方式，只有国家级清算公司（比如银联）是第一种方式，这是一种资源和权力上的不平等，不过是可以理解的。
+清算系统 保证金系统解决了保证金存放的问题，接下来就是解决如何清算的问题。假设保证金转账是实时的，就要面对上面说的问题，保证金不够的情况下，跨行交易是成功还是失败。这是一个业务上问题，有很多种解决方案，我们暂不说。从技术上来讲，如果每一笔交易都要保证金实时记账，那么保证金系统的负载太大，事务如何保证等等一些列的问题。所以一个最简单的方案就是：一天结算一次。
+每天由一个系统记录这些跨行交易信息，汇总出来，统一记账。这样一天只需要调用一次保证金系统即可。那么整个清算过程则是下面的流程：
+ 1 系统T日发生建行和工行的跨行交易100 
+ 2 清算系统T+1日汇总T日工行和建行之间发生的交易明细数据，并且发这些数据发给建行和工行进行确认 
+  &amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>Java动态代理实例</title>
+      <link>https://leizhiyuan.github.io/2013/11/24/java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AE%9E%E4%BE%8B/</link>
+      <pubDate>Sun, 24 Nov 2013 18:16:31 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/11/24/java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AE%9E%E4%BE%8B/</guid>
+      <description>首先什么是代理？ 所谓代理呢也就是在调用实现类的方法时，可以在方法执行前后做额外的工作，这个就是代理。  那动态代理呢，官方解释是：  Java 动态代理机制的出现，使得 Java 开发人员不用手工编写代理类，只要简单地指定一组接口及委托类对象，便能动态地获得代理类。代理类会负责将所有的方法调用分派到委托对象上反射执行，在分派执行的过程中，开发人员还可以按需调整委托类对象及其功能，这是一套非常灵活有弹性的代理框架。 老湿，你说的是个毛啊，完全没看懂啊！
+我更喜欢另一种通俗的解释，官方的解释总是高度抽象的，等用了一段时间才能理解体会  动态代理实现了日志和业务的分开，也就是某个类只是要提供了某些业务，比如银行取款业务。这个类实现了取款业务的同时也需要实现日志功能，如果不用动态代理的话，那么由此一来该类代码里面已经额外地添加了自己不该添加的日志功能能代码。所以我们就得使用动态代理把它的业务代码和日志功能代码分开。所以用到了动态代理概念，spring里面的AOP就是一个很好的例子。  不直观啊，老湿，能再给力一点不？ 额，这样的话，我们来看一个例子，要用到的两个类 实现java.lang.reflect.InvocationHandler接口提供一个执行处理器，也就是真正做事的，然后通过java.lang.reflect.Proxy得到一个代理对象，通过这个代理对象来执行业务方法,在业务方法被调用的同时，执行处理器会被自动调用。 记住，动态代理只能对接口 首先业务接口：  public interface HelloWorld { public void sayHelloWorld(); } 然后我们是这样写的实现 public class HelloWorldImpl implements HelloWorld { public void sayHelloWorld() { System.out.println(&amp;ldquo;Hello World!&amp;rdquo;); } } 后来我们觉得执行这个方法前能不能做点其他啥事呢，比如写个日志？见个妹子？啥，这段代码不让改了，改了的话，业务方法和日志混合的一塌糊涂啊，以后想改个日志格式你来写啊
+那我们就得定义一个拦截器/执行处理器了。 public class HelloWorldHandler implements InvocationHandler { //目标对象 private Object targetObject;
+public HelloWorldHandler(Object targetObject){ this.targetObject = targetObject; } public Object invoke(Object proxy, Method method, Object[] args) throws Throwable { System.</description>
+    </item>
+    
+  </channel>
+</rss>

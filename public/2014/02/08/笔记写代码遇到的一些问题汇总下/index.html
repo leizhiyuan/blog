@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>[笔记]写代码遇到的一些问题汇总下</title>
+  <meta property="og:title" content="[笔记]写代码遇到的一些问题汇总下" />
+  <meta name="twitter:title" content="[笔记]写代码遇到的一些问题汇总下" />
+  <meta name="description" content="本篇是用来填上一篇 挖下的坑的。
+1.java调用webservice
+有一些已有的webservice服务，由xfire生成发布，有些有参数，有些无参数，无参数的直接我直接使用org.codehaus.xfire这个包里的Client来动态生成客户端。然后调用就可以了。非常简单 Client client = null; try { client = new Client( new URL( &ldquo;http://leaver.me/testService?wsdl&quot;)); client.invoke(&ldquo;refreshAllCache&rdquo;, new Object[0]);
+} catch (MalformedURLException e) { e.printStackTrace(); } catch (Exception e) { e.printStackTrace(); }&lt;/pre&gt; 但对于有参的，且是服务器自定义的类作为参数的时候，实在是搞不定。。不管是把自定义的类放到本地，包名一致，在invoke的时候生成这个对象还是其他什么方法。都无法完成。
+最终换了直接发送soap报文来完成。dirty hack啊。如果你有一些好的方法希望不吝赐教。
+解决方案来源自stackoverflow，因为stackoverflow现在国内好像有时候打不开。因此把代码贴过来。有疑问的话留言讨论。 import javax.xml.soap.; import javax.xml.transform.; import javax.xml.transform.stream.*;
+public class SOAPClientSAAJ {
+/** * Starting point for the SAAJ - SOAP Client Testing */ public static void main(String args[]) { try { // Create SOAP Connection SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.">
+  <meta property="og:description" content="本篇是用来填上一篇 挖下的坑的。
+1.java调用webservice
+有一些已有的webservice服务，由xfire生成发布，有些有参数，有些无参数，无参数的直接我直接使用org.codehaus.xfire这个包里的Client来动态生成客户端。然后调用就可以了。非常简单 Client client = null; try { client = new Client( new URL( &ldquo;http://leaver.me/testService?wsdl&quot;)); client.invoke(&ldquo;refreshAllCache&rdquo;, new Object[0]);
+} catch (MalformedURLException e) { e.printStackTrace(); } catch (Exception e) { e.printStackTrace(); }&lt;/pre&gt; 但对于有参的，且是服务器自定义的类作为参数的时候，实在是搞不定。。不管是把自定义的类放到本地，包名一致，在invoke的时候生成这个对象还是其他什么方法。都无法完成。
+最终换了直接发送soap报文来完成。dirty hack啊。如果你有一些好的方法希望不吝赐教。
+解决方案来源自stackoverflow，因为stackoverflow现在国内好像有时候打不开。因此把代码贴过来。有疑问的话留言讨论。 import javax.xml.soap.; import javax.xml.transform.; import javax.xml.transform.stream.*;
+public class SOAPClientSAAJ {
+/** * Starting point for the SAAJ - SOAP Client Testing */ public static void main(String args[]) { try { // Create SOAP Connection SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.">
+  <meta name="twitter:description" content="本篇是用来填上一篇 挖下的坑的。
+1.java调用webservice
+有一些已有的webservice服务，由xfire生成发布，有些有参数，有些无参数，无参数的直接我直接使用org.codehaus.xfire这个包里的Client来动态生成客户端。然后调用就可以了。非常简单 Client client = null; try { client = new Client( new URL( …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2014/02/08/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8B/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2014/02/08/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8B/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>[笔记]写代码遇到的一些问题汇总下</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on February 8, 2014
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 4 minutes (672 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>本篇是用来填<a href="http://leaver.me/archives/3454.html">上一篇 </a>挖下的坑的。</p>
+
+<p><em><strong>1.java调用webservice</strong></em></p>
+
+<p>有一些已有的webservice服务，由xfire生成发布，有些有参数，有些无参数，无参数的直接我直接使用org.codehaus.xfire这个包里的Client来动态生成客户端。然后调用就可以了。非常简单
+<pre class="lang:default decode:true">Client client = null;
+        try {
+            client = new Client(
+                    new URL(
+                            &ldquo;<a href="http://leaver.me/testService?wsdl&quot;))">http://leaver.me/testService?wsdl&quot;))</a>;
+            client.invoke(&ldquo;refreshAllCache&rdquo;, new Object[0]);</p>
+<div class="highlight"><pre class="chroma">    } catch (MalformedURLException e) {
+
+        e.printStackTrace();
+    } catch (Exception e) {
+
+        e.printStackTrace();
+    }&lt;/pre&gt;</pre></div>
+<p>但对于有参的，且是服务器自定义的类作为参数的时候，实在是搞不定。。不管是把自定义的类放到本地，包名一致，在invoke的时候生成这个对象还是其他什么方法。都无法完成。</p>
+
+<p>最终换了直接发送soap报文来完成。dirty hack啊。如果你有一些好的方法希望不吝赐教。</p>
+
+<p>解决方案来源自<a href="http://stackoverflow.com/a/15942217/764869">stackoverflow</a>，因为stackoverflow现在国内好像有时候打不开。因此把代码贴过来。有疑问的话留言讨论。
+<pre class="lang:java decode:true">import javax.xml.soap.<em>;
+import javax.xml.transform.</em>;
+import javax.xml.transform.stream.*;</p>
+
+<p>public class SOAPClientSAAJ {</p>
+<div class="highlight"><pre class="chroma">/**
+ * Starting point for the SAAJ - SOAP Client Testing
+ */
+public static void main(String args[]) {
+    try {
+        // Create SOAP Connection
+        SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
+        SOAPConnection soapConnection = soapConnectionFactory.createConnection();
+
+        // Send SOAP Message to SOAP Server
+        String url = &#34;http://ws.cdyne.com/emailverify/Emailvernotestemail.asmx&#34;;
+        SOAPMessage soapResponse = soapConnection.call(createSOAPRequest(), url);
+
+        // Process the SOAP Response
+        printSOAPResponse(soapResponse);
+
+        soapConnection.close();
+    } catch (Exception e) {
+        System.err.println(&#34;Error occurred while sending SOAP Request to Server&#34;);
+        e.printStackTrace();
+    }
+}
+
+private static SOAPMessage createSOAPRequest() throws Exception {
+    MessageFactory messageFactory = MessageFactory.newInstance();
+    SOAPMessage soapMessage = messageFactory.createMessage();
+    SOAPPart soapPart = soapMessage.getSOAPPart();
+
+    String serverURI = &#34;http://ws.cdyne.com/&#34;;
+
+    // SOAP Envelope
+    SOAPEnvelope envelope = soapPart.getEnvelope();
+    envelope.addNamespaceDeclaration(&#34;example&#34;, serverURI);
+
+    /*
+    Constructed SOAP Request Message:
+    &amp;lt;SOAP-ENV:Envelope xmlns:SOAP-ENV=&#34;http://schemas.xmlsoap.org/soap/envelope/&#34; xmlns:example=&#34;http://ws.cdyne.com/&#34;&amp;gt;
+        &amp;lt;SOAP-ENV:Header/&amp;gt;
+        &amp;lt;SOAP-ENV:Body&amp;gt;
+            &amp;lt;example:VerifyEmail&amp;gt;
+                &amp;lt;example:email&amp;gt;mutantninja@gmail.com&amp;lt;/example:email&amp;gt;
+                &amp;lt;example:LicenseKey&amp;gt;123&amp;lt;/example:LicenseKey&amp;gt;
+            &amp;lt;/example:VerifyEmail&amp;gt;
+        &amp;lt;/SOAP-ENV:Body&amp;gt;
+    &amp;lt;/SOAP-ENV:Envelope&amp;gt;
+     */
+
+    // SOAP Body
+    SOAPBody soapBody = envelope.getBody();
+    SOAPElement soapBodyElem = soapBody.addChildElement(&#34;VerifyEmail&#34;, &#34;example&#34;);
+    SOAPElement soapBodyElem1 = soapBodyElem.addChildElement(&#34;email&#34;, &#34;example&#34;);
+    soapBodyElem1.addTextNode(&#34;mutantninja@gmail.com&#34;);
+    SOAPElement soapBodyElem2 = soapBodyElem.addChildElement(&#34;LicenseKey&#34;, &#34;example&#34;);
+    soapBodyElem2.addTextNode(&#34;123&#34;);
+
+    MimeHeaders headers = soapMessage.getMimeHeaders();
+    headers.addHeader(&#34;SOAPAction&#34;, serverURI  + &#34;VerifyEmail&#34;);
+
+    soapMessage.saveChanges();
+
+    /* Print the request message */
+    System.out.print(&#34;Request SOAP Message = &#34;);
+    soapMessage.writeTo(System.out);
+    System.out.println();
+
+    return soapMessage;
+}
+
+/**
+ * Method used to print the SOAP Response
+ */
+private static void printSOAPResponse(SOAPMessage soapResponse) throws Exception {
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    Transformer transformer = transformerFactory.newTransformer();
+    Source sourceContent = soapResponse.getSOAPPart().getContent();
+    System.out.print(&#34;\nResponse SOAP Message = &#34;);
+    StreamResult result = new StreamResult(System.out);
+    transformer.transform(sourceContent, result);
+}</pre></div>
+<p>}</pre>
+<em><strong>2.Access restriction on class due to restriction on required library rt.jar? 报错</strong></em></p>
+
+<p>总么都感觉是环境问题，系统bug。<a href="http://stackoverflow.com/a/2174607/764869">解决</a>如下：</p>
+
+<ol>
+<li>进入project properties的 Build Path 设置里.</li>
+<li>移除 JRE System Library</li>
+<li>再添加回来，方法是: 选择 &ldquo;Add Library&rdquo; ，然后选择 JRE System Library.
+&nbsp;</li>
+</ol>
+
+<p><em><strong>3.SSHManager类报错：com.jcraft.jsch.JSchException: UnknownHostKey</strong></em></p>
+
+<p>我使用的一个SSHManager类如下：
+<pre class="lang:java decode:true">package me.leaver.Util;</p>
+
+<p>import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;</p>
+
+<p>import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;</p>
+
+<p>public class SSHManager {
+    private static final Logger LOGGER = Logger.getLogger(SSHManager.class
+            .getName());
+    private JSch jschSSHChannel;
+    private String strUserName;
+    private String strConnectionIP;
+    private int intConnectionPort;
+    private String strPassword;
+    private Session sesConnection;
+    private int intTimeOut;</p>
+<div class="highlight"><pre class="chroma">private void doCommonConstructorActions(String userName, String password,
+        String connectionIP, String knownHostsFileName) {
+    jschSSHChannel = new JSch();
+
+    try {
+        jschSSHChannel.setKnownHosts(knownHostsFileName);
+    } catch (JSchException jschX) {
+        logError(jschX.getMessage());
+    }
+
+    strUserName = userName;
+    strPassword = password;
+    strConnectionIP = connectionIP;
+}
+
+public SSHManager(String userName, String password, String connectionIP,
+        String knownHostsFileName) {
+    doCommonConstructorActions(userName, password, connectionIP,
+            knownHostsFileName);
+    intConnectionPort = 22;
+    intTimeOut = 60000;
+}
+
+public SSHManager(String userName, String password, String connectionIP,
+        String knownHostsFileName, int connectionPort) {
+    doCommonConstructorActions(userName, password, connectionIP,
+            knownHostsFileName);
+    intConnectionPort = connectionPort;
+    intTimeOut = 60000;
+}
+
+public SSHManager(String userName, String password, String connectionIP,
+        String knownHostsFileName, int connectionPort,
+        int timeOutMilliseconds) {
+    doCommonConstructorActions(userName, password, connectionIP,
+            knownHostsFileName);
+    intConnectionPort = connectionPort;
+    intTimeOut = timeOutMilliseconds;
+}
+
+public String connect() {
+    String errorMessage = null;
+
+    try {
+        sesConnection = jschSSHChannel.getSession(strUserName,
+                strConnectionIP, intConnectionPort);
+        Properties config = new Properties();
+        config.put(&#34;StrictHostKeyChecking&#34;, &#34;no&#34;);
+        sesConnection.setConfig(config);
+        sesConnection.setPassword(strPassword);
+        sesConnection.connect(intTimeOut);
+    } catch (JSchException jschX) {
+        errorMessage = jschX.getMessage();
+    }
+
+    return errorMessage;
+}
+
+private String logError(String errorMessage) {
+    if (errorMessage != null) {
+        LOGGER.log(Level.SEVERE, &#34;{0}:{1} - {2}&#34;, new Object[] {
+                strConnectionIP, intConnectionPort, errorMessage });
+    }
+
+    return errorMessage;
+}
+
+private String logWarning(String warnMessage) {
+    if (warnMessage != null) {
+        LOGGER.log(Level.WARNING, &#34;{0}:{1} - {2}&#34;, new Object[] {
+                strConnectionIP, intConnectionPort, warnMessage });
+    }
+
+    return warnMessage;
+}
+
+public String sendCommand(String command) {
+    StringBuilder outputBuffer = new StringBuilder();
+
+    try {
+        Channel channel = sesConnection.openChannel(&#34;exec&#34;);
+        ((ChannelExec) channel).setCommand(command);
+        channel.connect();
+        InputStream commandOutput = channel.getInputStream();
+        int readByte = commandOutput.read();
+
+        while (readByte != 0xffffffff) {
+            outputBuffer.append((char) readByte);
+            readByte = commandOutput.read();
+        }
+
+        channel.disconnect();
+    } catch (IOException ioX) {
+        logWarning(ioX.getMessage());
+        return null;
+    } catch (JSchException jschX) {
+        logWarning(jschX.getMessage());
+        return null;
+    }
+
+    return outputBuffer.toString();
+}
+
+public void close() {
+    sesConnection.disconnect();
+}</pre></div>
+<p>}</pre>
+报这个错是因为
+<pre class="lang:default decode:true">public String connect() {
+        String errorMessage = null;</p>
+<div class="highlight"><pre class="chroma">    try {
+        sesConnection = jschSSHChannel.getSession(strUserName,
+                strConnectionIP, intConnectionPort);
+        Properties config = new Properties();
+        config.put(&#34;StrictHostKeyChecking&#34;, &#34;no&#34;);
+        sesConnection.setConfig(config);
+        sesConnection.setPassword(strPassword);
+        sesConnection.connect(intTimeOut);
+    } catch (JSchException jschX) {
+        errorMessage = jschX.getMessage();
+    }
+
+    return errorMessage;
+}&lt;/pre&gt;</pre></div>
+<p>连接这段代码里少了config.put(&ldquo;StrictHostKeyChecking&rdquo;, &ldquo;no&rdquo;);这段设置，这个是去掉了严格的安全检查，一般只用于测试目的。</p>
+
+<p><em><strong>4.navicat连接oracle数据库</strong></em></p>
+
+<p>之前使用PL/SQL操作Oracle数据库，使用Heidisql操作mysql数据库。。切换麻烦。而且PL/SQL搜索的时候中文有问题。于是打算使用navicat统一管理</p>
+
+<p>方法是：</p>
+
+<p>1.首先下载<a href="http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html">Instant Client </a>的32位版本和Navicat Premium</p>
+
+<p>2.然后解压Instant Client，配置navicat</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/2014/02/navicat_oracle.jpg"><img src="/images/929f511bc4fcfcc7f2579078a8aff7dddfa8b5c1.jpg" alt="navicat_oracle" /></a></p>
+
+<p>选择oci文件即可</p>
+
+<p>然后新建oracle配置，选择basic模式，其他的根据你的数据库信息自己填写即可。</p>
+
+<p>&nbsp;</p>
+
+<p><em><strong>5.HttpClient的logger日志实在太多了</strong></em></p>
+
+<p>大人，实在太多了。看不过来啊。附赠一篇<a href="http://www.cnblogs.com/ITEagle/archive/2010/04/23/1718365.html">log4j配置文件详解</a>
+<div>
+<div></p>
+
+<p>在log4j.properties文件中添加如下配置信息</p>
+
+<p>log4j.logger.httpclient.wire.header=INFO</p>
+
+<p>log4j.logger.httpclient.wire.content=INFO</p>
+
+<p>log4j.logger.org.apache.commons.httpclient = INFO</p>
+
+<p></div>
+</div>
+<em><strong>6.其他</strong></em></p>
+
+<p>最后附赠一些实用的工具</p>
+
+<p><a href="http://www.freeformatter.com/">http://www.freeformatter.com/</a> 程序员必备。各类转换，包括转义工具，格式校验工具。效果很好。</p>
+
+<p><a href="http://voice.hupu.com/hushi/f1/10909.html">流体力学理论与F1赛车的空气动力学1</a>，<a href="http://voice.hupu.com/hushi/f1/10953.html">2</a>，<a href="http://voice.hupu.com/hushi/f1/11001.html">3</a>   什么雷诺数，伯努利方程，文丘里效应，当年木有好好学啊。这么高大上的东西果然还是有压力。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/java/">java</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/linux/">linux</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E4%B8%8A%E6%B5%B7/">上海</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%B7%A5%E4%BD%9C/">工作</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2014/02/04/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8A/" data-toggle="tooltip" data-placement="top" title="[笔记]写代码遇到的一些问题汇总上">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2014/02/09/%E8%97%8F%E9%9A%90%E8%97%8F%E5%9C%A8png%E5%9B%BE%E5%83%8F%E5%85%83%E6%95%B0%E6%8D%AE%E4%B8%AD%E7%9A%84%E6%96%B0iframe%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/" data-toggle="tooltip" data-placement="top" title="[藏]隐藏在PNG图像元数据中的新iFrame注入攻击">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

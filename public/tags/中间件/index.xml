@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>中间件 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+    <description>Recent content in 中间件 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 08 Sep 2015 00:04:31 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>kafka快速开发demo</title>
+      <link>https://leizhiyuan.github.io/2015/09/08/kafka%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91demo/</link>
+      <pubDate>Tue, 08 Sep 2015 00:04:31 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/09/08/kafka%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91demo/</guid>
+      <description>在kafka快速上手,主要是使用kafka提供的测试来做了一下简单测试,实际开发中的使用可能才是我们要关系的.启动zk和kafka,新建topic的过程都不变.
+1 新建一个maven工程,引入依赖
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.kafka&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;kafka_2.11&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;0.8.2.1&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; 2 编写配置文件
+public interface KafkaProperties { public final static String ZK = &amp;#34;127.0.0.1:2181&amp;#34;; public final static String GROUP_ID = &amp;#34;test_group1&amp;#34;; public final static String TOPIC = &amp;#34;test&amp;#34;; public final static String BROKER_LIST = &amp;#34;127.0.0.1:9092&amp;#34;; public final static String SESSION_TIMEOUT = &amp;#34;20000&amp;#34;; public final static String SYNC_TIMEOUT = &amp;#34;20000&amp;#34;; public final static String INTERVAL = &amp;#34;1000&amp;#34;; } 3 编写生产者
+public class KafkaProducer extends Thread { private Producer&amp;lt;Integer, String&amp;gt; producer; private String topic; private Properties props = new Properties(); private final int SLEEP = 1000 * 3; public KafkaProducer(String topic) { props.</description>
+    </item>
+    
+    <item>
+      <title>kafka文章推荐</title>
+      <link>https://leizhiyuan.github.io/2015/09/07/kafka%E6%96%87%E7%AB%A0%E6%8E%A8%E8%8D%90/</link>
+      <pubDate>Mon, 07 Sep 2015 23:45:50 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/09/07/kafka%E6%96%87%E7%AB%A0%E6%8E%A8%E8%8D%90/</guid>
+      <description>本文主要分享看到的好的关于kafka的文章.后续看到持续更新
+ Kafka剖析（一）：Kafka背景及架构介绍 Kafka设计解析（二）：Kafka High Availability （上） Kafka设计解析（三）：Kafka High Availability （下） Kafka设计解析（四）：Kafka Consumer解析  </description>
+    </item>
+    
+    <item>
+      <title>kafka分布式部署与验证</title>
+      <link>https://leizhiyuan.github.io/2015/09/05/kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E4%B8%8E%E9%AA%8C%E8%AF%81/</link>
+      <pubDate>Sat, 05 Sep 2015 07:30:13 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/09/05/kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E4%B8%8E%E9%AA%8C%E8%AF%81/</guid>
+      <description>在kafka快速上手,和kafka中的partition和offset中,已经解释了kafka的一些原理,和完成了一个简单的生产消费的实践,如第一篇所说,kafka是一个分布式环境下的消息组件,那么,按照我们前面的简单上手,如果kafka的应用进程被杀或者kafka的机器宕机,那么kafka消息组件就无法使用了,或者zookeeper宕机了,那么kafka也无法使用了.
+kafka集群(cluster) 一台机器不够,那就多搞几台,首先,启动zookeeper这个就不多说了.可以参看前文,在启动kafka的时候,我们在单机模拟启动多个kafka应用. 首先在config目录,copy两个server.properties 文件,这里我复制三份,分别起名server1.properties ,server2.properties server3.properties 然后修改这三个配置文件,主要修改broker.id=2,port=9094,log.dir=/tmp/kafka-logs-2这三个值,broker.id是用来标记分布式环境中的broker的,要求唯一,port和log.dir一个端口,一个log目录,如果在真实的分布式环境中是不需要修改.这里单机模拟防止端口冲突.
+分别把broker.id改为1,2,3,log.dir则分别改成kafka-logs-1,kafka-logs-2,kafka-logs-3,然后依次启动 kafka-server-start.bat ../../config/server1.properties kafka-server-start.bat ../../config/server2.properties kafka-server-start.bat ../../config/server3.properties
+如果你启动有报错,一个就是之前说的那个vm参数太大,另一个可能是你的端口没改好.具体错误看下报错就好了.
+然后我们注册一个topic,叫做replicationtest kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic replicationtest 这里冗余是3,分区是1,那么最终各个broker都会保留一份,最多允许N-1,也就是2台broker宕机,服务照样运行. 注册之后,这时候 kafka-topics.bat--describe --zookeeper localhost:2181 --topic replicationtest 执行描述命令,看下集群情况 第一行给出了分区的汇总信息。每个分区行给出分区信息。
+&amp;ldquo;Leader&amp;rdquo; 节点是2. &amp;ldquo;Replicas&amp;rdquo; 信息，在节点2,3,1上,所有的节点信息. &amp;ldquo;Isr&amp;rdquo; 工作中的复制节点的集合. 也就是活的节点的集合.
+其他的就不用解释了.这里选出了2是leader,也就是说2这个节点会给消费者提供服务.
+然后我们测试一条信息. kafka-console-producer.bat --broker-list localhost:7777,localhost:8888,localhost:9999 --topic replicationtest 上面的7777是server1.properties 中设置的.根据个人情况.改改.然后在控制台发发消息.
+然后消费一下. kafka-console-consumer.bat --zookeeper localhost:2181 --topic replicationtest 这里的2181是zookeeper的端口,不用改. 然后.我们开始关掉一个broker,在3的控制台里CTRL,C.然后是否终止操作,输入Y. 再发一条消息 一切正常.我们看一下集群信息 发现Isr中存活的机器少了3.因为3挂了. 然后我们关掉broker2.这时候,会触发新的leader选举.期望值1变成leader,再发一条消息 可以看到生产者发消息过程中,产生了异常,因为和2的连接断开了.但是注意,消息并没有丢,因为触发了新的选举.可以看到,消费者还是接到了正常的消息.集群情况如下 至此,kafka的broker集群测试完毕,那么剩下的问题来了.消费者启动的时候连接的是zookeeper的地址,如果这台zookeeper挂了呢. 那么我们需要zookeeper集群部署.
+zookeeper集群 这就包括两部分. 1.</description>
+    </item>
+    
+    <item>
+      <title>kafka中的partition和offset</title>
+      <link>https://leizhiyuan.github.io/2015/09/04/kafka%E4%B8%AD%E7%9A%84partition%E5%92%8Coffset/</link>
+      <pubDate>Fri, 04 Sep 2015 00:01:21 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/09/04/kafka%E4%B8%AD%E7%9A%84partition%E5%92%8Coffset/</guid>
+      <description> 在kafka快速上手中,留下的问题是关于partition和offset,这篇文章主要解释这个.
+Log机制 说到分区,就要说kafka对消息的存储.在官方文档中. 首先,kafka是通过log(日志)来记录消息发布的.每当产生一个消息,kafka会记录到本地的log文件中,这个log和我们平时的log有一定的区别.这里可以参考一下The Log,不多解释.
+这个log文件默认的位置在config/server.properties中指定的.默认的位置是log.dirs=/tmp/kafka-logs,linux不用说,windows的话就在你对应磁盘的根目录下.我这里是D盘.
+#分区partition# kafka是为分布式环境设计的,因此如果日志文件,其实也可以理解成消息数据库,放在同一个地方,那么必然会带来可用性的下降,一挂全挂,如果全量拷贝到所有的机器上,那么数据又存在过多的冗余,而且由于每台机器的磁盘大小是有限的,所以即使有再多的机器,可处理的消息还是被磁盘所限制,无法超越当前磁盘大小.因此有了partition的概念.
+kafka对消息进行一定的计算,通过hash来进行分区.这样,就把一份log文件分成了多份.如上面的分区读写日志图,分成多份以后,在单台broker上,比如快速上手中,如果新建topic的时候,我们选择了--replication-factor 1 --partitions 2,那么在log目录里,我们会看到 test-0目录和test-1目录.就是两个分区了.
+你可能会想,这特么没啥区别呀.注意,当有了多个broker之后,这个意义就存在了.这里上一张图,原文在参考链接里有 这是一个topic包含4个Partition，2 Replication(拷贝),也就是说全部的消息被放在了4个分区存储,为了高可用,将4个分区做了2份冗余,然后根据分配算法.将总共8份数据,分配到broker集群上.
+结果就是每个broker上存储的数据比全量数据要少,但每份数据都有冗余,这样,一旦一台机器宕机,并不影响使用.比如图中的Broker1,宕机了.那么剩下的三台broker依然保留了全量的分区数据.所以还能使用,如果再宕机一台,那么数据不完整了.当然你可以设置更多的冗余,比如设置了冗余是4,那么每台机器就有了0123完整的数据,宕机几台都行.需要在存储占用和高可用之间做衡量. 至于宕机后,zookeeper会选出新的partition leader.来提供服务.这个等下篇文章
+#偏移offset#
+上一段说了分区,分区就是一个有序的,不可变的消息队列.新来的commit log持续往后面加数据.这些消息被分配了一个下标(或者偏移),就是offset,用来定位这一条消息.
+消费者消费到了哪条消息,是保持在消费者这一端的.消息者也可以控制,消费者可以在本地保存最后消息的offset,并间歇性的向zookeeper注册offset.也可以重置offset
+#如何通过offset算出分区#
+其实partition存储的时候,又分成了多个segment(段),然后通过一个index,索引,来标识第几段.这里先可以去看一下本地log目录的分区文件夹. 在我这里,test-0,这个分区里面,会有一个index文件和一个log文件, 对于某个指定的分区,假设每5个消息,作为一个段大小,当产生了10条消息的情况想,目前有会得到(只是解释) 0.index (表示这里index是对0-4做的索引) 5.index (表示这里index是对5-9做的索引) 10.index (表示这里index是对10-15做的索引,目前还没满) 和 0.log 5.log 10.log ,当消费者需要读取offset=8的时候,首先kafka对index文件列表进行二分查找,可以算出.应该是在5.index对应的log文件中,然后对对应的5.log文件,进行顺序查找,5-&amp;gt;6-&amp;gt;7-&amp;gt;8,直到顺序找到8就好了.
+具体的算法参看美团的文章好了
+更多文档  官方文档 Kafka文件存储机制那些事 Kafka集群partition replication自动分配分析  </description>
+    </item>
+    
+    <item>
+      <title>kafka快速上手</title>
+      <link>https://leizhiyuan.github.io/2015/09/03/kafka%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/</link>
+      <pubDate>Thu, 03 Sep 2015 22:29:57 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/09/03/kafka%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/</guid>
+      <description> 简单介绍 kafka是一个分布式消息中间件,在kafka中主要涉及到四个基本名词: Topic Kafka将消息种子分门别类， 每一类的消息称之为一个主题(Topic).
+Producer 发布消息的对象称之为主题生产者.
+Consumer 订阅消息并处理消息的对象称之为主题消费者
+Broker 已发布的消息保存在一组服务器中，称之为Kafka集群。集群中的每一个服务器称为一个代理(Broker). 消费者可以订阅一个或多个主题，并从Broker拉数据(注意是拉,不是pull,)，从而消费这些已发布的消息。
+安装(以windows为例) 安装非常简单,从这里下载,下载完成后解压到一个目录就好了.
+简单使用 首先使用kafka的一个流程就是生产者生产消息,发送给kafka集群,然后消费者从kafka集群中获取消息进行消费. 要启动kafka需要先启动zookeeper,因为ZooKeeper是通过冗余服务实现高可用性的,也就是说在分布式环境中,如何保证kafka集群的高可用.zookeeper会来做leader选取,当消费者准备发消息时,会从zookeeper中获取一个可用的消息服务器地址,然后连接进行发送,保证党集群内有服务器宕机并不影响整体的使用. 1.启动自带的简易zookeeper. 进行解压目录的bin/windows目录 zookeeper-server-start.bat ../../config/zookeeper.properties
+执行命令启动,从zookeeper.properties中会看到.zookeeper会开发一个clientPort=2181,2181的端口给消费者使用,其实也可以给生产者使用,但是在0.8.0版本后，producer不再通过zookeeper连接broker, 而是通过brokerlist（192.168.0.1:9092,192.168.0.2:9092,192.168.0.3:9092配置,直接和broker连接，只要能和一个broker连接上就能够获取到集群中其他broker上的信息,绕过了zookeeper.
+2.启动kafka服务 kafka-server-start.bat ../../config/server.properties 执行启动,另一个命令行窗口,同样的.查看配置问题,会知道kafka的服务会在port=9092 ,9092端口打开.
+3.注册一个topic kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test 这个命令中,create表示创建.zookeeper 和后面的地址表示kafka使用本机2181端口开放的zookeeper保持高可用.replication-factor表示消息只冗余一份,目前我们只有一个kafka机器,broker,partitions 表示一份分区,分区是kafka的另一个概念,大致是说,同一topic内部的消息按照一定的key和算法被分区(partition)存储在不同的位置上，这个下次写好了.这样已经在kafka注册了一个名为test的消息topic了.
+4.使用简易的控制台生产者模拟 kafka-console-producer.bat --broker-list localhost:9092 --topic test 前面说过了.新版本生产者直接通过brokerlist来连接kafka,目前只有一台,所以就一个地址,准备向test这个topic发送消息.
+5.使用简易的控制台消费者模拟 kafka-console-consumer.bat --zookeeper localhost:2181 --topic test 这个前面也说过了.消费者使用zookeeper获取可用的broker列表,然后拉去消息,并且还有一些offset同步的问题.和分区,文件存储一起的一个概念,下次写.
+6.开始生产和消费消息 至此,已经开了四个控制台窗口了..在producer窗口里,随便打几个字,然后enter,在消费者的窗口里将会显示出来. 其他问题 实际可能不那么顺利,如果你启动kafka或者其他应用的时候,有错误提示,提示无法创建虚拟机vm这样的.那么修改一下对应的bat脚本.就好了 ,vm的heap申请是1G,如果你机器内存不够,改成512M,或者更小的就好了.
+更多文档  官方文档 kafka快速入门  </description>
+    </item>
+    
+  </channel>
+</rss>

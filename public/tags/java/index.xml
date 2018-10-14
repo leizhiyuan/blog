@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/java/</link>
+    <description>Recent content in Java on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 08 Apr 2017 15:10:36 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>分析代码调用关系的利器-Flow</title>
+      <link>https://leizhiyuan.github.io/2017/04/08/%E5%88%86%E6%9E%90%E4%BB%A3%E7%A0%81%E8%B0%83%E7%94%A8%E5%85%B3%E7%B3%BB%E7%9A%84%E5%88%A9%E5%99%A8-flow/</link>
+      <pubDate>Sat, 08 Apr 2017 15:10:36 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2017/04/08/%E5%88%86%E6%9E%90%E4%BB%A3%E7%A0%81%E8%B0%83%E7%94%A8%E5%85%B3%E7%B3%BB%E7%9A%84%E5%88%A9%E5%99%A8-flow/</guid>
+      <description>今天推荐一个不错的软件.是idea 的插件.名字是Flow, 官方称:A better way to understand your Java applications,原理就是通过 java-agent 修改字节码,配置了拦截器,然后真实地跑一个测试用例,或者启动一下项目,就会生成一个真实的调用关系.官方地址:http://findtheflow.io/
+之前阅读源代码,对于抽象类,或者接口,静态阅读代码不太容易确定具体的调用类,因此阅读有一定的阻碍,当然 debug 也行..但是这个可以通过跑用例,或者简单的测试用例,理清调用关系,非常不错. 可以对代码结构有一个整体关系
+安装 安装比较简单:https://plugins.jetbrains.com/plugin/8362?pr=idea 直接安装idea 这个插件,然后重新启动 idea, 安装完成后的效果.
+使用 使用更简单,直接点击上图中的按钮,开始跑一下,即可,如果启动成功.控制台会有显示.
+然后,会在本地开启7575的端口,来显示结果.
+效果 注意,在结果页里,可以和 idea 源码交互,对着方法点右键,可以直接定位到 idea 代码中的源代码,非常方便.
+其他 其他,就是 可以在配置里设置根据哪些类,这样一些工具类啥的可以直接忽略了.
+使用了一下,还是不错的.但是这个有个问题,如果你的项目自定义了 classloader/ 或者使用了自定义的容易,这个由于没有 mvn 的 jar 包,可能会报错,类找不到.暂时没有好的办法.但是阅读开源代码基本没有问题了.</description>
+    </item>
+    
+    <item>
+      <title>jdk8_cannot_access_class_file</title>
+      <link>https://leizhiyuan.github.io/2017/03/31/jdk8_cannot_access_class_file/</link>
+      <pubDate>Fri, 31 Mar 2017 13:48:50 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2017/03/31/jdk8_cannot_access_class_file/</guid>
+      <description>之前有个项目用 jdk6跑运行正常,用 jdk8跑的时候,会报java cannot access ....class file ...as class file not found though it exists. 虽然可以通过加上报错的类到依赖里解决.但是一直没想明白,为啥 jdk6下没报错.
+最近再次遇到,于是想一次性搞清楚.搜了一下,看 so 上有这么个说法.大意就是以前,如果 A 依赖 B,B 实现了 C 接口,编译的时候, 用 jdk8编译的时候, C 必须在 classpath 中, http://stackoverflow.com/questions/40255718/compiling-with-jdk-1-8-java-cannot-access-class-file-class-file-not-found
+给出了一个 bug 连接,但是这里跟我们的问题有差异,不过这个点提醒了我.于是我搜索了一下 jdk8的relase note
+http://www.oracle.com/technetwork/java/javase/8-compatibility-guide-2156366.html
+注意观看这一段:
+ Area: Tools / javac Synopsis Interfaces need to be present when compiling against their implementations
+ 好了.也就是说还是乖乖加依赖.但是清楚了原因了</description>
+    </item>
+    
+    <item>
+      <title>oom介绍</title>
+      <link>https://leizhiyuan.github.io/2017/02/03/oom%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Fri, 03 Feb 2017 15:04:04 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2017/02/03/oom%E4%BB%8B%E7%BB%8D/</guid>
+      <description>oom 之前知道, 但是并不是很了解,最近遇到了由 oom 引发的问题,所以学习记录一下.
+OOM-killer：Out-of-Memory (OOM) Killer是一种保护机制，用于当内存严重不足时，为了系统的继续运转，内核迫不得已挑选一个进程，将其杀死，以释放内存，缓解内存不足的问题。 可以看出这种方式对进程的保护是有限的，不能完全的保护进程的运行。
+如何知道是否发生了 oom 两种方法,第一种,查看 /var/log/messages,会有类似
+Out of memory: Kill process 9682 (mysqld) score 9 or sacrifice child Killed process 9682, UID 27, (mysqld) total-vm:47388kB, anon-rss:3744kB, file-rss:80kB httpd invoked oom-killer: gfp_mask=0x201da, order=0, oom_adj=0, oom_score_adj=0 httpd cpuset=/ mems_allowed=0 Pid: 8911, comm: httpd Not tainted 2.6.32-279.1.1.el6.i686 #1 这样的标识,说明发生了 oom,关键就是 kill process, 所以可以这样
+sudo cat /var/log/messages | grep -i&amp;quot;killed process&amp;quot;
+另一种是通过dmesg来查看 dmesg | egrep -i &#39;killed process&#39; 这个命令查看的 oom 的时间里是时间戳的形式,如果你的 dmesg 没有-T这个时间的选项,那么就需要通过</description>
+    </item>
+    
+    <item>
+      <title>graylog日记管理平台使用的那些坑</title>
+      <link>https://leizhiyuan.github.io/2016/12/10/graylog%E6%97%A5%E8%AE%B0%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/</link>
+      <pubDate>Sat, 10 Dec 2016 18:48:17 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/12/10/graylog%E6%97%A5%E8%AE%B0%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/</guid>
+      <description>前言 最近使用 graylog在部署日志平台的时候,踩到很多&amp;rdquo;坑&amp;rdquo;,记录一下
+日志采集(nxlog) 1.客户端不要做太多的正则计算 graylog 最早推荐的 nxlog 采集客户端,现在貌似有了 beats 的采集方式,不过我没了解,nxlog 采集的话,需要配置Snippets,就是定义输入,输出,处理器的地方,这个地方, Input 模块是在客户端计算的.所以,一定不要进行太多的正则计算.否则会严重影响客户端的 cpu 资源.降低应用程序的性能.
+2.开多行一定要慎重 graylog 可以通过配置
+&amp;lt;Extension multiline&amp;gt; Module xm_multiline HeaderLine /^\d{0,2}\/\d{0,2}\/\d{0,4}/ EndLine /^\d{0,2}\/\d{0,2}\/\d{0,4}/ &amp;lt;/Extension&amp;gt; &amp;lt;Input pcc-esolutions-log&amp;gt; Module im_file File &amp;#34;*.log&amp;#34; SavePos TRUE InputType multiline &amp;lt;/Input&amp;gt; 来实现对于类似错误栈这样的信息,将多行采集成一行,但是一定要注意.如果这个正则写错了,或者其他原因,导致,未能正确匹配.会导致 nxlog 客户端占用内存暴涨.原因是为了实现多行采集,会再客户端内存中保存日志内容,直到匹配到行尾.如果未能正确匹配.会一直保存.导致内存泄露.
+这时候一般伴随着nxlog 的客户端日志中开始打印: 2016-12-05 18:36:47 ERROR oversized string, limit is 1048576 bytes 这样的信息.表示单条日志超过了1m
+最终有一定几率影响客户端应用,被 oom 所杀.不要问我怎么知道的&amp;hellip;
+3 日志就是太大怎么办. 貌似没办法..只能在 Input 配置中.
+Exec if $raw_event $raw_event = substr($raw_event, 0, 1040000); 执行类似的来限制,没有尝试过,参考这里:日志大小超长配置</description>
+    </item>
+    
+    <item>
+      <title>graylog中的字段解析</title>
+      <link>https://leizhiyuan.github.io/2016/10/30/graylog%E4%B8%AD%E7%9A%84%E5%AD%97%E6%AE%B5%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Sun, 30 Oct 2016 14:47:01 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/10/30/graylog%E4%B8%AD%E7%9A%84%E5%AD%97%E6%AE%B5%E8%A7%A3%E6%9E%90/</guid>
+      <description>关于字段解析 一旦 graylog 用在了一个分布式系统上,那么采集的日志格式多种多样,涉及到通过 rules.drl来解析具体的字段.之前的同学的方案是用drools 来完成的.通过一个统一的界面,来给用户生成一些正则规则这种.然后自己写了个转换器转成 Drools 的文件.更新到 graylog 的服务器上.然后重启gralog 应用完成.
+实际上, graylog 2之后的版本提供了rules和 pipeline ,这种不需要重启应用,完成这个解析的动作.但是.注意.这个不完善.所以只支持一些简单的语法,无法实现原有的完全转换.所以放弃.
+在此过程中.这个rules 有一个比较强大的功能,自动解析 key value 对.需要添加,但是,需要你的日志文件格式里的 key value有空格, 也就是要求必须是 key=value 这样,不能紧挨着逗号这样的..比如你的打印日志是 key=value,key2=value2.那么久无法解析了..这个暂时没看到比较好的办法.估计要改代码.如果你恰好符合.那最好了.</description>
+    </item>
+    
+    <item>
+      <title>mac日志批量查询配置</title>
+      <link>https://leizhiyuan.github.io/2016/10/05/mac%E6%97%A5%E5%BF%97%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Wed, 05 Oct 2016 10:13:05 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/10/05/mac%E6%97%A5%E5%BF%97%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E9%85%8D%E7%BD%AE/</guid>
+      <description>由于公司线下机器非常多,导致每次查日志变得非常痛苦.线下的trace平台大部分时候还是可用的.但是有时候需要本机来批量查询.方案就是批量分发ssh key,实现免登.然后luit实现编码转换,这个主要是公司的机器编码有差异.历史原因.
+0. 准备 先要安装pssh,expect,ssh-copy-id.
+brew install pssh brew install homebrew/dupes/expect brew install ssh-copy-id 另外安装luit的安装参考这里luit安装
+1. 生成ssh key ,并批量copy 生成ssh key比较简单.ssh-keygen -t rsa -C &amp;quot;your_email@example.com&amp;quot;,直接使用git的ssh key也是可以的.然后保存下面这个脚本为pscopy.sh,
+#!/bin/bash FILE=`cat ~/host.txt` for ip in $FILE;do expect -c &amp;#34; spawn ssh-copy-id $ipexpect { \&amp;#34;*yes/no*\&amp;#34; {send \&amp;#34;yes\r\&amp;#34;;exp_continue} \&amp;#34;*password*\&amp;#34; {send \&amp;#34;pass\r\&amp;#34;;exp_continue} \&amp;#34;*password*\&amp;#34; {send \&amp;#34;pass\r\&amp;#34;;} } &amp;#34; done 然后执行一下sh pscopy.sh,注意,host.txt要保证存在.格式是user@address.一行一个,中间的paas要改成user的密码,这样就会使用指定的用户密码,自动copy ssh key了. 完成上面的步骤之后,ssh user@address 就可以免登了.
+2. 写一个简单的pssh脚本 #!/bin/bash  encoding= key= command= file= usage() { echo &amp;#34;Usage: `basename $0` [-f filename] [-c encoding] [-k keyword]&amp;#34; exit 1 } while getopts :f:c:k: opt do case $opt in c) encoding=$OPTARG ;; :) echo &amp;#34;-$OPTARGneeds an argument&amp;#34; ;; k) key=$OPTARG ;; f) file=$OPTARG ;; *) echo &amp;#34;-$optnot recognized&amp;#34; usage ;; esac done if [ -z &amp;#34;$encoding&amp;#34; ]; then #该脚本必须提供-d选项  encoding=&amp;#34;gbk&amp;#34; fi if [ -z &amp;#34;$file&amp;#34; ]; then #该脚本必须提供-d选项  file=&amp;#34;~/hosts.</description>
+    </item>
+    
+    <item>
+      <title>motan源码阅读-客户端服务引用</title>
+      <link>https://leizhiyuan.github.io/2016/05/31/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%95%E7%94%A8/</link>
+      <pubDate>Tue, 31 May 2016 20:00:45 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/05/31/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%95%E7%94%A8/</guid>
+      <description>一旦服务器启动,服务开始提供,并且在配置中心注册了(配置中心可以是本地的地址,也可以是zk,也可以是其他的实现),那么客户端就要开始调用了
+点击看大图
+服务引用 RefererConfig.getRef()
+先是获取集群支持(先忽略,主要是配置中心相关的)
+configHandler.refer(interfaceClass, clusters, proxy) 开始获取接口代理
+1.一旦知道接口名,Class.forName加载接口类,就开始通过proxy工厂来为服务端接口创建代理了
+2.jdk的Proxy类,直接来创建代理.同时代理要传入RefererInvocationHandler 这个类可以看错是真正的stub,封装了rpc调用请求.当在客户端获取到服务接口的bean的时候,实际上调用过程被这个类拦截,进行封装发送rpc
+1.当接口被调用的时候,这个拦截器险根据拦截到的请求构造一个rpc请求
+2.这里就会存在一个策略.该调用哪个,以FailoverHaStrategy为例
+1.选择一个服务提供方
+1.如果是jvm服务,那么直接从本地的服务map中取出一个调用就行
+2.如果是真正的远程服务,这时候就进入nettyClient部分了
+把请求向netty的Channel中写就行了.服务端会从Channel中取进行处理,然后放回来.这样客户端就拿到结果了</description>
+    </item>
+    
+    <item>
+      <title>motan源码阅读-服务的发布</title>
+      <link>https://leizhiyuan.github.io/2016/05/30/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8F%91%E5%B8%83/</link>
+      <pubDate>Mon, 30 May 2016 20:42:06 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/05/30/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8F%91%E5%B8%83/</guid>
+      <description>这一篇继续从这个demo开始,分析一下这个服务是怎么发布出去的.关键的代码从motanDemoService.export();开始.
+一图胜千言.
+点击看大图
+服务发布ServiceConfig.export()
+1.加载有的配置中心url列表/新建
+2.doExport(ProtocolConfig,port,registryURLs) //配置中心地址列表
+2.1导出的时候,会先判断是否存在.其实就是根据协议名,ip,接口,参数来生成一个唯一key.
+2.2ConfigHandler.export(Class interfaceClass, T ref, List registryUrls) //接口.实现.配置中心url列表
+2.2.1.根据协议名创建协议,这里ProtocolFilterDecorator
+2.2.2.根据接口,实现类,serviceUrl,构造一个Provider,用来提供服务
+2.2.3.使用协议进行导出Provider, export(Provider provider, URL url)
+2.2.3.1创建一个Exporter
+2.2.3.1.1.创建的时候会将服务提供方Provider和url有个映射关系,这样当一个url请求过来的时候,就知道改调用谁了.ProviderMessageRouter,讲一个请求路由注册到server上,同时包装了一个心跳包
+2.2.3.2进行导出 导出就是一个服务器打开的过程/server.open();
+2.2.3.2.1进入nettyServer初始化,主要就是添加handler,编码解码.和一个rpc处理的 相当于一个请求过来的时候,先进行解码,然后调用业务处理handler进行处理,处理完成后,进行编码,然后返回给客户端
+服务器启动后,相当于这个服务就发布了
+2.2.4.注册register(registryUrls, serviceUrl) //这一步就是将serviceUrl,向对应的jvm/rpc服务中心注册url,本地注册就是LocalRegistryService类里一个map..zk的.就是向zk写node.等等</description>
+    </item>
+    
+    <item>
+      <title>motan源码阅读-入门和运行demo</title>
+      <link>https://leizhiyuan.github.io/2016/05/29/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%85%A5%E9%97%A8%E5%92%8C%E8%BF%90%E8%A1%8Cdemo/</link>
+      <pubDate>Sun, 29 May 2016 15:13:48 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/05/29/motan%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%85%A5%E9%97%A8%E5%92%8C%E8%BF%90%E8%A1%8Cdemo/</guid>
+      <description>工作中一直在使用rpc,但是只是对简单的原理比较熟悉.最近看到有motan的一个介绍,代码拉下来看了看,除了测试用例比较少之外.其他还是不错的,和阿里的rpc框架比起来,还是弱了一些,好处就是方便用来学习. motan 是weibo的一个rpc框架,据说已经在线上使用了.
+在学习rpc框架之前,建议看一个hello world级别的文章RPC框架几行代码就够了,写的非常好,看完基本就知道rpc的核心了.
+Remote Procedure Calls中最关键的那个图,就能说明了.
+本地client调用本地client stub,stub对消息进行封装,通过socket发送,服务端的server stub接收到,然后解包,将里面传递的方法名,方法参数.等等信息,识别出来,调用服务端对应的服务,然后得到结果后,又通过socket返回,本地client又进行解包.就行了.
+这里面会涉及到,封装,封装就是吧对象序列化,这样才能在网络中传递.
+而生产环境的rpc框架需要考虑的有:
+stub怎么生成,序列化怎么最高效,如何统一不同机器之前的调用,(大小端的机器等),如何识别该调用哪个机器,负载均衡.socket通信.等等.
+先跑个demo熟悉一下.
+下载motan源码,导入ide,然后先启动服务端,MotanApiExportDemo,这个类,然后控制台会打出服务已经启动.然后运行MotanApiClientDemo,会发现一个控制台打出motan,服务端打出hello motan.就说明跑起来了.
+如果控制台日志没有.修改对应resources下面的log4j.properties文件.首行添加log4j.rootLogger=debug,stdout ,会设置默认日志级别为debug,并且在控制台输出. 或者直接fork我这个
+后面会逐步分析,希望坚持下来.</description>
+    </item>
+    
+    <item>
+      <title>python3.5 安装 Paramiko</title>
+      <link>https://leizhiyuan.github.io/2015/12/28/python3.5-%E5%AE%89%E8%A3%85-paramiko/</link>
+      <pubDate>Mon, 28 Dec 2015 19:17:25 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/12/28/python3.5-%E5%AE%89%E8%A3%85-paramiko/</guid>
+      <description>最近由于一些需求,要搞一下python,于是周末搞了搞.要连接服务器,进行一些服务器的操作,于是安装这个Paramiko包,
+直接pip install paramiko 结果.报错,最关键的一句是:
+error: Unable to find vcvarsall.bat google一圈.最终找到一种最简单地方法.其他的安装vs.安装MinGW都太复杂了.
+ 安装PyCrypto 第三方版 因为paramiko依赖PyCrypto,上面那个错就是他报错出来的.安装PyCrypto第三方版 java pip install --use-wheel --no-index --find-links=https://github.com/sfbahr/PyCrypto-Wheels/raw/master/pycrypto-2.6.1-cp35-none-win_amd64.whl pycrypto ` 安装完成后,再次安装paramiko即可. 2.修改nt.py  安装完上面的步骤,写一个简单的程序测试下
+#-*- coding: utf-8 -*- #!/usr/bin/python import paramiko import threading def ssh2(ip,username,passwd,cmd):try: ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(ip,22,username,passwd,timeout=5) for m in cmd: stdin, stdout, stderr = ssh.exec_command(m) out = stdout.readlines() #屏幕输出 for o in out: print(o) print(&amp;#39;%s\tOK\n&amp;#39;%(ip)) ssh.close() except : print(&amp;#39;%s\tError\n&amp;#39;%(ip)) if __name__==&amp;#39;__main__&amp;#39;: cmd = [&amp;#39;find /home/admin/logs/ -mtime +3 -name \&amp;#39;*.</description>
+    </item>
+    
+    <item>
+      <title>json-lib反序列化精度丢失问题</title>
+      <link>https://leizhiyuan.github.io/2015/11/25/json-lib%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 25 Nov 2015 21:30:58 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/11/25/json-lib%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/</guid>
+      <description>最近在工作中,遇到一个问题,项目中某处使用了json-lib的2.4-jdk15版本.问题最终简化为
+double amount = 6264583.33; String jsonString = &amp;#34;{\&amp;#34;pi\&amp;#34;:&amp;#34; + amount + &amp;#34;}&amp;#34;; JSONObject jsonObject = JSONObject.fromObject(jsonString); System.out.println(&amp;#34;转换前:&amp;#34; + jsonString); System.out.println(&amp;#34;转换后:&amp;#34; + jsonObject); 这个值输出的将会是6264583.5 这个值.这个问题.先google一下,很快赵到了 http://sourceforge.net/p/json-lib/bugs/116/ 于是,大概问题知道了.是json-lib的一个bug,但是这个bug怎么来的呢.结合这个bug下面的评论和debug代码,先以pi这个例子,很快走到了.
+可以看到json-lib走到了apache common-lang(2.5这个版本) 的NumberUtils.createNumber处,此时String的还是对的. 继续单步,来到这个方法里面
+可以看到这里小数部分,整数部分也都还是对的.继续向下走.我擦.画风不太对.居然采用了先尝试float,发现没问题.然后就继续尝试double,我擦.直接数据就丢失了呀..
+好吧..那么现在问题就便成了更简单的一个问题.
+使用NumberUtils.createNumber 的bug.在bug issue里,有人提到.这个bug,apache官方已知.好的. https://issues.apache.org/jira/browse/LANG-693 然后在这里有官方的一次修复,修复记录在这里.3.2版本已经修复. http://svn.apache.org/viewvc?view=revision&amp;amp;revision=1484263 可以看到是对小数部分的长度进行了判断.如果小于7位,就用float转换,如果大于7,小于16,就用double,如果还大,就用BigDecimal.
+n = org.apache.commons.lang3.math.NumberUtils.createNumber(&amp;#34;3.14159265358&amp;#34;); System.out.println(&amp;#34;lang3_createNumber_3.14159265358----&amp;gt;&amp;#34; + n + &amp;#34;-&amp;gt;精度正常&amp;#34;); 于是我继续debug,看common-lang3的修复情况,好像确实是修复了.但是对于我出现的问题1.6264583.33 这个数字,还是出现了精度丢失,因为这里小数部分小于7位,所以尝试使用float转换,直接丢失精度
+修复不完善..
+于是提个bug :https://issues.apache.org/jira/browse/LANG-1187 等回复.
+继续.公司内部一般使用fastjson,那么如果我使用fastjson,有问题吗? 发现没有问题.
+Object o = com.alibaba.fastjson.JSONObject.parse(&amp;#34;3.14159265358&amp;#34;); System.out.println(&amp;#34;fastjson_createNumber_3.14159265358----&amp;gt;&amp;#34; + o + &amp;#34;-&amp;gt;精度正常&amp;#34;); o = com.alibaba.fastjson.JSONObject.parse(&amp;#34;6264583.33&amp;#34;); System.out.println(&amp;#34;fastjson_createNumber_6264583.33----&amp;gt;&amp;#34; + o + &amp;#34;-&amp;gt;精度正常&amp;#34;); 可以看到,这里做转换的时候传递了一个是否是bigdecimal的标识.</description>
+    </item>
+    
+    <item>
+      <title>zookeeper伪集群部署</title>
+      <link>https://leizhiyuan.github.io/2015/11/22/zookeeper%E4%BC%AA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Sun, 22 Nov 2015 16:06:43 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/11/22/zookeeper%E4%BC%AA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/</guid>
+      <description>zookeeper是用来管理分布式环境的系统主要用来服务发现,配置管理,同步.大致原理是zookeeper 自身集群的每个节点都维护这一个目录树,内容相同,每个节点的数据一致性由zookeeper自身的算法来解决.下篇尝试.zookeeper本篇主要说明如果部署zookeeper的分布式环境.
+下载 zookeeper由apache在管理,下载地址:http://www.apache.org/dyn/closer.cgi/zookeeper/.下载完成后,随便放个目录好了..
+配置 本次创建3个节点. 1 . 存储目录准备 首先给每个伪节点创建一个目录.用来存储每个节点保存的目录信息.真实的分布式环境将对应在不同的机器上. 这里我在D:\zookeeper,创建三个目录,分别是zk1,zk2,zk3. 然后为每个集群编写一个myid文件,标识集群id
+2 . 启动配置文件 下载完成后,在conf目录会看到由一个zoo_sample.cfg实例配置文件,我们可以以这个为模板.来为分布式环境的每个zookeeper节点配置一个节点的数据目录,端口.其他节点的信息等.
+我们在conf目录例创建三个配置文件,分别为zk1.cfg,zk2.cfg,zk3.cfg; 里面的值 zk1.cfg
+tickTime=2000 initLimit=10 syncLimit=5 dataDir=D:/zookeeper/zk1 clientPort=2181 server.1=127.0.0.1:2888:3888 server.2=127.0.0.1:2889:3889 server.3=127.0.0.1:2890:3890 zk2.cfg
+tickTime=2000 initLimit=10 syncLimit=5 dataDir=D:/zookeeper/zk2 clientPort=2182 server.1=127.0.0.1:2888:3888 server.2=127.0.0.1:2889:3889 server.3=127.0.0.1:2890:3890 zk1.cfg
+tickTime=2000 initLimit=10 syncLimit=5 dataDir=D:/zookeeper/zk3 clientPort=2183 server.1=127.0.0.1:2888:3888 server.2=127.0.0.1:2889:3889 server.3=127.0.0.1:2890:3890 这里的server.1.2.3这就是每个机器对应的myid的值. server.1=127.0.0.1:2888:3888解释一下这条配置.前面的2888是各个节点用来互相交流.选取leader的端口.后面这个端口,3888是各个节点用来和leader沟通的节点.而clientPort 是开放出去,等待客户端连接的端口.
+启动 分别启动三个实例,在zookeeper的安装目录下.进如bin目录,复制三个zkServer.cmd 文件,要是linux就不用这么麻烦了..
+分别加上一行
+set ZOOCFG=../conf/zk1.cfg
+最终这个文件像这样
+setlocal call &amp;#34;%~dp0zkEnv.cmd&amp;#34; set ZOOMAIN=org.apache.zookeeper.server.quorum.QuorumPeerMain set ZOOCFG=../conf/zk1.cfg echo on java &amp;#34;-Dzookeeper.log.dir=%ZOO_LOG_DIR%&amp;#34; &amp;#34;-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%&amp;#34; -cp &amp;#34;%CLASSPATH%&amp;#34; %ZOOMAIN% &amp;#34;%ZOOCFG%&amp;#34; %* endlocal 然后直接双击启动zkServer1.</description>
+    </item>
+    
+    <item>
+      <title>Java可重入锁学习笔记</title>
+      <link>https://leizhiyuan.github.io/2015/11/20/java%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Fri, 20 Nov 2015 20:51:25 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/11/20/java%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>前几天被前辈问到这个可重入锁,结果忘掉了.于是抽空整个了解一下
+目录  什么是可重入锁 为什么要可重入 如何实现可重入锁 有不可重入锁吗 demo代码展示 参考文章  1 . 什么是可重入锁 锁的概念就不用多解释了,当某个线程A已经持有了一个锁,当线程B尝试进入被这个锁保护的代码段的时候.就会被阻塞.而锁的操作粒度是&amp;rdquo;线程&amp;rdquo;,而不是调用(至于为什么要这样,下面解释).同一个线程再次进入同步代码的时候.可以使用自己已经获取到的锁,这就是可重入锁 java里面内置锁(synchronize)和Lock(ReentrantLock)都是可重入的
+2 . 为什么要可重入 如果线程A继续再次获得这个锁呢?比如一个方法是synchronized,递归调用自己,那么第一次已经获得了锁,第二次调用的时候还能进入吗? 直观上当然需要能进入.这就要求必须是可重入的.可重入锁又叫做递归锁,再举个例子.
+public class Widget { public synchronized void doSomething() { ... } } public class LoggingWidget extends Widget { public synchronized void doSomething() { System.out.println(toString() + &amp;#34;: calling doSomething&amp;#34;); super.doSomething();//若内置锁是不可重入的，则发生死锁 } } 这个例子是java并发编程实战中的例 子.synchronized 是父类Widget的内置锁,当执行子 类的方法的时候,先获取了一次Widget的锁,然后在执行super的时候,就要获取一次,如果不可重入,那么就跪了.
+3 . 如何实现可重入锁 为每个锁关联一个获取计数器和一个所有者线程,当计数值为0的时候,这个所就没有被任何线程只有.当线程请求一个未被持有的锁时,JVM将记下锁的持有者,并且将获取计数值置为1,如果同一个线程再次获取这个锁,技术值将递增,退出一次同步代码块,计算值递减,当计数值为0时,这个锁就被释放. ReentrantLock里面有实现
+4 . 有不可重入锁吗 这个还真有.Linux下的pthread_mutex_t锁是默认是非递归的。可以通过设置PTHREAD_MUTEX_RECURSIVE属性，将pthread_mutex_t锁设置为递归锁。如果要自己实现不可重入锁,同可重入锁,这个计数器只能为1.或者0,再次进入的时候,发现已经是1了,就进行阻塞.jdk里面没有默认的实现类.
+5 . demo代码展示 5.1 内置锁的可重入</description>
+    </item>
+    
+    <item>
+      <title>jenkins相关资料</title>
+      <link>https://leizhiyuan.github.io/2014/09/21/jenkins%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99/</link>
+      <pubDate>Sun, 21 Sep 2014 18:26:48 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/09/21/jenkins%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99/</guid>
+      <description> jenkins相关资料 jenkins的前身是hudson,是为了做持续集成测试而诞生的框架.
+简单说就是把代码流配置上去,然后该框架就能根据设定的时间或其他方式不间断的执行测试用例.并给出报告.这样就可以随时掌控代码质量.支持执行shell命令.支持短信通知等等.
+jenkins,首先从http://jenkins-ci.org/官方下载war包,然后有两种方式可以本地部署,一种直接执行 java -jar hudson.war,然后在本地的8080端口访问就可以了.另一种是我们希望部署在容器上,那么可以部署到tomcat,jetty等等.直接拷贝war包到对应的目录即可.
+部署成功后,可以新建job,然后配置svn流,配置build时间,配置一下build之前的动作,配置一下各种命令,执行完成后通知等等就可以了.
+最近因为有个功能感觉通过开发jenkins插件的方式会更加方便,周末大量读了一些文档,能找到的都是helloworl.摸索了一下,已经写出一个小的demo了,后面改进一下,.就ok了.先简单把这个过程中收集的资料整理一下.基本都看过觉得还不错的,官方文档不给力.下周希望可以写完,然后分享出来.
+ jenkins入门文档 The hudson book Writing-first-hudson-plugin Hudson插件开发简介 Hudson插件开发入门体验  插件界面设计设计的各种tag介绍 官方插件开发 UI开发jelly介绍 jenkins入门(itech)  </description>
+    </item>
+    
+    <item>
+      <title>Spring揭秘-23章，Spring MVC初体验</title>
+      <link>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-23%E7%AB%A0spring-mvc%E5%88%9D%E4%BD%93%E9%AA%8C/</link>
+      <pubDate>Sun, 13 Jul 2014 11:26:24 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-23%E7%AB%A0spring-mvc%E5%88%9D%E4%BD%93%E9%AA%8C/</guid>
+      <description>&amp;nbsp;鸟瞰Spring MVC与其他请求驱动的Web框架思路类似。org.springframework.web.servlet.DispatcherServlet就是Spring mvC中的Front Controller。负责处理请求，但是不针对具体的处理逻辑。而是委派给下一级的控制器，也就是org.springframework.web.servlet.mvc.Controller去执行。DispatcherServlet的处理流程如下：1.HandlerMappingDispathcherServlet是FrontController，所以他服务于一组Web请求，需要在web.xml中配置。DispathcherServlet需要自己处理请求和处理之前的对应关系，比如根据参数对应到不同的Controller上。为了更加方便的处理映射的匹配，引入HandlerMapping用来获取需要处理请求的对应的Controller类。 2.Controller对应于DispathcherServlet的次级控制器，本身实现了对应某个具体Web请求的处理逻辑，当HandlerMapping查到了Controller之后，DispathcherServlet获得了HandlerMapping的返回结果。然后调用Controller处理请求，处理完成后，返回一个ModelAndView实例，里面包含两部分内容视图的逻辑名称，DispathcherServlet根据名称决定显示哪个视图模型数据，渲染过程中需要将这些模型数据并入视图的显示中 ViewResolver和View我们已经来到了最后一步，要转成最终的JSP视图文件。由于模板引擎很多，Spring提供了一套基于ViewResolver和View的抽象层。 
+[来自为知笔记(Wiz)](http://www.wiz.cn/i/e0140d75 &#34;来自为知笔记(Wiz)&#34;) </description>
+    </item>
+    
+    <item>
+      <title>Spring揭秘-22章，迈向Spring MVC的旅程</title>
+      <link>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-22%E7%AB%A0%E8%BF%88%E5%90%91spring-mvc%E7%9A%84%E6%97%85%E7%A8%8B/</link>
+      <pubDate>Sun, 13 Jul 2014 11:25:39 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-22%E7%AB%A0%E8%BF%88%E5%90%91spring-mvc%E7%9A%84%E6%97%85%E7%A8%8B/</guid>
+      <description>Spring揭秘-22章，迈向Spring MVC的旅程 Servlet导致数据访问逻辑和业务处理逻辑和对应的视图渲染逻辑相互混杂。之后，JSP出现，通过将输出渲染以模板的形式抽取到jsp后缀的模板文件中，jsp开始繁盛，同时要注意，Servlet处理web请求的时候，要在web.xml中，注册相应的请求url和具体的Serlet的映射关系。于是，jsp有开始混合着写代码 于是，我们引入了JavaBean,来封装相关业务逻辑，经过一次升级后， 这个模型就比较清楚了。但是和MVC还是有点差别一个典型的mvc模式应该是这样的 控制器处理请求，模型封装逻辑和状态，视图给用户， Structs以请求/响应框架为基础。 Spring MVC属于请求渠道的WEb框架。框架引入Front Controller做分发之后，就更加好管理了。 
+[来自为知笔记(Wiz)](http://www.wiz.cn/i/e0140d75 &#34;来自为知笔记(Wiz)&#34;) </description>
+    </item>
+    
+    <item>
+      <title>Spring揭秘-第13章 统一的数据访问异常层次体系</title>
+      <link>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-%E7%AC%AC13%E7%AB%A0-%E7%BB%9F%E4%B8%80%E7%9A%84%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E5%BC%82%E5%B8%B8%E5%B1%82%E6%AC%A1%E4%BD%93%E7%B3%BB/</link>
+      <pubDate>Sun, 13 Jul 2014 11:25:13 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-%E7%AC%AC13%E7%AB%A0-%E7%BB%9F%E4%B8%80%E7%9A%84%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E5%BC%82%E5%B8%B8%E5%B1%82%E6%AC%A1%E4%BD%93%E7%B3%BB/</guid>
+      <description>Spring揭秘-第13章 统一的数据访问异常层次体系  DAO可以分离数据哭的访问和存储，屏蔽各种数据访问方式的差异性，下面以访问顾客信息为例，使用DAO模式 首先定义一个数据访问对象接口，如下   public interrface ICustomerDao{ Customer findCustomerByPK(String customerId); void updateCustomerStatus(Customer customer); &amp;nbsp;
+ 之后，所有的数据访问都通过该接口进行，不论底层存储机制如何改变，DAO的实现因此会扩展，但客户端代码不需要调整   客户端要用的时候这样使用即可。   publicclassCustomerService { privateICustomerDao customerDao; publicvoid disableCustomerCampain(String customerId) { Customer customer=getCustomerDao().findCustomerByPK(customerId); customer.setCampainStatus(CampainStatus.DISABLE); getCustomerDao().updateCustomerStatus(customer); } publicICustomerDao getCustomerDao() { return customerDao; } publicvoid setCustomerDao(ICustomerDao customerDao) { this.customerDao=customerDao; } &amp;nbsp;
+  我们只要针对不同的数据存储方式实现不同的Dao类即可。  我们开始实现具体的访问数据了。   publicCustomer findCustomerByPK(String customerId) { Connection con=null; try{ con=getDataSource().getConnection(); Customer cust=..; return cust; } catch(SQLException e){ //这里咋办，直接抛出还是直接处理？ } finally{ releaseConnection(con); } } privatevoid releaseConnection(Connection con){ } &amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>Spring揭秘-第四章BeanFactory笔记</title>
+      <link>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-%E7%AC%AC%E5%9B%9B%E7%AB%A0beanfactory%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sun, 13 Jul 2014 11:20:09 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-%E7%AC%AC%E5%9B%9B%E7%AB%A0beanfactory%E7%AC%94%E8%AE%B0/</guid>
+      <description>之前说了，IoC容器就是一个IoC Service Provider，但是容器是个啥意思？![](/images/d4d1615a6c1a06895088631c37e3fca7692f0b8a.png) 可以看到IoC容器提供了更多的内容， Spring的IoC容器又分成两种， 1.BeanFactory 。基础类型IoC容器，提供完整的IoC服务支持。如果没有特殊指定，默认采用延 迟初始化策略（lazy-load）。只有当客户端对象需要访问容器中的某个受管对象的时候，才对 该受管对象进行初始化以及依赖注入操作。所以，相对来说，容器启动初期速度较快，所需 要的资源有限。对于资源有限，并且功能要求不是很严格的场景，BeanFactory是比较合适的 IoC容器选择。  2.ApplicationContext。ApplicationContext在BeanFactory的基础上构建，是相对比较高 级的容器实现，除了拥有BeanFactory的所有支持，ApplicationContext还提供了其他高级特性，比如事件发布、国际化信息支持等，这些会在后面详述。ApplicationContext所管理 的对象，在该类型容器启动之后，默认全部初始化并绑定完成。所以，相对于BeanFactory来 说，ApplicationContext要求更多的系统资源，同时，因为在启动时就完成所有初始化，容 器启动时间较之BeanFactory也会长一些。在那些系统资源充足，并且要求更多功能的场景中， ApplicationContext类型的容器是比较合适的选择。   通过 图4-2，我们可以对BeanFactory和ApplicationContext之间的关系有一个更清晰的认识。      ![](/images/f531ea3e11bb391453eb5f763283398c938634b2.png)     Bean工长，就是生成Bean的嘛，每个业务对象被看成Javabean,我们与工厂打交道就简单得多，我们只要告诉他我要什么对象，至于怎么组装，那是他的事情。   工厂提供了一些对外的接口，比如获取Bean，渠道Bean的状态等等。 以xml为例    &amp;lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&amp;gt; &amp;lt;!DOCTYPE beans PUBLIC &#34;-//SPRING//DTD BEAN//EN&#34; &#34;http://www.springframework.org/dtd/spring-beans.dtd&#34;&amp;gt; &amp;lt;beans&amp;gt; &amp;lt;bean id=&#34;djNewsProvider&#34; class=&#34;..FXNewsProvider&#34;&amp;gt; &amp;lt;constructor-arg index=&#34;0&#34;&amp;gt; &amp;lt;ref bean=&#34;djNewsListener&#34;/&amp;gt; &amp;lt;/constructor-arg&amp;gt; &amp;lt;constructor-arg index=&#34;1&#34;&amp;gt; &amp;lt;ref bean=&#34;djNewsPersister&#34;/&amp;gt; &amp;lt;/constructor-arg&amp;gt; &amp;lt;/bean&amp;gt; &amp;lt;bean id=&#34;djNewsListener&#34; class=&#34;..impl.DowJonesNewsListener&#34;&amp;gt; &amp;lt;/bean&amp;gt; &amp;lt;bean id=&#34;</description>
+    </item>
+    
+    <item>
+      <title>Spring揭秘-第三章IoC Service Provider读书笔记</title>
+      <link>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-%E7%AC%AC%E4%B8%89%E7%AB%A0ioc-service-provider%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sun, 13 Jul 2014 11:18:02 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/07/13/spring%E6%8F%AD%E7%A7%98-%E7%AC%AC%E4%B8%89%E7%AB%A0ioc-service-provider%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>我们虽然已经通过IoC声明了相应的依赖，但是最终总要有个啥东西将这些依赖对象绑定在一起，这里而IoC Service Provider, 来啦，表示一种绑定的实现方式，可以使一段代码，也可以是一组相关的泪，甚至是框架或容器。  比如前一篇提到的 IFXNewsListener newsListener = new DowJonesNewsListener(); IFXNewsPersister newsPersister = new DowJonesNewsPersister(); FXNewsProvider newsProvider = new FXNewsProvider(newsListener,newsPersister); newsProvider.getAndPersistNews(); &amp;nbsp;
+ 就是一个容器，只不过太简单了，不适用于更多的场景，  IoC容器就是Spring提供依赖注入服务的Provider  IoC Service Provider 是干嘛？ 1.业务对象的构建管理，剥离客户端对象的构建的依赖逻辑，比如A引用B，那么A是B的客户端对象，容器需要理清这种关系。 2.业务对象之间的依赖绑定，通过1的实现， 识别各个对象的依赖关系，然后将这些对象依赖的对象注入绑定，用的时候就有了。   那你要问了，这怎么管理对象间的依赖关系呢  IoC Service Provider怎么就能完全领会代码的意图呢？他怎么记住这么多的依赖关系等等，他要这么做 1.元数据方式 2.通过描述性较强的xml来记录对应信息 3.通过编写代码的方式注册这些信息   3.直接编码方式， 明确了依赖关系 IoContainer container = &amp;hellip;; container.register(FXNewsProvider.class,new FXNewsProvider()); container.register(IFXNewsListener.class,new DowJonesNewsListener()); &amp;hellip; FXNewsProvider newsProvider = (FXNewsProvider)container.get(FXNewsProvider.class); newProvider.getAndPersistNews(); &amp;nbsp;
+  2.配置文件方式  最常见的还是xml方式，  &amp;lt;bean id=&amp;ldquo;newsProvider&amp;rdquo; class=&amp;ldquo;.</description>
+    </item>
+    
+    <item>
+      <title>《Spring揭秘》读书笔记-第二章IoC的基本概念</title>
+      <link>https://leizhiyuan.github.io/2014/07/01/spring%E6%8F%AD%E7%A7%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0ioc%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</link>
+      <pubDate>Tue, 01 Jul 2014 18:54:17 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/07/01/spring%E6%8F%AD%E7%A7%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0ioc%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</guid>
+      <description>理念就是让别人为你服务，中文名控制反转，也叫依赖注入DI
+public class FXNewsProvider { private IFXNewsListener newsListener; private IFXNewsPersister newPersistener; public void getAndPersistNews() { String[] newsIds = newsListener.getAvailableNewsIds(); if(ArrayUtils.isEmpty(newsIds)) { return; } for(String newsId : newsIds) { FXNewsBean newsBean = newsListener.getNewsByPK(newsId); newPersistener.persistNews(newsBean); newsListener.postProcessIfNecessary(newsId); } } }  假设这个类用来处理新闻，
+IFXNewsListener 用来获取新闻，
+IFXNewsPersister  用来把获取的新闻持久化
+当我们需要获取不同的新闻源，比如道琼斯的新闻时，我们会写一个 DowJonesNewsListener 类和 DowJonesNewsPersister 类，然后实例化
+public FXNewsProvider()
+{
+newsListener = new DowJonesNewsListener();
+newPersistener = new DowJonesNewsPersister();
+} &amp;nbsp;
+如果我们依赖于某个类或服务，最简单而有效的方式就是直接
+在类的构造函数中新建相应的依赖类。
+注意看， ，我们都是自己主动地去获
+取依赖的对象！
+可是回头想想，我们自己每次用到什么依赖对象都要主动地去获取，这是否真的必要？我们最终
+所要做的，其实就是直接调用依赖对象所提供的某项服务而已
+能不能我们用的时候自动送过来呢？</description>
+    </item>
+    
+    <item>
+      <title>《Spring揭秘》读书笔记-第一章Spring框架的由来</title>
+      <link>https://leizhiyuan.github.io/2014/06/30/spring%E6%8F%AD%E7%A7%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0spring%E6%A1%86%E6%9E%B6%E7%9A%84%E7%94%B1%E6%9D%A5/</link>
+      <pubDate>Mon, 30 Jun 2014 20:40:40 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/06/30/spring%E6%8F%AD%E7%A7%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0spring%E6%A1%86%E6%9E%B6%E7%9A%84%E7%94%B1%E6%9D%A5/</guid>
+      <description>1.框架的由来
+倡导J2EE轻量级应用解决方案
+框架总结结构
+ 整个Spring架构建立在Core核心模块上，是基础，该模块中，有一个IoC容器的实现，用来以依赖注入的方式管理对象之间的依赖关系。Core中还有一些气筒工具类，比如IO工具类
+从图中看到，AOP模块，提供了轻便二强大的AOP框架，一AOP的形式增强POJO的能力，弥补OOP/OOSD的不足，采用Proxy模式，与IoC容器相结合
+继续向上看，在Core和AOP之上，提供了完毕的数据访问和事务管理的抽象，其中，对JDBC API的最佳实践简化了API的使用，还未ORM产品提供了统一的支持，
+为了简化Java EE的服务，比如JNDI，JMS等等，Spring还提供了这些的集成服务，
+最后就是Web模块，提供了一套自己的Web MVC框架，上层模块依赖于下层模块，水平之间的模块彼此基本可以认为独立。
+Spring不仅仅是容器，更是开发任何Java应用的框架，
+Spring 框架之上衍生的产品包括不限于Spring Web Flow,Spring Web Services,Spring Security,Spring Integration，Spring Rich Client 等等等等</description>
+    </item>
+    
+    <item>
+      <title>8583报文相关</title>
+      <link>https://leizhiyuan.github.io/2014/06/27/8583%E6%8A%A5%E6%96%87%E7%9B%B8%E5%85%B3/</link>
+      <pubDate>Fri, 27 Jun 2014 15:28:46 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/06/27/8583%E6%8A%A5%E6%96%87%E7%9B%B8%E5%85%B3/</guid>
+      <description>以下是我在学习的时候发现的好的资料，都是非常有帮助的。
+如果你想知道原理，看完下面这篇就会了
+[藏]轻松掌握ISO8583报文协议原理 看了原理之后还想知道怎么来的。手工联系一下
+谈谈8583报文的使用及测试 这篇文章不错
+看完了想写代码了，可以看看这篇文章，基本上不能直接拿来用，但是可以参考实现
+ISO8583报文工具类（组装和解析报文）  看完之后这里还有一些补充
+ISO-8583协议的简要说明 &amp;nbsp;
+最后，http://www.jpos.org/这个库基本可以用来做这个事情。
+Jimmy写了一个例子非常好，iso-8583-tutorial-build-and-parse-iso-message-using-jpos-library，至于银联的那个规范搜一下。
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>构建数据库连接的配置方法</title>
+      <link>https://leizhiyuan.github.io/2014/04/26/%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Sat, 26 Apr 2014 16:56:41 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/04/26/%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/</guid>
+      <description>以前我在写数据库连接的时候，都是在文件里写死的，或者一个简单地配置文件，只有一个数据库连接嘛，但是最近写一个测试工具的时候，需要很多数据库，而且有些还有分库规则，于是查找资料，完善了两个类，和xml的定义规则，分享出来。仅供参考，有任何指教请回复。不胜感谢
+首先xml的配置格式定义如下 &amp;lt;?xml version=&amp;ldquo;1.0&amp;rdquo; encoding=&amp;ldquo;UTF-8&amp;rdquo;?&amp;gt;
+&amp;lt;config&amp;gt;
+&amp;lt;db-info&amp;gt; &amp;lt;id&amp;gt;oracle-test&amp;lt;/id&amp;gt;
+&amp;lt;driver-name&amp;gt;oracle.jdbc.driver.OracleDriver&amp;lt;/driver-name&amp;gt;
+&amp;lt;url&amp;gt;jdbc:oracle:thin:@127.0.0.1:1521:test&amp;lt;/url&amp;gt;
+&amp;lt;user-name&amp;gt;admin&amp;lt;/user-name&amp;gt;
+&amp;lt;password&amp;gt;admin&amp;lt;/password&amp;gt;
+&amp;lt;/db-info&amp;gt;
+&amp;lt;db-info&amp;gt; &amp;lt;id&amp;gt;mysql-test&amp;lt;/id&amp;gt;
+&amp;lt;driver-name&amp;gt;com.mysql.jdbc.Driver&amp;lt;/driver-name&amp;gt;
+&amp;lt;url&amp;gt;jdbc:mysql://127.0.0.1:3306&amp;lt;/url&amp;gt;
+&amp;lt;user-name&amp;gt;root&amp;lt;/user-name&amp;gt;
+&amp;lt;password&amp;gt;root&amp;lt;/password&amp;gt;
+&amp;lt;/db-info&amp;gt; &amp;lt;/config&amp;gt; 然后我们有XmlConfigReader类，用来读取这个配置文件，并且返回对应的jdbcConfig对象。
+这个对象就是一个model类，对应xml的属性
+然后我们的DBUtil类会调用XmlConfigReader，通用的一般是传个 &amp;lt;id&amp;gt;mysql-test&amp;lt;/id&amp;gt; 值，然后XmlConfigReader来读取返回，对象，然后在DBUtil里用这个对象得知来构造连接，我添加了一个简单的方法 public static Connection getConnection(String dbId,String dbName) throws ClassNotFoundException { Connection conn = null;
+try { //新建jdbc配置类。 XmlConfigReader xcr=new XmlConfigReader(); JdbcConfig jdbcconfig = xcr.getConnection(dbId,dbName); Class.forName(jdbcconfig.getDriverName()); //取得连接对象。 conn = DriverManager.getConnection(jdbcconfig.getUrl(), jdbcconfig.getUserName(), jdbcconfig.getPassword()); } catch (ClassNotFoundException e) { // 抛出 exception e.printStackTrace(); }catch(SQLException e) { e.printStackTrace(); } return conn; }&amp;lt;/pre&amp;gt; 就是多传一个数据库名</description>
+    </item>
+    
+    <item>
+      <title>Google输入法和Java不兼容</title>
+      <link>https://leizhiyuan.github.io/2014/03/29/google%E8%BE%93%E5%85%A5%E6%B3%95%E5%92%8Cjava%E4%B8%8D%E5%85%BC%E5%AE%B9/</link>
+      <pubDate>Sat, 29 Mar 2014 12:13:25 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/03/29/google%E8%BE%93%E5%85%A5%E6%B3%95%E5%92%8Cjava%E4%B8%8D%E5%85%BC%E5%AE%B9/</guid>
+      <description>一直发现自己写的Swing界面无法关闭，症状是点击了界面的关闭按钮后程序会卡住，然后点击无响应最后就挂掉了。
+最开始以为是自己的资源没释放，但是没理由呀，应该在关闭的时候会自动释放，而且改了代码也没用。
+今天再执行另一个Swing的时候，eclipse报错了 #
+A fatal error has been detected by the Java Runtime Environment: #
+EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x6d986cc3, pid=700, tid=2280 #
+JRE version: Java&amp;trade; SE Runtime Environment (7.0_45-b18) (build 1.7.0_45-b18) Java VM: Java HotSpot&amp;trade; Client VM (24.45-b08 mixed mode, sharing windows-x86 ) Problematic frame: C [GOOGLEPINYIN2.IME+0x96cc3] #
+Failed to write core dump. Minidumps are not enabled by default on client versions of Windows 看问题说是Google拼音输入法冲突，导致访问禁止，在PChunder里卸载掉javaw的Google拼音模块，javaw马上就关闭了，于是修改系统的默认输入法为其他输入法问题解决。
+我了个去，纠结了我好长时间。我说为啥公司电脑和我的电脑都会关不了呢&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>[藏]深入理解Java内存模型</title>
+      <link>https://leizhiyuan.github.io/2014/03/11/%E8%97%8F%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Tue, 11 Mar 2014 08:28:38 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/03/11/%E8%97%8F%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</guid>
+      <description> 深入理解java内存模型（一）——基础 深入理解java内存模型（二）——重排序 深入理解java内存模型（三）——顺序一致性 深入理解java内存模型（四）——volatile 深入理解java内存模型（五）——锁 深入理解java内存模型（六）——final 深入理解java内存模型（七）——总结  </description>
+    </item>
+    
+    <item>
+      <title>[藏]运用 BoxLayout 进行 Swing 控件布局</title>
+      <link>https://leizhiyuan.github.io/2014/03/03/%E8%97%8F%E8%BF%90%E7%94%A8-boxlayout-%E8%BF%9B%E8%A1%8C-swing-%E6%8E%A7%E4%BB%B6%E5%B8%83%E5%B1%80/</link>
+      <pubDate>Mon, 03 Mar 2014 21:17:20 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/03/03/%E8%97%8F%E8%BF%90%E7%94%A8-boxlayout-%E8%BF%9B%E8%A1%8C-swing-%E6%8E%A7%E4%BB%B6%E5%B8%83%E5%B1%80/</guid>
+      <description>写的非常非常好的一个教程，感谢陈 怡平
+引言 在用户使用 Java Swing 进行用户界面开发过程中，会碰到如何对 Java Swing 的控件进行布局的问题。Swing 的控件放置在容器 (Container) 中，容器就是能够容纳控件或者其它容器的类，容器的具体例子有 Frame、Panel 等等。容器需要定义一个布局管理器来对控件进行布局管理，Swing 当中提供的主要的布局管理器有 FlowLayout、BorderLayout、BoxLayout、GridLayout 和 GridBaglayout, 它们的主要特点如表 1 所示：
+表 1. Swing 中的一些主要布局管理器的比较   布局管理器 特点     FlowLayout 把控件按照顺序一个接一个由左向右的水平放置在容器中，一行放不下，就放到下一行   BorderLayout 将整个容器划分成东南西北中五个方位来放置控件，放置控件时需要指定控件放置的方位   BoxLayout 可以指定在容器中是否对控件进行水平或者垂直放置，比 FlowLayout 要更为灵活   GridLayout 将整个容器划分成一定的行和一定的列，可以指定控件放在某行某列上   GridBagLayout 是 Swing 当中最灵活也是最复杂的布局管理器，可对控件在容器中的位置进行比较灵活的调整    本文主要关注在 BoxLayout 布局管理器的使用上。我们首先对 BoxLayout 作一下介绍。
+BoxLayout 介绍 如前所述，BoxLayout 可以把控件依次进行水平或者垂直排列布局，这是通过参数 X_AXIS、Y_AXIS 来决定的。X_AXIS 表示水平排列，而 Y_AXIS 表示垂直排列。BoxLayout 的构造函数有两个参数，一个参数定义使用该 BoxLayout 的容器，另一个参数是指定 BoxLayout 是采用水平还是垂直排列。下面是一个创建 BoxLayout 实例的例子：   JPanel panel=new JPanel(); BoxLayout layout=new BoxLayout(panel, BoxLayout.</description>
+    </item>
+    
+    <item>
+      <title>[译]使用Mockito简单mock入门</title>
+      <link>https://leizhiyuan.github.io/2014/03/01/%E8%AF%91%E4%BD%BF%E7%94%A8mockito%E7%AE%80%E5%8D%95mock%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Sat, 01 Mar 2014 10:57:33 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/03/01/%E8%AF%91%E4%BD%BF%E7%94%A8mockito%E7%AE%80%E5%8D%95mock%E5%85%A5%E9%97%A8/</guid>
+      <description>我们在写单元测试的时候，面临的一个挑战就是要测试的内容总是依赖于其他组件，要是我们还得先配置好其他组件，未免有点不如意，那么我们可以使用Mocks来代替那些依赖的组件
+本文问了展示这个过程，我会创建一个DAL，数据访问层，这是一个类，提供了一个通用的api来访问和修改数据仓库的数据，然后，我们要测试这个api，而不用配置连接某个本地的数据库，，或者一个远程的数据库，或者是一个文件系统，反正就是任何放数据的东西，DAL层的好处就是隔离开了数据访问和应用程序代码
+首先使用maven来创建一个工程 mvn archetype:generate -DgroupId=info.sanaulla -DartifactId=MockitoDemo -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 执行之后，本地生成MockitoDemo 文件夹，然后整个工程的目录结构与生成好了。
+然后，我们写这样一个model类，表示book类型 package info.sanaulla.models;
+import java.util.List;
+/** * Model class for the book details. */ public class Book {
+private String isbn; private String title; private List&amp;lt;String&amp;gt; authors; private String publication; private Integer yearOfPublication; private Integer numberOfPages; private String image;
+public Book(String isbn, String title, List&amp;lt;String&amp;gt; authors, String publication, Integer yearOfPublication, Integer numberOfPages, String image){
+this.isbn = isbn; this.title: = title; this.</description>
+    </item>
+    
+    <item>
+      <title>尝试JavaFX开发</title>
+      <link>https://leizhiyuan.github.io/2014/02/11/%E5%B0%9D%E8%AF%95javafx%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Tue, 11 Feb 2014 20:40:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/02/11/%E5%B0%9D%E8%AF%95javafx%E5%BC%80%E5%8F%91/</guid>
+      <description>曾经有报道说JavaFX将使java在桌面开发上大有作为，感觉好像是很高端的样子，今天尝试了一下，界面对于自用的工具来说，本来也不多重要，只是一个简单的尝试
+简单说下大致的步骤和一些思路，可能有错误。
+javafx需要sdk支持，java7之后的都有的。设计思路是数据和代码分离，界面通过xml或json数据来描述，这样就把业务逻辑代码和界面实现代码分开了
+一个简单的开发过程应该是这样的
+1.使用JavaFX Scene Builder来绘制界面，保存为xml/json格式
+画的话没啥要说的，了解一下基本的整体概念就行。
+2.在eclipse里新建工程，可以是普通工程，将1中的文件放到资源目录，在代码里加载，然后界面就加载成功了。 Node topNode = FXMLLoader.load(AFI.class.getResource(&amp;ldquo;/afimain.fxml&amp;rdquo;)); 逻辑代码，比如一个简单的按钮事件可以通过 Node node = topNode.lookup(&amp;ldquo;#paneRightBottom&amp;rdquo;); 来查找到id为paneRightBottom的元素，然后就可以通过对node添加事件监听器来完成一些功能了
+主要想说的是：
+JavaFX和WPF其实思路是一模一样的，恰好WPF我也用过，感觉两个都没搞起来，虽然界面炫，然后我去维基看了下： &amp;gt; 该产品于2007年5月在JavaOne大会上首次对外公布。JavaFX技术主要应用于创建Rich Internet application（RIAs）。JavaFX期望能够在桌面应用的开发领域与Adobe公司的AIR、OpenLaszlo以及微软公司的Silverlight相竞争 已经7年了，用户数应该是非常少的，成熟的商业型产品也没几个，在尝试的过程中，我在stackoverflow，以及一些很不错的java博客上，大量查找基本也没有太多的信息，都是一些很浅的应用，包括stackoverflow上的回答数，基本还是能反映出来的，主要应用于RIA，而当前RIA已经出html5的天下了。SL早都不更新了，这种坑爹的所谓新技术。
+&amp;nbsp;
+Oracle还是好好把Swing搞好吧。。不建议尝试。
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>[笔记]写代码遇到的一些问题汇总下</title>
+      <link>https://leizhiyuan.github.io/2014/02/08/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8B/</link>
+      <pubDate>Sat, 08 Feb 2014 11:06:51 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/02/08/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8B/</guid>
+      <description>本篇是用来填上一篇 挖下的坑的。
+1.java调用webservice
+有一些已有的webservice服务，由xfire生成发布，有些有参数，有些无参数，无参数的直接我直接使用org.codehaus.xfire这个包里的Client来动态生成客户端。然后调用就可以了。非常简单 Client client = null; try { client = new Client( new URL( &amp;ldquo;http://leaver.me/testService?wsdl&amp;quot;)); client.invoke(&amp;ldquo;refreshAllCache&amp;rdquo;, new Object[0]);
+} catch (MalformedURLException e) { e.printStackTrace(); } catch (Exception e) { e.printStackTrace(); }&amp;lt;/pre&amp;gt; 但对于有参的，且是服务器自定义的类作为参数的时候，实在是搞不定。。不管是把自定义的类放到本地，包名一致，在invoke的时候生成这个对象还是其他什么方法。都无法完成。
+最终换了直接发送soap报文来完成。dirty hack啊。如果你有一些好的方法希望不吝赐教。
+解决方案来源自stackoverflow，因为stackoverflow现在国内好像有时候打不开。因此把代码贴过来。有疑问的话留言讨论。 import javax.xml.soap.; import javax.xml.transform.; import javax.xml.transform.stream.*;
+public class SOAPClientSAAJ {
+/** * Starting point for the SAAJ - SOAP Client Testing */ public static void main(String args[]) { try { // Create SOAP Connection SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.</description>
+    </item>
+    
+    <item>
+      <title>[笔记]写代码遇到的一些问题汇总上</title>
+      <link>https://leizhiyuan.github.io/2014/02/04/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8A/</link>
+      <pubDate>Tue, 04 Feb 2014 19:13:26 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/02/04/%E7%AC%94%E8%AE%B0%E5%86%99%E4%BB%A3%E7%A0%81%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E4%B8%8A/</guid>
+      <description>今天大雪，天冷，不能出去玩了。把保存在pocket里的一些记录总结一下，太懒了。。下篇等我去了上海用我电脑写吧
+1.java模拟https登陆
+首先我要登陆，然后保存cookie，然后利用cookie来访问后续的网页，发包，处理包这样，然后，为了方便，我选择了 org.apache.http 这个库，典型的一个登陆场景应该是这样的，以后遇到问题一定先要去看官方的例子，别人给出的例子一般要么是不能用，要么是用的方法都是一些过时的，虽然能用，但看到警告还是不舒服。 public static BasicCookieStore cookieStore; //整个过程用一个client public static CloseableHttpClient httpclient; cookieStore = new BasicCookieStore(); httpclient = HttpClients.custom().setDefaultCookieStore(cookieStore).build(); //先访问一下首页，然后cookie、会填充进来 HttpGet httpget = new HttpGet(&amp;ldquo;https://leaver.me/index.htm&amp;quot;); httpclient.execute(httpget); CloseableHttpResponse responseCookie = null; //然后post请求登陆 HttpPost httpost = new HttpPost(&amp;ldquo;https://leaver.me/login.htm&amp;quot;); //通过键值对来作为post参数 List &amp;lt; NameValuePair &amp;gt; nameValuePairs = new ArrayList &amp;lt; NameValuePair &amp;gt; (1); nameValuePairs.add(new BasicNameValuePair(&amp;ldquo;loginType&amp;rdquo;, &amp;ldquo;1&amp;rdquo;)); nameValuePairs.add(new BasicNameValuePair(&amp;ldquo;loginName&amp;rdquo;, username)); nameValuePairs.add(new BasicNameValuePair(&amp;ldquo;Password&amp;rdquo;, password)); httpost.setEntity(new UrlEncodedFormEntity(nameValuePairs, Consts.UTF_8)); CloseableHttpResponse responLogin = null; responLogin = httpclient.execute(httpost); 但是，这个过程报了如下的错 e: sun.</description>
+    </item>
+    
+    <item>
+      <title>[藏]Class.getResource和ClassLoader.getResource不同点</title>
+      <link>https://leizhiyuan.github.io/2013/12/14/%E8%97%8Fclass.getresource%E5%92%8Cclassloader.getresource%E4%B8%8D%E5%90%8C%E7%82%B9/</link>
+      <pubDate>Sat, 14 Dec 2013 18:18:53 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/12/14/%E8%97%8Fclass.getresource%E5%92%8Cclassloader.getresource%E4%B8%8D%E5%90%8C%E7%82%B9/</guid>
+      <description>有一次遇到了，查了查。原文地址
+Java中取资源时，经常用到Class.getResource和ClassLoader.getResource，这里来看看他们在取资源文件时候的路径问题。
+Class.getResource(String path)  path不以’/&amp;lsquo;开头时，默认是从此类所在的包下取资源； path 以’/&amp;lsquo;开头时，则是从ClassPath根下获取；  什么意思呢？看下面这段代码的输出结果就明白了：  package testpackage; public class TestMain { public static void main(String[] args) { System.out.println(TestMain.class.getResource(&amp;ldquo;&amp;rdquo;)); System.out.println(TestMain.class.getResource(&amp;ldquo;/&amp;rdquo;)); } }  输出结果：  file:/E:/workspace/Test/bin/testpackage/ file:/E:/workspace/Test/bin/  上面说到的【path以’/&amp;lsquo;开头时，则是从ClassPath根下获取；】在这里就是相当于bin目录(Eclipse环境下)。
+再来一个实例，假设有如下Project结构：
+
+如果我们想在TestMain.java中分别取到1~3.properties文件，该怎么写路径呢？代码如下： package testpackage;
+public class TestMain {
+public static void main(String[] args) { // 当前类(class)所在的包目录 System.out.println(TestMain.class.getResource(&amp;#34;&amp;#34;)); // class path根目录 System.out.println(TestMain.class.getResource(&amp;#34;/&amp;#34;)); // TestMain.class在&amp;amp;lt;bin&amp;amp;gt;/testpackage包中 // 2.properties 在&amp;amp;lt;bin&amp;amp;gt;/testpackage包中 System.out.println(TestMain.class.getResource(&amp;#34;2.properties&amp;#34;)); // TestMain.class在&amp;amp;lt;bin&amp;amp;gt;/testpackage包中 // 3.properties 在&amp;amp;lt;bin&amp;amp;gt;/testpackage.subpackage包中 System.out.println(TestMain.class.getResource(&amp;#34;subpackage/3.properties&amp;#34;)); // TestMain.</description>
+    </item>
+    
+    <item>
+      <title>Java动态代理实例</title>
+      <link>https://leizhiyuan.github.io/2013/11/24/java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AE%9E%E4%BE%8B/</link>
+      <pubDate>Sun, 24 Nov 2013 18:16:31 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/11/24/java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AE%9E%E4%BE%8B/</guid>
+      <description>首先什么是代理？ 所谓代理呢也就是在调用实现类的方法时，可以在方法执行前后做额外的工作，这个就是代理。  那动态代理呢，官方解释是：  Java 动态代理机制的出现，使得 Java 开发人员不用手工编写代理类，只要简单地指定一组接口及委托类对象，便能动态地获得代理类。代理类会负责将所有的方法调用分派到委托对象上反射执行，在分派执行的过程中，开发人员还可以按需调整委托类对象及其功能，这是一套非常灵活有弹性的代理框架。 老湿，你说的是个毛啊，完全没看懂啊！
+我更喜欢另一种通俗的解释，官方的解释总是高度抽象的，等用了一段时间才能理解体会  动态代理实现了日志和业务的分开，也就是某个类只是要提供了某些业务，比如银行取款业务。这个类实现了取款业务的同时也需要实现日志功能，如果不用动态代理的话，那么由此一来该类代码里面已经额外地添加了自己不该添加的日志功能能代码。所以我们就得使用动态代理把它的业务代码和日志功能代码分开。所以用到了动态代理概念，spring里面的AOP就是一个很好的例子。  不直观啊，老湿，能再给力一点不？ 额，这样的话，我们来看一个例子，要用到的两个类 实现java.lang.reflect.InvocationHandler接口提供一个执行处理器，也就是真正做事的，然后通过java.lang.reflect.Proxy得到一个代理对象，通过这个代理对象来执行业务方法,在业务方法被调用的同时，执行处理器会被自动调用。 记住，动态代理只能对接口 首先业务接口：  public interface HelloWorld { public void sayHelloWorld(); } 然后我们是这样写的实现 public class HelloWorldImpl implements HelloWorld { public void sayHelloWorld() { System.out.println(&amp;ldquo;Hello World!&amp;rdquo;); } } 后来我们觉得执行这个方法前能不能做点其他啥事呢，比如写个日志？见个妹子？啥，这段代码不让改了，改了的话，业务方法和日志混合的一塌糊涂啊，以后想改个日志格式你来写啊
+那我们就得定义一个拦截器/执行处理器了。 public class HelloWorldHandler implements InvocationHandler { //目标对象 private Object targetObject;
+public HelloWorldHandler(Object targetObject){ this.targetObject = targetObject; } public Object invoke(Object proxy, Method method, Object[] args) throws Throwable { System.</description>
+    </item>
+    
+    <item>
+      <title>[藏]图文并茂详解Eclipse断点</title>
+      <link>https://leizhiyuan.github.io/2013/11/16/%E8%97%8F%E5%9B%BE%E6%96%87%E5%B9%B6%E8%8C%82%E8%AF%A6%E8%A7%A3eclipse%E6%96%AD%E7%82%B9/</link>
+      <pubDate>Sat, 16 Nov 2013 14:21:11 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/11/16/%E8%97%8F%E5%9B%BE%E6%96%87%E5%B9%B6%E8%8C%82%E8%AF%A6%E8%A7%A3eclipse%E6%96%AD%E7%82%B9/</guid>
+      <description>本文转自：http://my.oschina.net/colorleaf/blog/176569
+这个算说的比较清楚的了，虽然简单但是很有用。收藏一下。
+详解Eclipse断点
+大家肯定都用过Eclipse的调试的功能，在调试的过程中自然也无法避免要使用断点(breakpoint)，但不知是否对Eclipse中各类断点都有所了解。本篇图文并茂地介绍了Eclipse中全部类型的断点，及其设置，希望对大家有所帮助。(2011.11.20)
+1. 示例程序 BreakpointDemo是一个臆造的应用程序，只是为了便于讲解Eclipse中各类断点的使用罢了。其代码如下图所示，  BreakpointDemo主要包含两个方法： [1]setValue，该方法根据指定的次数(count)，对成员变量value进行赋值，值的范围为0-9的随机整数。 [2]printValue，该方法会调用setValue()对value进行赋值，并打印出value的值；但，如果value能被3整除，那么就会抛出IllegalArgumentException异常。
+2. Line Breakpoint Line Breakpoin是最简单的Eclipse断点，只要双击某行代码对应的左侧栏，就对该行设置上断点。此处，对第20行代码设置上Line Breakpoint，如下图所示，  可以为Line Breakpoint设置一个条件，那么当程序运行到该断点时，只有满足设定的条件，才会被中断。右键点击第20行的断点，选择&amp;rdquo;Breakpoint Properties&amp;hellip;&amp;rdquo;  在弹出的属性对话框中，勾选上&amp;rdquo;Conditional&amp;rdquo;，然后在文本框中输入&amp;rdquo;count % 2 == 0&amp;rdquo;。  该条件表示，当程序运行到第20行时，只有当count为偶数时，程序才会被中断。细心地话，你会发现该断点的图标发生了改变，多了一个问号。 
+3. Watchpoint Line Breakpoint关注于程序运行的&amp;rdquo;过程&amp;rdquo;，大家也常把使用这种断点的调试称为单步调试。但有时候，我们对程序的运行过程不太了解，可能也不太关心，不能确定在什么地方设置断点比较合适，而可能比较关注某个关键变量的变化或使用。此时，就可以为该变量设置一种特殊的断点&amp;ndash;Watchpoint。在此示例，我们最关心的就是成员变量value的值，那么就可以为它设置一个Watchpoint，双击第9行代码对应的左侧栏就可以了。  使用在2中所提及的方法，查看该断点的属性，  默认地，当该变量被访问或它的值被修改时，程序都会被中断。但在本示例中，只希望当对value的值进行修改时程序才需要被中断，所以取消对&amp;rdquo;Access&amp;rdquo;的勾选。  这时，我们会发现原来的Watchpoin图标也有变化了。 
+4. Method Breakpoint 与关注对某个变量的访问与修改一样，我们也可以关注程序对某个方法的调用情况，即，可以设置Method Breakpoint。在此处，设置针对方法setValue的Method Breakpoint。同理，双击第11行代码对应的左侧栏即可。  仍然要查看该断点的属性。默认地，只勾选了&amp;rdquo;Entry&amp;rdquo;，而没有勾选&amp;rdquo;Exit&amp;rdquo;。  这表示，当刚进入该方法(调用开始)时，程序会被中断；而，离开该方法(调用结束)时，程序并不会被中断。在本示例中，需要同时勾选上&amp;rdquo;Exit&amp;rdquo;。  点击OK之后，可以看到该断点的图标也有所改变。  根据这里的设置，当程序运行到第20行后会在第12行被中断，尽管这里没有显式的断点，但这就是setValue()方法的入口(Entry)。必须注意地是，程序在运行到第16行时不会被中断，尽管它看起来像是setValue()方法的出口(Exit)。实际上，程序会在第17行被中断，这里才是setValue()调用结束的地方。
+5. Exception Breakpoint 如果，我们期望某个特定异常发生时程序能够被中断，以方便查看当时程序所处的状态。通过设置Exception Breakpoint就能达到这一目标。本示例故意在第23行抛出了IllegalArgumentException异常，我们期望程序运行到此处时会被中断。但我们不直接为此行代码设置Line Breakpoint，而是为IllegalArgumentException设置Exception Breakpoint。设置Exception Breakpoint的方法与其它类型断点都不同，它不能通过双击左侧栏的方式在代码编辑器上直接进行设置。点击Breakpoints视图右上角形如Ji的图标，  会弹出如下所示的对话框，  在其中选中IllegalArgumentException，并点击OK，这时一个Exception Breakpoint就设置好了。  当value为3的倍数时，程序会在第23行被中断，这时我们就能使用调试器来看看value具体是等于0，3或6。 6.</description>
+    </item>
+    
+    <item>
+      <title>Spring依赖注入</title>
+      <link>https://leizhiyuan.github.io/2013/09/20/spring%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/</link>
+      <pubDate>Fri, 20 Sep 2013 19:06:00 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/20/spring%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/</guid>
+      <description>在Spring框架中，依赖注入设计模式主要用来定义对象之间的依赖，存在两种主要类型
+1)setter注入(设置器)
+2)constructor注入(构造器)
+1.Setter注入 是最流行最简单的DI方法，通过一个setter方法来完成依赖。
+例子：
+一个有一个setter方法的Helper类 package com.mkyong.output;
+import com.mkyong.output.IOutputGenerator;
+public class OutputHelper { IOutputGenerator outputGenerator;
+public void setOutputGenerator(IOutputGenerator outputGenerator){ this.outputGenerator = outputGenerator; } } 再写一个bean配合iwenjianshengming这些bean，并且通过property(属性)标签来设置依赖 &amp;lt;beans xmlns=&amp;ldquo;http://www.springframework.org/schema/beans&amp;quot; xmlns:xsi=&amp;ldquo;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;ldquo;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd&amp;quot;&amp;gt;
+&amp;amp;lt;bean id=&amp;#34;OutputHelper&amp;#34; class=&amp;#34;com.mkyong.output.OutputHelper&amp;#34;&amp;amp;gt; &amp;amp;lt;property name=&amp;#34;outputGenerator&amp;#34;&amp;amp;gt; &amp;amp;lt;ref bean=&amp;#34;CsvOutputGenerator&amp;#34; /&amp;amp;gt; &amp;amp;lt;/property&amp;amp;gt; &amp;amp;lt;/bean&amp;amp;gt; &amp;lt;bean id=&amp;ldquo;CsvOutputGenerator&amp;rdquo; class=&amp;ldquo;com.mkyong.output.impl.CsvOutputGenerator&amp;rdquo; /&amp;gt; &amp;lt;bean id=&amp;ldquo;JsonOutputGenerator&amp;rdquo; class=&amp;ldquo;com.mkyong.output.impl.JsonOutputGenerator&amp;rdquo; /&amp;gt;
+&amp;lt;/beans&amp;gt; 看到了把。我们只需要一个setter方法把CsvOutputGenerator注入进去就行了
+2.Constructor注入 这种方式是通过一个构造函数来完成依赖设置的
+例子：
+一个有着一个构造函数的Helper类 package com.mkyong.output;
+import com.mkyong.output.IOutputGenerator;
+public class OutputHelper { IOutputGenerator outputGenerator;
+OutputHelper(IOutputGenerator outputGenerator){ this.outputGenerator = outputGenerator; } } 然后当然是一个bean配置文件了。通过constructor-arg标签来写依赖 &amp;lt;beans xmlns=&amp;ldquo;http://www.</description>
+    </item>
+    
+    <item>
+      <title>Spring松耦合示例</title>
+      <link>https://leizhiyuan.github.io/2013/09/20/spring%E6%9D%BE%E8%80%A6%E5%90%88%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Fri, 20 Sep 2013 15:50:46 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/20/spring%E6%9D%BE%E8%80%A6%E5%90%88%E7%A4%BA%E4%BE%8B/</guid>
+      <description>面向对象设计的理念是把整个系统分成一组可重用的组件，然而，当系统变得越大的时候，尤其是在java中，这最大的对象依赖将会紧紧耦合，以至于非常难以管理和修改，而现在，你可以使用Spring框架扮演一个中间模块的角色，方便高效地管理其他组件依赖
+输出生成的例子 看个例子，假设你的项目有一个方法可以输出内容到csv或者json格式，你可能写出这样的代码 package com.mkyong.output;
+public interface IOutputGenerator { public void generateOutput(); } ，然后是实现接口的类 package com.mkyong.output.impl;
+import com.mkyong.output.IOutputGenerator;
+public class CsvOutputGenerator implements IOutputGenerator { public void generateOutput(){ System.out.println(&amp;ldquo;Csv Output Generator&amp;rdquo;); } } 再写个Json生成的类 package com.mkyong.output.impl;
+import com.mkyong.output.IOutputGenerator;
+public class JsonOutputGenerator implements IOutputGenerator { public void generateOutput(){ System.out.println(&amp;ldquo;Json Output Generator&amp;rdquo;); } } 有好几种方法来调用IOutputGenerator接口，以及我们如何使用Spring来避免对象的过度耦合。
+方法1-直接调用 package com.mkyong.common;
+import com.mkyong.output.IOutputGenerator; import com.mkyong.output.impl.CsvOutputGenerator;
+public class App { public static void main( String[] args ) { IOutputGenerator output = new CsvOutputGenerator(); output.</description>
+    </item>
+    
+    <item>
+      <title>Spring3实例入门-Hello World</title>
+      <link>https://leizhiyuan.github.io/2013/09/20/spring3%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-hello-world/</link>
+      <pubDate>Fri, 20 Sep 2013 13:14:39 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/20/spring3%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-hello-world/</guid>
+      <description>每次看到hello world,都有一种说不出的赶脚，想起了一个程序员，退休后写毛笔字，取笔研磨铺纸，大笔一挥，写下了“hello world”。
+1.使用Maven生成项目结构 mvn archetype:generate -DgroupId=com.mkyong.core -DartifactId=Spring3Example -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 2.转换成Eclipse项目 mvn eclipse:eclipse 3.添加Spring3.0 依赖 在pom.xml文件里添加Spring 3.0 依赖，然后依赖会从Maven中央仓库自动下载 &amp;lt;project xmlns=&amp;ldquo;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;ldquo;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;ldquo;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;com.mkyong.core&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;Spring3Example&amp;lt;/artifactId&amp;gt; &amp;lt;packaging&amp;gt;jar&amp;lt;/packaging&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;name&amp;gt;Spring3Example&amp;lt;/name&amp;gt; &amp;lt;url&amp;gt;http://maven.apache.org&amp;lt;/url&amp;gt;
+&amp;amp;lt;properties&amp;amp;gt; &amp;amp;lt;spring.version&amp;amp;gt;3.0.5.RELEASE&amp;amp;lt;/spring.version&amp;amp;gt; &amp;amp;lt;/properties&amp;amp;gt; &amp;amp;lt;dependencies&amp;amp;gt; &amp;amp;lt;!-- Spring 3 dependencies --&amp;amp;gt; &amp;amp;lt;dependency&amp;amp;gt; &amp;amp;lt;groupId&amp;amp;gt;org.springframework&amp;amp;lt;/groupId&amp;amp;gt; &amp;amp;lt;artifactId&amp;amp;gt;spring-core&amp;amp;lt;/artifactId&amp;amp;gt; &amp;amp;lt;version&amp;amp;gt;${spring.version}&amp;amp;lt;/version&amp;amp;gt; &amp;amp;lt;/dependency&amp;amp;gt; &amp;amp;lt;dependency&amp;amp;gt; &amp;amp;lt;groupId&amp;amp;gt;org.springframework&amp;amp;lt;/groupId&amp;amp;gt; &amp;amp;lt;artifactId&amp;amp;gt;spring-context&amp;amp;lt;/artifactId&amp;amp;gt; &amp;amp;lt;version&amp;amp;gt;${spring.version}&amp;amp;lt;/version&amp;amp;gt; &amp;amp;lt;/dependency&amp;amp;gt; &amp;amp;lt;/dependencies&amp;amp;gt; &amp;lt;/project&amp;gt;
+4.Spring bean 写个简单的bean package com.mkyong.core;
+/** * Spring bean * */ public class HelloWorld { private String name;</description>
+    </item>
+    
+    <item>
+      <title>使用Maven创建Web项目</title>
+      <link>https://leizhiyuan.github.io/2013/09/20/%E4%BD%BF%E7%94%A8maven%E5%88%9B%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/</link>
+      <pubDate>Fri, 20 Sep 2013 08:44:11 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/20/%E4%BD%BF%E7%94%A8maven%E5%88%9B%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/</guid>
+      <description>本文通过Maven完成一个简单的Web项目（注意，Spring配置不是重点，看看就行）
+1.从Maven模板创建Web应用程序 命令格式如下： mvn archetype:generate -DgroupId={project-packaging} -DartifactId={project-name} -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false 这就告诉Maven从**maven-archetype-webapp **这个模板来创建
+友情提示：是不是太难记了..好吧，直接输入 mvn archetype:generate 根据向导来创建把。。
+比如我这样写： &amp;gt; mvn archetype:generate -DgroupId=com.mkyong -DartifactId=CounterWebApp -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false [INFO] Scanning for projects&amp;hellip; [INFO]
+[INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash; [INFO] Building Maven Stub Project (No POM) 1 [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash; [INFO] [INFO] Generating project in Batch mode [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Using following parameters for creating project from Old (1.x) Archetype: maven-archetype-webapp:1.0 [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Parameter: groupId, Value: com.mkyong [INFO] Parameter: packageName, Value: com.</description>
+    </item>
+    
+    <item>
+      <title>Maven库依赖机制及添加自定义库</title>
+      <link>https://leizhiyuan.github.io/2013/09/19/maven%E5%BA%93%E4%BE%9D%E8%B5%96%E6%9C%BA%E5%88%B6%E5%8F%8A%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%93/</link>
+      <pubDate>Thu, 19 Sep 2013 22:49:42 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/19/maven%E5%BA%93%E4%BE%9D%E8%B5%96%E6%9C%BA%E5%88%B6%E5%8F%8A%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%93/</guid>
+      <description>一.Maven库依赖机制 Maven的库依赖机制可以帮助我们自动下载依赖的库文件，并且还能更新版本。。
+考虑一个情境来理解机制的工作原理，假设我们要使用Log4J库作为项目的日志记录。以下是我们要做的
+1.传统的方式 1）访问Log4J网站http://logging.apache.org/log4j/2.x/
+2）下载Log4J的jar包
+3）复制进项目的classpath里
+4）手工包含到项目的依赖里
+看到没，你要从头做到尾，如果Log4J更新了，你得再来一遍。。
+2.Maven的方式 1）需要知道Log4J的Maven坐标(coordinates,这个暂时没想到好名字)，就是这样的东西 &amp;lt;groupId&amp;gt;log4j&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;log4j&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2.14&amp;lt;/version&amp;gt; 然后Maven就会自动下载1.2.14版本的Log4J了。如果version这个元素没有，那么如果有了新版本，Maven会自动下载新版本的。
+2）在pom.xml里声明这个Maven坐标 &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;log4j&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;log4j&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2.14&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; 3）当Maven编译或者build的时候，Log4J会自动下载，放入本地仓库里
+4）Maven全部接管
+3.解释 搜索顺序前面说过了。本地-》中央-》远程仓库
+Maven坐标咋来的，当然去中央仓库搜索之了，搜索结果清晰的令人发指
+二.添加自定义库到本地仓库 有两个情况，需要我们包含自定义的库到本地仓库里
+1是你想使用的jar文件不再中央仓库
+2是你创建了一个自定义的jar包，需要另一个项目使用这个jar
+比如，kaptche，一个第三方的java库，生成验证码，现在中央仓库没有了。
+我们想要加到本地仓库里
+1.mvn安装 下载kaptche，解压并且拷贝kaptcha-version.jar到其他任何你喜欢的地方，比如c盘，然后输入如下格式的命令 mvn install:install-file -Dfile=c:\kaptcha-{version}.jar -DgroupId=com.google.code -DartifactId=kaptcha -Dversion={version} -Dpackaging=jar 这里我这样输入 D:&amp;amp;gt;mvn install:install-file -Dfile=c:\kaptcha-2.3.jar -DgroupId=com.google.code -DartifactId=kaptcha -Dversion=2.3 -Dpackaging=jar [INFO] Scanning for projects&amp;hellip; [INFO] Searching repository for plugin with prefix: &amp;lsquo;install&amp;rsquo;. [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash; [INFO] Building Maven Default Project [INFO] task-segment: install:install-file [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash; [INFO] [install:install-file] [INFO] Installing c:\kaptcha-2.</description>
+    </item>
+    
+    <item>
+      <title>Maven仓库详解</title>
+      <link>https://leizhiyuan.github.io/2013/09/19/maven%E4%BB%93%E5%BA%93%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Thu, 19 Sep 2013 22:05:10 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/19/maven%E4%BB%93%E5%BA%93%E8%AF%A6%E8%A7%A3/</guid>
+      <description>本文由我翻译合并了多篇文章，整理成一篇。
+一.本地仓库(Local Repository) 本地仓库就是一个本机的目录，这个目录被用来存储我们项目的所有依赖（插件的jar包还有一些其他的文件），简单的说，当你build一个Maven项目的时候，所有的依赖文件都会放在本地仓库里，仓库供所有项目都可以使用
+默认情况下，本地仓库在.m2目录，windows下的话就是你的用户名目录下的.m2目录
+1.更新本地仓库目录 找到你的MAVEN_HOME目录下的conf/setting.xml文件，更新localRepository节点 &amp;lt;settings&amp;gt; &amp;lt;!&amp;ndash; localRepository | The path to the local repository maven will use to store artifacts. | | Default: ~/.m2/repository &amp;lt;localRepository&amp;gt;/path/to/local/repo&amp;lt;/localRepository&amp;gt; &amp;ndash;&amp;gt;
+&amp;lt;localRepository&amp;gt;D:/maven/repo&amp;lt;/localRepository&amp;gt;
+2.保存一下 完成了。新的本地仓库被放在了D:/maven/repo
+看一下这个目录
+
+二.中央仓库(central repository) 当我们build一个Maven项目的时候，Maven会检查我们的pom.xml文件，来定义项目的依赖，然后Maven会在本地仓库里查找，如果没有找到，就去maven的中央库去下载，地址是
+http://search.maven.org/#browse
+看起来是这样的
+
+&amp;nbsp;
+注意啊，虽然这个是新的中央仓库，但有时候还是会从_“http://repo1.maven.org/maven/_这个旧仓库下载东西，不过不要紧，理解就行了
+三.远程仓库(Remote Respository) 在Maven中，当你在pom.xml中生命的依赖既不在本地库，也不在中央库的时候，就会报错。
+1.例子 org.jvnet.localizer这个包仅在java.net的仓库里有(以前是，现在中央仓库也有了。但理解就行) &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.jvnet.localizer&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;localizer&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.8&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; 当我们build的时候，会失败，并输出未找到错误信息
+2.声明java.net仓库 为了告诉Maven从远程仓库里获取依赖，我们需要声明一个远程仓库，在pom.xml里这样写 &amp;lt;repositories&amp;gt; &amp;lt;repository&amp;gt; &amp;lt;id&amp;gt;java.net&amp;lt;/id&amp;gt; &amp;lt;url&amp;gt;https://maven.java.net/content/repositories/public/&amp;lt;/url&amp;gt; &amp;lt;/repository&amp;gt; &amp;lt;/repositories&amp;gt; 这样，Maven搜索依赖的顺序就是：
+1）搜索本地仓库，没有找到，就去第2步，否则退出
+2）搜索中央仓库，没有找到，就去第3步，否则退出
+3）去java.net远程仓库获取，没有找到，就报错，否则退出
+补充：JBoss也有个远程仓库，可以如下配置： &amp;lt;project &amp;hellip;&amp;gt; &amp;lt;repositories&amp;gt; &amp;lt;repository&amp;gt; &amp;lt;id&amp;gt;JBoss repository&amp;lt;/id&amp;gt; &amp;lt;url&amp;gt;http://repository.</description>
+    </item>
+    
+    <item>
+      <title>Maven安装教程</title>
+      <link>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Thu, 19 Sep 2013 21:15:09 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</guid>
+      <description>Maven不需要作为服务组件安装到windows上，仅仅需要下载，解压，然后配置一下环境变量就行了
+1.JDK和JAVA_HOME 确保JDK已经安装，同时JAVA_HOME变量已经添加到了windows环境变量里，指向jdk目录
+
+&amp;nbsp;
+2.下载Maven 去Maven主页,选个版本，点击下载
+3.解压 解压下载的zip文件，重命名，比如我放到D盘的Maven目录
+4.添加MAVEN_HOME环境变量 添加一个新的环境变量MAVEN_HOME到环境变量，指向Maven目录
+
+&amp;nbsp;
+5.添加path变量 更新Path变量，把Maven的bin目录添加进去，这样就可以在任何地方执行mvn命令了
+
+&amp;nbsp;
+6.验证 打开命令行，输入 mvn -version 如果看到类似下面的 C:\Documents and Settings\mkyong&amp;gt;mvn -version Apache Maven 2.2.1 (r801777; 2009-08-07 03:16:01+0800) Java version: 1.6.0_13 Java home: C:\Program Files\Java\jdk1.6.0_13\jre Default locale: en_US, platform encoding: Cp1252 OS name: &amp;ldquo;windows xp&amp;rdquo; version: &amp;ldquo;5.1&amp;rdquo; arch: &amp;ldquo;x86&amp;rdquo; Family: &amp;ldquo;windows&amp;rdquo; Maven已经成功的安装配置了。
+老外写的太详细了。。。
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>Maven实例入门-随机数生成</title>
+      <link>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90/</link>
+      <pubDate>Thu, 19 Sep 2013 20:50:23 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90/</guid>
+      <description>看了很多个例子，发现这个最好，译文中会带有我的一些了理解，有问题欢迎指出。
+0.Maven是什么？ Apache Maven，是一个软件（特别是Java软件）项目管理及自动构建工具，由Apache软件基金会所提供。基于项目对象模型（缩写：POM）概念，Maven利用一个中央信息片断能管理一个项目的构建、报告和文档等步骤。
+可以看到，核心就是项目管理和自动构建了，从例子中将会体会更深。本例创建一个随机数生成程序。
+1.从Maven模板创建项目 Maven的环境变量配置和java类似，直接添加系统变量MAVEN_HOME指向你下载的maven目录，然后将bin目录添加到path环境变量里。
+在命令行下，进入到你想存储项目的位置，比如，我自己有个叫work的目录，那么我就cd到work目录，然后按下面的格式输入命令 mvn archetype:generate -DgroupId={project-packaging} -DartifactId={project-name} -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 这是告诉Maven从**maven-archetype-quickstart **创建一个java项目，如果你这个参数不填，那么会列出一个列表，让你选择你想创建什么类型，比如web项目啊，啥的。
+友情提示：是不是太难记了..好吧，直接输入 mvn archetype:generate 根据向导来创建把。。
+比如 &amp;gt;mvn archetype:generate -DgroupId=com.mkyong -DartifactId=NumberGenerator -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false [INFO] Scanning for projects&amp;hellip; [INFO]
+[INFO] &amp;ndash; omitted for readability [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Using following parameters for creating project from Old (1.x) Archetype: maven-archetype-quickstart:1.0 [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Parameter: groupId, Value: com.mkyong [INFO] Parameter: packageName, Value: com.mkyong [INFO] Parameter: package, Value: com.mkyong [INFO] Parameter: artifactId, Value: NumberGenerator [INFO] Parameter: basedir, Value: /Users/mkyong/Documents/workspace [INFO] Parameter: version, Value: 1.</description>
+    </item>
+    
+    <item>
+      <title>[译]Java中的CountDownLatch和CyclicBarrier</title>
+      <link>https://leizhiyuan.github.io/2013/09/15/%E8%AF%91java%E4%B8%AD%E7%9A%84countdownlatch%E5%92%8Ccyclicbarrier/</link>
+      <pubDate>Sun, 15 Sep 2013 08:03:09 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/15/%E8%AF%91java%E4%B8%AD%E7%9A%84countdownlatch%E5%92%8Ccyclicbarrier/</guid>
+      <description>本文译自官方文档，有细微改动，Java多线程的时候，看了好多文档，还是官方说的最清楚。结合自己的理解，译之。
+CountDownLatch 字面意思就是倒计数闩，后面会讲到，这里的同步允许一个或多个线程等待，，知道其他线程进行的一系列操作完成。而CountDownLatch通过一个参数count（数目）来构造，而await（）则阻塞当前线程，直到countDown()将count减为了0，然后，所有的阻塞线程被释放，也就是那些调用了await方法的线程立即返回，注意，这是一次性的，也就是说count不能被自动重置，如果你想这么做，CyclicBarrier是可以的。
+CountDownLatch用处很多，当用count=1来构造的时候，这就相当于一个开关，所有调用了await方法的线程都在等待，直到有一个线程调用了countDown()，CountDownLatch通过count=N构造的话，就可以使一个线程等待其他N个线程完成操作，或者一个操作被做N次。
+简单的demo：
+一组worker（工人）线程使用两个CountDownLatch
+第一个是开始信号，用来阻止工人提前操作，直到(driver)传送带准备好了才允许开始
+第二个是完成信号，他使传送带等待直到所有的worker都完成 class Driver { // &amp;hellip; void main() throws InterruptedException { CountDownLatch startSignal = new CountDownLatch(1); CountDownLatch doneSignal = new CountDownLatch(N);
+for (int i = 0; i &amp;amp;lt; N; ++i) // 创建并启动线程 new Thread(new Worker(startSignal, doneSignal)).start(); doSomethingElse(); // 传送带做点准备工作 startSignal.countDown(); // 减为0，工人可以开始了 doSomethingElse(); doneSignal.await(); // 等待直到所有的工人完成任务 } }
+class Worker implements Runnable { private final CountDownLatch startSignal; private final CountDownLatch doneSignal; Worker(CountDownLatch startSignal, CountDownLatch doneSignal) { this.</description>
+    </item>
+    
+    <item>
+      <title>等物体填充问题</title>
+      <link>https://leizhiyuan.github.io/2013/06/29/%E7%AD%89%E7%89%A9%E4%BD%93%E5%A1%AB%E5%85%85%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 29 Jun 2013 18:14:08 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/06/29/%E7%AD%89%E7%89%A9%E4%BD%93%E5%A1%AB%E5%85%85%E9%97%AE%E9%A2%98/</guid>
+      <description>那天在群里，rich大牛提了一个问题，一个直径为10cm的球内最多能够填充直径为1cm的球多少个.
+之前看到过一个类似的简单说明，就像是在一个盒子里装乒乓球，如果装满了，想继续装，如何办？经验告诉我们，摇一摇盒子。。这个问题看上去简单，其实是个NP难问题&amp;hellip;于是，查找了一些资料，比较有意思，分享一下。
+&amp;nbsp;
+首先是stetson大学efriedma教授的网页，收集了各类填充（英文是packing）问题的图示，欢迎移步：packing center ，不过这里面恰好没有球体填充（SpherePacking）的问题，然后继续查找，进入了一个可以演示球体填充问题的页面：sphere packing demo 感谢网站作者Hugo Pfoertner，这里作者解出了1-72个球的问题，但是，作者说对于n&amp;gt;10的情况无法证明最优化.不过这个页面的演示太帅了，推荐看看。
+
+&amp;nbsp;
+可以鼠标拖动旋转3D视角。
+然后在数学世界看到了一球体填充问题的证明结果，见：SpherePacking，当然，下面一大堆引用我都没看..看文章里的意思是说这个填充问题填充率已经被证明最大是77.9%，但是这个上限可能还能提高，因为貌似根据这个情况，rich大牛提出的这个问题应该数量在779左右..
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>Eclipse安装JavaCC</title>
+      <link>https://leizhiyuan.github.io/2012/09/17/eclipse%E5%AE%89%E8%A3%85javacc/</link>
+      <pubDate>Mon, 17 Sep 2012 18:26:35 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/17/eclipse%E5%AE%89%E8%A3%85javacc/</guid>
+      <description>今年的编译原理课程上机实践是讲这个的。。要求用JavaCC来做一个简单的解释器。今天总算是有点时间找找文档先把这个安装了。安装过程很简单。。
+　1.希望你已经安装了Eclipse。。。
+　2.去sourceforge该项目主页下载javaCC压缩包
+　3.下载完成后解压到你的Eclipse根目录。会提示覆盖plugins和features。直接覆盖即可。
+　4.测试一下是否成功。具体步骤就是，打开eclipse，新建一个空java项目。然后对着项目点击右键new-&amp;gt;other-&amp;gt;javaCC-&amp;gt;javaCC template file。然后选择命名空间。包名。和文件名就可以了。这个地方的什么的是由你建立的java项目决定的。所以你可以先把java项目设置好，然后直接选就可以了。。
+　5.点击运行。选择java application。控制台输出　Reading from standard input&amp;hellip;　Enter an expression like &amp;ldquo;1+(2+3)*4;&amp;rdquo;:
+　完成。。。
+Update:其实吧。这里安装的是JavaCC的插件。但是已经可以进行开发了。可能你需要一个例子来开始。或者你不喜欢eclipse。那么去JavaCC的项目下载你喜欢的即可。我下的是javacc-5.0.zip 里面有例子。可以参考。</description>
+    </item>
+    
+    <item>
+      <title>andorid 实现拖动滑动效果</title>
+      <link>https://leizhiyuan.github.io/2012/04/12/andorid-%E5%AE%9E%E7%8E%B0%E6%8B%96%E5%8A%A8%E6%BB%91%E5%8A%A8%E6%95%88%E6%9E%9C/</link>
+      <pubDate>Thu, 12 Apr 2012 11:05:43 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/12/andorid-%E5%AE%9E%E7%8E%B0%E6%8B%96%E5%8A%A8%E6%BB%91%E5%8A%A8%E6%95%88%E6%9E%9C/</guid>
+      <description>&lt;p&gt;这个大家都有过体会，就是当你左右拖动的时候，能够做到向左向右翻页。代码我写了很详细的注释。包括xml的注释，所以就不怎么解释了。先测试下代码高亮能用不.我当前用的是&lt;strong&gt;WP-Syntax&lt;/strong&gt;插件。将就着还行吧。如果你知道更好的话。不妨给我推荐一下。
+&lt;pre lang=&#34;java&#34;&gt;package com.android.flip;&lt;/p&gt;
+
+&lt;p&gt;import android.app.Activity;
+import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.ViewFlipper;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>图的遍历(C#)</title>
+  <meta property="og:title" content="图的遍历(C#)" />
+  <meta name="twitter:title" content="图的遍历(C#)" />
+  <meta name="description" content="讲的非常好的一篇文章。感谢abatei，直接收藏分享之。
+图的存储结构 图的存储结构除了要存储图中各个顶点的本身的信息外，同时还要存储顶点与顶点之间的所有关系（边的信息），因此，图的结构比较复杂，很难以数据元素在存储区中的物理位置来表示元素之间的关系，但也正是由于其任意的特性，故物理表示方法很多。常用的图的存储结构有邻接矩阵、邻接表、十字链表和邻接多重表。
+8.2.1 邻接矩阵表示法 对于一个具有n个顶点的图，可以使用n*n的矩阵（二维数组）来表示它们间的邻接关系。图8.10和图8.11中，矩阵A(i，j)=1表示图中存在一条边(Vi，Vj)，而A(i，j)=0表示图中不存在边(Vi，Vj)。实际编程时，当图为不带权图时，可以在二维数组中存放bool值，A(i，j)=true表示存在边(Vi，Vj)，A(i，j)=false表示不存在边(Vi，Vj)；当图带权值时，则可以直接在二维数组中存放权值，A(i，j)=null表示不存在边(Vi，Vj)。
+ 图8.10所示的是无向图的邻接矩阵表示法，可以观察到，矩阵延对角线对称，即A(i，j)= A(j，i)。无向图邻接矩阵的第i行或第i列非零元素的个数其实就是第i个顶点的度。这表示无向图邻接矩阵存在一定的数据冗余。
+图8.11所示的是有向图邻接矩阵表示法，矩阵并不延对角线对称，A(i，j)=1表示顶点Vi邻接到顶点Vj；A(j，i)=1则表示顶点Vi邻接自顶点Vj。两者并不象无向图邻接矩阵那样表示相同的意思。有向图邻接矩阵的第i行非零元素的个数其实就是第i个顶点的出度，而第i列非零元素的个数是第i个顶点的入度，即第i个顶点的度是第i行和第i列非零元素个数之和。
+由于存在n个顶点的图需要n2个数组元素进行存储，当图为稀疏图时，使用邻接矩阵存储方法将出现大量零元素，照成极大地空间浪费，这时应该使用邻接表表示法存储图中的数据。
+8.2.2 邻接表表示法 图的邻接矩阵存储方法跟树的孩子链表示法相类似，是一种顺序分配和链式分配相结合的存储结构。邻接表由表头结点和表结点两部分组成，其中图中每个顶点均对应一个存储在数组中的表头结点。如这个表头结点所对应的顶点存在相邻顶点，则把相邻顶点依次存放于表头结点所指向的单向链表中。如图8.12所示，表结点存放的是邻接顶点在数组中的索引。对于无向图来说，使用邻接表进行存储也会出现数据冗余，表头结点A所指链表中存在一个指向C的表结点的同时，表头结点C所指链表也会存在一个指向A的表结点。  有向图的邻接表有出边表和入边表（又称逆邻接表）之分。出边表的表结点存放的是从表头结点出发的有向边所指的尾顶点；入边表的表结点存放的则是指向表头结点的某个头顶点。如图8.13所示，图(b)和&copy;分别为有向图(a)的出边表和入边表。  以上所讨论的邻接表所表示的都是不带权的图，如果要表示带权图，可以在表结点中增加一个存放权的字段，其效果如图8.14所示。
+
+【注意】：观察图8.14可以发现，当删除存储表头结点的数组中的某一元素，有可能使部分表头结点索引号的改变，从而导致大面积修改表结点的情况发生。可以在表结点中直接存放指向表头结点的指针以解决这个问题（在链表中存放类实例即是存放指针，但必须要保证表头结点是类而不是结构体）。在实际创建邻接表时，甚至可以使用链表代替数组存放表头结点或使用顺序表存代替链表存放表结点。对所学的数据结构知识应当根据实际情况及所使用语言的特点灵活应用，切不可生搬硬套。
+【例8-1 AdjacencyList.cs】图的邻接表存储结构  using System; using System.Collections.Generic; public class AdjacencyList&lt;T&gt; { List&lt;Vertex&lt;T&gt;&gt; items; //图的顶点集合 public AdjacencyList() : this(10) { } //构造方法 public AdjacencyList(int capacity) //指定容量的构造方法 { items = new List&lt;Vertex&lt;T&gt;&gt;(capacity); } public void AddVertex(T item) //添加一个顶点 { //不允许插入重复值 if (Contains(item)) { throw new ArgumentException(&ldquo;插入了重复顶点！&rdquo;); } items.Add(new Vertex&lt;T&gt;(item)); } public void AddEdge(T from, T to) //添加无向边 { Vertex&lt;T&gt; fromVer = Find(from); //找到起始顶点 if (fromVer == null) { throw new ArgumentException(&ldquo;头顶点并不存在！&rdquo;); } Vertex&lt;T&gt; toVer = Find(to); //找到结束顶点 if (toVer == null) { throw new ArgumentException(&ldquo;尾顶点并不存在！&rdquo;); } //无向边的两个顶点都需记录边信息 AddDirectedEdge(fromVer, toVer); AddDirectedEdge(toVer, fromVer); } public bool Contains(T item) //查找图中是否包含某项 { foreach (Vertex&lt;T&gt; v in items) { if (v.">
+  <meta property="og:description" content="讲的非常好的一篇文章。感谢abatei，直接收藏分享之。
+图的存储结构 图的存储结构除了要存储图中各个顶点的本身的信息外，同时还要存储顶点与顶点之间的所有关系（边的信息），因此，图的结构比较复杂，很难以数据元素在存储区中的物理位置来表示元素之间的关系，但也正是由于其任意的特性，故物理表示方法很多。常用的图的存储结构有邻接矩阵、邻接表、十字链表和邻接多重表。
+8.2.1 邻接矩阵表示法 对于一个具有n个顶点的图，可以使用n*n的矩阵（二维数组）来表示它们间的邻接关系。图8.10和图8.11中，矩阵A(i，j)=1表示图中存在一条边(Vi，Vj)，而A(i，j)=0表示图中不存在边(Vi，Vj)。实际编程时，当图为不带权图时，可以在二维数组中存放bool值，A(i，j)=true表示存在边(Vi，Vj)，A(i，j)=false表示不存在边(Vi，Vj)；当图带权值时，则可以直接在二维数组中存放权值，A(i，j)=null表示不存在边(Vi，Vj)。
+ 图8.10所示的是无向图的邻接矩阵表示法，可以观察到，矩阵延对角线对称，即A(i，j)= A(j，i)。无向图邻接矩阵的第i行或第i列非零元素的个数其实就是第i个顶点的度。这表示无向图邻接矩阵存在一定的数据冗余。
+图8.11所示的是有向图邻接矩阵表示法，矩阵并不延对角线对称，A(i，j)=1表示顶点Vi邻接到顶点Vj；A(j，i)=1则表示顶点Vi邻接自顶点Vj。两者并不象无向图邻接矩阵那样表示相同的意思。有向图邻接矩阵的第i行非零元素的个数其实就是第i个顶点的出度，而第i列非零元素的个数是第i个顶点的入度，即第i个顶点的度是第i行和第i列非零元素个数之和。
+由于存在n个顶点的图需要n2个数组元素进行存储，当图为稀疏图时，使用邻接矩阵存储方法将出现大量零元素，照成极大地空间浪费，这时应该使用邻接表表示法存储图中的数据。
+8.2.2 邻接表表示法 图的邻接矩阵存储方法跟树的孩子链表示法相类似，是一种顺序分配和链式分配相结合的存储结构。邻接表由表头结点和表结点两部分组成，其中图中每个顶点均对应一个存储在数组中的表头结点。如这个表头结点所对应的顶点存在相邻顶点，则把相邻顶点依次存放于表头结点所指向的单向链表中。如图8.12所示，表结点存放的是邻接顶点在数组中的索引。对于无向图来说，使用邻接表进行存储也会出现数据冗余，表头结点A所指链表中存在一个指向C的表结点的同时，表头结点C所指链表也会存在一个指向A的表结点。  有向图的邻接表有出边表和入边表（又称逆邻接表）之分。出边表的表结点存放的是从表头结点出发的有向边所指的尾顶点；入边表的表结点存放的则是指向表头结点的某个头顶点。如图8.13所示，图(b)和&copy;分别为有向图(a)的出边表和入边表。  以上所讨论的邻接表所表示的都是不带权的图，如果要表示带权图，可以在表结点中增加一个存放权的字段，其效果如图8.14所示。
+
+【注意】：观察图8.14可以发现，当删除存储表头结点的数组中的某一元素，有可能使部分表头结点索引号的改变，从而导致大面积修改表结点的情况发生。可以在表结点中直接存放指向表头结点的指针以解决这个问题（在链表中存放类实例即是存放指针，但必须要保证表头结点是类而不是结构体）。在实际创建邻接表时，甚至可以使用链表代替数组存放表头结点或使用顺序表存代替链表存放表结点。对所学的数据结构知识应当根据实际情况及所使用语言的特点灵活应用，切不可生搬硬套。
+【例8-1 AdjacencyList.cs】图的邻接表存储结构  using System; using System.Collections.Generic; public class AdjacencyList&lt;T&gt; { List&lt;Vertex&lt;T&gt;&gt; items; //图的顶点集合 public AdjacencyList() : this(10) { } //构造方法 public AdjacencyList(int capacity) //指定容量的构造方法 { items = new List&lt;Vertex&lt;T&gt;&gt;(capacity); } public void AddVertex(T item) //添加一个顶点 { //不允许插入重复值 if (Contains(item)) { throw new ArgumentException(&ldquo;插入了重复顶点！&rdquo;); } items.Add(new Vertex&lt;T&gt;(item)); } public void AddEdge(T from, T to) //添加无向边 { Vertex&lt;T&gt; fromVer = Find(from); //找到起始顶点 if (fromVer == null) { throw new ArgumentException(&ldquo;头顶点并不存在！&rdquo;); } Vertex&lt;T&gt; toVer = Find(to); //找到结束顶点 if (toVer == null) { throw new ArgumentException(&ldquo;尾顶点并不存在！&rdquo;); } //无向边的两个顶点都需记录边信息 AddDirectedEdge(fromVer, toVer); AddDirectedEdge(toVer, fromVer); } public bool Contains(T item) //查找图中是否包含某项 { foreach (Vertex&lt;T&gt; v in items) { if (v.">
+  <meta name="twitter:description" content="讲的非常好的一篇文章。感谢abatei，直接收藏分享之。
+图的存储结构 图的存储结构除了要存储图中各个顶点的本身的信息外，同时还要存储顶点与顶点之间的所有关系（边的信息），因此，图的结构比较复杂，很难以数据元素在存储区中的物理位置来表示元素之间的关系，但也正是由于其任意的特性，故物理表示方法很多。常用的图的存储结构有邻接矩阵、邻接表、十字链表和邻接多重表。
+8.2.1 邻接矩阵表示法 对于一个具 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2013/01/06/%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86c/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2013/01/06/%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86c/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>图的遍历(C#)</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on January 6, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 4 minutes (718 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p>讲的非常好的一篇文章。感谢<a href="http://www.cnblogs.com/abatei/archive/2008/06/06/1215114.html">abatei</a>，直接收藏分享之。</p>
+
+<h2 id="图的存储结构">图的存储结构</h2>
+
+<p>图的存储结构除了要存储图中各个顶点的本身的信息外，同时还要存储顶点与顶点之间的所有关系（边的信息），因此，图的结构比较复杂，很难以数据元素在存储区中的物理位置来表示元素之间的关系，但也正是由于其任意的特性，故物理表示方法很多。常用的图的存储结构有邻接矩阵、邻接表、十字链表和邻接多重表。</p>
+
+<h3 id="8-2-1-邻接矩阵表示法">8.2.1  邻接矩阵表示法</h3>
+
+<p>对于一个具有n个顶点的图，可以使用n*n的矩阵（二维数组）来表示它们间的邻接关系。图8.10和图8.11中，矩阵A(i，j)=1表示图中存在一条边(V<sub>i</sub>，V<sub>j</sub>)，而A(i，j)=0表示图中不存在边(V<sub>i</sub>，V<sub>j</sub>)。实际编程时，当图为不带权图时，可以在二维数组中存放bool值，A(i，j)=true表示存在边(V<sub>i</sub>，V<sub>j</sub>)，A(i，j)=false表示不存在边(V<sub>i</sub>，V<sub>j</sub>)；当图带权值时，则可以直接在二维数组中存放权值，A(i，j)=null表示不存在边(V<sub>i</sub>，V<sub>j</sub>)。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/31196_o.jpg"><img src="/images/34232ee6d725c72cdc277e3b5146680671171e7f.jpg" alt="" /></a>
+图8.10所示的是无向图的邻接矩阵表示法，可以观察到，矩阵延对角线对称，即A(i，j)= A(j，i)。无向图邻接矩阵的第i行或第i列非零元素的个数其实就是第i个顶点的度。这表示无向图邻接矩阵存在一定的数据冗余。</p>
+
+<p>图8.11所示的是有向图邻接矩阵表示法，矩阵并不延对角线对称，A(i，j)=1表示顶点V<sub>i</sub>邻接到顶点V<sub>j</sub>；A(j，i)=1则表示顶点V<sub>i</sub>邻接自顶点V<sub>j</sub>。两者并不象无向图邻接矩阵那样表示相同的意思。有向图邻接矩阵的第i行非零元素的个数其实就是第i个顶点的出度，而第i列非零元素的个数是第i个顶点的入度，即第i个顶点的度是第i行和第i列非零元素个数之和。</p>
+
+<p>由于存在n个顶点的图需要n<sup>2</sup>个数组元素进行存储，当图为稀疏图时，使用邻接矩阵存储方法将出现大量零元素，照成极大地空间浪费，这时应该使用邻接表表示法存储图中的数据。</p>
+
+<h3 id="8-2-2-邻接表表示法">8.2.2 邻接表表示法</h3>
+
+<p>图的邻接矩阵存储方法跟树的孩子链表示法相类似，是一种顺序分配和链式分配相结合的存储结构。邻接表由表头结点和表结点两部分组成，其中图中每个顶点均对应一个存储在数组中的表头结点。如这个表头结点所对应的顶点存在相邻顶点，则把相邻顶点依次存放于表头结点所指向的单向链表中。如图8.12所示，表结点存放的是邻接顶点在数组中的索引。对于无向图来说，使用邻接表进行存储也会出现数据冗余，表头结点A所指链表中存在一个指向C的表结点的同时，表头结点C所指链表也会存在一个指向A的表结点。
+<a href="http://leaverimage.b0.upaiyun.com/31197_o.jpg"><img src="/images/e6366b11df17b7aee6ddd118de3c84bb1c760c37.jpg" alt="" /></a>
+有向图的邻接表有出边表和入边表（又称逆邻接表）之分。出边表的表结点存放的是从表头结点出发的有向边所指的尾顶点；入边表的表结点存放的则是指向表头结点的某个头顶点。如图8.13所示，图(b)和&copy;分别为有向图(a)的出边表和入边表。
+<a href="http://leaverimage.b0.upaiyun.com/31198_o.jpg"><img src="/images/847e7b120ab02fcb88556adaa762a4098e7ba831.jpg" alt="" /></a>
+以上所讨论的邻接表所表示的都是不带权的图，如果要表示带权图，可以在表结点中增加一个存放权的字段，其效果如图8.14所示。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/31199_o.jpg"><img src="/images/a78cf3f8419a98ca2cede25716595c14a30ae2d3.jpg" alt="" /></a></p>
+
+<p>【注意】：观察图8.14可以发现，当删除存储表头结点的数组中的某一元素，有可能使部分表头结点索引号的改变，从而导致大面积修改表结点的情况发生。可以在表结点中直接存放指向表头结点的指针以解决这个问题（在链表中存放类实例即是存放指针，但必须要保证表头结点是类而不是结构体）。在实际创建邻接表时，甚至可以使用链表代替数组存放表头结点或使用顺序表存代替链表存放表结点。对所学的数据结构知识应当根据实际情况及所使用语言的特点灵活应用，切不可生搬硬套。</p>
+
+<p>【例8-1  AdjacencyList.cs】图的邻接表存储结构
+<div>
+<pre class="lang:default decode:true">using System;
+using System.Collections.Generic;
+public class AdjacencyList&lt;T&gt;
+{
+    List&lt;Vertex&lt;T&gt;&gt; items; //图的顶点集合
+    public AdjacencyList() : this(10) { } //构造方法
+    public AdjacencyList(int capacity) //指定容量的构造方法
+    {
+        items = new List&lt;Vertex&lt;T&gt;&gt;(capacity);
+    }
+    public void AddVertex(T item) //添加一个顶点
+    {   //不允许插入重复值
+        if (Contains(item))
+        {
+            throw new ArgumentException(&ldquo;插入了重复顶点！&rdquo;);
+        }
+        items.Add(new Vertex&lt;T&gt;(item));
+    }
+    public void AddEdge(T from, T to) //添加无向边
+    {
+        Vertex&lt;T&gt; fromVer = Find(from); //找到起始顶点
+        if (fromVer == null)
+        {
+            throw new ArgumentException(&ldquo;头顶点并不存在！&rdquo;);
+        }
+        Vertex&lt;T&gt; toVer = Find(to); //找到结束顶点
+        if (toVer == null)
+        {
+            throw new ArgumentException(&ldquo;尾顶点并不存在！&rdquo;);
+        }
+        //无向边的两个顶点都需记录边信息
+        AddDirectedEdge(fromVer, toVer);
+        AddDirectedEdge(toVer, fromVer);
+    }
+    public bool Contains(T item) //查找图中是否包含某项
+    {
+        foreach (Vertex&lt;T&gt; v in items)
+        {
+            if (v.data.Equals(item))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private Vertex&lt;T&gt; Find(T item) //查找指定项并返回
+    {
+        foreach (Vertex&lt;T&gt; v in items)
+        {
+            if (v.data.Equals(item))
+            {
+                return v;
+            }
+        }
+        return null;
+    }
+    //添加有向边
+    private void AddDirectedEdge(Vertex&lt;T&gt; fromVer, Vertex&lt;T&gt; toVer)
+    {
+        if (fromVer.firstEdge == null) //无邻接点时
+        {
+            fromVer.firstEdge = new Node(toVer);
+        }
+        else
+        {
+            Node tmp, node = fromVer.firstEdge;
+            do
+            {   //检查是否添加了重复边
+                if (node.adjvex.data.Equals(toVer.data))
+                {
+                    throw new ArgumentException(&ldquo;添加了重复的边！&rdquo;);
+                }
+                tmp = node;
+                node = node.next;
+            } while (node != null);
+            tmp.next = new Node(toVer); //添加到链表未尾
+        }
+    }
+    public override string ToString() //仅用于测试
+    {   //打印每个节点和它的邻接点
+        string s = string.Empty;
+        foreach (Vertex&lt;T&gt; v in items)
+        {
+            s += v.data.ToString() + &rdquo;:&ldquo;;
+            if (v.firstEdge != null)
+            {
+                Node tmp = v.firstEdge;
+                while (tmp != null)
+                {
+                    s += tmp.adjvex.data.ToString();
+                    tmp = tmp.next;
+                }
+            }
+            s += &rdquo;\r\n&rdquo;;
+        }
+        return s;
+    }
+    //嵌套类，表示链表中的表结点
+    public class Node
+    {
+        public Vertex&lt;T&gt; adjvex; //邻接点域
+        public Node next; //下一个邻接点指针域
+        public Node(Vertex&lt;T&gt; value)
+        {
+            adjvex = value;
+        }
+    }
+    //嵌套类，表示存放于数组中的表头结点
+    public class Vertex&lt;TValue&gt;
+    {
+        public TValue data; //数据
+        public Node firstEdge; //邻接点链表头指针
+        public Boolean visited; //访问标志,遍历时使用
+        public Vertex(TValue value) //构造方法
+        {
+            data = value;
+        }
+    }
+}</pre>
+</div>
+AdjacencyList&lt;T&gt;类使用泛型实现了图的邻接表存储结构。它包含两个内部类，Vertex&lt;Tvalue&gt;类（109～118行代码）用于表示一个表头结点，Node类（99～107）则用于表示表结点，其中存放着邻接点信息，用来表示表头结点的某条边。多个Node用next指针相连形成一个单链表，表头指针为Vertex类的firstEdge成员，表头结点所代表的顶点的所有边的信息均包含在链表内，其结构如图8.12所示。所不同之处在于：</p>
+
+<p>l         Vertex类中包含了一个visited成员，它的作用是在图遍历时标识当前节点是否被访问过，这一点在稍后会讲到。</p>
+
+<p>l         邻接点指针域adjvex直接指向某个表头结点，而不是表头结点在数组中的索引。</p>
+
+<p>AdjacencyList&lt;T&gt;类中使用了一个泛型List代替数组来保存表头结点信息（第5行代码），从而不再考虑数组存储空间不够的情况发生，简化了操作。</p>
+
+<p>由于一条无向边的信息需要在边的两个顶点分别存储信息，即添加两个有向边，所以58～78行代码的私有方法AddDirectedEdge()方法用于添加一个有向边。新的邻接点信息即可以添加到链表的头部也可以添加到尾部，添加到链表头部可以简化操作，但考虑到要检查是否添加了重复边，需要遍历整个链表，所以最终把邻接点信息添加到链表尾部。</p>
+
+<p>【例8-1  Demo8-1.cs】图的邻接表存储结构测试
+<div>
+<pre class="lang:default decode:true">using System;
+class Demo8_1
+{
+    static void Main(string[] args)
+    {
+        AdjacencyList&lt;char&gt; a = new AdjacencyList&lt;char&gt;();
+        //添加顶点
+        a.AddVertex(&lsquo;A&rsquo;);
+        a.AddVertex(&lsquo;B&rsquo;);
+        a.AddVertex(&lsquo;C&rsquo;);
+        a.AddVertex(&rsquo;D&rsquo;);
+        //添加边
+        a.AddEdge(&lsquo;A&rsquo;, &rsquo;B&rsquo;);
+        a.AddEdge(&lsquo;A&rsquo;, &rsquo;C&rsquo;);
+        a.AddEdge(&lsquo;A&rsquo;, &rsquo;D&rsquo;);
+        a.AddEdge(&lsquo;B&rsquo;, &rsquo;D&rsquo;);
+        Console.WriteLine(a.ToString());
+    }
+}</pre>
+&nbsp;</p>
+
+<p></div>
+运行结果：
+A：BCD</p>
+
+<p>B：AD</p>
+
+<p>C：A</p>
+
+<p>D：AB</p>
+
+<p>&nbsp;</p>
+
+<p>本例存储的表如图8.12所示，结果中，冒号前面的是表头结点，冒号后面的是链表中的表结点。</p>
+
+<h2 id="8-3-图的遍历">8.3 图的遍历</h2>
+
+<p>和树的遍历类似，在此，我们希望从图中某一顶点出发访遍图中其余顶点，且使每一个顶点仅被访问一次，这一过程就叫做图的遍历(TraversingGraph)。如果只访问图的顶点而不关注边的信息，那么图的遍历十分简单，使用一个foreach语句遍历存放顶点信息的数组即可。但如果为了实现特定算法，就需要根据边的信息按照一定顺序进行遍历。图的遍历算法是求解图的连通性问题、拓扑排序和求关键路径等算法的基础。</p>
+
+<p>图的遍历要比树的遍历复杂得多，由于图的任一顶点都可能和其余顶点相邻接，故在访问了某顶点之后，可能顺着某条边又访问到了已访问过的顶点，因此，在图的遍历过程中，必须记下每个访问过的顶点，以免同一个顶点被访问多次。为此给顶点附设访问标志visited，其初值为false，一旦某个顶点被访问，则其visited标志置为true。</p>
+
+<p>图的遍历方法有两种：一种是深度优先搜索遍历（Depth-First Search 简称DFS）；另一种是广度优先搜索遍历（Breadth_First Search 简称BFS）。</p>
+
+<h3 id="8-3-1-深度优先搜索遍历">8.3.1  深度优先搜索遍历</h3>
+
+<p>图的深度优先搜索遍历类似于二叉树的深度优先搜索遍历。其基本思想如下：假定以图中某个顶点V<sub>i</sub>为出发点，首先访问出发点，然后选择一个V<sub>i</sub>的未访问过的邻接点V<sub>j</sub>，以V<sub>j</sub>为新的出发点继续进行深度优先搜索，直至图中所有顶点都被访问过。显然，这是一个递归的搜索过程。</p>
+
+<p>现以图8.15为例说明深度优先搜索过程。假定V<sub>1</sub>是出发点，首先访问V<sub>1</sub>。因V<sub>1</sub>有两个邻接点V<sub>2</sub>、V<sub>3</sub>均末被访问过，可以选择V<sub>2</sub>作为新的出发点，访问V<sub>2</sub>之后，再找V<sub>2</sub>的末访问过的邻接点。同V<sub>2</sub>邻接的有V<sub>1</sub>、V<sub>4</sub>和V<sub>5</sub>，其中V<sub>1</sub>已被访问过，而V<sub>4</sub>、V<sub>5</sub>尚未被访问过，可以选择V<sub>4</sub>作为新的出发点。重复上述搜索过程，继续依次访问V<sub>8</sub>、V<sub>5</sub> 。访问V<sub>5</sub>之后，由于与V<sub>5</sub>相邻的顶点均已被访问过，搜索退回到V<sub>8</sub>，访问V<sub>8</sub>的另一个邻接点V<sub>6</sub>。接下来依次访问V<sub>3</sub>和V<sub>7</sub>，最后得到的的顶点的访问序列为：V<sub>1</sub> → V<sub>2</sub> → V<sub>4</sub> → V<sub>8</sub> → V<sub>5</sub> → V<sub>6</sub> → V<sub>3</sub> →V<sub>7</sub>。
+<a href="http://leaverimage.b0.upaiyun.com/31200_o.jpg"><img src="/images/13132121255a94bad1935b0182c903d462a9a856.jpg" alt="" /></a>
+下面根据上一节创建的邻接表存储结构添加深度优先搜索遍历代码。</p>
+
+<p>【例8-2  DFSTraverse.cs】深度优先搜索遍历</p>
+
+<p>打开【例8-1  AdjacencyList.cs】，在AdjacencyList&lt;T&gt;类中添加以下代码后，将文件另存为DFSTraverse.cs。
+<div>
+<pre class="lang:default decode:true">    public void DFSTraverse() //深度优先遍历
+    {
+        InitVisited(); //将visited标志全部置为false
+        DFS(items[0]); //从第一个顶点开始遍历
+    }
+    private void DFS(Vertex&lt;T&gt; v) //使用递归进行深度优先遍历
+    {
+        v.visited = true; //将访问标志设为true
+        Console.Write(v.data + &ldquo; &ldquo;); //访问
+        Node node = v.firstEdge;
+        while (node != null) //访问此顶点的所有邻接点
+        {   //如果邻接点未被访问，则递归访问它的边
+            if (!node.adjvex.visited)
+            {
+                DFS(node.adjvex); //递归
+            }
+           node = node.next; //访问下一个邻接点
+        }
+    }</p>
+<div class="highlight"><pre class="chroma">private void InitVisited() //初始化visited标志
+{
+     foreach (Vertex&amp;lt;T&amp;gt; v in items)
+    {
+         v.visited = false; //全部置为false
+     }
+ }&lt;/pre&gt;</pre></div>
+<p></div>
+【例8-2  Demo8-2.cs】深度优先搜索遍历测试
+<div>
+<pre class="lang:default decode:true">using System;
+class Demo8_2
+{
+    static void Main(string[] args)
+    {
+        AdjacencyList&lt;string&gt; a = new AdjacencyList&lt;string&gt;();
+        a.AddVertex(&ldquo;V1&rdquo;);
+        a.AddVertex(&ldquo;V2&rdquo;);
+        a.AddVertex(&ldquo;V3&rdquo;);
+        a.AddVertex(&ldquo;V4&rdquo;);
+        a.AddVertex(&ldquo;V5&rdquo;);
+        a.AddVertex(&ldquo;V6&rdquo;);
+        a.AddVertex(&ldquo;V7&rdquo;);
+        a.AddVertex(&ldquo;V8&rdquo;);
+        a.AddEdge(&ldquo;V1&rdquo;, &rdquo;V2&rdquo;);
+        a.AddEdge(&ldquo;V1&rdquo;, &rdquo;V3&rdquo;);
+        a.AddEdge(&ldquo;V2&rdquo;, &rdquo;V4&rdquo;);
+        a.AddEdge(&ldquo;V2&rdquo;, &rdquo;V5&rdquo;);
+        a.AddEdge(&ldquo;V3&rdquo;, &rdquo;V6&rdquo;);
+        a.AddEdge(&ldquo;V3&rdquo;, &rdquo;V7&rdquo;);
+        a.AddEdge(&ldquo;V4&rdquo;, &rdquo;V8&rdquo;);
+        a.AddEdge(&ldquo;V5&rdquo;, &rdquo;V8&rdquo;);
+        a.AddEdge(&ldquo;V6&rdquo;, &rdquo;V8&rdquo;);
+        a.AddEdge(&ldquo;V7&rdquo;, &rdquo;V8&rdquo;);
+        a.DFSTraverse();
+    }
+}</pre>
+&nbsp;</p>
+
+<p></div>
+运行结果：</p>
+
+<p>V1 V2 V4 V8 V5 V6 V3 V7</p>
+
+<p>&nbsp;</p>
+
+<p>本例参照图8-15进行设计，运行过程请参照对图8-15所作的分析。</p>
+
+<h3 id="8-3-2-广度优先搜索遍历">8.3.2  广度优先搜索遍历</h3>
+
+<p>图的广度优先搜索遍历算法是一个分层遍历的过程，和二叉树的广度优先搜索遍历类同。它从图的某一顶点V<sub>i</sub>出发，访问此顶点后，依次访问V<sub>i</sub>的各个未曾访问过的邻接点，然后分别从这些邻接点出发，直至图中所有已有已被访问的顶点的邻接点都被访问到。对于图8.15所示的无向连通图，若顶点V<sub>i</sub>为初始访问的顶点，则广度优先搜索遍历顶点访问顺序是：V<sub>1</sub> →V<sub>2</sub> → V<sub>3</sub> → V<sub>4</sub> → V<sub>5</sub> → V<sub>6</sub> → V<sub>7</sub> → V<sub>8</sub>。遍历过程如图8.16的所示。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/31201_o.jpg"><img src="/images/137d86b71c14e3f0de5f3c57e2f04a6d18a27b94.jpg" alt="" /></a>
+和二叉树的广度优先搜索遍历类似，图的广度优先搜索遍历也需要借助队列来完成，例8.3演示了这个过程。</p>
+
+<p>【例8-3  BFSTraverse.cs】广度优先搜索遍历</p>
+
+<p>打开【例8-2  DFSTraverse.cs】，在AdjacencyList&lt;T&gt;类中添加以下代码后，将文件另存为BFSTraverse.cs。
+<div>
+<pre class="lang:default decode:true">  public void BFSTraverse() //广度优先遍历
+  {
+      InitVisited(); //将visited标志全部置为false
+      BFS(items[0]); //从第一个顶点开始遍历
+  }
+  private void BFS(Vertex&lt;T&gt; v) //使用队列进行广度优先遍历
+   {   //创建一个队列
+      Queue&lt;Vertex&lt;T&gt;&gt; queue = new Queue&lt;Vertex&lt;T&gt;&gt;();
+      Console.Write(v.data + &ldquo; &ldquo;); //访问
+      v.visited = true; //设置访问标志
+      queue.Enqueue(v); //进队
+      while (queue.Count &gt; 0) //只要队不为空就循环
+      {
+          Vertex&lt;T&gt; w = queue.Dequeue();
+           Node node = w.firstEdge;
+          while (node != null) //访问此顶点的所有邻接点
+          {   //如果邻接点未被访问，则递归访问它的边
+              if (!node.adjvex.visited)
+              {
+                  Console.Write(node.adjvex.data + &ldquo; &ldquo;); //访问
+                  node.adjvex.visited = true; //设置访问标志
+                  queue.Enqueue(node.adjvex); //进队
+              }
+              node = node.next; //访问下一个邻接点
+          }
+      }
+   }</pre>
+&nbsp;</p>
+
+<p></div>
+【例8-3  Demo8-3.cs】广度优先搜索遍历测试
+<div>
+<pre class="lang:default decode:true">using System;
+class Demo8_3
+{
+    static void Main(string[] args)
+    {
+        AdjacencyList&lt;string&gt; a = new AdjacencyList&lt;string&gt;();
+        a.AddVertex(&ldquo;V1&rdquo;);
+        a.AddVertex(&ldquo;V2&rdquo;);
+        a.AddVertex(&ldquo;V3&rdquo;);
+        a.AddVertex(&ldquo;V4&rdquo;);
+        a.AddVertex(&ldquo;V5&rdquo;);
+        a.AddVertex(&ldquo;V6&rdquo;);
+        a.AddVertex(&ldquo;V7&rdquo;);
+        a.AddVertex(&ldquo;V8&rdquo;);
+        a.AddEdge(&ldquo;V1&rdquo;, &rdquo;V2&rdquo;);
+        a.AddEdge(&ldquo;V1&rdquo;, &rdquo;V3&rdquo;);
+        a.AddEdge(&ldquo;V2&rdquo;, &rdquo;V4&rdquo;);
+        a.AddEdge(&ldquo;V2&rdquo;, &rdquo;V5&rdquo;);
+        a.AddEdge(&ldquo;V3&rdquo;, &rdquo;V6&rdquo;);
+        a.AddEdge(&ldquo;V3&rdquo;, &rdquo;V7&rdquo;);
+        a.AddEdge(&ldquo;V4&rdquo;, &rdquo;V8&rdquo;);
+        a.AddEdge(&ldquo;V5&rdquo;, &rdquo;V8&rdquo;);
+        a.AddEdge(&ldquo;V6&rdquo;, &rdquo;V8&rdquo;);
+        a.AddEdge(&ldquo;V7&rdquo;, &rdquo;V8&rdquo;);
+        a.BFSTraverse(); //广度优先搜索遍历
+    }
+}</pre>
+</div>
+运行结果：</p>
+
+<p>&nbsp;</p>
+
+<p>V1 V2 V3 V4 V5 V6 V7 V8</p>
+
+<p>&nbsp;</p>
+
+<p>运行结果请参照图8.16进行分析。</p>
+
+<h3 id="8-3-3-非连通图的遍历">8.3.3  非连通图的遍历</h3>
+
+<p>以上讨论的图的两种遍历方法都是相对于无向连通图的，它们都是从一个顶点出发就能访问到图中的所有顶点。若无向图是非连通图，则只能访问到初始点所在连通分量中的所有顶点，其他连通分量中的顶点是不可能访问到的（如图8.17所示）。为此需要从其他每个连通分量中选择初始点，分别进行遍历，才能够访问到图中的所有顶点，否则不能访问到所有顶点。为此同样需要再选初始点，继续进行遍历，直到图中的所有顶点都被访问过为止。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/31202_o.jpg"><img src="/images/7f0cae03c6b3c9704041e52e0ca4dfa3af5ce5c1.jpg" alt="" /></a>
+上例的代码只需对DFSTraverse()方法和BFSTraverse()方法稍作修改，便可以遍历非连通图。
+<div>
+<pre class="lang:default decode:true ">public void DFSTraverse() //深度优先遍历
+    {
+        InitVisited(); //将visited标志全部置为false
+        foreach (Vertex&lt;T&gt; v in items)
+        {
+            if (!v.visited) //如果未被访问
+            {
+                DFS(v); //深度优先遍历
+            }
+        }
+    }
+    public void BFSTraverse() //广度优先遍历
+    {
+        InitVisited(); //将visited标志全部置为false
+        foreach (Vertex&lt;T&gt; v in items)
+        {
+            if (!v.visited) //如果未被访问
+            {
+                BFS(v); //广度优先遍历
+            }
+        }
+    }</pre>
+&nbsp;</p>
+
+<p></div></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2013/01/06/sql%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84waf%E7%BB%95%E8%BF%87%E6%8A%80%E6%9C%AF/" data-toggle="tooltip" data-placement="top" title="SQL注入中的WAF绕过技术">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2013/01/11/c#%E9%9A%90%E8%97%8Ftabcontrol%E6%A0%87%E7%AD%BE%E6%A0%8F/" data-toggle="tooltip" data-placement="top" title="C#隐藏TabControl标签栏">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

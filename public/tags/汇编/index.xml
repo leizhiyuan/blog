@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>汇编 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E6%B1%87%E7%BC%96/</link>
+    <description>Recent content in 汇编 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 24 Sep 2012 08:02:36 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E6%B1%87%E7%BC%96/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>汇编-32位CPU所含有的寄存器</title>
+      <link>https://leizhiyuan.github.io/2012/09/24/%E6%B1%87%E7%BC%96-32%E4%BD%8Dcpu%E6%89%80%E5%90%AB%E6%9C%89%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8/</link>
+      <pubDate>Mon, 24 Sep 2012 08:02:36 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/24/%E6%B1%87%E7%BC%96-32%E4%BD%8Dcpu%E6%89%80%E5%90%AB%E6%9C%89%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8/</guid>
+      <description>今年的课程有汇编。真为校领导的智商捉鸡。。不过还是要学的。分享一篇来自中文FLEX例子的汇编寄存器的文章。很不错的一篇寄存器详解的文章。文章最后是我找到的一个汇编指令助手。
+　4个数据寄存器(EAX、EBX、ECX和EDX)　2个变址和指针寄存器(ESI和EDI) 2个指针寄存器(ESP和EBP) 6个段寄存器(ES、CS、SS、DS、FS和GS) 1个指令指针寄存器(EIP) 1个标志寄存器(EFlags)
+1、数据寄存器 　数据寄存器主要用来保存操作数和运算结果等信息，从而节省读取操作数所需占用总线和访问存储器的时间。32位CPU有4个32位的通用寄存器EAX、EBX、ECX和EDX。对低16位数据的存取，不会影响高16位的数据。这些低16位寄存器分别命名为：AX、BX、CX和DX，它和先前的CPU中的寄存器相一致。
+　4个16位寄存器又可分割成8个独立的8位寄存器(AX：AH-AL、BX：BH-BL、CX：CH-CL、DX：DH-DL)，每个寄存器都有自己的名称，可独立存取。程序员可利用数据寄存器的这种”可分可合”的特性，灵活地处理字/字节的信息。
+　寄存器AX和AL通常称为累加器(Accumulator)，用累加器进行的操作可能需要更少时间。累加器可用于乘、 除、输入/输出等操作，它们的使用频率很高； 寄存器BX称为基地址寄存器(Base Register)。它可作为存储器指针来使用； 寄存器CX称为计数寄存器(Count Register)。在循环和字符串操作时，要用它来控制循环次数；在位操作 中，当移多位时，要用CL来指明移位的位数；
+　寄存器DX称为数据寄存器(Data Register)。在进行乘、除运算时，它可作为默认的操作数参与运算，也 可用于存放I/O的端口地址。在16位CPU中，AX、BX、CX和DX不能作为基址和变址寄存器来存放存储单元的地址，但在32位CPU中，其32位寄存器EAX、EBX、ECX和EDX不仅可传送数据、暂存数据保存算术逻辑运算结果，而且也可作为指针寄存器，所以，这些32位寄存器更具有通用性。
+2、变址寄存器 　32位CPU有2个32位通用寄存器ESI和EDI。其低16位对应先前CPU中的SI和DI，对低16位数据的存取，不影响高16位的数据。
+　寄存器ESI、EDI、SI和DI称为变址寄存器(Index Register)，它们主要用于存放存储单元在段内的偏移量，用它们可实现多种存储器操作数的寻址方式，为以不同的地址形式访问存储单元提供方便。变址寄存器不可分割成8位寄存器。作为通用寄存器，也可存储算术逻辑运算的操作数和运算结果。它们可作一般的存储器指针使用。在字符串操作指令的执行过程中，对它们有特定的要求，而且还具有特殊的功能。
+3、指针寄存器 　32位CPU有2个32位通用寄存器EBP和ESP。其低16位对应先前CPU中的SBP和SP，对低16位数据的存取，不影响高16位的数据。
+　寄存器EBP、ESP、BP和SP称为指针寄存器(Pointer Register)，主要用于存放堆栈内存储单元的偏移量，用它们可实现多种存储器操作数的寻址方式，为以不同的地址形式访问存储单元提供方便。指针寄存器不可分割成8位寄存器。作为通用寄存器，也可存储算术逻辑运算的操作数和运算结果。
+　它们主要用于访问堆栈内的存储单元，并且规定：
+　BP为基指针(Base Pointer)寄存器，用它可直接存取堆栈中的数据；
+　SP为堆栈指针(Stack Pointer)寄存器，用它只可访问栈顶。
+4、段寄存器 　段寄存器是根据内存分段的管理模式而设置的。内存单元的物理地址由段寄存器的值和一个偏移量组合而成
+　的，这样可用两个较少位数的值组合成一个可访问较大物理空间的内存地址。
+　CPU内部的段寄存器：
+　CS——代码段寄存器(Code Segment Register)，其值为代码段的段值； DS——数据段寄存器(Data Segment Register)，其值为数据段的段值；　ES——附加段寄存器(Extra Segment Register)，其值为附加数据段的段值； SS——堆栈段寄存器(Stack Segment Register)，其值为堆栈段的段值； FS——附加段寄存器(Extra Segment Register)，其值为附加数据段的段值； GS——附加段寄存器(Extra Segment Register)，其值为附加数据段的段值。</description>
+    </item>
+    
+  </channel>
+</rss>

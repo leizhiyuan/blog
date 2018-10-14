@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>倒水问题求解(C&#43;&#43;)</title>
+  <meta property="og:title" content="倒水问题求解(C&#43;&#43;)" />
+  <meta name="twitter:title" content="倒水问题求解(C&#43;&#43;)" />
+  <meta name="description" content="明天要去参加微软面试，不求顺利，但求体验。
+这个题目答题的意思是:
+给你一个容量为A升的桶和一个容量为B升的桶，水不限使用，要求精确得到Q升水.请说明步骤
+当数字比较小的时候,我们可以通过大脑穷举来得到结果,但这里有两个问题,当数字很大的时候怎么解?题目给定的数据是否有解?
+首先判断是否有解?
+题目可以理解为,x为用A的次数,y为用B的次数,Q为目标值
+Q = A * x &#43; B * y Q =目标值.
+Q必须是 Gcd(A,B)(也就是A,B的最大公约数)的倍数,否则无解,如果 Gcd(A,B) == 1, 任何Q都是可解的
+最简单的方法就是把A的水不断的向B中倒(B向A中倒也行),知道得到最终结果,如果桶满了,就清空该桶.举个例子
+A = 3, B = 4 并且 Q = 2 重复得从 A-&gt;B
+A B ###### 0 0 4 0 1 3 1 0 0 1 4 1 2 3 &lt;-A桶中得到2了
+试试从 B-&gt;A
+A B ##### 0 0 0 3 3 0 3 3 4 2 &lt;- B中也得到了2 但是注意,从 B-&gt;A 比从 A-&gt;B快哦">
+  <meta property="og:description" content="明天要去参加微软面试，不求顺利，但求体验。
+这个题目答题的意思是:
+给你一个容量为A升的桶和一个容量为B升的桶，水不限使用，要求精确得到Q升水.请说明步骤
+当数字比较小的时候,我们可以通过大脑穷举来得到结果,但这里有两个问题,当数字很大的时候怎么解?题目给定的数据是否有解?
+首先判断是否有解?
+题目可以理解为,x为用A的次数,y为用B的次数,Q为目标值
+Q = A * x &#43; B * y Q =目标值.
+Q必须是 Gcd(A,B)(也就是A,B的最大公约数)的倍数,否则无解,如果 Gcd(A,B) == 1, 任何Q都是可解的
+最简单的方法就是把A的水不断的向B中倒(B向A中倒也行),知道得到最终结果,如果桶满了,就清空该桶.举个例子
+A = 3, B = 4 并且 Q = 2 重复得从 A-&gt;B
+A B ###### 0 0 4 0 1 3 1 0 0 1 4 1 2 3 &lt;-A桶中得到2了
+试试从 B-&gt;A
+A B ##### 0 0 0 3 3 0 3 3 4 2 &lt;- B中也得到了2 但是注意,从 B-&gt;A 比从 A-&gt;B快哦">
+  <meta name="twitter:description" content="明天要去参加微软面试，不求顺利，但求体验。
+这个题目答题的意思是:
+给你一个容量为A升的桶和一个容量为B升的桶，水不限使用，要求精确得到Q升水.请说明步骤
+当数字比较小的时候,我们可以通过大脑穷举来得到结果,但这里有两个问题,当数字很大的时候怎么解?题目给定的数据是否有解?
+首先判断是否有解?
+题目可以理解为,x为用A的次数,y为用B的次数,Q为目标值
+Q = A * x &#43; B * y Q =目 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2013/05/15/%E5%80%92%E6%B0%B4%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3c--/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2013/05/15/%E5%80%92%E6%B0%B4%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3c--/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>倒水问题求解(C&#43;&#43;)</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 15, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (313 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>明天要去参加微软面试，不求顺利，但求体验。</p>
+
+<p>这个题目答题的意思是:</p>
+
+<p>给你一个容量为A升的桶和一个容量为B升的桶，水不限使用，要求精确得到Q升水.请说明步骤</p>
+
+<p>当数字比较小的时候,我们可以通过大脑穷举来得到结果,但这里有两个问题,当数字很大的时候怎么解?题目给定的数据是否有解?</p>
+
+<p>首先判断是否有解?</p>
+
+<p>题目可以理解为,x为用A的次数,y为用B的次数,Q为目标值</p>
+
+<p>Q = A * x + B * y
+Q =目标值.</p>
+
+<p>Q必须是 Gcd(A,B)(也就是A,B的最大公约数)的倍数,否则无解,如果 Gcd(A,B) == 1, 任何Q都是可解的</p>
+
+<p>最简单的方法就是把A的水不断的向B中倒(B向A中倒也行),知道得到最终结果,如果桶满了,就清空该桶.举个例子</p>
+
+<p>A = 3, B = 4 并且 Q = 2
+重复得从 A-&gt;B</p>
+
+<p>A B
+######
+0 0
+4 0
+1 3
+1 0
+0 1
+4 1
+2 3 &lt;-A桶中得到2了</p>
+
+<p>试试从  B-&gt;A</p>
+
+<p>A B
+#####
+0 0
+0 3
+3 0
+3 3
+4 2 &lt;- B中也得到了2
+但是注意,从 B-&gt;A 比从 A-&gt;B快哦</p>
+
+<p>然后我贴出代码
+<pre class="lang:default decode:true">#include &ldquo;stdafx.h&rdquo;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include&lt;string&gt;</p>
+
+<p>using namespace std;</p>
+
+<p>//热门智力题 - 打水问题
+//基本思想：用A桶容量的倍数对B桶的容量进行取余。
+//指导方针：不断用A桶装水倒入B桶，B桶满了立即清空
+//每次判断下二个桶中水的容量是否等于指定容量。
+const string OPERATOR_NAME[7] = {
+    &ldquo;装满A桶&rdquo;,
+    &ldquo;装满B桶&rdquo;,
+    &ldquo;将A桶清空&rdquo;,
+    &ldquo;将B桶清空&rdquo;,
+    &ldquo;A桶中水倒入B桶&rdquo;,
+    &ldquo;B桶中水倒入A桶&rdquo;,
+    &ldquo;成功得到结果&rdquo;
+};
+int max(int a,int b)
+{
+    return a&gt;b?a:b;
+}
+int gcd(int m,int n)
+{
+    int temp,p,r;
+    //n存放最小数，m存放最大数
+    if(n&gt;m){
+        temp = n;
+        n = m;
+        m = temp;
+    }
+    p=n<em>m;//先取得两个数的积
+    while(n!=0){
+        r=m%n;
+        m=n;
+        n=r;
+    }
+return m;
+}
+int _tmain(int argc, _TCHAR</em> argv[])
+{
+    int    a_capacity, b_capacity, goal_capacity;
+    vector&lt;string&gt; record;       //记录操作过程
+    int a_water, b_water;</p>
+<div class="highlight"><pre class="chroma">cout&amp;lt;&amp;lt;&#34;请输入A桶容量，B桶容量，目标容量Q：&#34;;
+cin&amp;gt;&amp;gt;a_capacity&amp;gt;&amp;gt;b_capacity&amp;gt;&amp;gt;goal_capacity;
+a_water = b_water = 0; //A桶，B桶中有多少升水
+
+//判断是否一定可解
+if (a_capacity&amp;lt;=0 || b_capacity&amp;lt;=0 || goal_capacity&amp;lt;=0)
+{
+    cout&amp;lt;&amp;lt;&#34;请保证所以容量大于0&#34;&amp;lt;&amp;lt;endl;
+    return -1;
+}
+if (goal_capacity&amp;gt;max(a_capacity,b_capacity))
+{
+    cout&amp;lt;&amp;lt;&#34;要量出的容量应该小于其中桶容量&#34;&amp;lt;&amp;lt;endl;
+    return -2;
+}
+//如果可解则解之
+if(goal_capacity%gcd(a_capacity,b_capacity)==0)
+{
+    //存放临时的字符串构造
+    char szTemp[30];
+    while (true)
+    {
+        if (a_water == 0)//A桶没水,就装满水
+        {
+            a_water = a_capacity;
+            sprintf(szTemp, &#34;         A:%d  B:%d&#34;, a_water, b_water);
+            record.push_back(OPERATOR_NAME[0] + szTemp);//先填满 A桶
+        }
+        else
+        {
+            //如果A桶的水比(B桶容量-B桶的水)要多，也就是多于没装满的B桶空出来的部分，A桶会剩下
+            if (a_water &amp;gt; b_capacity - b_water)
+            {
+                //A桶向B桶倒水直到B桶满，此时A桶的水==A桶的水+B桶的水-B桶容量
+                a_water = a_water + b_water- b_capacity;
+                b_water = b_capacity;        //B桶的水装满了
+                sprintf(szTemp, &#34;  A:%d  B:%d&#34;, a_water, b_water); 
+                record.push_back(OPERATOR_NAME[4] + szTemp);//A-&amp;gt;B   
+                if (a_water == goal_capacity)
+                    break;
+                b_water = 0;            //将B桶清空
+                sprintf(szTemp, &#34;       A:%d  B:%d&#34;, a_water, b_water); 
+                record.push_back(OPERATOR_NAME[3] + szTemp);
+            }
+            else
+            {
+                //A桶小于装满B桶需要的水，此时B桶的水==A桶的水+B桶的水
+                b_water += a_water; 
+                a_water = 0;
+                sprintf(szTemp, &#34;  A:%d  B:%d&#34;, a_water, b_water);
+                record.push_back(OPERATOR_NAME[4] + szTemp);//A-&amp;gt;B
+                if (b_water == goal_capacity) 
+                    break;
+            }
+        }
+    }
+    record.push_back(OPERATOR_NAME[6]); //break出来说明成功了
+    cout&amp;lt;&amp;lt;&#34;\n---------------------------------------------------&#34;&amp;lt;&amp;lt;endl;
+    cout&amp;lt;&amp;lt;&#34;以下下是一种方案&#34;&amp;lt;&amp;lt;endl;
+    vector&amp;lt;string&amp;gt;::iterator pos;
+    for (pos = record.begin(); pos != record.end(); pos++)
+        cout&amp;lt;&amp;lt;*pos&amp;lt;&amp;lt;endl;
+    cout&amp;lt;&amp;lt;&#34;---------------------------------------------------&#34;&amp;lt;&amp;lt;endl;
+}
+else
+{
+    cout&amp;lt;&amp;lt;&#34;此情况下无解&#34;&amp;lt;&amp;lt;endl;
+}
+
+return 0;</pre></div>
+<p>}</pre>
+运行结果如下：</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/36055_o.png"><img src="/images/9b3722c45b95afd3637b0726db13912e2f203ff3.png" alt="" /></a></p>
+
+<p>关于如何求最少的步数来求解这个问题，希望有朋友能够留言指教。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2013/05/13/%E8%97%8F%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%E7%94%B5%E5%AD%90%E6%97%B6%E4%BB%A3%E7%9A%84%E4%BA%BA%E7%94%9F%E7%BB%91%E6%9E%B6%E8%80%85/" data-toggle="tooltip" data-placement="top" title="[藏]社交网络，电子时代的人生绑架者">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2013/05/22/%E5%BC%95%E7%94%A8%E5%92%8C%E6%8C%87%E9%92%88c--/" data-toggle="tooltip" data-placement="top" title="引用和指针(C&#43;&#43;)">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

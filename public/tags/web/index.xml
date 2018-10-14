@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/web/</link>
+    <description>Recent content in Web on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 26 Apr 2014 16:36:28 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[藏]再谈JavaScript中的闭包</title>
+      <link>https://leizhiyuan.github.io/2014/04/26/%E8%97%8F%E5%86%8D%E8%B0%88javascript%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85/</link>
+      <pubDate>Sat, 26 Apr 2014 16:36:28 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/04/26/%E8%97%8F%E5%86%8D%E8%B0%88javascript%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85/</guid>
+      <description>之前读js的时候总是感觉不清楚，近日决定重新攻读，看到这篇文章之后，我明白了某大神说的那句话，如果你不能向一个6岁的小朋友讲明白。那么这件事情你一定不明白。还有就是如果你必须理解一个闭包才会使用它，那么这个闭包设计本身就是失败的。情赏析本文。相当精彩。
+JavaScript中函数的重要性毋庸置疑。在理解了JavaScript中的函数之后，非常重要的地点就是理解我们怎样使用函数来创建闭包。一直以来，闭包都是JavaScript新手学习时的一个难点所在，它位于JavaScript函数与变量作用域交叉的一个灰色地带：
+
+本文将尽可能简单的方法讲述关于JavaScript闭包的那些事情，使用的代码也非常的简单。如果一开始就讲述闭包的概念，只会使得你更加的困惑。所以我们就从一个我们熟悉的领域开始，慢慢的向闭包的邪恶领域前进，看看我们在那里能发现什么。
+下面开始我们的冒险之旅吧！
+函数中的函数 我们要做的第一件事情是理解当你在函数中创建了函数并且从函数内部返回一个函数时究竟发生了什么。首先我们来快速的回顾一下函数。
+看下面的代码：
+&amp;lt;span class=&amp;#34;token keyword&amp;#34; style=&amp;#34;color: #0077aa;&amp;#34;&amp;gt;function&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;#34;token function&amp;#34;&amp;gt;calculateRectangleArea&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;(&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;length&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;,&amp;lt;/span&amp;gt;width&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;{&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;#34;token keyword&amp;#34; style=&amp;#34;color: #0077aa;&amp;#34;&amp;gt;return&amp;lt;/span&amp;gt; length&amp;lt;span class=&amp;#34;token operator&amp;#34; style=&amp;#34;color: #a67f59;&amp;#34;&amp;gt;*&amp;lt;/span&amp;gt;width&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;;&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;}&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;#34;token keyword&amp;#34; style=&amp;#34;color: #0077aa;&amp;#34;&amp;gt;var&amp;lt;/span&amp;gt; roomArea &amp;lt;span class=&amp;#34;token operator&amp;#34; style=&amp;#34;color: #a67f59;&amp;#34;&amp;gt;=&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;#34;token function&amp;#34;&amp;gt;calculateRectangleArea&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;(&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;#34;token number&amp;#34; style=&amp;#34;color: #990055;&amp;#34;&amp;gt;10&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;,&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;#34;token number&amp;#34; style=&amp;#34;color: #990055;&amp;#34;&amp;gt;10&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;;&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;#34;token function&amp;#34;&amp;gt;alert&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;(&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;roomArea&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;#34;token punctuation&amp;#34; style=&amp;#34;color: #999999;&amp;#34;&amp;gt;;&amp;lt;/span&amp;gt; `&amp;lt;/pre&amp;gt; calculateRectangleArea函数接收两个参数并且返回这两个参数的乘积。在这个例子中没我们将返回的数赋值给了变量roomArea。 当代码运行之后，roomArea变量包含了10乘10的结果，也就是100： [!</description>
+    </item>
+    
+  </channel>
+</rss>

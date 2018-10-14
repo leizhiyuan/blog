@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>11个高效的VS调试技巧</title>
+  <meta property="og:title" content="11个高效的VS调试技巧" />
+  <meta name="twitter:title" content="11个高效的VS调试技巧" />
+  <meta name="description" content="介绍
+调试是软件开发周期中的一个很重要的部分，有时很有挑战性，有时候则让程序员迷惑，有时候让程序员发疯，但是。可以肯定的是，对于任何不是太那个微不足道的程序来说，调试是不可避免的。近年来，调试工具的发展已经使得很多调试任务简单省时了。
+本文总结了十个调试技巧，当你使用VS的时候可以节省你很多时间。
+1. 悬停鼠标查看表达式
+
+调试有时候很有挑战性，当你步入一个函数想看看哪块出错的时候，查看调用栈来想想值是从哪来的。另一些情况下，则需要添加一些监视表达式，或者查看局部变量列表，这通常还是花费一些时间的，但是。如果你把你鼠标指向你感兴趣的一个变量。你会发现事情简单多了。而且，类和结构体可以通过单击展开。这样。你就可以方便快捷的找到你想查看的变量了。
+2. 实时改变值  调试器不仅仅是一个分析程序崩溃或是异常结果的工具了，许多bug都可以通过步入新写的函数，检查函数是否如期望的那样运行来预防。有时候你可能会好奇“如果条件为真函数会正确运行吗”大多数情况下，根本不需要改变代码重启挑起，仅仅把鼠标悬停到一个变量上，双击值然后输入一个新值就可以了。。
+3．设置下一条语句  一个典型的调试情况就是通过单步跟踪分析为什么一个函数调用失败了。当你发现一个函数调用的另一个函数返回错误的时候你会怎么做？重启调试？有更好的方法。拖动这个黄色的语句标识到你想下一步执行的语句前就可以了。比如你刚才失败的那块，然后步入。简单，不是吗？
+4.编辑然后继续  调试一个复杂的程序，或是一个插件的时候，在一个被调用很多次的函数处发现一个错误。但是不想浪费时间停下来，重新编译然后重新调试。没问题，仅仅在该处改正代码然后继续单步就可以。VS会修正程序然后继续调试不需要重启
+注意，编辑然后继续有大量的已知限制，首先，64位代码是不行的。如果他如果为你的C#程序工作。就去工程设置的生成选项，然后目标平台为x86.不要担心。发布版的目标平台和调试的时候是分开的。可以被设置为任何平台。。
+第二．编辑然后继续改变在一个方法里应该是局部的。。如果你改变了方法签名，添加一些新方法或是类。你就不得不重启程序了。或者撤销改变来继续。改变方法也包含lambda表达式隐式修改的自动生成的代理类，因此也不能继续。
+5.方便的监视窗口  大概现代的调试器都有一个监视窗口，无论如何。VS允许你简单的添加或移除变量。单击空行，输入你的表达式按下回车，或者是在不需要的表达式上按下Delete键就可以删除了。 而且。从监视窗口你不仅仅可以看到“正常”的变量。你可以输入$handles 来追踪你的程序打开了多少句柄（可以方便的修复内存泄漏） ，输入$err 可以看到上一个函数的错误码，然后使用工具-错误信息可以看到更详细的描述，或者输入@eax（64位是@rax）来查看包含函数返回值的寄存器。
+6.带注释的反汇编  使用交互式的反汇编模式可以使得优化程序的关键部分变得很容易，VS给出对应你代码每一行的汇编指令，并且运行单步运行。同时，可以在任何位置设置断点。而且，表达式的查看和修改也像在C&#43;&#43;代码里一样
+7.带有栈的线程窗口  调试多线程的程序是痛苦的。。或者也可以是很有趣的。取决于你的调试器。VS2010真正优美的特性是线程窗口的栈视图，通过窗口的调用栈你可以方便的总览线程。
+8.条件断点  如果你尝试通过断点再现一个罕见的事件，该情况引发了一些严重的错误。你可以添加条件断点。定义一个断点的条件，然后如果条件不成立，VS会忽略该断点
+9.内存窗口  有些bug由不正确的结构体定义引起，忽略的对齐属性等等。查看内存中的内容可以定位然后修复bug。VS提供了一个放百年的内存窗口，可以把值以8/16/32/64位的形式展示。还有浮点值。也允许实时改变他们。就像在文本编辑器里一样。
+10.转到定义  这个特性不是直接关于调试的，而是关于浏览大项目的。如果你尝试找到一些不是你自己写的代码中的错误，快速知道“这个类型是什么”或者“这个函数是干嘛的”，可以节省很多时间，VS通过一个转到定义命令方便了你。
+11.命令窗口  第十一的技巧chaau已经建议过了。确实可以节省很多时间，VS支持命令窗口，可以通过，视图-其他窗口-命令窗口来启动。一旦激活，你可以输入不同的命令来自动化调试。举个例子。你可以通过如下命令 简单的模拟MFC COleDateTime 变量。 ? dt.Format(&ldquo;%Y-%m-%d %H:%M:%S&rdquo;) 许可 本文包括源代码和文件在CPOL下授权。
+&nbsp;
+原文地址：10plus-powerful-debugging-tricks-with-Visual-Studi
+著作权声明：本文由http://leaver.me 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！">
+  <meta property="og:description" content="介绍
+调试是软件开发周期中的一个很重要的部分，有时很有挑战性，有时候则让程序员迷惑，有时候让程序员发疯，但是。可以肯定的是，对于任何不是太那个微不足道的程序来说，调试是不可避免的。近年来，调试工具的发展已经使得很多调试任务简单省时了。
+本文总结了十个调试技巧，当你使用VS的时候可以节省你很多时间。
+1. 悬停鼠标查看表达式
+
+调试有时候很有挑战性，当你步入一个函数想看看哪块出错的时候，查看调用栈来想想值是从哪来的。另一些情况下，则需要添加一些监视表达式，或者查看局部变量列表，这通常还是花费一些时间的，但是。如果你把你鼠标指向你感兴趣的一个变量。你会发现事情简单多了。而且，类和结构体可以通过单击展开。这样。你就可以方便快捷的找到你想查看的变量了。
+2. 实时改变值  调试器不仅仅是一个分析程序崩溃或是异常结果的工具了，许多bug都可以通过步入新写的函数，检查函数是否如期望的那样运行来预防。有时候你可能会好奇“如果条件为真函数会正确运行吗”大多数情况下，根本不需要改变代码重启挑起，仅仅把鼠标悬停到一个变量上，双击值然后输入一个新值就可以了。。
+3．设置下一条语句  一个典型的调试情况就是通过单步跟踪分析为什么一个函数调用失败了。当你发现一个函数调用的另一个函数返回错误的时候你会怎么做？重启调试？有更好的方法。拖动这个黄色的语句标识到你想下一步执行的语句前就可以了。比如你刚才失败的那块，然后步入。简单，不是吗？
+4.编辑然后继续  调试一个复杂的程序，或是一个插件的时候，在一个被调用很多次的函数处发现一个错误。但是不想浪费时间停下来，重新编译然后重新调试。没问题，仅仅在该处改正代码然后继续单步就可以。VS会修正程序然后继续调试不需要重启
+注意，编辑然后继续有大量的已知限制，首先，64位代码是不行的。如果他如果为你的C#程序工作。就去工程设置的生成选项，然后目标平台为x86.不要担心。发布版的目标平台和调试的时候是分开的。可以被设置为任何平台。。
+第二．编辑然后继续改变在一个方法里应该是局部的。。如果你改变了方法签名，添加一些新方法或是类。你就不得不重启程序了。或者撤销改变来继续。改变方法也包含lambda表达式隐式修改的自动生成的代理类，因此也不能继续。
+5.方便的监视窗口  大概现代的调试器都有一个监视窗口，无论如何。VS允许你简单的添加或移除变量。单击空行，输入你的表达式按下回车，或者是在不需要的表达式上按下Delete键就可以删除了。 而且。从监视窗口你不仅仅可以看到“正常”的变量。你可以输入$handles 来追踪你的程序打开了多少句柄（可以方便的修复内存泄漏） ，输入$err 可以看到上一个函数的错误码，然后使用工具-错误信息可以看到更详细的描述，或者输入@eax（64位是@rax）来查看包含函数返回值的寄存器。
+6.带注释的反汇编  使用交互式的反汇编模式可以使得优化程序的关键部分变得很容易，VS给出对应你代码每一行的汇编指令，并且运行单步运行。同时，可以在任何位置设置断点。而且，表达式的查看和修改也像在C&#43;&#43;代码里一样
+7.带有栈的线程窗口  调试多线程的程序是痛苦的。。或者也可以是很有趣的。取决于你的调试器。VS2010真正优美的特性是线程窗口的栈视图，通过窗口的调用栈你可以方便的总览线程。
+8.条件断点  如果你尝试通过断点再现一个罕见的事件，该情况引发了一些严重的错误。你可以添加条件断点。定义一个断点的条件，然后如果条件不成立，VS会忽略该断点
+9.内存窗口  有些bug由不正确的结构体定义引起，忽略的对齐属性等等。查看内存中的内容可以定位然后修复bug。VS提供了一个放百年的内存窗口，可以把值以8/16/32/64位的形式展示。还有浮点值。也允许实时改变他们。就像在文本编辑器里一样。
+10.转到定义  这个特性不是直接关于调试的，而是关于浏览大项目的。如果你尝试找到一些不是你自己写的代码中的错误，快速知道“这个类型是什么”或者“这个函数是干嘛的”，可以节省很多时间，VS通过一个转到定义命令方便了你。
+11.命令窗口  第十一的技巧chaau已经建议过了。确实可以节省很多时间，VS支持命令窗口，可以通过，视图-其他窗口-命令窗口来启动。一旦激活，你可以输入不同的命令来自动化调试。举个例子。你可以通过如下命令 简单的模拟MFC COleDateTime 变量。 ? dt.Format(&ldquo;%Y-%m-%d %H:%M:%S&rdquo;) 许可 本文包括源代码和文件在CPOL下授权。
+&nbsp;
+原文地址：10plus-powerful-debugging-tricks-with-Visual-Studi
+著作权声明：本文由http://leaver.me 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！">
+  <meta name="twitter:description" content="介绍
+调试是软件开发周期中的一个很重要的部分，有时很有挑战性，有时候则让程序员迷惑，有时候让程序员发疯，但是。可以肯定的是，对于任何不是太那个微不足道的程序来说，调试是不可避免的。近年来，调试工具的发展已经使得很多调试任务简单省时了。
+本文总结了十个调试技巧，当你使用VS的时候可以节省你很多时间。
+1. 悬停鼠标查看表达式
+
+调试有时候很有挑战性，当你步入一个函数想看看哪块出错的时候，查看调用栈来 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/10/03/11%E4%B8%AA%E9%AB%98%E6%95%88%E7%9A%84vs%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/10/03/11%E4%B8%AA%E9%AB%98%E6%95%88%E7%9A%84vs%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>11个高效的VS调试技巧</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 3, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (45 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><strong>介绍</strong></p>
+
+<p>调试是软件开发周期中的一个很重要的部分，有时很有挑战性，有时候则让程序员迷惑，有时候让程序员发疯，但是。可以肯定的是，对于任何不是太那个微不足道的程序来说，调试是不可避免的。近年来，调试工具的发展已经使得很多调试任务简单省时了。</p>
+
+<p>本文总结了十个调试技巧，当你使用VS的时候可以节省你很多时间。</p>
+
+<p>1. 悬停鼠标查看表达式</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/27679_o.png"><img src="/images/5b9e01a5158e02f8079c7dc331f56110f3e0b82d.png" alt="" title="1" /></a></p>
+
+<p>调试有时候很有挑战性，当你步入一个函数想看看哪块出错的时候，查看调用栈来想想值是从哪来的。另一些情况下，则需要添加一些监视表达式，或者查看局部变量列表，这通常还是花费一些时间的，但是。如果你把你鼠标指向你感兴趣的一个变量。你会发现事情简单多了。而且，类和结构体可以通过单击展开。这样。你就可以方便快捷的找到你想查看的变量了。</p>
+
+<p>2. 实时改变值
+<a href="http://leaverimage.b0.upaiyun.com/27680_o.png"><img src="/images/eade577f5ea39d3b970613ac3123610b67e427cb.png" alt="" title="2" /></a>
+调试器不仅仅是一个分析程序崩溃或是异常结果的工具了，许多bug都可以通过步入新写的函数，检查函数是否如期望的那样运行来预防。有时候你可能会好奇“如果条件为真函数会正确运行吗”大多数情况下，根本不需要改变代码重启挑起，仅仅把鼠标悬停到一个变量上，双击值然后输入一个新值就可以了。。</p>
+
+<p>3．设置下一条语句
+<a href="http://leaverimage.b0.upaiyun.com/27690_o.png"><img src="/images/1c86cc15b16c98adc1563eb1660481fa249beaf0.png" alt="" title="3" /></a>
+一个典型的调试情况就是通过单步跟踪分析为什么一个函数调用失败了。当你发现一个函数调用的另一个函数返回错误的时候你会怎么做？重启调试？有更好的方法。拖动这个黄色的语句标识到你想下一步执行的语句前就可以了。比如你刚才失败的那块，然后步入。简单，不是吗？</p>
+
+<p>4.编辑然后继续
+<a href="http://leaverimage.b0.upaiyun.com/27682_o.png"><img src="/images/8117d2025d49155485268fc1b56041e96cefaeac.png" alt="" title="4" /></a>
+调试一个复杂的程序，或是一个插件的时候，在一个被调用很多次的函数处发现一个错误。但是不想浪费时间停下来，重新编译然后重新调试。没问题，仅仅在该处改正代码然后继续单步就可以。VS会修正程序然后继续调试不需要重启</p>
+
+<p>注意，编辑然后继续有大量的已知限制，首先，64位代码是不行的。如果他如果为你的C#程序工作。就去工程设置的生成选项，然后目标平台为x86.不要担心。发布版的目标平台和调试的时候是分开的。可以被设置为任何平台。。</p>
+
+<p>第二．编辑然后继续改变在一个方法里应该是局部的。。如果你改变了方法签名，添加一些新方法或是类。你就不得不重启程序了。或者撤销改变来继续。改变方法也包含lambda表达式隐式修改的自动生成的代理类，因此也不能继续。</p>
+
+<p>5.方便的监视窗口
+<a href="http://leaverimage.b0.upaiyun.com/27683_o.png"><img src="/images/a204da1e7bb82719b4a965da45d1cfcc51a90cd3.png" alt="" title="5" /></a>
+大概现代的调试器都有一个监视窗口，无论如何。VS允许你简单的添加或移除变量。单击空行，输入你的表达式按下回车，或者是在不需要的表达式上按下Delete键就可以删除了。
+而且。从监视窗口你不仅仅可以看到“正常”的变量。你可以输入$handles 来追踪你的程序打开了多少句柄（可以方便的修复内存泄漏） ，输入$err 可以看到上一个函数的错误码，然后使用工具-错误信息可以看到更详细的描述，或者输入@eax（64位是@rax）来查看包含函数返回值的寄存器。</p>
+
+<p>6.带注释的反汇编
+<a href="http://leaverimage.b0.upaiyun.com/27684_o.png"><img src="/images/d61b64ed0a189bec2f34f2faaf059916cce8e525.png" alt="" title="6" /></a>
+使用交互式的反汇编模式可以使得优化程序的关键部分变得很容易，VS给出对应你代码每一行的汇编指令，并且运行单步运行。同时，可以在任何位置设置断点。而且，表达式的查看和修改也像在C++代码里一样</p>
+
+<p>7.带有栈的线程窗口
+<a href="http://leaverimage.b0.upaiyun.com/27691_o.png"><img src="/images/5b212033679007829bb5c0684d62ab8f27a0514b.png" alt="" title="7" /></a>
+调试多线程的程序是痛苦的。。或者也可以是很有趣的。取决于你的调试器。VS2010真正优美的特性是线程窗口的栈视图，通过窗口的调用栈你可以方便的总览线程。</p>
+
+<p>8.条件断点
+<a href="http://leaverimage.b0.upaiyun.com/27686_o.png"><img src="/images/e93436bf72af22e533fe859971913a3d3c555789.png" alt="" title="8" /></a>
+如果你尝试通过断点再现一个罕见的事件，该情况引发了一些严重的错误。你可以添加条件断点。定义一个断点的条件，然后如果条件不成立，VS会忽略该断点</p>
+
+<p>9.内存窗口
+<a href="http://leaverimage.b0.upaiyun.com/27687_o.png"><img src="/images/0cfda80c7dbe3d0c50bb5646155914b5e3f07f4f.png" alt="" title="9" /></a>
+有些bug由不正确的结构体定义引起，忽略的对齐属性等等。查看内存中的内容可以定位然后修复bug。VS提供了一个放百年的内存窗口，可以把值以8/16/32/64位的形式展示。还有浮点值。也允许实时改变他们。就像在文本编辑器里一样。</p>
+
+<p>10.转到定义
+<a href="http://leaverimage.b0.upaiyun.com/27688_o.png"><img src="/images/3593aad0199fbed2f8faaef908e151a068e14d09.png" alt="" title="10" /></a>
+这个特性不是直接关于调试的，而是关于浏览大项目的。如果你尝试找到一些不是你自己写的代码中的错误，快速知道“这个类型是什么”或者“这个函数是干嘛的”，可以节省很多时间，VS通过一个转到定义命令方便了你。</p>
+
+<p>11.命令窗口
+<a href="http://leaverimage.b0.upaiyun.com/27689_o.png"><img src="/images/2af5b37764b18abe3ae34c1a67e4398721fbd04b.png" alt="" title="11" /></a>
+第十一的技巧<a href="http://www.codeproject.com/script/Membership/View.aspx?mid=4917930">chaau</a>已经建议过了。确实可以节省很多时间，VS支持命令窗口，可以通过，视图-其他窗口-命令窗口来启动。一旦激活，你可以输入不同的命令来自动化调试。举个例子。你可以通过如下命令 简单的模拟MFC COleDateTime 变量。
+<pre class="lang:default decode:true">? dt.Format(&ldquo;%Y-%m-%d %H:%M:%S&rdquo;)</pre>
+许可
+本文包括源代码和文件在CPOL下授权。</p>
+
+<p>&nbsp;</p>
+
+<p>原文地址：<a href="http://www.codeproject.com/Articles/359801/10plus-powerful-debugging-tricks-with-Visual-Studi">10plus-powerful-debugging-tricks-with-Visual-Studi</a></p>
+
+<p>著作权声明：本文由<a href="http://leaver.me/">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/10/01/c#%E7%BC%96%E5%86%99%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E5%99%A8/" data-toggle="tooltip" data-placement="top" title="C#编写文件搜索器">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/10/04/%E7%AE%80%E5%8D%95%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E5%A2%9E%E5%BC%BA%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7/" data-toggle="tooltip" data-placement="top" title="简单扩展方法增强代码可读性">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

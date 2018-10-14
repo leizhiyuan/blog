@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>插件 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E6%8F%92%E4%BB%B6/</link>
+    <description>Recent content in 插件 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 21 May 2016 18:55:27 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E6%8F%92%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>eclipse插件开发-tycho使用</title>
+      <link>https://leizhiyuan.github.io/2016/05/21/eclipse%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91-tycho%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sat, 21 May 2016 18:55:27 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/05/21/eclipse%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91-tycho%E4%BD%BF%E7%94%A8/</guid>
+      <description>不说废话，直接上。本文主要包括tycho的使用，版本号的自动更新。
+eclipse插件开发中，依赖的管理是个问题。如果采用常规的搞个lib目录，然后加到MF文件中。一旦依赖越来越多。或者要更换版本号就变得非常麻烦。所以要用到tycho
+首先说明一下目录结构。一个parent的maven工程，一个plugin工程，。两个features。一个是deps的。一个是plugin的，这个依赖deps是独立的mvn项目。可以先不用管。一个deps依赖工程（这个依赖工程独立）。 在主pom下。
+步骤如下。
+关于依赖部分
+ 新建一个普通的mvn工程,比如deps。打包类型写成&amp;lt;packaging&amp;gt;bundle&amp;lt;/packaging&amp;gt;,同时在pom.xml中添加build部分  &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.apache.felix&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;maven-bundle-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.0.1&amp;lt;/version&amp;gt; &amp;lt;extensions&amp;gt;true&amp;lt;/extensions&amp;gt; &amp;lt;configuration&amp;gt; &amp;lt;niceManifest&amp;gt;true&amp;lt;/niceManifest&amp;gt; &amp;lt;manifestLocation&amp;gt;META-INF&amp;lt;/manifestLocation&amp;gt; &amp;lt;instructions&amp;gt; &amp;lt;Bundle-SymbolicName&amp;gt;${project.artifactId}&amp;lt;/Bundle-SymbolicName&amp;gt; &amp;lt;Embed-Dependency&amp;gt;*&amp;lt;/Embed-Dependency&amp;gt; &amp;lt;Embed-Transitive&amp;gt;true&amp;lt;/Embed-Transitive&amp;gt; &amp;lt;Embed-Directory&amp;gt;lib&amp;lt;/Embed-Directory&amp;gt; &amp;lt;Bundle-ClassPath&amp;gt;{maven-dependencies}&amp;lt;/Bundle-ClassPath&amp;gt; &amp;lt;_exportcontents&amp;gt;*&amp;lt;/_exportcontents&amp;gt; &amp;lt;_failok&amp;gt;true&amp;lt;/_failok&amp;gt; &amp;lt;_nouses&amp;gt;true&amp;lt;/_nouses&amp;gt; &amp;lt;Import-Package&amp;gt;&amp;lt;/Import-Package&amp;gt; &amp;lt;/instructions&amp;gt; &amp;lt;/configuration&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;/plugins&amp;gt; &amp;lt;/build&amp;gt; 然后正常添加一些依赖到这个工程中。然后执行一下mvn clean install ，你就会发现本地mvn仓库生成了一个jar包，这个jar里直接打包了所有的jar
+关于插件部分
+ 新建一个类型为pom的parent工程。用来包含下面的子工程，通过  &amp;lt;modules&amp;gt; &amp;lt;module&amp;gt;xxx.plugin.1&amp;lt;/module&amp;gt; &amp;lt;module&amp;gt;xxx.plugin.2&amp;lt;/module&amp;gt; &amp;lt;/modules&amp;gt;  来管理。同时 添加如下的插件  &amp;lt;properties&amp;gt; &amp;lt;tycho.version&amp;gt;0.24.0&amp;lt;/tycho.version&amp;gt; &amp;lt;/properties&amp;gt; &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;maven-source-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;executions&amp;gt; &amp;lt;execution&amp;gt; &amp;lt;id&amp;gt;attach-sources&amp;lt;/id&amp;gt; &amp;lt;phase&amp;gt;none&amp;lt;/phase&amp;gt; &amp;lt;/execution&amp;gt; &amp;lt;/executions&amp;gt; &amp;lt;version&amp;gt;2.4&amp;lt;/version&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.eclipse.tycho&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;tycho-maven-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${tycho.version}&amp;lt;/version&amp;gt; &amp;lt;extensions&amp;gt;true&amp;lt;/extensions&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.</description>
+    </item>
+    
+  </channel>
+</rss>

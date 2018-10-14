@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>类型安全的黑板模式（属性包）</title>
+  <meta property="og:title" content="类型安全的黑板模式（属性包）" />
+  <meta name="twitter:title" content="类型安全的黑板模式（属性包）" />
+  <meta name="description" content="有时候对于对象来说。在一个软件中，不直接通过互相引用而做到共享信息是非常有用的。比如像带有插件的软件。可以互相进行通信。假设我们有了很多对象。其中一些包含一些数据。而另一些对象需要消费这些数据 不同的子集，我们不通过对数据生产者和消费者的直接引用来实现，而是通过更低耦合的方式。叫做创建一个“BlackBoard”（黑板）对象。该对象允许其他对象自由对其进行读取/写入数据。这种解耦方式使得消费者不知道也不必知道数据来自哪里。如果想要了解更多关于黑板模式的信息。我们常说的。Google是你最好的朋友。
+一个最简单的黑板对象应该是 Dictionary一些简单的命名值的字典。所有的对象共享同一个字典引用。使得他们可以交换这些命名数据。这种方法有两个问题。一个是名字。一个是类型安全—数据生产者和消费者对每一个数据值都必须共享一个字符串标识。消费者也没有对字典中的值进行编译时的类型检查，比如，可能期望一个小数，结果运行时读到了字符串。本文对这两个问题演示了一种解决方案。
+背景
+最近我在开发一个通用任务的异步执行的引擎。我的通用任务通常有Do/Undo方法。原则上是相互独立的，但是有一些任务需要从已经执行的任务重请求数据。比如。一个任务可以 为一个硬件设备建立一个API，随后的任务就可以使用创建好的API来操作硬件设备。但是。我不想我的执行引擎知道关于这个执行任务的任何信息。而且。我也不想直接手工的就在一个任务里引用另一个任务。
+黑板类
+黑板类本质上是一个Dictionary的包装类，对外暴露Get和Set方法。黑板类允许其他对象存储并且取回数据。但是要求这些数据使用一个 BlackboardProperty 类型的标识符来表示这些数据是可存取的。BlackboardProperty 对象应该在那些准备读写黑板类的对象之间共享，因此，他应该在那些类中作为一个静态成员。（很像WPF的依赖属性。是他们所属控件的静态成员）
+注意：命名安全应该可以通过同样的方式实现。但是但是依然没有解决类型安全的问题。那么。到了主要的部分了。那就是黑板类的代码了 public class Blackboard : INotifyPropertyChanged, INotifyPropertyChanging { Dictionary&lt;string, object&gt; _dict = new Dictionary&lt;string, object&gt;();
+public T Get&amp;lt;T&amp;gt;(BlackboardProperty&amp;lt;T&amp;gt; property) { if (!_dict.ContainsKey(property.Name)) _dict[property.Name] = property.GetDefault(); return (T)_dict[property.Name]; } public void Set&amp;lt;T&amp;gt;(BlackboardProperty&amp;lt;T&amp;gt; property, T value) { OnPropertyChanging(property.Name); _dict[property.Name] = value; OnPropertyChanged(property.Name); } #region property change notification public event PropertyChangingEventHandler PropertyChanging; public event PropertyChangedEventHandler PropertyChanged; protected virtual void OnPropertyChanging(string propertyName) { if (PropertyChanging !">
+  <meta property="og:description" content="有时候对于对象来说。在一个软件中，不直接通过互相引用而做到共享信息是非常有用的。比如像带有插件的软件。可以互相进行通信。假设我们有了很多对象。其中一些包含一些数据。而另一些对象需要消费这些数据 不同的子集，我们不通过对数据生产者和消费者的直接引用来实现，而是通过更低耦合的方式。叫做创建一个“BlackBoard”（黑板）对象。该对象允许其他对象自由对其进行读取/写入数据。这种解耦方式使得消费者不知道也不必知道数据来自哪里。如果想要了解更多关于黑板模式的信息。我们常说的。Google是你最好的朋友。
+一个最简单的黑板对象应该是 Dictionary一些简单的命名值的字典。所有的对象共享同一个字典引用。使得他们可以交换这些命名数据。这种方法有两个问题。一个是名字。一个是类型安全—数据生产者和消费者对每一个数据值都必须共享一个字符串标识。消费者也没有对字典中的值进行编译时的类型检查，比如，可能期望一个小数，结果运行时读到了字符串。本文对这两个问题演示了一种解决方案。
+背景
+最近我在开发一个通用任务的异步执行的引擎。我的通用任务通常有Do/Undo方法。原则上是相互独立的，但是有一些任务需要从已经执行的任务重请求数据。比如。一个任务可以 为一个硬件设备建立一个API，随后的任务就可以使用创建好的API来操作硬件设备。但是。我不想我的执行引擎知道关于这个执行任务的任何信息。而且。我也不想直接手工的就在一个任务里引用另一个任务。
+黑板类
+黑板类本质上是一个Dictionary的包装类，对外暴露Get和Set方法。黑板类允许其他对象存储并且取回数据。但是要求这些数据使用一个 BlackboardProperty 类型的标识符来表示这些数据是可存取的。BlackboardProperty 对象应该在那些准备读写黑板类的对象之间共享，因此，他应该在那些类中作为一个静态成员。（很像WPF的依赖属性。是他们所属控件的静态成员）
+注意：命名安全应该可以通过同样的方式实现。但是但是依然没有解决类型安全的问题。那么。到了主要的部分了。那就是黑板类的代码了 public class Blackboard : INotifyPropertyChanged, INotifyPropertyChanging { Dictionary&lt;string, object&gt; _dict = new Dictionary&lt;string, object&gt;();
+public T Get&amp;lt;T&amp;gt;(BlackboardProperty&amp;lt;T&amp;gt; property) { if (!_dict.ContainsKey(property.Name)) _dict[property.Name] = property.GetDefault(); return (T)_dict[property.Name]; } public void Set&amp;lt;T&amp;gt;(BlackboardProperty&amp;lt;T&amp;gt; property, T value) { OnPropertyChanging(property.Name); _dict[property.Name] = value; OnPropertyChanged(property.Name); } #region property change notification public event PropertyChangingEventHandler PropertyChanging; public event PropertyChangedEventHandler PropertyChanged; protected virtual void OnPropertyChanging(string propertyName) { if (PropertyChanging !">
+  <meta name="twitter:description" content="有时候对于对象来说。在一个软件中，不直接通过互相引用而做到共享信息是非常有用的。比如像带有插件的软件。可以互相进行通信。假设我们有了很多对象。其中一些包含一些数据。而另一些对象需要消费这些数据 不同的子集，我们不通过对数据生产者和消费者的直接引用来实现，而是通过更低耦合的方式。叫做创建一个“BlackBoard”（黑板）对象。该对象允许其他对象自由对其进行读取/写入数据。这种解耦方式使得消费者不知 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/10/16/%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%BB%91%E6%9D%BF%E6%A8%A1%E5%BC%8F%E5%B1%9E%E6%80%A7%E5%8C%85/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/10/16/%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%BB%91%E6%9D%BF%E6%A8%A1%E5%BC%8F%E5%B1%9E%E6%80%A7%E5%8C%85/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>类型安全的黑板模式（属性包）</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 16, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (444 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>有时候对于对象来说。在一个软件中，不直接通过互相引用而做到共享信息是非常有用的。比如像带有插件的软件。可以互相进行通信。假设我们有了很多对象。其中一些包含一些数据。而另一些对象需要消费这些数据 不同的子集，我们不通过对数据生产者和消费者的直接引用来实现，而是通过更低耦合的方式。叫做创建一个“BlackBoard”（黑板）对象。该对象允许其他对象自由对其进行读取/写入数据。这种解耦方式使得消费者不知道也不必知道数据来自哪里。如果想要了解更多关于黑板模式的信息。我们常说的。Google是你最好的朋友。</p>
+
+<p>一个最简单的黑板对象应该是 Dictionary一些简单的命名值的字典。所有的对象共享同一个字典引用。使得他们可以交换这些命名数据。这种方法有两个问题。一个是名字。一个是类型安全—数据生产者和消费者对每一个数据值都必须共享一个字符串标识。消费者也没有对字典中的值进行编译时的类型检查，比如，可能期望一个小数，结果运行时读到了字符串。本文对这两个问题演示了一种解决方案。</p>
+
+<p><strong>背景</strong></p>
+
+<p>最近我在开发一个通用任务的异步执行的引擎。我的通用任务通常有Do/Undo方法。原则上是相互独立的，但是有一些任务需要从已经执行的任务重请求数据。比如。一个任务可以
+为一个硬件设备建立一个API，随后的任务就可以使用创建好的API来操作硬件设备。但是。我不想我的执行引擎知道关于这个执行任务的任何信息。而且。我也不想直接手工的就在一个任务里引用另一个任务。</p>
+
+<p><strong>黑板类</strong></p>
+
+<p>黑板类本质上是一个Dictionary的包装类，对外暴露Get和Set方法。黑板类允许其他对象存储并且取回数据。但是要求这些数据使用一个
+BlackboardProperty 类型的标识符来表示这些数据是可存取的。BlackboardProperty 对象应该在那些准备读写黑板类的对象之间共享，因此，他应该在那些类中作为一个静态成员。（很像WPF的依赖属性。是他们所属控件的静态成员）</p>
+
+<p>注意：命名安全应该可以通过同样的方式实现。但是但是依然没有解决类型安全的问题。那么。到了主要的部分了。那就是黑板类的代码了
+<pre class="lang:default decode:true">public class Blackboard : INotifyPropertyChanged, INotifyPropertyChanging
+{
+    Dictionary&lt;string, object&gt; _dict = new Dictionary&lt;string, object&gt;();</p>
+<div class="highlight"><pre class="chroma">public T Get&amp;lt;T&amp;gt;(BlackboardProperty&amp;lt;T&amp;gt; property)
+{
+    if (!_dict.ContainsKey(property.Name))
+        _dict[property.Name] = property.GetDefault();
+    return (T)_dict[property.Name];
+}
+
+public void Set&amp;lt;T&amp;gt;(BlackboardProperty&amp;lt;T&amp;gt; property, T value)
+{
+    OnPropertyChanging(property.Name);
+    _dict[property.Name] = value;
+    OnPropertyChanged(property.Name);
+}
+
+#region property change notification
+
+public event PropertyChangingEventHandler PropertyChanging;
+
+public event PropertyChangedEventHandler PropertyChanged;
+
+protected virtual void OnPropertyChanging(string propertyName)
+{
+    if (PropertyChanging != null)
+        PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+}
+
+protected virtual void OnPropertyChanged(string propertyName)
+{
+    if (PropertyChanged != null)
+        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+}
+#endregion</pre></div>
+<p>}</pre>
+<strong>黑板属性（BlackBoardProperty）类</strong></p>
+
+<p>BlackBoardProperty 类 提供了一个标识符来存取黑板对象中的数据。定义了名称和值的类型。也定义了一个默认的返回值。以防黑板类中对应属性没有值。
+<pre class="lang:default decode:true">/// &lt;summary&gt;
+/// 对应黑板类中的属性的强类型标识符
+/// &lt;/summary&gt;
+/// &lt;typeparam name=&ldquo;T&rdquo;&gt;该类能识别的属性值的类型&lt;/typeparam&gt;
+public class BlackboardProperty&lt;T&gt;
+{
+    /// &lt;summary&gt;
+    /// 属性的名称
+    /// &lt;remarks&gt;
+    /// 黑板类的属性通过名称来存储。请注意不要让相同的名字有不同的属性值。因为如果被用在同样的黑板类上。他们会互相覆盖值
+    /// &lt;/remarks&gt;
+    /// &lt;/summary&gt;
+    public string Name { get; set; }</p>
+
+<p>//当黑板对象没有包含对应属性的时候。该工厂方法被用来提供一个默认的值
+    //<br />
+Func&lt;T&gt; _createDefaultValueFunc;</p>
+<div class="highlight"><pre class="chroma">public BlackboardProperty(string name)
+    : this(name, default(T))
+{
+}
+
+/// &amp;lt;summary&amp;gt;
+/// 
+/// &amp;lt;/summary&amp;gt;
+/// &amp;lt;param name=&#34;name&#34;&amp;gt;&amp;lt;/param&amp;gt;
+/// &amp;lt;param name=&#34;defaultValue&#34;&amp;gt;
+/// 当黑板类不包括该属性的时候。该值会被返回。
+/// &amp;lt;remarks&amp;gt;
+/// 如果缺省的值是一个常量或是一个值类型的时候，使用该构造方法。
+/// &amp;lt;/remarks&amp;gt;
+/// &amp;lt;/param&amp;gt;
+public BlackboardProperty(string name, T defaultValue)
+{
+    Name = name;
+    _createDefaultValueFunc = () =&amp;gt; defaultValue;
+}
+
+/// &amp;lt;summary&amp;gt;
+/// &amp;lt;/summary&amp;gt;
+/// &amp;lt;remarks&amp;gt;</pre></div>
+<p>/// 如果缺省值是一个引用类型，并且，你不想要共享该实例给多个黑板对象的时候。请使用该
+/// 构造函数
+    /// &lt;/remarks&gt;
+    /// &lt;param name=&ldquo;name&rdquo;&gt;&lt;/param&gt;
+    /// &lt;param name=&ldquo;createDefaultValueFunc&rdquo;&gt;&lt;/param&gt;
+    public BlackboardProperty(string name, Func&lt;T&gt; createDefaultValueFunc)
+    {
+        Name = name;
+        _createDefaultValueFunc = createDefaultValueFunc;
+    }</p>
+<div class="highlight"><pre class="chroma">public BlackboardProperty()
+{
+    Name = Guid.NewGuid().ToString();
+}
+
+public T GetDefault()
+{
+    return _createDefaultValueFunc();
+}</pre></div>
+<p>}</pre>
+我承认不是非常有用的代码。但是。能够模拟两个类的使用。
+下一个例子会更和现实情况接近。但是肯定是被简化过了的。在下面的例子里。我定义了集中不同的任务。我用这些任务来启动对硬件设备的连接。操作设备。关闭连接。这些任务通过一个执行引擎依次执行，这些任务通过一个公用的黑板类来共享数据。至于这个任务类的和执行引擎（ExecutionEngine）类还是留到另一篇文章中把。
+<pre class="lang:default decode:true">//一个设备的接口例子
+interface IDevice
+{
+    void Connect();
+    void Reset();
+    decimal Read(string obis);
+    void Close();
+}</p>
+
+<p>//任务实例化了设备api，设置并且启动连接
+class InitiateDeviceTask : Task
+{
+    //这个用来定义黑板类里的DeviceAPI 变量
+    public static BlackboardProperty&lt;IDevice&gt; DeviceAPIProperty = new BlackboardProperty&lt;IDevice&gt;();</p>
+<div class="highlight"><pre class="chroma">protected override void Execute(Blackboard context)
+{
+    IDevice deviceAPI = null;
+    //deviceAPI = ...创建并设置设备 API, 连接到设备
+    deviceAPI.Connect();
+
+    //这是最重要的部分 – 我把deviceAPI 放在了黑板类里
+    //并使用 DeviceProperty作为该对象的标识符
+    context.Set(DeviceAPIProperty, deviceAPI);
+}</pre></div>
+<p>}</p>
+
+<p>//t该任务重置设备
+class ResetDeviceTask : Task
+{
+    protected override void Execute(Blackboard context)
+    {
+        //从黑板类里取出 deviceAPI
+        // InitiateDeviceTask这个任务必然要在本任务之前执行
+        IDevice deviceAPI = context.Get(InitiateDeviceTask.DeviceAPIProperty);//注意不需要进行转换
+        deviceAPI.Reset();
+    }
+}</p>
+
+<p>//该任务读取设备的一个寄存器
+class ReadRegisterTask : Task
+{
+    public string RegisterName { get; set; }</p>
+<div class="highlight"><pre class="chroma">//工厂方法为该属性提供一个默认的值
+public static BlackboardProperty&amp;lt;Dictionary&amp;lt;string, decimal&amp;gt;&amp;gt; ReadingsProperty = new BlackboardProperty&amp;lt;Dictionary&amp;lt;string, decimal&amp;gt;&amp;gt;(&#34;Readings&#34;, () =&amp;gt; new Dictionary&amp;lt;string, decimal&amp;gt;());
+
+protected override void DoExecute(Blackboard context)
+{
+    IDevice deviceAPI = context.Get(InitiateDeviceTask.DeviceAPIProperty);
+    decimal value = deviceAPI.Read(RegisterName);//我们可以把值放在一个仓库里
+
+    //可以把寄存器的名字和值存储到字典里。这样其他的任务也可以使用该值了 
+    //如果 readings属性不在黑板类里。那么一个空的字典对象将会被 createDefaultValueFunc 工厂方法创建ReadingsProperty来完成。
+    context.Get(ReadingsProperty)[RegisterName] = value;
+}</pre></div>
+<p>}</p>
+
+<p>//该任务关闭对设备的连接
+class CloseConnectionTask : Task
+{
+    protected override void Execute(Blackboard context)
+    {
+        IDevice deviceAPI = context.Get(InitiateDeviceTask.DeviceAPIProperty);
+        deviceAPI.Close();
+    }
+}</p>
+
+<p>class Demo
+{
+    public void StartDemo()
+    {
+        ExecutionEngine engine = new ExecutionEngine();
+        engine.Enque(new InitiateDeviceTask()); //创建 deviceAPI 对象, 连接, 放在黑板类里
+        engine.Enque(new ReadRegisterTask() { RegisterName = &ldquo;1.8.0&rdquo; }); //使用设备api来读取一个值
+        engine.Enque(new ReadRegisterTask() { RegisterName = &ldquo;3.8.0&rdquo; }); //使用设备api来读取另一个值
+        engine.Enque(new ResetDeviceTask()); //使用设备api来重置设备
+        engine.Enque(new CloseConnectionTask()); //使用设备api来关闭设备连接</p>
+<div class="highlight"><pre class="chroma">    //引擎创建了一个黑板, 
+    /开启一个新线程并且一个接一个将任务传递给黑板对象来执行
+    //
+    engine.Start();
+}</pre></div>
+<p>}</pre>
+黑板类另一种可能的使用情况就是一个支持插件的软件。如果需要的话允许插件进行通信，这种情况下属性改变的时候能够通知是很有用的。</p>
+
+<p>还有一件重要的事情是注意 BlackboardProperty 实例一般应该作为逻辑上拥有该属性的类的一个静态成员。那么既然那是静态的。同样的BlackboardProperty 实例就可以出现在多个黑板对象里。当某一个给定的属性。黑板对象里没有值的时候。他会请求BlackboardProperty 实例提供一个默认的值。缺省的值可能是一个引用类型，因此，如果你不想在多个黑板对象间共享同一个引用。在创建BlackboardProperty 对象的时候务必使用下面的构造函数。
+public BlackboardProperty(string name, Func createDefaultValueFunc)
+这就会使得默认的值不会在多个黑板对象间共享。</p>
+
+<p><strong>有意思的地方</strong>
+我应该说过了。这个方案一部分是受微软WPF中依赖属性的影响。还参考了我前段时间读到的一篇关于枚举类的文章</p>
+
+<p><strong>许可</strong>
+本文包括源代码和文件在CPOL下授权。</p>
+
+<p>原文地址： <a href="http://www.codeproject.com/Articles/451326/Type-safe-blackboard-property-bag">Type-safe-blackboard-property-bag</a></p>
+
+<p>著作权声明：本文由<a href="http://leaver.me/">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%AD%A6%E6%B1%89/">武汉</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/10/14/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAwpf%E7%94%A8%E6%88%B7%E6%8E%A7%E4%BB%B6%E5%9C%A8wpf%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8/" data-toggle="tooltip" data-placement="top" title="如何创建WPF用户控件&amp;在WPF项目中使用">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/10/17/%E6%A8%A1%E6%8B%9Foffice2010%E6%96%87%E4%BB%B6%E8%8F%9C%E5%8D%95%E7%9A%84tabcontrol%E6%A8%A1%E6%9D%BF/" data-toggle="tooltip" data-placement="top" title="模拟Office2010文件菜单的TabControl模板">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

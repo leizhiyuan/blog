@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>操作系统</title>
+  <meta property="og:title" content="操作系统" />
+  <meta name="twitter:title" content="操作系统" />
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="tags-heading">
+              
+                <h1>操作系统</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/05/22/%E5%BC%95%E7%94%A8%E5%92%8C%E6%8C%87%E9%92%88c--/">
+                <h2 class="post-title">引用和指针(C&#43;&#43;)</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 22, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (214 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  今天在整理收藏夹的时候，又看到了这两篇非常不错的文章，关于指针和引用的，我就不翻译了，文章很简单，不过把其中我觉得很有意思的两部分结合我的理解希望说的更清楚,假定你读这篇文章之前已经知道指针，但是不是很清楚其中的部分。
+首先是关于指针的一个直观的一个认识. #include &lt;iostream&gt;
+int main() { using namespace std;
+// 声明并初始化指针. unsigned short int * pPointer = 0; // 定义一个unsigned short int 变量 值为35698 unsigned short int twoInt = 35698; // 定义一个unsigned short int 变量 值为 77 unsigned short int oneInt = 77; // 使用&amp;操作符将twoInt的地址赋给指针 pPointer = &amp;twoInt; // pPointer 现在的值就是twoInt的地址了
+// 打印 cout &lt;&lt; &ldquo;pPointer的内存地址:\t\t&rdquo; &lt;&lt; &amp;pPointer &lt;&lt; endl; cout &lt;&lt; &ldquo;oneInt的内存地址:\t&rdquo; &lt;&lt; &amp;oneInt &lt;&lt; &ldquo;\t整数值:\t&rdquo; &lt;&lt; oneInt &lt;&lt; endl; cout &lt;&lt; &ldquo;twoInt的内存地址:\t&rdquo; &lt;&lt; &amp;twoInt &lt;&lt; &ldquo;\t整数值:\t&rdquo; &lt;&lt; twoInt &lt;&lt; endl; cout &lt;&lt; &ldquo;pPointer所指向的地址(也就是pPoint的值):\t&rdquo; &lt;&lt; pPointer &lt;&lt; &ldquo;\t整数值:\t&rdquo; &lt;&lt; *pPointer &lt;&lt; endl;
+                  <a href="https://leizhiyuan.github.io/2013/05/22/%E5%BC%95%E7%94%A8%E5%92%8C%E6%8C%87%E9%92%88c--/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c&#43;&#43;/">C&#43;&#43;</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/02/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%AD%BB%E9%94%81%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+                <h2 class="post-title">操作系统的死锁和内存管理</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on February 2, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (23 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>这部分是最后一部分笔记。《现代操作系统》第三版的笔记就这样了。
+<strong>死锁；</strong>
+把需要排他性使用的对象称为资源，资源分为可抢占的和不可抢占的。可抢占资源可以从拥有它的进程中抢占而不会具有任何副作用。存储器就是可抢占的。不可抢占资源是指在不引起相关的计算失败的情况下，无法把它从占有她的进程处抢占过来。比如CD刻录机，如果一个进程开始刻盘，突然分配给CD刻录机到另一进程，就会划坏CD盘。死锁会发生在不可抢占资源中
+<strong>死锁的规范定义</strong>：如果一个进程集合中的每个进程都在等待只能由该进程集合中的其他进程才能引发的事件，那么，该进程集合就是死锁的。</p>
+
+<p><strong>死锁的四个必要条件</strong>
+1.互斥条件。每个资源要么已经分配给一个进程，要么就是可用的。
+2.占有和等待条件，已经得到了某个资源的进程可以再请求新的资源。
+3.不可抢占条件，已经分配给一个进程的资源不可强制性的被抢占，他只能由占有她的进程显式的释放。
+4.环路等待条件。死锁发生时，系统中一定有友两个/多个进程组成的一条回路，该环路中的每个进程都在等待着下一个进程所占有的资源。</p>
+
+<p><strong>死锁处理的四种策略</strong>
+1.忽略该问题，如果可以忽略。则忽略
+2.检测死锁并恢复，让死锁发生，检测他们是否发生，一旦发生。采取行动。
+3.仔细对资源进行分配。动态的避免死锁。
+4.通过破坏引起的四个必要条件之一。防止死锁发生。</p>
+
+<p><strong>银行家算法</strong>就是对每个请求进行检查。检查如果满足这一请求是否会达到安全状态，或是，那么满足这请求，若否。就推迟这一请求的满足。为了看状态是否安全。类似于银行家投资。看自己是否有足够的资源满足客户。如果可以。就认为投资是可以收回的。接着检查最接近最大限额的一个客户。如果所有投资最终都被收回。则该状态安全。</p>
+
+<p><strong>通信死锁</strong>：两个/以上的进程发送消息通信。A向B发送请求信息，然后阻塞直到B回复。假设请求信息丢失，A将阻塞等待回复。B则阻塞等待一个向其发送命令的请求。则发生死锁。他不能通过对资源排序/安排调度来避免，因此。采用了超时来中断通信死锁。</p>
+
+<p><strong>活锁</strong>：两个进程A和B，A获得1.B获得2.轮询请求对方的。没有进程被阻塞。看起来像是死锁发生了。就叫做活锁。</p>
+
+<p><strong>内存管理</strong>
+每个linux进程都有一个地址空间，逻辑上有三段组成：代码。数据和堆栈段。代码段包含了形成程序可执行代码的机器指令。通常是只读的。是由编译器把源码转换成机器码形成的。
+数据段包含了所有程序变量。字符串。数字和其他数据的存储。由两部分，初始化数据和未初始化数据。后者即为BSS，符号起始块。加载后被初始化为0.数据段可以修改。可以增加数据段的大小。
+第三段是栈段。大多数机器里。从虚拟地址空间的顶部/附近开始。并且向下生长。</p>
+
+<p>linux内存由三部分组成。前两部分是内核和内存映射，被钉在内存中。页面从不换粗。内存的其他部分，被划分为页框。每个页框都可以包含一个代码。数据或栈页面。</p>
+
+<p>window如何知道系统配置的细节呢。答案就是windows会挂载一种特殊的文件系统，其为小文件做了优化，到名字空间，也就是注册表。注册表被阻止成了不同的卷，称作储巢。hive。一个叫做system的储巢会在系统启动时。装入内存。这里面包含了驱动什么设备工作。什么软件要初始化。那些变量等等。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/linux/">linux</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%AC%94%E8%AE%B0/">笔记</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/02/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/">
+                <h2 class="post-title">操作系统中的输入输出</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on February 1, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (24 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p><strong>输入输出</strong>
+<strong>I/O硬件：</strong>
+I/O设备分为两类：块设备和字符设备，块设备吧信息存储在固定大小的块中，每个块有自己的地址，传输以块为单位，每个块都能独立于其他块读写，硬盘，CD-ROM和USB盘都是常见的块设备。字符设备是以字符为单位发送和接收一个字符流，而不考虑任何块结构，字符设备不可寻址，也不寻道，打印机，网络几口，鼠标，以及大多数与磁盘不同的设备都可看作是字符设备。</p>
+
+<p>I/O设备一般由机械部件和电子部件两部分组成，通常分开处理，实现模块化和通用设计，电子部件称作设备控制器/适配器，在个人计算机上，通常以主板上的芯片的形式出现，或者以插入PCI的印刷电路板的形式出现。控制器卡上通常有一个连接器，通向设备本身的电缆可以插入到这个连接器中，
+控制器的任务是吧串行的位流转换成字节块，并进行必要的错误校正工作，字节块通常首先在控制器内部的一个缓冲区中按位进行组装，然后再对校验和进行校验并证明字节块没有错误后再将它复制到主存中。</p>
+
+<p>每个控制器都有几个寄存器用来和cpu通信，通过写入这些寄存器，操作系统可以命令设备发送数据等等操作。
+1.内存映射io
+将所有控制寄存器映射到内存空间中，每个寄存器被分配一个唯一的内存地址，并且不会有内存被分配这一地址，这样的系统称为内存映射I/O，通常位于地址空间的顶端。使用内存映射io，设备控制器只是内存中的变量，c语言可以和其他变量一样寻址，这样，I/O设备驱动程序就可以采用c语言编写。
+2.DMA
+无论CPU是否具有内存映射I/O,他都需要寻址设备控制器以便和他们交换数据，但浪费eficpu时间，所以经常使用直接存储器存储。可独立于cpu访问地址总线。</p>
+
+<p>没有DMA的时候，首先控制器从磁盘驱动器串行的一位一位的读一个块，直到将整块信息放入控制器的内存缓冲区中，接着，他计算校验和，以保证没有读错误发生，然后控制器产生一个中断，当操作系统开始运行时，它重复地从控制器的缓冲区中一次一个字节/一个字的读取该块的信息，并将其放入内存中。
+当有DMA的时候，首先CPU通过设置DMA控制器的寄存器对它进行编程，所以DMA控制器知道将什么数据传送到什么地方，(第1步)DMA控制器还要向磁盘控制器发送一个命令，通知他从磁盘读数据到其内部的缓冲区中，并且对校验和进行检验，如果磁盘控制器中的缓冲区中的数据是有效的的。那么DMA开始
+DMA控制器通过在总线上发出一个读请求到磁盘控制器而发起DMA传送（第2步），这一读请求和其他一样，并且磁盘控制器并不关心是来自DMA还是CPU，一般情况下，要写的内存地址在总线的地址线上，所以磁盘控制器从内部缓冲区中读取下一个字的时候，她知道要写的什么地方，写到内存是另一个标准总线周期，（第3步）
+当写操作完成时，磁盘控制器在总线上发起一个应答信号到DMA（第4步），于是DMA控制器部增要使用的内存地址，并且步减字节计数，如果字节计数仍然大于0，则从父2-4步。完成后产生中断告诉cpu，操作系统开始工作时，数据已经在内存中了。
+<strong>中断：</strong>
+将机器留在一个明确状态的中断称为精确中断，四个特征，1.PC保存在一个已知的地方。2.PC所指向的指令之前的所有指令都已经完全执行。3.PC所指向的指令之后的所有指令都没有执行。4.PC所指向的指令的执行状态是已知的。注意，对于PC所指向的指令以后的指令，并没有禁止他们开始执行，而只是要求在中断发生之前必须撤销他们对寄存器或内存所做的任何修改。
+<strong>I/O软件：</strong>
+设计I/O软件时一个关键的点就是设备独立性，意思是我们可以访问任意I/O设备而无需事先指定设备。也就是对于不同的I/O硬件。同一段程序是可以的。</p>
+
+<p>具有标准接口的驱动程序的工作方式如下：对于每一种设备类型，例如磁盘和打印机。操作系统定义一组驱动程序必须支持的函数，对于磁盘而言，这些函数自然的包含读和写，除此之外还包含开启和关闭电源，格式化以及其他与磁盘有关的事情。驱动程序通常包含一张表格，这张表格具有针对这些函数指向驱动程序自身的指针。当驱动程序装载时，操作系统记录下这张函数指针表的地址。所以当操作系统需要调用一个函数时，可以通过表格发出间接调用。这张函数指针表定义了驱动程序与操作系统其他部分之间的接口。</p>
+
+<p><strong>双缓冲：</strong>当第二个缓冲区正在复制用户空间的时候，第一个缓冲区用来接收新的字符。以这样的方法。两个缓冲区轮流使用。称为双缓冲。</p>
+
+<p><strong>磁盘臂调度算法：</strong>
+读/写一个磁盘块需要时间：1.寻道时间（将磁盘臂移动到适当的柱面上所需的时间）2.旋转延迟（等待适当扇区旋转到磁头下所需的时间）。3.实际数据传输时间。</p>
+
+<p>一个磁盘子系统具有如下特性：当一个写命令发给它时，磁盘要么正确地写数据，要么什么也不做，让现有的数据完整无缺的留下，这样的系统称为稳定存储器，并且是在软件中实现的。目标是不惜一切代价保持磁盘的一致性。</p>
+
+<p><strong>时钟：</strong>两种。1种是直接接到电源线上。就可以每个电压周期产生一个终端。现在比较少。另一种是由晶体振荡器，计数器和存储寄存器三个构成。当把一块石英晶体适当的切割并且安装到一定的压力之下时就可以产生非常精确的周期性信号。时钟启动时，存储寄存器的值被复制到计数器中，每一个脉冲使计数器-1，直到为0，产生中断。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/01/31/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
+                <h2 class="post-title">操作系统中的文件系统</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on January 31, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (22 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p><strong>文件系统</strong>
+进程，地址空间，文件这些抽象概念均是操作系统中的重要概念，如果理解了这三个概念，就迈上了成为一个操作系统专家的道路。
+文件系统存放在磁盘上，多数磁盘划分为一个/多个分区，每个分区有一个独立的文件系统，磁盘的0号扇区称为主引导记录，也就是MBR，用来引导计算机，MBR的结尾就是分区表了。该表给出了每个分区的起始和结束地址。表中的一个分区被标记为活动分区。在计算机被引导时，BIOS读入并执行MBR，MBR做的第一件事就是确定活动分区，读入他的第一个块，称为引导块，并执行之，引导块中的程度将装载该分区中的操作系统，为统一起见，每个分区都从一个启动块开始，即使它不含有一个可以启动的操作系统。
+<a href="http://leaverimage.b0.upaiyun.com/32257_o.png"><img src="/images/2e6edaf72b3ff2b35c5e98e4a1538ae14d74d858.png" alt="" /></a>
+<strong>文件的实现：</strong>
+1.连续分配，每个文件作为一连串连续数据存储在磁盘上。实现简单，读操作性能好，一次就可以了。但不足是删除之后不能移动，因为成本太高，使得空块增多。碎片化严重。更诡异的是对于文件编辑软件，实现无法准确预测大小，如果预测错了。。就跪了。
+//研究那些具有清晰和简洁概念的老式系统和思想是很重要的，因为他们可能以一种令人吃惊的方式在未来系统中获得应用。</p>
+
+<p>2.链表分配
+为每个文件构造磁盘块链表，一个文件分为N个文件块，N个文件块构成一个链表，存储在物理上的多个地方。顺序读取很方便，但随机读取则相当缓慢，由于指针的存在，每个磁盘块存储数据的字节不再是2的整数次幂，导致系统运行效率降低，因为很多程序都是以2的整数次幂来读写磁盘的。</p>
+
+<p>3.在内存中采用表的链表分配
+去除每个文件块在磁盘上的指针字，放入内存的一个表上，就可以解决上一个分配的不足。直观的例子如图。
+文件A使用了磁盘块4，7，2，10，12</p>
+
+<p>内存中这样的表格称为文件分配表，也就是FAT了。主要缺点是对于大磁盘的小块，这种表需要的内存占用太大。。不太适用。
+<a href="http://leaverimage.b0.upaiyun.com/32256_o.png"><img src="/images/b3afb8b5bedaaa50b38292cd6eb90a388d5081d1.png" alt="" /></a></p>
+
+<p>4.i节点
+记录各个文件包含哪些磁盘块的方法是给每个文件赋予一个称为i节点的数据结构,其中类除了文件属性和文件块的磁盘地址.相对于在内存中采用表的方式,这种机制的优势在于只有对应文件打开时,其i节点才进入内存.</p>
+
+<p>文件系统的一致性检查分为两种:块的一致性检查和文件的一致性检查.构造两张表,一张跟踪块在文件中的出现次数,另一张跟踪该块在空闲表中的出现次数,如果一致,则某一块必然在两个表中1/2中为1,如果某一块没有出现在任何一张表中,则称为块丢失,浪费了磁盘空间.解决方法是让文件系统检验程序把他们加入到空闲表中
+如果在空闲表中出现了两次.则重新建议建议空闲表即可.
+如果在文件表中出现了两次.则比较麻烦.</p>
+
+<p><strong>文件系统性能</strong>
+1.高速缓存,最常用,指的是一系列的块,逻辑上属于磁盘.但实际上被保存在内存上.基本算法是检查全部的读请求,查看在高速缓存中是否有所需要的块,如果存在,就读,否则读入高速缓存在复制到其他地方.
+2.块提前读,在需要用到块之前,试图提前将其写入高速缓存,从而提高命中率.比如某个文件有n个块,则请求k块的时候,则同时预读k+1块.只适用于顺序读取的文件,对随机读取文件,则没有效果/反效果.
+3.减少磁盘臂运动
+把所有可能顺序读取的块放在一起,当然最好是放在同一个柱面上,从而减少磁盘臂的移动次数.</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%AC%94%E8%AE%B0/">笔记</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/01/30/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95/">
+                <h2 class="post-title">操作系统中的页面置换算法</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on January 30, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (19 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p><div>最近读完了《现代操作系统》。页面置换算法的读书笔记。其他的笔记慢慢整理一下在博客做个备份。</div>
+<div></div>
+<div>虚拟内存的基本思想：每个程序都拥有自己的内存空间，这个空间被分割成很多块，每一块称为一页/页面，每一页有连续的地址范围，这些页被映射到物理内。</div>
+页面置换算法
+1.最优页面置换算法，每个页面都可以用在该页面首次被访问前所需要执行的指令数作为标记。因此我们选择标记最大的页面，也就是把不愉快的事情往后拖延。但是，唯一的问题是无法实现。
+2.最近未使用页面置换算法。系统每一个页面设置两个状态位，当页面被访问时设置R位，当被修改时设置M位，包含在页表项中，初始时，都被设置0，R被定期地清零，以区别最近没有被访问和被访问的页面。NRU算法随机的从类编号最小的非空类中挑选一个页面淘汰之，
+根据R和W可以将页面分为4类
+0没有被访问，没有被修改/1没有被访问，被修改/2已被访问，没有被修改/3已被访问，已被修改。第一类只有在定期清R的时候才会出现。
+隐含的意思是，淘汰一个没有被访问的已修改页面要比淘汰一个被频繁使用的干净页面要好。
+3.先进先出置换，找出最先进入的替换掉，很少单独使用
+4.第二次机会页面置换算法。FIFO可能将经常使用的页面置换出来。为此，检查最老页面的r位，如果R为0，则既老又没有被使用，则就置换掉，如果是1，就清0，放在链表尾，修改装入时间为最新。继续搜索。
+5.时钟页面置换算法，第二次机会算法经常要在链表中移动页面，更好的方法是将页面保存在一个类似钟面的环形链表中，表针指向最老的页面。发生缺页时，如果R是0就
+淘汰该页面，并插入新页面，然后表针前移，如果是1，就清除R并前移，直到找到一个R位为0的页面。这也是时钟的由来
+<a href="http://leaverimage.b0.upaiyun.com/32235_o.jpg"><img src="/images/e198f5889716b00f06a452789f0c413474927e87.jpg" alt="" /></a>
+6.最近最少使用页面置换算法。在发生缺页时，置换未使用时间最长的页面，这个策略称为LRU，最简单的一个实现策略是有一个64位计数器，每条指令执行完加1.每个页表项必须有一个足够容纳这个计数器值的域，每次访问内存后，将C值保存到被访问页面的页表项，一旦中断，检查所有页面项的计数器值，找到最小的即可。
+7.NFU最不常用算法，是LRU的软件模拟实现。每个页面与一个软件计数器管理。初值为0，每次时钟中断时，操作系统扫描内存中的所有页面，将每个页面中的R位值加到他的计数器上，计数器的值即为访问的频繁程度。该算法的问题是记住的事情太多，如果第一次执行扫描的时间最长。比如第一次某个页面的值很大。这个很大的值会影响到下一次扫描，结果操作系统将置换有用的页面而不是不再使用的页面。
+8.修改一下NFU：R位被加进之前，将计数器右移一位，同时将R加到计数器的左端。即为老化算法
+9.工作集页面置换算法。一个进程当前正在使用的页面的集合称作他的工作集。基本思路是找出一个不在工作集中的页面并淘汰它。
+10.工作集时钟页面置换算法。基于时钟算法，并且使用了工作集信息。</p>
+
+<p>页面调度算法总结；
+<a href="http://leaverimage.b0.upaiyun.com/32236_o.jpg"><img src="/images/8aeb6656133389828c802b546823152810700003.jpg" alt="" /></a>
+最好的两种算法是老化算法和工作集时钟算法，分别基于LRU和工作集。具有良好的页面调度性能。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2013/01/24/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B0%83%E5%BA%A6/">
+                <h2 class="post-title">现代操作系统的调度</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on January 24, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (25 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>这几天在读《现代操作系统》，想起当时学这门课的时候，并没有感觉那么爽，现在通读这本书，知识的过渡性和结构性令我叹服。感受操作系统的魅力吧。</p>
+
+<p><strong>批处理系统中的调度：</strong>
+1.先来先服务</p>
+
+<p>2.最短作业优先
+只有在所有的作业都可以同时运行(也即同时到达)的情况下，最短作业优先算法才是最优化的。</p>
+
+<p>3.最短剩余时间优先-最短作业优先的抢占式版本。调度算法总是选择剩余时间最短的那个进程运行，注意，运行时间必须提前掌握，当一个新的作业到达时，其整个时间同当前进程的剩余时间做比较，如果更少。就运行新进程。可以使新的短作业获得良好的服务。</p>
+
+<p><strong>交互式系统的调度</strong>
+1.轮转调度。
+最古老，最简单，最公平切使用最广，每个进程被分配一个时间片。如果进程在时间片结束之前阻塞或结束，则CPU立即切换。调度程序只是维护一张可运行进程列表，当进程用完它的时间片后，就被移到队列的末尾。时间片太短会导致进程切换过多，降低CPU效率，设置的太长又引起对短的交互请求的响应时间变长。通常20-50ms算合理。</p>
+
+<p>2.优先级调度
+为了防止高优先级进程无休止的运行下去，可以在一个时钟中断里降低当前进程的优先级，如果这导致该进程的优先级低于次高优先级的进程，则切换或者也可以赋予每个进程一个时间片。可以和轮转调度一起工作，设置每个优先级上有多个进程。优先运行高优先级，并未高优先级上的进程按照轮转换着运行，如果高优先级没了。就进入到较低优先级。。。问题是如果不偶尔对优先级进行调整，则可能发生饥饿现象。</p>
+
+<p>3.多级队列
+CTSS的设计者发现为CPU密集型进程设置较长的时间片比频繁的分给他们很短的时间片更为高效（减少了交换次数），但长时间的进程又会影响响应时间，方法是设立优先级类，最高优先级类里的进程运行1个时间片。次高运行2个。以此类推。当一个进程用完分配的时间片后，被移动到下一类。大致算法都是用于讨好交互用户和进程，而不惜牺牲后台进程
+//故事：可以采用只要终端上有Enter键按下，就将该终端上的进程移到最高优先级类。假设当前进程急需交互，但是。一个人发现了。大家都开始用。。。理论和实际差异太大。。哈哈</p>
+
+<p>4.最短进程优先
+这个很好立即，但难点在于如何找出最短的那个。一种方法是根据过去的行为推测。假设每个命令执行时间为T0，下一次运行时间为T1，则可以根据aT0+(1-a)T1来估计时间。。a被用来决定尽快忘掉老的运行时间还是记住它。这种算法成为老化算法。通常选a=<sup>1</sup>&frasl;<sub>2</sub></p>
+
+<p>5.保证调度
+就是保证每个用户获得cpu的1/n，系统需要跟踪进程的cpu时间，他实际获得如果多于应该获得的。则转向实际获得小于应该获得的。</p>
+
+<p>6.彩票调度
+保证调度很难实现，而彩票调度算法是向进程提供各种系统资源的彩票。一旦需要做出一项调度决策时，就随机抽出一张彩票。谁获得谁就上。比如视频服务器，可以为不同的帧速率提供不同的彩票。然后分配cpu</p>
+
+<p>7.公平分享调度
+这个就考虑到了进程的所有者。需要我们定义公平的含义。是保证每个用户只占用的时间相等还是其他了。</p>
+
+<p><strong>实时系统的调度：</strong>
+可以分为硬实时和软实时，前者必须满足绝对的截止时间，后者则可以容忍一些。用户级线程系统是不知道的。用户级和内核级的差异主要在性能，用户级需少量的机器指令，而内核级需要很多的。过程。采用轮转和优先级调度更常见一些。</p>
+
+<p>//操作系统的大神们太强大了。哲学家进餐问题居然可以通过拿起左边叉子以后，检测右边是否可用，如果不可用，则等待一个随机的时间。这种方案是可行的。在极少的情况下不可用。。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/09/24/%E6%B1%87%E7%BC%96-32%E4%BD%8Dcpu%E6%89%80%E5%90%AB%E6%9C%89%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8/">
+                <h2 class="post-title">汇编-32位CPU所含有的寄存器</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 24, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (122 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  今年的课程有汇编。真为校领导的智商捉鸡。。不过还是要学的。分享一篇来自中文FLEX例子的汇编寄存器的文章。很不错的一篇寄存器详解的文章。文章最后是我找到的一个汇编指令助手。
+　4个数据寄存器(EAX、EBX、ECX和EDX)　2个变址和指针寄存器(ESI和EDI) 2个指针寄存器(ESP和EBP) 6个段寄存器(ES、CS、SS、DS、FS和GS) 1个指令指针寄存器(EIP) 1个标志寄存器(EFlags)
+1、数据寄存器 　数据寄存器主要用来保存操作数和运算结果等信息，从而节省读取操作数所需占用总线和访问存储器的时间。32位CPU有4个32位的通用寄存器EAX、EBX、ECX和EDX。对低16位数据的存取，不会影响高16位的数据。这些低16位寄存器分别命名为：AX、BX、CX和DX，它和先前的CPU中的寄存器相一致。
+　4个16位寄存器又可分割成8个独立的8位寄存器(AX：AH-AL、BX：BH-BL、CX：CH-CL、DX：DH-DL)，每个寄存器都有自己的名称，可独立存取。程序员可利用数据寄存器的这种”可分可合”的特性，灵活地处理字/字节的信息。
+　寄存器AX和AL通常称为累加器(Accumulator)，用累加器进行的操作可能需要更少时间。累加器可用于乘、 除、输入/输出等操作，它们的使用频率很高； 寄存器BX称为基地址寄存器(Base Register)。它可作为存储器指针来使用； 寄存器CX称为计数寄存器(Count Register)。在循环和字符串操作时，要用它来控制循环次数；在位操作 中，当移多位时，要用CL来指明移位的位数；
+　寄存器DX称为数据寄存器(Data Register)。在进行乘、除运算时，它可作为默认的操作数参与运算，也 可用于存放I/O的端口地址。在16位CPU中，AX、BX、CX和DX不能作为基址和变址寄存器来存放存储单元的地址，但在32位CPU中，其32位寄存器EAX、EBX、ECX和EDX不仅可传送数据、暂存数据保存算术逻辑运算结果，而且也可作为指针寄存器，所以，这些32位寄存器更具有通用性。
+2、变址寄存器 　32位CPU有2个32位通用寄存器ESI和EDI。其低16位对应先前CPU中的SI和DI，对低16位数据的存取，不影响高16位的数据。
+　寄存器ESI、EDI、SI和DI称为变址寄存器(Index Register)，它们主要用于存放存储单元在段内的偏移量，用它们可实现多种存储器操作数的寻址方式，为以不同的地址形式访问存储单元提供方便。变址寄存器不可分割成8位寄存器。作为通用寄存器，也可存储算术逻辑运算的操作数和运算结果。它们可作一般的存储器指针使用。在字符串操作指令的执行过程中，对它们有特定的要求，而且还具有特殊的功能。
+3、指针寄存器 　32位CPU有2个32位通用寄存器EBP和ESP。其低16位对应先前CPU中的SBP和SP，对低16位数据的存取，不影响高16位的数据。
+　寄存器EBP、ESP、BP和SP称为指针寄存器(Pointer Register)，主要用于存放堆栈内存储单元的偏移量，用它们可实现多种存储器操作数的寻址方式，为以不同的地址形式访问存储单元提供方便。指针寄存器不可分割成8位寄存器。作为通用寄存器，也可存储算术逻辑运算的操作数和运算结果。
+　它们主要用于访问堆栈内的存储单元，并且规定：
+　BP为基指针(Base Pointer)寄存器，用它可直接存取堆栈中的数据；
+　SP为堆栈指针(Stack Pointer)寄存器，用它只可访问栈顶。
+4、段寄存器 　段寄存器是根据内存分段的管理模式而设置的。内存单元的物理地址由段寄存器的值和一个偏移量组合而成
+　的，这样可用两个较少位数的值组合成一个可访问较大物理空间的内存地址。
+　CPU内部的段寄存器：
+　CS——代码段寄存器(Code Segment Register)，其值为代码段的段值； DS——数据段寄存器(Data Segment Register)，其值为数据段的段值；　ES——附加段寄存器(Extra Segment Register)，其值为附加数据段的段值； SS——堆栈段寄存器(Stack Segment Register)，其值为堆栈段的段值； FS——附加段寄存器(Extra Segment Register)，其值为附加数据段的段值； GS——附加段寄存器(Extra Segment Register)，其值为附加数据段的段值。
+                  <a href="https://leizhiyuan.github.io/2012/09/24/%E6%B1%87%E7%BC%96-32%E4%BD%8Dcpu%E6%89%80%E5%90%AB%E6%9C%89%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%B1%87%E7%BC%96/">汇编</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/17/%E4%BF%AE%E6%94%B9windows%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E9%BB%98%E8%AE%A4%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/">
+                <h2 class="post-title">修改Windows系统软件默认安装路径</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 17, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (20 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>作为一个完全不能容忍windows默认程序都往C:\Program Files\目录里安装的人。每次安装软件的时候，都得手动一个个改到D:\Program Files里。安装软件多了。就hold不住了。</p>
+
+<p>　　其实可以通过注册表使得所有安装程序默认安装到其他盘的。将下列内容保存到一个文本文件里，命名为Mo.reg。然后运行即可。以后安装的程序就会默认安装到D盘的Program Files目录了。你也可以根据需要自行修改</p>
+
+<p>　　<pre lang="c"></p>
+
+<p>　　Windows Registry Editor Version 5.00</p>
+
+<p>　　;修改Windows系统软件默认安装路径</p>
+
+<p>　　[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion]</p>
+
+<p>　　&rdquo;ProgramFilesDir&rdquo;=&ldquo;D:\Program Files&rdquo;</p>
+
+<p>　　</pre>
+效果如下图，安装程序已经默认到D盘了
+<a href="http://leaverimage.b0.upaiyun.com/21644_o.jpg"><img src="/images/a83d479db2c8d3fac56dc0dacca9fca7329d7c61.jpg" alt="" title="w" /></a></p>
+
+<p>update:已知后遗症，我在这样实践了以后，发现vs2010的.net framework 4将会丢失。也就是说就不能新建.net framework 4项目了，具体不明，可能是我当初把VS一部分安装到D盘的缘故，应该可以通过重新安装vs解决，如果你不想折腾。把注册表改回去就可以了。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/07/windows%E4%B8%8Bvim%E9%97%AA%E7%83%81%E9%97%AE%E9%A2%98/">
+                <h2 class="post-title">windows下vim闪烁问题</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 7, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (10 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p>今天打开我的vim才发现，界面隔几秒会闪烁。虽说貌似能够起到防止眼睛疲劳的效果，但我实在是hold不住啊。不行，搜索。。
+首先有这个问题的人不多。首先找到了<a href="http://hi.baidu.com/chrisyue/blog/item/ebc7b8de373c1048cdbf1af9.html">这篇文章</a>，但是作者不知道怎么想的。只说了原因，没有给出解决方法。继续搜索关键字cursorcolumn，结果找到了<a href="http://yyq123.blogspot.com/2012/01/vim-cursor.html">这篇文章</a>，按着说明来了一下
+<pre lang="php">set cursorline cursorcolumn</pre>
+没效果。依然闪烁。
+　　好吧。如果是插件的问题。于是我删掉了所有的插件包括写入的配置。依然不行。于是还是采用排除法，一行行删掉配置文件。最后定位到
+<pre lang="php">set guifont=Arial_monospaced_for_SAP:h9:cANSI </pre>
+　　这是设置字体的，不太明白为什么会出现这样的情况。怀疑是字体的原因，于是换个字体，依然闪烁。。好吧。就这样吧。删掉算了。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/05/07/%E5%9B%9B%E7%A7%8Di/o%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F/">
+                <h2 class="post-title">四种I/O控制方式</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on May 7, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (82 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  基本上原文照搬过来吧。主要是原文排版太乱。不利于传播。 随着计算机技术的发展，I/O控制方式也在不断地发展。I/O控制的发展经历了以下四个阶段：
+　一.程序I/O控制方式
+　在早期的计算机系统中，由于无中断机构，处理机对I/O设备的控制，采取程序I/O方式（Programmed I/O方式）。在程序I/O方式中，由于CPU的高速性和I/O设备的低速性，致使CPU 的绝大部分时间都处于等待I/O设备完成数据I/O的循环测试中，造成对CPU的极大浪费。在该方式中，CPU之所以要不断地测试I/O设备的状态，就是因为在CPU中无中断机构，使 I/O设备无法向CPU报告它已完成了一个字符的输入操作。如下图所示：
+　图1.![]}/images/c83bce26670bc565b0fb2eaa4984e5b7575b618a.jpg)
+　程序I/O方式又称忙&ndash;等待方式，即在处理机向设备控制器发出一条I/O指令启动输入设备、输出数据时，要同时把状态寄存器中的忙/闲标志busy置为1，然后便不断地循环测试busy。当busy=1时，表示输入机尚未输完一个字（符），处理机应继续对busy进行测试；直至busy=0，表明输入机已将输入数据送入控制器的数据寄存器中，于是处理机将数据寄存器中的数据取出，送入内存指定单元中，接着，再启动去读下一个数据，并置busy=1。 △ 此方式造成对CPU的极大浪费。
+　二.中断驱动I/O控制方式
+　在现代计算机系统中，对I/O设备的控制，广泛采用中断驱动（Interrupt&mdash;Driven）方式。在I/O设备输入每个数据的过程中，由于无须CPU干预，因而可使CPU与I/O设备并行工作。仅当输完一个数据时，才需CPU花费极短的时间去做些中断处理。可见，这样可使CPU和I/O设备都处于忙碌状态，从而提高了整个系统的资源利用率及吞吐量。如下图所示：
+　图2 
+　当某进程要启动某个I/O设备工作时，便由CPU向相应的设备控制器发出一条I/O命令，然后立即返回继续执行原来的任务。设备控制器便按照该命令的要求去控制I/O设备。此时，CPU与I/O设备并行操作。　例如，从终端输入一个字符的时间约为 100ms ， 而将字符送入终端缓冲区的时间小于 0.1ms 。 若采用程序 I/O 方式， CPU 约有 99.9ms 的 时间处于忙 — 等待中。 采用中断驱动方式后， CPU 可利用这 99.9 ms 的时间去做其它事情，而仅用 0.1 ms 的时间来处理由控制器发来的中 断请求 。 可见，中断驱动方式可以成百倍地提高 CPU 的利用率。△ 中断驱动方式可以成百倍地提高CPU的利用率。
+　三.直接存储器访问DMA控制方式
+　&ndash;&gt;DMA控制方式的引入
+　虽然中断驱动I/O比程序I/O方式更有效，但它是以字（节）为单位进行I/O的，若将这种方式用于块设备的I/O，显然将会是极其低效的。为了进一步减少CPU对I/O的干预，而引入了直接存储器访问（Direct Memory Access）方式。如下图：
+　图3![]}/images/ee3e0c3ca8d998d2a84488f01d3ca4d6e642f217.jpg)
+　此方式的特点是： 数据传输的基本单位是数据块；所传输的数据是从设备直接送入内存的,或者相反；整块数据的传送是在控制器的控制下完成的；
+　可见，DMA方式较之中断驱动方式，又是成百倍地减少了CPU对I/O的干预，进一步提高了CPU与I/O设备的并行操作程度。
+                  <a href="https://leizhiyuan.github.io/2012/05/07/%E5%9B%9B%E7%A7%8Di/o%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+        </div>
+        
+          <ul class="pager main-pager">
+            
+            
+              <li class="next">
+                <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/page/2/">Older Posts &rarr;</a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

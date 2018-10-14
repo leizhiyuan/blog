@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>软件测试 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/</link>
+    <description>Recent content in 软件测试 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 26 Jul 2013 08:24:54 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>《软件测试》一点笔记</title>
+      <link>https://leizhiyuan.github.io/2013/07/26/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E4%B8%80%E7%82%B9%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Fri, 26 Jul 2013 08:24:54 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/07/26/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E4%B8%80%E7%82%B9%E7%AC%94%E8%AE%B0/</guid>
+      <description>这两天在读《软件测试》，书不厚，也就300页，有些观念还是挺诧异的，比如软件功能超出产品说明书也算作软件缺陷&amp;hellip;想想也能明白，只是猛然看到还是很惊异..简单记录一下读书过程中一些重要的笔记.留作备份.
+软件缺陷： 1.软件为达到产品说明书表明的功能 2.软件出现了产品说明书指明不会出现的错误. 3.软件功能超出产品说明书指明范围 4.软件未达到产品说明书虽未指出但应达到的目标 5.软件测试员认为软件难以理解，不易使用，运行速度缓慢，或者最终用户认为不好.   为什么会出现软件缺陷 最大的原因是产品说明书.而并非编程错误，第二大来源是设计方案  软件测试员的目标是发现软件缺陷，进可能早一些，确保其得到修复  完全测试程序是不可能的  不要总是报告坏消息，如果软件没有错误，就夸他们，和他们聊天  可靠性只是质量的一个方面，可能还包括功能齐全，技术制裁，包括色彩等  在设计和执行测试案例时，首先进行通过测试，在破坏性试验之前看看软件基本功能是否实现是很重要的，否则在正常使用软件时就会奇怪为什么有这么多软件缺陷  软件测试员必须测试程序的状态及其转换  动态白盒测试的目标是寻找软件缺陷，调试则是为了修复他们  静态黑盒子（审查设计说明书），动态黑盒子，静态白盒子，动态白盒子  进行白盒测试前，一定要根据说明书建立黑盒测试案例  语句覆盖是程序的所有语句执行，分支覆盖则是所有分支都被执行，条件覆盖则要保证IF语句的每一种可能性都被覆盖  优秀UI的七个要素： 1.符合标准和规范，2.灵活性，3.正确性。4.直观性。5.舒适性，6.实用性。7.一致性   测试存根用于自顶向下的测试，清查到低级模块或者把自己替换为低级模块，主要测试高级模块，外表和行为就像是低级模块</description>
+    </item>
+    
+  </channel>
+</rss>

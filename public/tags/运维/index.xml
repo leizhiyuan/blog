@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>运维 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E8%BF%90%E7%BB%B4/</link>
+    <description>Recent content in 运维 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 25 Mar 2016 19:51:07 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E8%BF%90%E7%BB%B4/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ansible简单使用</title>
+      <link>https://leizhiyuan.github.io/2016/03/25/ansible%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Fri, 25 Mar 2016 19:51:07 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/03/25/ansible%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</guid>
+      <description>由于线下机器太多.有没有日志平台,所以查询日志比较麻烦.发现了ansible,按照官方文档(ubuntu)
+$ sudo apt-get install software-properties-common $ sudo apt-add-repository ppa:ansible/ansible $ sudo apt-get update $ sudo apt-get install ansible 一步步执行,第二步执行的时候,可能会报错
+sudo: add-apt-repository: command not found 这时候.先执行
+$ sudo add-apt-repository ppa:git-core/ppa $ sudo apt-get update 然后接着执行上面的第二步就行了..
+安装完成后,配置集群
+cat /etc/ansible/hosts[servergroup1] 192.168.1.1 ansible_ssh_user=root ansible_ssh_pass=root [servergroup2] 192.168.2.1 ansible_ssh_user=root ansible_ssh_pass=root 后面的账号和密码,如果你使用ssh key登陆的话就不需要了.但是如果有很多机器,需要加到known_hosts就太多了. 这时候可以参考Batch_key 这个脚本.稍微修改一下,就能批量生成了
+然后就是执行命令了
+ansible常见用法为ansible host-pattern -m 模块 -a 命令，host-pattern类似于简化的正则表达式，而模块可以通过ansible-doc -l命令来查询。下面是一些常用模块的使用方法：
+安装软件：ansible servergroup1 -m apt -a &#39;name=gcc state=present&#39; 或者ansible local -m yum -a &amp;quot;name=nmap state=installed&amp;quot;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Php on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/php/</link>
+    <description>Recent content in Php on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 06 Jan 2013 13:15:37 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SQL注入中的WAF绕过技术</title>
+      <link>https://leizhiyuan.github.io/2013/01/06/sql%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84waf%E7%BB%95%E8%BF%87%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Sun, 06 Jan 2013 13:15:37 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/01/06/sql%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84waf%E7%BB%95%E8%BF%87%E6%8A%80%E6%9C%AF/</guid>
+      <description>作者：bystander 博客：http://leaver.me 论坛：法克论坛
+目录
+1.大小写绕过
+2.简单编码绕过
+3.注释绕过
+4.分隔重写绕过
+5.Http参数污染(HPP)
+6.使用逻辑运算符 or /and绕过
+7.比较操作符替换
+8.同功能函数替换
+9.盲注无需or和and
+10.加括号
+11.缓冲区溢出绕过
+1. 大小写绕过 这个大家都很熟悉，对于一些太垃圾的WAF效果显著，比如拦截了union,那就使用Union UnIoN等等。绕过
+2. 简单编码绕过 比如WAF检测关键字，那么我们让他检测不到就可以了。比如检测union,那么我们就用%55 也就是U的16进制编码来代替U, union写成 %55nION，结合大小写也可以绕过一些WAF，你可以随意替换一个或几个都可以。。
+也还有大家在Mysql注入中比如表名或是load文件的时候，会把文件名或是表明用16进制编码来绕过WAF都是属于这类。
+3. 注释绕过 这种情况比较少，适用于WAF只是过滤了一次危险的语句，而没有阻断我们的整个查询  &amp;gt; /?id=1+union+select+1,2,3/*  比如对于上面这条查询，WAF过滤了一次union和select，那么我们在之前在写一个注释的语句，让他把注释里面的过滤掉，，并不影响我们的查询。。 所以绕过语句就是：  &amp;gt; /?id=1/union/union/select/select+1,2,3/*  还有一种和注释有关的绕过： 比如  &amp;gt; index.php?page_id=-15 /!UNION/ /!SELECT/ 1,2,3,4….  可以看到，只要我们把敏感词放到注释里面，注意，前面要加一个！
+4. 分隔重写绕过 还是上面的例子，适用于那种WAF采用了正则表达式的情况，会检测所有的敏感字，而不在乎你写在哪里，有几个就过滤几个。。 我们可以通过注释分开敏感字,这样WAF的正则不起作用了，而带入查询的时候并不影响我们的结果  &amp;gt; /?id=1+un//ion+sel//ect+1,2,3&amp;ndash;  至于重写绕过，适用于WAF过滤了一次的情况，和我们上传aaspsp马的原理一样，我们可以写出类似Ununionion这样的。过滤一次union后就会执行我们的查询了  &amp;gt; ?id=1 ununionion select 1,2,3&amp;ndash;  5. Http参数污染(HPP) 比如我们有这样的语句：  &amp;gt; /?</description>
+    </item>
+    
+    <item>
+      <title>php的一些知识点</title>
+      <link>https://leizhiyuan.github.io/2012/04/17/php%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/</link>
+      <pubDate>Tue, 17 Apr 2012 17:37:18 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/17/php%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/</guid>
+      <description>一.php中单双引号的区别
+ &amp;rdquo;&amp;rdquo; 双引号里面的字段会经过编译器解释，然后再当作HTML代码输出。 &amp;rdquo; 单引号里面的不进行解释，直接输出。 从字面意思上就可以看出，单引号比双引号要快了。单引号支持\&amp;lsquo;和\的转义，但其他一些转义字符就必须是在双引号里了。 例如： $name=&amp;lsquo;my name is bystander&amp;rsquo;; echo $name //结果是:my name is bystander echo &amp;lsquo;$name&amp;rsquo; //结果是:$name echo &amp;ldquo;$name&amp;rdquo; //结果是:my name is bystander  二.require和include的区别 在于，出现错误时，require是error,也就是说脚本会停止执行，而include是warning。也就说说代码会继续执行，另外，无论require的位置如何。即使是放在一个if代码块里面。他也会将指定文件包含进来。。即使该if部分不执行。顺带说下include 和include_once。其实类似于c里面的ifdef。。就是只包含一次。不重复包含。  三。php类 php类的构造函数命名为_construct.析构函数为_destruct，需要调用父类的构造函数时，使用parent::_construct()来调用
+四。pear包 PEAR是&amp;rdquo;PHP Extension and Application Repository&amp;rdquo;的缩写，也就是一个PHP扩展和应用的管理工具， 具体可参考：http://www.berlinix.com/php_pear.html
+五。PDO PDO(PHP Data Objects)扩展为PHP访问数据库定义了一个轻量级的、一致性的接口，它提供了一个数据访问抽象层，这样，无论使用什么数据库，都可以通过一致的函数执行查询和获取数据。PDO随PHP5.1发行，在PHP5.0的PECL扩展中也可以使用。其实就是一个访问数据库的一个类，连数据库的时候实例一个。调用方法就这样。前提是这个装好了。 linux下具体可以参考：LINUX下手动安装PDO_MYSQL window下和例子（例子也可以在linux下使用）参考此文：PHP5中PDO的简单使用
+六。Zend
+ 准确地讲 Zend 框架究竟是什么呢？Zend 框架具有以下特征： 是基于 PHP 建立的。 是面向对象的。 使用 MVC 范例。 具有开放源码贡献者。 有贡献者负责保证他们的代码不是他人的知识产权。  通过建立 MVC 模式，Zend 框架的目标是使编程生活更加轻松，这不仅体现在通用领域，而且对您始终想要做的具体的事情也是如此，比如访问数据库或输出 PDF 文件。
+具体可参考：理解 Zend 框架，第 1 部分: 基础</description>
+    </item>
+    
+    <item>
+      <title>《PHP和MySQL程序设计》&amp; 《细说PHP》</title>
+      <link>https://leizhiyuan.github.io/2012/04/16/php%E5%92%8Cmysql%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E7%BB%86%E8%AF%B4php/</link>
+      <pubDate>Mon, 16 Apr 2012 22:04:41 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/16/php%E5%92%8Cmysql%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E7%BB%86%E8%AF%B4php/</guid>
+      <description>今天从早上到下午一使劲把PHP和MySQL程序设计 这本书读完了。因为昨天读完了head first的那本php书。所以看这本书难度也不是很大。先对这本书整体评价一下。
+　这本书我其实之前并没有在豆瓣上看看评论。豆瓣也不适合看这类专业书的评论。只是看到是第三版。说明这本书还是不错的。一般国内的专业书很少看到出过第二版的。。因为质量实在是太差了。选好书的一个方法就是看版本。。能出到第N版的都是有其可圈可点之处的。于是把这本书拿来就看。
+　书从头看到尾。我只能说大叔把代码贴的太多了。但是好事情就是代码给出了执行结果。这基本上方便了我直接看代码。文字部分跳过一些。但是，大叔，我也是人啊。 你把代码贴这么多。。函数给这么全。这也记不住啊。而且书也并不是有个循序渐进的过程。对比昨天看的head first的书。深深体会到一本好的入门书是多么重要啊。这本书并不如它的宣传那样适合新手读。很多地方都用了结果还没解释。到后面又开始解释。完全无条理。。最最重要的是错误太多了。。
+　不过。对我还是有很大收获的。因为看了这本书就发现head first的书确实是入门书。讲的比较浅。（但非常重要），一些框架。模板。类在这里面都有讨论。需要花些时间搞清楚。我已经记下来了。稍后准备阅读一下这些主题，
+　中午还用了一个多小时看完了《细说PHP》，不便于多说什么。。和《PHP和MySQL程序设计》的区别就是代码没有执行结果。讲的倒还算清楚。因为我看这本书不仔细。只是捡自己不会的去看。所以对本书评价不是太高。相比前一本书。这本书列的函数没那么多。都是比较实用的。。这点很好。但是看豆瓣和亚马逊到评分倒还挺高的。。令我情何以堪啊。 一会把一点知识点贴上来。记录一下今日的收获吧。。</description>
+    </item>
+    
+    <item>
+      <title>lamp开发环境简单搭建</title>
+      <link>https://leizhiyuan.github.io/2012/04/15/lamp%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%AE%80%E5%8D%95%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Sun, 15 Apr 2012 17:54:27 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/15/lamp%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%AE%80%E5%8D%95%E6%90%AD%E5%BB%BA/</guid>
+      <description>因为一些事情，要去学习php开发。所以呢。今天就先搭建一下php开发环境，其实windows下搭建相对比较简单，也有一键安装包。比如AppServ，但是因为考虑到以后的一些事情，于是还是采用LAMP开发环境。
+　我是用Ubuntu来做，本地刚好有Ubuntu的镜像。。虚拟里面来测试。首先就是在虚拟机里安装Ubuntu。这个不多说。大家都会。安装好以后。登陆进来。命令行或是图形界面都可以。
+　新版本的Ubuntu貌似是没了新立得管理器。所以使用命令来安装更简单。打开终端。切换到root。如果不能切换到root。参考此文。切换到root后。输入
+apt-get install apache2 mysql-server mysql-client php5 php5-gd php5-mysql 　回车后就开始自动下载了。大概几分钟后就会出现MySql的安装设置界面
+ 输入你想设置的mysql的登录密码。然后需要再输入一遍
+ ok。等会就安装完成了。。就这么简单。。 然后进行一些后续的设置
+　默认网站的目录在/usr/www.这个目录的权限如下图。 
+　为了以后方便。设置为777会更好一些。。执行如下命令： sudo chmod 777 /var/www 
+ 然后是启用 apache的 mod_rewrite 模块 输入如下命令： sudo a2enmod rewrite 然后继续输入如下命令来重启 Apache服务器： sudo /etc/init.d/apache2 restart Apache重启后我们可以测试一下，在 /var/www目录下新建文件 test.php，写入代码： &amp;lt;?php phpinfo(); ?&amp;gt; 保存，在地址栏输入 http://127.0.0.1/test.php 或 http://localhost/test.php ，如果正确出现了如下 php 配置信息则表明 LAMP Apache已经正常工作了 
+　还可以测试一下mysql是否正常。这个直接在终端下输入 mysql -u root -p 然后根据提示输入密码就出现如下的图  表示已经登录到mysql了。说明mysql可以了。可以继续输入 show databases;来显示所有的数据库。</description>
+    </item>
+    
+  </channel>
+</rss>

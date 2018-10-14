@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>[译]Unix sed实用教程第五篇–替换文件内容续</title>
+  <meta property="og:title" content="[译]Unix sed实用教程第五篇–替换文件内容续" />
+  <meta name="twitter:title" content="[译]Unix sed实用教程第五篇–替换文件内容续" />
+  <meta name="description" content="前面已经学习过替换文件内容了，本文我们学习一些更频繁使用的搜索替换操作.
+示例文件使用： $ cat file RE01:EMP1:25:2500 RE02:EMP2:26:2650 RE03:EMP3:24:3500 RE04:EMP4:27:2900 1.替换每行开始的两个字母，这里用XX来替换 $ sed &rsquo;s/^../XX/&rsquo; file XX01:EMP1:25:2500 XX02:EMP2:26:2650 XX03:EMP3:24:3500 XX04:EMP4:27:2900 s代表substitute，前面说过了，^用来匹配行开头，.表示任意一个字符，两个..就是你懂的，
+其实，不要^符号也是可以的，因为默认就是从开头开始匹配，如下也可以实现 sed &rsquo;s/../XX/&rsquo; file 2.删除每行开头的两个字符 $ sed &rsquo;s/^..//&rsquo; file 01:EMP1:25:2500 02:EMP2:26:2650 03:EMP3:24:3500 04:EMP4:27:2900 看到没有，后两个斜线之间没有内容，也就是用空字符来替换开头的两个字符，就实现了删除
+3.要是想删除每行最后的两个字符呢 $ sed &rsquo;s/..$//&rsquo; file RE01:EMP1:25:25 RE02:EMP2:26:26 RE03:EMP3:24:35 RE04:EMP4:27:29 再次强调，$在不同的情况下表示不同的意思，这里匹配行尾，有时候也匹配文件尾部
+4.向每行末尾添加内容 $ sed &rsquo;s/$/.Rs/&rsquo; file RE01:EMP1:25:2500.Rs RE02:EMP2:26:2650.Rs RE03:EMP3:24:3500.Rs RE04:EMP4:27:2900.Rs 这里，先匹配行尾，然后把&rdquo;.Rs&rdquo;添加到行尾
+5.在每行开头添加空格 $ sed &rsquo;s/^/ /&rsquo; file RE01:EMP1:25:Rs.2500 RE02:EMP2:26:Rs.2650 RE03:EMP3:24:Rs.3500 RE04:EMP4:27:Rs.2900 还记得前面说过的么，sed默认不影响原始文件，要是想更新原始文件，请加-i参数 $ sed -i &rsquo;s/^/ /&rsquo; file $ cat file RE01:EMP1:25:Rs.">
+  <meta property="og:description" content="前面已经学习过替换文件内容了，本文我们学习一些更频繁使用的搜索替换操作.
+示例文件使用： $ cat file RE01:EMP1:25:2500 RE02:EMP2:26:2650 RE03:EMP3:24:3500 RE04:EMP4:27:2900 1.替换每行开始的两个字母，这里用XX来替换 $ sed &rsquo;s/^../XX/&rsquo; file XX01:EMP1:25:2500 XX02:EMP2:26:2650 XX03:EMP3:24:3500 XX04:EMP4:27:2900 s代表substitute，前面说过了，^用来匹配行开头，.表示任意一个字符，两个..就是你懂的，
+其实，不要^符号也是可以的，因为默认就是从开头开始匹配，如下也可以实现 sed &rsquo;s/../XX/&rsquo; file 2.删除每行开头的两个字符 $ sed &rsquo;s/^..//&rsquo; file 01:EMP1:25:2500 02:EMP2:26:2650 03:EMP3:24:3500 04:EMP4:27:2900 看到没有，后两个斜线之间没有内容，也就是用空字符来替换开头的两个字符，就实现了删除
+3.要是想删除每行最后的两个字符呢 $ sed &rsquo;s/..$//&rsquo; file RE01:EMP1:25:25 RE02:EMP2:26:26 RE03:EMP3:24:35 RE04:EMP4:27:29 再次强调，$在不同的情况下表示不同的意思，这里匹配行尾，有时候也匹配文件尾部
+4.向每行末尾添加内容 $ sed &rsquo;s/$/.Rs/&rsquo; file RE01:EMP1:25:2500.Rs RE02:EMP2:26:2650.Rs RE03:EMP3:24:3500.Rs RE04:EMP4:27:2900.Rs 这里，先匹配行尾，然后把&rdquo;.Rs&rdquo;添加到行尾
+5.在每行开头添加空格 $ sed &rsquo;s/^/ /&rsquo; file RE01:EMP1:25:Rs.2500 RE02:EMP2:26:Rs.2650 RE03:EMP3:24:Rs.3500 RE04:EMP4:27:Rs.2900 还记得前面说过的么，sed默认不影响原始文件，要是想更新原始文件，请加-i参数 $ sed -i &rsquo;s/^/ /&rsquo; file $ cat file RE01:EMP1:25:Rs.">
+  <meta name="twitter:description" content="前面已经学习过替换文件内容了，本文我们学习一些更频繁使用的搜索替换操作.
+示例文件使用： $ cat file RE01:EMP1:25:2500 RE02:EMP2:26:2650 RE03:EMP3:24:3500 RE04:EMP4:27:2900 1.替换每行开始的两个字母，这里用XX来替换 $ sed &rsquo;s/^../XX/&rsquo; file …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2013/08/10/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E4%BA%94%E7%AF%87%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%BB%AD/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2013/08/10/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E4%BA%94%E7%AF%87%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%BB%AD/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>[译]Unix sed实用教程第五篇–替换文件内容续</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on August 10, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (185 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>前面已经学习过<a href="http://leaver.me/archives/3174.html">替换文件内容</a>了，本文我们学习一些更频繁使用的搜索替换操作.</p>
+
+<p>示例文件使用：
+<pre>$ cat file
+RE01:EMP1:25:2500
+RE02:EMP2:26:2650
+RE03:EMP3:24:3500
+RE04:EMP4:27:2900</pre>
+<span style="color: #3366ff;">1.替换每行开始的两个字母，这里用XX来替换</span>
+<pre>$ sed &rsquo;s/^../XX/&rsquo; file
+XX01:EMP1:25:2500
+XX02:EMP2:26:2650
+XX03:EMP3:24:3500
+XX04:EMP4:27:2900</pre>
+s代表substitute，前面说过了，^用来匹配行开头，.表示任意一个字符，两个..就是你懂的，</p>
+
+<p>其实，不要^符号也是可以的，因为默认就是从开头开始匹配，如下也可以实现
+<pre>sed &rsquo;s/../XX/&rsquo; file</pre>
+<span style="color: #3366ff;">2.删除每行开头的两个字符</span>
+<pre>$ sed &rsquo;s/^..//&rsquo; file
+01:EMP1:25:2500
+02:EMP2:26:2650
+03:EMP3:24:3500
+04:EMP4:27:2900</pre>
+看到没有，后两个斜线之间没有内容，也就是用空字符来替换开头的两个字符，就实现了删除</p>
+
+<p><span style="color: #3366ff;">3.要是想删除每行最后的两个字符呢</span>
+<pre>$ sed &rsquo;s/..$//&rsquo; file
+RE01:EMP1:25:25
+RE02:EMP2:26:26
+RE03:EMP3:24:35
+RE04:EMP4:27:29</pre>
+再次强调，$在不同的情况下表示不同的意思，这里匹配行尾，有时候也匹配文件尾部</p>
+
+<p><span style="color: #3366ff;">4.向每行末尾添加内容</span>
+<pre>$ sed &rsquo;s/$/.Rs/&rsquo; file
+RE01:EMP1:25:2500.Rs
+RE02:EMP2:26:2650.Rs
+RE03:EMP3:24:3500.Rs
+RE04:EMP4:27:2900.Rs</pre>
+这里，先匹配行尾，然后把&rdquo;.Rs&rdquo;添加到行尾</p>
+
+<p><span style="color: #3366ff;">5.在每行开头添加空格</span>
+<pre>$ sed &rsquo;s/^/   /&rsquo; file
+   RE01:EMP1:25:Rs.2500
+   RE02:EMP2:26:Rs.2650
+   RE03:EMP3:24:Rs.3500
+   RE04:EMP4:27:Rs.2900</pre>
+还记得前面说过的么，sed默认不影响原始文件，要是想更新原始文件，请加-i参数
+<pre>$ sed -i &rsquo;s/^/   /&rsquo; file
+$ cat file
+   RE01:EMP1:25:Rs.2500
+   RE02:EMP2:26:Rs.2650
+   RE03:EMP3:24:Rs.3500
+   RE04:EMP4:27:Rs.2900</pre>
+<span style="color: #3366ff;">6.移除开始的空格</span>
+<pre>$ sed &rsquo;s/^ *//&rsquo; file
+RE01:EMP1:25:2500
+RE02:EMP2:26:2650
+RE03:EMP3:24:3500
+RE04:EMP4:27:2900</pre>
+^匹配行首，然后是一个空格，然后是*，表示一个或多个空格嘛，然后替换为空字符</p>
+
+<p><span style="color: #3366ff;">7.移除行首和行尾的空格</span>
+<pre>$ sed &rsquo;s/^ *//; s/ *$//&rsquo; file
+RE01:EMP1:25:2500
+RE02:EMP2:26:2650
+RE03:EMP3:24:3500
+RE04:EMP4:27:2900</pre>
+不要怕，从分号处分开，就是两条命令啦，一个做行首的，一个做行尾的，前面说过的，可以使用-e参数来分开
+<pre>sed -e &rsquo;s/^ *//&rsquo; -e &rsquo;s/ <em>$//&rsquo; file</pre>
+<span style="color: #3366ff;">8.如何在一个字符串前后添加一些其他字符呢，可以用来字符串转义</span>
+<pre>$ sed &rsquo;s/.</em>/&rdquo;&amp;&rdquo;/&rsquo; file
+&ldquo;RE01:EMP1:25:Rs.2500&rdquo;
+&ldquo;RE02:EMP2:26:Rs.2650&rdquo;
+&ldquo;RE03:EMP3:24:Rs.3500&rdquo;
+&ldquo;RE04:EMP4:27:Rs.2900&rdquo;</pre>
+前两个斜线匹配了所有字符，也就是本行，然后后面两个斜线是替换的内容，注意里面的&amp;符号，之前也说过的，表示匹配到的字符，也就是本行了。所有就这样啦</p>
+
+<p><span style="color: #3366ff;">9.移除行首和行尾的一个字符（多个你也会的啦）</span>
+<pre>$ sed &rsquo;s/^.//;s/.$//&rsquo; file
+RE01:EMP1:25:2500
+RE02:EMP2:26:2650
+RE03:EMP3:24:3500
+RE04:EMP4:27:2900</pre>
+分开看看，你可以的</p>
+
+<p><span style="color: #3366ff;">10.删除第一个数字之前的所有字符</span>
+<pre>$ sed &rsquo;s/^[^0-9]<em>//&rsquo; file
+01:EMP1:25:2500
+02:EMP2:26:2650
+03:EMP3:24:3500
+04:EMP4:27:2900</pre>
+这条命令略复杂，请先回头看一下我们的示例文件，然后我们开始分析这个表达式，地一个^表示匹配行首，然后[^0-9]</em> 是一个典型的正则，匹配非数字的多个字符，简单说一下[0-9]表示匹配0,1,2,3,4,5,6,7,8,9任意一个字符，前面加个一个^，表示非，也就是不匹配这些数字，然后最后是一个*，表示匹配非数字的连续多个字符，有机会的话我会推荐一个正则系列，或者自己写一篇文章。这里就先这样理解吧。</p>
+
+<p>那猜猜这个是干嘛的
+<pre>sed &rsquo;s/^[^a-zA-Z]*//&rsquo; file</pre>
+是的，你猜对了，删除开头的所有非字母字符。</p>
+
+<p><span style="color: #3366ff;">11.删除行尾的数字</span>
+<pre>$ sed &rsquo;s/[0-9]*$//&rsquo; file
+RE01:EMP1:25:
+RE02:EMP2:26:
+RE03:EMP3:24:
+RE04:EMP4:27:</pre>
+看看前面的你就知道了</p>
+
+<p><span style="color: #3366ff;">12.通过分隔符得到文件最后一列</span>
+<pre>$ sed &rsquo;s/.<em>://&rsquo; file
+2500
+2650
+3500
+2900</pre>
+可能你你预想的不一样，是不是，你可能认为会是第一列被删除，其他的列都在，不对的，sed是很贪心的，当我们指定&rsquo;.</em>:&lsquo;时，他会一直向后查找，尽量匹配更多，所以，就匹配到最后一个列之前了</p>
+
+<p><span style="color: #3366ff;">13.转换整行字符为小写</span>
+<pre>$ sed &rsquo;s/.*/\L&amp;/&rsquo; file
+re01:emp1:25:rs.2500
+re02:emp2:26:rs.2650
+re03:emp3:24:rs.3500
+re04:emp4:27:rs.2900</pre>
+\L是sed的一个命令，Lowercase嘛。\L之后的内容被毁转换，而&amp;表示前面匹配道德内容，所以就实现了转换</p>
+
+<p><span style="color: #3366ff;">14.转换大写</span></p>
+
+<p>\U你懂的，Uppercase
+<pre>$ sed &rsquo;s/.*/\U&amp;/&rsquo; file
+RE01:EMP1:25:RS.2500
+RE02:EMP2:26:RS.2650
+RE03:EMP3:24:RS.3500
+RE04:EMP4:27:RS.2900</pre></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/linux/">linux</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/shell/">shell</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2013/08/10/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E5%9B%9B%E7%AF%87%E9%80%89%E6%8B%A9%E6%80%A7%E6%89%93%E5%8D%B0/" data-toggle="tooltip" data-placement="top" title="[译]Unix sed实用教程第四篇–选择性打印">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2013/08/10/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E5%85%AD%E7%AF%87%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9/" data-toggle="tooltip" data-placement="top" title="[译]Unix sed实用教程第六篇–删除文件内容">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

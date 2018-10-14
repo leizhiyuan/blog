@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>[译]Unix sed实用教程第三篇–读写文件</title>
+  <meta property="og:title" content="[译]Unix sed实用教程第三篇–读写文件" />
+  <meta name="twitter:title" content="[译]Unix sed实用教程第三篇–读写文件" />
+  <meta name="description" content="本文将展示如何将文件内容读入到sed输出，同时包含如何将一个文件的部分内容写入到另一文件
+一.文件读取
+假定有两个文件，file1和file2，内容分别如下： $ cat file1 1apple 1banana 1mango $ cat file2 2orange 2strawberry sed有两个选项用来读写文件 r filename : 读取filename指定的文件内容 w filename : 将内容写入filename指定的文件 看例子：
+1.在file1的每一行读完之后读取file2的内容 $ sed &lsquo;r file2&rsquo; file1 1apple 2orange 2strawberry 1banana 2orange 2strawberry 1mango 2orange 2strawberry r file2读取file2的所有内容，因此r之前没有知道那个行号或匹配，因此有了上面的输出，记住，sed的工作机制，每次读file1的一行，然后执行命令
+2.如何在读取了file1的第一行之后将file2读入 $ sed &lsquo;1r file2&rsquo; file1 1apple 2orange 2strawberry 1banana 1mango r前面加个1就行了
+3.当file1某行匹配了模式之后，读入file2 $ sed &lsquo;/banana/r file2&rsquo; file1 1apple 1banana 2orange 2strawberry 1mango sed逐行读入file1，然后判断该行是否匹配banana，如果匹配，就读入file2
+4.当file1读取完成后读入file2，其实就是合并两个文件 $ sed &lsquo;$r file2&rsquo; file1 1apple 1banana 1mango 2orange 2strawberry 这里只是演示一下，其实cat file1 file2就可以完成合并">
+  <meta property="og:description" content="本文将展示如何将文件内容读入到sed输出，同时包含如何将一个文件的部分内容写入到另一文件
+一.文件读取
+假定有两个文件，file1和file2，内容分别如下： $ cat file1 1apple 1banana 1mango $ cat file2 2orange 2strawberry sed有两个选项用来读写文件 r filename : 读取filename指定的文件内容 w filename : 将内容写入filename指定的文件 看例子：
+1.在file1的每一行读完之后读取file2的内容 $ sed &lsquo;r file2&rsquo; file1 1apple 2orange 2strawberry 1banana 2orange 2strawberry 1mango 2orange 2strawberry r file2读取file2的所有内容，因此r之前没有知道那个行号或匹配，因此有了上面的输出，记住，sed的工作机制，每次读file1的一行，然后执行命令
+2.如何在读取了file1的第一行之后将file2读入 $ sed &lsquo;1r file2&rsquo; file1 1apple 2orange 2strawberry 1banana 1mango r前面加个1就行了
+3.当file1某行匹配了模式之后，读入file2 $ sed &lsquo;/banana/r file2&rsquo; file1 1apple 1banana 2orange 2strawberry 1mango sed逐行读入file1，然后判断该行是否匹配banana，如果匹配，就读入file2
+4.当file1读取完成后读入file2，其实就是合并两个文件 $ sed &lsquo;$r file2&rsquo; file1 1apple 1banana 1mango 2orange 2strawberry 这里只是演示一下，其实cat file1 file2就可以完成合并">
+  <meta name="twitter:description" content="本文将展示如何将文件内容读入到sed输出，同时包含如何将一个文件的部分内容写入到另一文件
+一.文件读取
+假定有两个文件，file1和file2，内容分别如下： $ cat file1 1apple 1banana 1mango $ cat file2 2orange 2strawberry sed有两个选项用来读写文件 r filename : 读取filename指定的文件内容 w …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2013/08/09/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E4%B8%89%E7%AF%87%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2013/08/09/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E4%B8%89%E7%AF%87%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>[译]Unix sed实用教程第三篇–读写文件</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on August 9, 2013
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (133 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>本文将展示如何将文件内容读入到sed输出，同时包含如何将一个文件的部分内容写入到另一文件</p>
+
+<p><em><strong><span style="color: #3366ff;">一.文件读取</span></strong></em></p>
+
+<p>假定有两个文件，file1和file2，内容分别如下：
+<pre class="lang:default decode:true">$ cat file1
+1apple
+1banana
+1mango</pre>
+<pre class="lang:default decode:true">$ cat file2
+2orange
+2strawberry</pre>
+sed有两个选项用来读写文件
+<pre class="lang:default decode:true">r filename : 读取filename指定的文件内容
+w filename : 将内容写入filename指定的文件</pre>
+看例子：</p>
+
+<p><span style="color: #3366ff;">1.在file1的每一行读完之后读取file2的内容</span>
+<pre class="lang:default decode:true">$ sed &lsquo;r file2&rsquo; file1
+1apple
+2orange
+2strawberry
+1banana
+2orange
+2strawberry
+1mango
+2orange
+2strawberry</pre>
+r file2读取file2的所有内容，因此r之前没有知道那个行号或匹配，因此有了上面的输出，记住，sed的工作机制，每次读file1的一行，然后执行命令</p>
+
+<p><span style="color: #3366ff;">2.如何在读取了file1的第一行之后将file2读入</span>
+<pre class="lang:default decode:true">$ sed &lsquo;1r file2&rsquo; file1
+1apple
+2orange
+2strawberry
+1banana
+1mango</pre>
+r前面加个1就行了</p>
+
+<p><span style="color: #3366ff;">3.当file1某行匹配了模式之后，读入file2</span>
+<pre class="lang:default decode:true">$ sed &lsquo;/banana/r file2&rsquo; file1
+1apple
+1banana
+2orange
+2strawberry
+1mango</pre>
+sed逐行读入file1，然后判断该行是否匹配banana，如果匹配，就读入file2</p>
+
+<p><span style="color: #3366ff;">4.当file1读取完成后读入file2，其实就是合并两个文件</span>
+<pre class="lang:default decode:true">$ sed &lsquo;$r file2&rsquo; file1
+1apple
+1banana
+1mango
+2orange
+2strawberry</pre>
+这里只是演示一下，其实cat file1 file2就可以完成合并</p>
+
+<p><span style="color: #3366ff;"><em><strong>二.文件写入</strong></em></span></p>
+
+<p>使用一个file1文件，内容如下：
+<pre class="lang:default decode:true">$ cat file1
+apple
+banana
+mango
+orange
+strawberry</pre>
+<span style="color: #3366ff;"> 1.将file1的2-4行写入到file2</span>
+<pre class="lang:default decode:true">$ sed -n &lsquo;2,4w file2&rsquo; file1</pre>
+2,4w就是写2-4行的意思，那-n呢？默认情况下sed会把读入的文件处理的结果输出到标准输出，也就是终端，而为了不使用默认输出，-n就派上用场了，执行该命令终端不会有任何输出
+<pre class="lang:default decode:true">$ cat file2
+banana
+mango
+orange</pre>
+查看file2内容，发现已经写入成功了</p>
+
+<p><span style="color: #3366ff;">2.从第三行开始全部写入file2</span>
+<pre class="lang:default decode:true">$ sed -n &lsquo;3,$w file2&rsquo; file1</p>
+
+<p>$ cat file2
+mango
+orange
+strawberry</pre>
+就不多解释了</p>
+
+<p><span style="color: #3366ff;">3.如果是用正则呢？</span>
+<pre class="lang:default decode:true">$ sed -n &lsquo;/apple/,/mango/w file2&rsquo; file1</p>
+
+<p>$ cat file2
+apple
+banana
+mango</pre>
+该命令将逐行读入file1，然后判断该行是否匹配apple，如果匹配，则作为起始行，然后继续读入，判断是否匹配mango，如果是，则作为终止行，然后将中间的内容写入到file2</p>
+
+<p>&nbsp;</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/linux/">linux</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/shell/">shell</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2013/08/09/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9/" data-toggle="tooltip" data-placement="top" title="[译]Unix sed实用教程第二篇–替换文件内容">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2013/08/10/%E8%AF%91unix-sed%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B%E7%AC%AC%E5%9B%9B%E7%AF%87%E9%80%89%E6%8B%A9%E6%80%A7%E6%89%93%E5%8D%B0/" data-toggle="tooltip" data-placement="top" title="[译]Unix sed实用教程第四篇–选择性打印">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

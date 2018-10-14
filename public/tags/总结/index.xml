@@ -1,0 +1,1130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>总结 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E6%80%BB%E7%BB%93/</link>
+    <description>Recent content in 总结 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 16 Nov 2013 14:21:11 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E6%80%BB%E7%BB%93/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[藏]图文并茂详解Eclipse断点</title>
+      <link>https://leizhiyuan.github.io/2013/11/16/%E8%97%8F%E5%9B%BE%E6%96%87%E5%B9%B6%E8%8C%82%E8%AF%A6%E8%A7%A3eclipse%E6%96%AD%E7%82%B9/</link>
+      <pubDate>Sat, 16 Nov 2013 14:21:11 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/11/16/%E8%97%8F%E5%9B%BE%E6%96%87%E5%B9%B6%E8%8C%82%E8%AF%A6%E8%A7%A3eclipse%E6%96%AD%E7%82%B9/</guid>
+      <description>本文转自：http://my.oschina.net/colorleaf/blog/176569
+这个算说的比较清楚的了，虽然简单但是很有用。收藏一下。
+详解Eclipse断点
+大家肯定都用过Eclipse的调试的功能，在调试的过程中自然也无法避免要使用断点(breakpoint)，但不知是否对Eclipse中各类断点都有所了解。本篇图文并茂地介绍了Eclipse中全部类型的断点，及其设置，希望对大家有所帮助。(2011.11.20)
+1. 示例程序 BreakpointDemo是一个臆造的应用程序，只是为了便于讲解Eclipse中各类断点的使用罢了。其代码如下图所示，  BreakpointDemo主要包含两个方法： [1]setValue，该方法根据指定的次数(count)，对成员变量value进行赋值，值的范围为0-9的随机整数。 [2]printValue，该方法会调用setValue()对value进行赋值，并打印出value的值；但，如果value能被3整除，那么就会抛出IllegalArgumentException异常。
+2. Line Breakpoint Line Breakpoin是最简单的Eclipse断点，只要双击某行代码对应的左侧栏，就对该行设置上断点。此处，对第20行代码设置上Line Breakpoint，如下图所示，  可以为Line Breakpoint设置一个条件，那么当程序运行到该断点时，只有满足设定的条件，才会被中断。右键点击第20行的断点，选择&amp;rdquo;Breakpoint Properties&amp;hellip;&amp;rdquo;  在弹出的属性对话框中，勾选上&amp;rdquo;Conditional&amp;rdquo;，然后在文本框中输入&amp;rdquo;count % 2 == 0&amp;rdquo;。  该条件表示，当程序运行到第20行时，只有当count为偶数时，程序才会被中断。细心地话，你会发现该断点的图标发生了改变，多了一个问号。 
+3. Watchpoint Line Breakpoint关注于程序运行的&amp;rdquo;过程&amp;rdquo;，大家也常把使用这种断点的调试称为单步调试。但有时候，我们对程序的运行过程不太了解，可能也不太关心，不能确定在什么地方设置断点比较合适，而可能比较关注某个关键变量的变化或使用。此时，就可以为该变量设置一种特殊的断点&amp;ndash;Watchpoint。在此示例，我们最关心的就是成员变量value的值，那么就可以为它设置一个Watchpoint，双击第9行代码对应的左侧栏就可以了。  使用在2中所提及的方法，查看该断点的属性，  默认地，当该变量被访问或它的值被修改时，程序都会被中断。但在本示例中，只希望当对value的值进行修改时程序才需要被中断，所以取消对&amp;rdquo;Access&amp;rdquo;的勾选。  这时，我们会发现原来的Watchpoin图标也有变化了。 
+4. Method Breakpoint 与关注对某个变量的访问与修改一样，我们也可以关注程序对某个方法的调用情况，即，可以设置Method Breakpoint。在此处，设置针对方法setValue的Method Breakpoint。同理，双击第11行代码对应的左侧栏即可。  仍然要查看该断点的属性。默认地，只勾选了&amp;rdquo;Entry&amp;rdquo;，而没有勾选&amp;rdquo;Exit&amp;rdquo;。  这表示，当刚进入该方法(调用开始)时，程序会被中断；而，离开该方法(调用结束)时，程序并不会被中断。在本示例中，需要同时勾选上&amp;rdquo;Exit&amp;rdquo;。  点击OK之后，可以看到该断点的图标也有所改变。  根据这里的设置，当程序运行到第20行后会在第12行被中断，尽管这里没有显式的断点，但这就是setValue()方法的入口(Entry)。必须注意地是，程序在运行到第16行时不会被中断，尽管它看起来像是setValue()方法的出口(Exit)。实际上，程序会在第17行被中断，这里才是setValue()调用结束的地方。
+5. Exception Breakpoint 如果，我们期望某个特定异常发生时程序能够被中断，以方便查看当时程序所处的状态。通过设置Exception Breakpoint就能达到这一目标。本示例故意在第23行抛出了IllegalArgumentException异常，我们期望程序运行到此处时会被中断。但我们不直接为此行代码设置Line Breakpoint，而是为IllegalArgumentException设置Exception Breakpoint。设置Exception Breakpoint的方法与其它类型断点都不同，它不能通过双击左侧栏的方式在代码编辑器上直接进行设置。点击Breakpoints视图右上角形如Ji的图标，  会弹出如下所示的对话框，  在其中选中IllegalArgumentException，并点击OK，这时一个Exception Breakpoint就设置好了。  当value为3的倍数时，程序会在第23行被中断，这时我们就能使用调试器来看看value具体是等于0，3或6。 6.</description>
+    </item>
+    
+    <item>
+      <title>Maven实例入门-随机数生成</title>
+      <link>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90/</link>
+      <pubDate>Thu, 19 Sep 2013 20:50:23 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/09/19/maven%E5%AE%9E%E4%BE%8B%E5%85%A5%E9%97%A8-%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90/</guid>
+      <description>看了很多个例子，发现这个最好，译文中会带有我的一些了理解，有问题欢迎指出。
+0.Maven是什么？ Apache Maven，是一个软件（特别是Java软件）项目管理及自动构建工具，由Apache软件基金会所提供。基于项目对象模型（缩写：POM）概念，Maven利用一个中央信息片断能管理一个项目的构建、报告和文档等步骤。
+可以看到，核心就是项目管理和自动构建了，从例子中将会体会更深。本例创建一个随机数生成程序。
+1.从Maven模板创建项目 Maven的环境变量配置和java类似，直接添加系统变量MAVEN_HOME指向你下载的maven目录，然后将bin目录添加到path环境变量里。
+在命令行下，进入到你想存储项目的位置，比如，我自己有个叫work的目录，那么我就cd到work目录，然后按下面的格式输入命令 mvn archetype:generate -DgroupId={project-packaging} -DartifactId={project-name} -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 这是告诉Maven从**maven-archetype-quickstart **创建一个java项目，如果你这个参数不填，那么会列出一个列表，让你选择你想创建什么类型，比如web项目啊，啥的。
+友情提示：是不是太难记了..好吧，直接输入 mvn archetype:generate 根据向导来创建把。。
+比如 &amp;gt;mvn archetype:generate -DgroupId=com.mkyong -DartifactId=NumberGenerator -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false [INFO] Scanning for projects&amp;hellip; [INFO]
+[INFO] &amp;ndash; omitted for readability [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Using following parameters for creating project from Old (1.x) Archetype: maven-archetype-quickstart:1.0 [INFO] &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- [INFO] Parameter: groupId, Value: com.mkyong [INFO] Parameter: packageName, Value: com.mkyong [INFO] Parameter: package, Value: com.mkyong [INFO] Parameter: artifactId, Value: NumberGenerator [INFO] Parameter: basedir, Value: /Users/mkyong/Documents/workspace [INFO] Parameter: version, Value: 1.</description>
+    </item>
+    
+    <item>
+      <title>《软件测试》一点笔记</title>
+      <link>https://leizhiyuan.github.io/2013/07/26/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E4%B8%80%E7%82%B9%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Fri, 26 Jul 2013 08:24:54 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/07/26/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E4%B8%80%E7%82%B9%E7%AC%94%E8%AE%B0/</guid>
+      <description>这两天在读《软件测试》，书不厚，也就300页，有些观念还是挺诧异的，比如软件功能超出产品说明书也算作软件缺陷&amp;hellip;想想也能明白，只是猛然看到还是很惊异..简单记录一下读书过程中一些重要的笔记.留作备份.
+软件缺陷： 1.软件为达到产品说明书表明的功能 2.软件出现了产品说明书指明不会出现的错误. 3.软件功能超出产品说明书指明范围 4.软件未达到产品说明书虽未指出但应达到的目标 5.软件测试员认为软件难以理解，不易使用，运行速度缓慢，或者最终用户认为不好.   为什么会出现软件缺陷 最大的原因是产品说明书.而并非编程错误，第二大来源是设计方案  软件测试员的目标是发现软件缺陷，进可能早一些，确保其得到修复  完全测试程序是不可能的  不要总是报告坏消息，如果软件没有错误，就夸他们，和他们聊天  可靠性只是质量的一个方面，可能还包括功能齐全，技术制裁，包括色彩等  在设计和执行测试案例时，首先进行通过测试，在破坏性试验之前看看软件基本功能是否实现是很重要的，否则在正常使用软件时就会奇怪为什么有这么多软件缺陷  软件测试员必须测试程序的状态及其转换  动态白盒测试的目标是寻找软件缺陷，调试则是为了修复他们  静态黑盒子（审查设计说明书），动态黑盒子，静态白盒子，动态白盒子  进行白盒测试前，一定要根据说明书建立黑盒测试案例  语句覆盖是程序的所有语句执行，分支覆盖则是所有分支都被执行，条件覆盖则要保证IF语句的每一种可能性都被覆盖  优秀UI的七个要素： 1.符合标准和规范，2.灵活性，3.正确性。4.直观性。5.舒适性，6.实用性。7.一致性   测试存根用于自顶向下的测试，清查到低级模块或者把自己替换为低级模块，主要测试高级模块，外表和行为就像是低级模块</description>
+    </item>
+    
+    <item>
+      <title>一道笔试指针题目详解</title>
+      <link>https://leizhiyuan.github.io/2013/04/17/%E4%B8%80%E9%81%93%E7%AC%94%E8%AF%95%E6%8C%87%E9%92%88%E9%A2%98%E7%9B%AE%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Wed, 17 Apr 2013 08:34:39 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/04/17/%E4%B8%80%E9%81%93%E7%AC%94%E8%AF%95%E6%8C%87%E9%92%88%E9%A2%98%E7%9B%AE%E8%AF%A6%E8%A7%A3/</guid>
+      <description>看到本题是在搜狗某年的笔试题上,看也没人给出非常详细的讲解,直接给出了答案,我来尝试写一写,
+貌似本题来源自&amp;lt;The C Puzzle Book&amp;gt; ，搜狗也只是换了一下字符串，直接看题吧 #include &amp;lt;stdio.h&amp;gt; char *c[]={&amp;ldquo;ENTNG&amp;rdquo;, &amp;ldquo;NST&amp;rdquo;,&amp;ldquo;AMAZI&amp;rdquo;,&amp;ldquo;FIRBE&amp;rdquo;}; char** cp[]={c+3, c+2, c+1, c}; char *cpp= cp; int main() { printf(&amp;ldquo;%s&amp;rdquo;,++cpp); printf(&amp;ldquo;%s &amp;ldquo;,&amp;ndash;++cpp+3); printf(&amp;ldquo;%s&amp;rdquo;,*cpp[-2]+3); printf(&amp;ldquo;%s&amp;rdquo;,cpp[-1][-1]+1); } &amp;lt;span style=&amp;quot;font-family: Georgia, &#39;Times New Roman&#39;, &#39;Bitstream Charter&#39;, Times, serif; font-size: 13px; line-height: 19px;&amp;quot;&amp;gt;请写出程序的执行结果....&amp;lt;/span&amp;gt;
+首先从左到右看： char *c[]= { &amp;ldquo;ENTNG&amp;rdquo;, &amp;ldquo;NST&amp;rdquo;, &amp;ldquo;AMAZI&amp;rdquo;, &amp;ldquo;FIRBE&amp;rdquo; }; *c[] 是一个字符，因此，c[]是指向该字符，c就是一个数组（数组的内容为指向字符的指针），c已经被初始化了. char** cp[]={c+3, c+2, c+1, c}; 再看第二行，**cp[]是一个字符，*cp[]就是一个指针，指向该字符，cp[]就是一个指针，指向该指针，而cp就成为了指针数组，内容是指向字符的指针的指针。并且通过c的元素进行了初始化 char cpp= cp; 第三行，cpp是一个字符，**cpp指向该字符，*cpp指向该指针，cpp就指向该字符的指针的指针.
+然后我画一张图表示初始的情况看看
+
+然后对于下面的输出语句，通过操作符优先级使用括号来区分一下： ((++cpp)); 这个嘛，就是把cpp后移(注意cpp已经改变了)然后就指向了cp[1]，然后两次取其值即可得到AMAZI
+推导过程如下：
+ ++cpp -&amp;gt; cp[1] // cp[1] -&amp;gt; c+2 ++cpp = &amp;amp;cp[1] // &amp;amp;(c+2) *++cpp = *(&amp;amp;c+2) // c[2] **++cpp = &amp;amp;c[2] 然后看第二个 ((&amp;ndash;(*(++cpp))))+3; 加括号后如上，cpp再加一，就指向了cp[2],取一次值（也就是号）就变成了c[1],然后&amp;ndash;c[1]就指向了c[0],取值就成了c[0]的地址，然后地址+3，就是NG了 ((cpp[-2]))+3; 上面，cpp指向cp[2]了，然后呢，cpp[-2] 相当于*(cpp-2)，间接引用cp[2]，这样cpp[-2]就指向了cp[0]了，然后，就是FIRBE了,加3就是BE了</description>
+    </item>
+    
+    <item>
+      <title>C#中的Debug类</title>
+      <link>https://leizhiyuan.github.io/2013/03/01/c#%E4%B8%AD%E7%9A%84debug%E7%B1%BB/</link>
+      <pubDate>Fri, 01 Mar 2013 22:57:22 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/03/01/c#%E4%B8%AD%E7%9A%84debug%E7%B1%BB/</guid>
+      <description>位于命名空间System.Diagnostics中 1.Debug.Print方法
+Debug.Print(&#34;Today: {0}&#34;, DateTime.Today); 2.Debug.WriteLine方法
+Debug.WriteLine(&#34;Have a nice day&#34;); 3.TraceListener类
+DelimitedListTraceListener创建的时候指定一个文件名，当Flush调用的时候，就被覆写到文件里。
+TraceListener listener = new DelimitedListTraceListener(@&#34;C:\debugfile.txt&#34;); // Add listener. Debug.Listeners.Add(listener); // Write and flush. Debug.WriteLine(&#34;Welcome&#34;); Debug.Flush(); 4.Debug.Write和WriteIf以及WriteLineIf方法
+Debug.WriteLineIf(IsThursday(), &#34;Thursday&#34;);  第一个参数一个bool值，为真则输出。
+5.Debug.Assert方法
+Debug.Assert(value != -1, &#34;Value must never be -1.&#34;); 如果表达式为false，则输出。</description>
+    </item>
+    
+    <item>
+      <title>现代操作系统的调度</title>
+      <link>https://leizhiyuan.github.io/2013/01/24/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B0%83%E5%BA%A6/</link>
+      <pubDate>Thu, 24 Jan 2013 14:08:51 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/01/24/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B0%83%E5%BA%A6/</guid>
+      <description>这几天在读《现代操作系统》，想起当时学这门课的时候，并没有感觉那么爽，现在通读这本书，知识的过渡性和结构性令我叹服。感受操作系统的魅力吧。
+批处理系统中的调度： 1.先来先服务
+2.最短作业优先 只有在所有的作业都可以同时运行(也即同时到达)的情况下，最短作业优先算法才是最优化的。
+3.最短剩余时间优先-最短作业优先的抢占式版本。调度算法总是选择剩余时间最短的那个进程运行，注意，运行时间必须提前掌握，当一个新的作业到达时，其整个时间同当前进程的剩余时间做比较，如果更少。就运行新进程。可以使新的短作业获得良好的服务。
+交互式系统的调度 1.轮转调度。 最古老，最简单，最公平切使用最广，每个进程被分配一个时间片。如果进程在时间片结束之前阻塞或结束，则CPU立即切换。调度程序只是维护一张可运行进程列表，当进程用完它的时间片后，就被移到队列的末尾。时间片太短会导致进程切换过多，降低CPU效率，设置的太长又引起对短的交互请求的响应时间变长。通常20-50ms算合理。
+2.优先级调度 为了防止高优先级进程无休止的运行下去，可以在一个时钟中断里降低当前进程的优先级，如果这导致该进程的优先级低于次高优先级的进程，则切换或者也可以赋予每个进程一个时间片。可以和轮转调度一起工作，设置每个优先级上有多个进程。优先运行高优先级，并未高优先级上的进程按照轮转换着运行，如果高优先级没了。就进入到较低优先级。。。问题是如果不偶尔对优先级进行调整，则可能发生饥饿现象。
+3.多级队列 CTSS的设计者发现为CPU密集型进程设置较长的时间片比频繁的分给他们很短的时间片更为高效（减少了交换次数），但长时间的进程又会影响响应时间，方法是设立优先级类，最高优先级类里的进程运行1个时间片。次高运行2个。以此类推。当一个进程用完分配的时间片后，被移动到下一类。大致算法都是用于讨好交互用户和进程，而不惜牺牲后台进程 //故事：可以采用只要终端上有Enter键按下，就将该终端上的进程移到最高优先级类。假设当前进程急需交互，但是。一个人发现了。大家都开始用。。。理论和实际差异太大。。哈哈
+4.最短进程优先 这个很好立即，但难点在于如何找出最短的那个。一种方法是根据过去的行为推测。假设每个命令执行时间为T0，下一次运行时间为T1，则可以根据aT0+(1-a)T1来估计时间。。a被用来决定尽快忘掉老的运行时间还是记住它。这种算法成为老化算法。通常选a=1&amp;frasl;2
+5.保证调度 就是保证每个用户获得cpu的1/n，系统需要跟踪进程的cpu时间，他实际获得如果多于应该获得的。则转向实际获得小于应该获得的。
+6.彩票调度 保证调度很难实现，而彩票调度算法是向进程提供各种系统资源的彩票。一旦需要做出一项调度决策时，就随机抽出一张彩票。谁获得谁就上。比如视频服务器，可以为不同的帧速率提供不同的彩票。然后分配cpu
+7.公平分享调度 这个就考虑到了进程的所有者。需要我们定义公平的含义。是保证每个用户只占用的时间相等还是其他了。
+实时系统的调度： 可以分为硬实时和软实时，前者必须满足绝对的截止时间，后者则可以容忍一些。用户级线程系统是不知道的。用户级和内核级的差异主要在性能，用户级需少量的机器指令，而内核级需要很多的。过程。采用轮转和优先级调度更常见一些。
+//操作系统的大神们太强大了。哲学家进餐问题居然可以通过拿起左边叉子以后，检测右边是否可用，如果不可用，则等待一个随机的时间。这种方案是可行的。在极少的情况下不可用。。</description>
+    </item>
+    
+    <item>
+      <title>社工字典生成工具</title>
+      <link>https://leizhiyuan.github.io/2013/01/21/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Mon, 21 Jan 2013 08:23:13 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/01/21/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7/</guid>
+      <description>在家无聊写了这个工具，主要是为了防止自己这一直写随笔把本行忘了。。也熟悉一下代码。。暂时不放源代码了。以后改的好一点再发吧。
+作者：bystander
+博客：http://leaver.me
+转载请注明出处！
+
+&amp;nbsp;
+
+涉及到的东西有：
+1.C#隐藏TabControl的header部分，前面的文章有介绍
+2.获取窗体全部的某一类控件（这个无聊的话抽象出一个通用的方法出来，以后就可以直接用了） /// &amp;lt;summary&amp;gt; /// 获取所有的文本框控件 /// &amp;lt;/summary&amp;gt; /// &amp;lt;param name=&amp;ldquo;control&amp;rdquo;&amp;gt;&amp;lt;/param&amp;gt; /// &amp;lt;returns&amp;gt;&amp;lt;/returns&amp;gt; private List&amp;lt;TextBox&amp;gt; GetAllControls(Control control) { foreach (Control con in control.Controls) { if (con.Controls.Count &amp;gt; 0) { GetAllControls(con); } else if (con is TextBox) { tBoxList.Add(con as TextBox); } } return tBoxList; } &amp;nbsp;
+3.文件操作
+4.字符串操作
+反正很简单，主要就是写的时候思路要清晰。知道大部分使用密码的规则。处理一下生日格式。否则后面很麻烦。。相应的验证也比较少。界面依然毫无美感。。
+总结：
+现在发现在控件命名上越来越顺利了。自我感觉良好。后面慢慢的要开始尝试使用学到的一些新的技术点。。
+下载：社工字典生成工具</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第四部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/24/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/</link>
+      <pubDate>Mon, 24 Dec 2012 19:20:12 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/24/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/</guid>
+      <description>首先祝大家平安夜快乐。本篇介绍一些流行的JavaScript模式。为下一篇打基础
+使用/了解JavaScript的一个好处就是函数的高级用法。。在JavaScript里。函数仅仅是对象。他们可以有赋给他们的属性。而在C#中。我们不能做我们可以在JavaScript的全部事情。但是我们仍然可以做些事情。一个原因是JavaScript在函数里给变量以作用域。因此，不得不通过创建函数，大多数情况是匿名的来定位变量。而在C#中。通过使用块，通过花括号来创建作用域
+当然，换种方式来说。C#中，函数也会给变量作用域。通过使用Lambda表达式。我们通过花括号在其里面创建了一个变量。然而。我们也可以局部的创建作用域。
+我们来看看通过使用Lambda表达式可以实现一些在JavaScript里面有用的模式把。
+回调模式
+这个模式是个老的模式。事实上。回调模式从.net 的第一版就开始使用了。但是是以一种很简单的方式实现的。而现在。通过使用Lambda表达式。闭包，捕获变量等特性能够允许我们写出如下的代码来。
+void CreateTextBox() { var tb = new TextBox(); tb.IsReadOnly = true; tb.Text = &#34;Please wait ...&#34;; DoSomeStuff(() =&amp;gt; { tb.Text = string.Empty; tb.IsReadOnly = false; }); } void DoSomeStuff(Action callback) { // Do some stuff - asynchronous would be helpful ... callback(); } 对于JavaScript程序员会觉得这没什么啊。他们使用这个模式太多了。然而，它非常有用。因为我们可以使用参数作为Ajax相关事件的事件处理器（比如oncompleted，onsuccess），等等。如果你使用LINQ，那么你可能也会用到回调模式的一些东西。举个例子。LINQ的where子句将会在每一次迭代中回调你的查询语句。这只是回调函数的一个例子。在.net的世界里。事件如它名字所暗示的那样。通常是事件处理的首选方法。这有时候很像一个回调。他有两个参数。有一个特殊的关键字和一个类型模式（两个参数分别是sender和arguments，sender通常是object类型。Arguments通常继承自EventArgs） 可以通过+= 和-=给事件添加/删除事件处理程序。
+返回方法 和普通的方法比较。Lambda表达式也可以返回一个方法指针（就是一个委托实例），这意味着我们可以使用Lambda表达式创建/返回一个lambda表达式（或者今年仅是一个已定义好的方法的委托实例），大量的情况下。这个模式也很有用。首先看一下例子。
+Func&amp;lt;string, string&amp;gt; SayMyName(string language) { switch(language.ToLower()) { case &#34;fr&#34;: return name =&amp;gt; { return &#34;Je m&#39;appelle &#34;</description>
+    </item>
+    
+    <item>
+      <title>Lambda高手之路第一部分</title>
+      <link>https://leizhiyuan.github.io/2012/12/18/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</link>
+      <pubDate>Tue, 18 Dec 2012 19:38:42 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/12/18/lambda%E9%AB%98%E6%89%8B%E4%B9%8B%E8%B7%AF%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</guid>
+      <description>好长时间没发技术文章了，恰好看到一篇非常详细的Lambda文章。一边翻译一边学习。题目好像有点霸气。。
+介绍 Lambda表达式是使代码更加动态，易于扩展并且更加快速（看完本文你就知道原因了）的强有力的工具。也可以用来降低潜在的错误。同时可以利用静态输入和智能提示，就像VS里一样。
+&amp;nbsp;
+Lambda表达式在.net framework 3.5中提出来。并且在LINQ和ASP.NET MVC内部的一些技术中扮演了相当重要的角色。如果你考虑一下ASP.NET MVC中各类控件的实现。你就发现。奥妙就是他们大多使用了Lambda表达式。和Lambda表达式一起，使用Html扩展方法将会使得在后台创建模型成为可能。
+本文会讲到如下的知识。
+1.简短的介绍-Lambda表达式是什么，以及为什么和匿名方法不同（之前我们使用的） 2.走近Lambda表达式的性能-在哪些情况下比起标准方法，Lambda会提高/损失性能 3.深入-Lambda表达式在MSIL代码中是什么样 4.一些来自JS世界的模式映射到C#中 5.那些能够提高性能，并且代码看起来相当舒服的使用Lambda的情况。 6.一些我提出的新模式-当然有可能别人也提出来了。但这是我的思考结果。
+&amp;nbsp;
+如果你期望本文是一篇入门教程我可能要让你失望了，除非你真的很优秀并且很聪明，当然我不是这种人，所以我也想提前声明一下：为了读懂这篇文章你可能需要C#的一些高级知识，并且对C#比较了解。
+&amp;nbsp;
+你应该期望本文试着解释一些事情给你，也会解释一些有趣的问题，至少对我来说是这样的。最后我会展示一些实际的例子和模式，如我所说，Lambda表达式简化了很多情况。因此写显式的模式很有用。
+背景知识-什么是Lambda表达式 在C#1.0中，委托被提出了，它使得传递函数成为可能，一句话就是委托就是强类型的函数指针，但委托比指针更强大。一般传递一个函数需要如下几步。 1. 写一个委托（就像一个类）包含返回类型和参数类型 2. 使用委托作为某一个函数的参数类型，这样，该函数就可以接受和委托描述的有着相同签名的函数了 3. 将一个委托类型的函数传递给委托，创建一个委托实例。
+&amp;nbsp;
+如果听起来很复杂，确实本来很复杂，但这是必需的。（虽然不是造火箭，但是比你认为的要更多的代码），然而步骤三不是必需的，编译器会为你做他，但是步骤1和2却是必不可少的。
+&amp;nbsp;
+幸运的是C#2.0出现了泛型，现在我们也可以写泛型类，方法，更重要的是，泛型委托，然而，直到.net framework 3.5的时候。微软意识到实际上只有两种泛型委托（当然有一些不同的重载），会覆盖99%的使用情况：
+1.Action 没有任何输入参数，也没有输出参数。 2.Action&amp;lt;t1,…t16&amp;gt; 需要1-16个参数，没有输出参数。 3.Func&amp;lt;t1….t16,tout&amp;gt;需要0-16个参数，一个输出参数
+&amp;nbsp;
+Action和其对应的泛型版本（仅仅是一个动作，执行一些事情）返回void的时候。Func则可以返回最后一个参数指定的类型，通过这两个委托类型，我们事实上，大部分情况下。前面提到的三步中的第一部就不用写的。而第二步仍然需要。
+&amp;nbsp;
+那么如果我们想要运行代码的时候怎么做呢。在C#2.0中问题已经可以解决了。在这个版本里。我们可以创建委托方法，也就是一个匿名方法，然后这个语法一直未能流行起来，一个相当简化的匿名方法的版本类似这样： Func&amp;lt;double, double&amp;gt; square = delegate (double x) { return x * x; } 为了提高这种语法，欢迎来到Lambda表达式的国度。首先，这个Lambda名字怎么来的？事实上。来自于数学上的λ演算，更准确的说他是数学中一个正式的系统。用于通过变量绑定和替换来进行表达式计算，所以我们有0-N个输入参数和一个返回值，而在编程中，也可以没有返回值
+我们看一下Lambda表达式的一些例子 //编译器可以识别，然后就可以通过dummyLambda();来调用了 var dummyLambda = () =&amp;gt; { Console.WriteLine(&amp;ldquo;Hallo World from a Lambda expression!</description>
+    </item>
+    
+    <item>
+      <title>C#与.net 程序员面试笔记</title>
+      <link>https://leizhiyuan.github.io/2012/11/28/c#%E4%B8%8E.net-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 28 Nov 2012 07:13:03 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/28/c#%E4%B8%8E.net-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</guid>
+      <description>这是前几天读的书。书不难。10-13章跳过了。以后再看。
+以前，一个应用程序对应一个进程。并且为该进程指定虚拟内存，这样。进程会消耗很多资源，而且进程之间的通信业比较麻烦
+应用程序域可以理解为很多应用程序域都可以运行在同一个.net 进程中，降低内存消耗。同时不同的域之间隔离。安全有保证。通信也简单。
+程序集是指包含编译好的。面向.net framework的代码的逻辑单元。是完全自我描述性的一个逻辑单元。可以存储在多个文件中。简单来说，程序集就是几个彼此有关联程序文件的集合。程序集会包含程序的元数据。描述了对应代码中定义的方法和类型。
+装箱和拆箱：装箱转换是将一个值类型显式或隐式的转换成一个object对象。并且把这个对象转换成一个被该值类型应用的的接口类型。装箱后的object对象中的数据位于堆中。一般应该避免这种运算。 CLR将值类型的数据包裹到匿名的托管对象中，并将托管对象的引用放在Object类型的变量中。这个过程称为装箱。一般还是使用泛型来代替多好。
+值类型和引用类型：值类型实例通常分配在线程的栈上。并且不包含指向任何实例数据的指针。引用类型实例分配在托管堆上。变量保存了实例数据的内存引用。引用类型复制的话会导致引用同一个内存地址。
+C#预处理指令是在编译时调用的。预处理指令通知C#编译器要编译哪些代码。并指出如何处理特定的错误和异常。比如用在一些调试的时候。在顶部define一个debug 内部的测试部分写上测试用例。具体示例 //定义条件变量，注意条件变量的定义要在代码的最前面 #define Debug using System; namespace MyConsole { class Preprocesor { public static void Main() { //如果条件变量是Debug则运行单元调试代码，再运行功能模块返回运行结果 #if Debug Console.WriteLine(&amp;ldquo;运行单元测试模块&amp;rdquo;); Console.WriteLine(&amp;ldquo;运行功能模块，返回输出结果&amp;rdquo;); Console.Read(); #elif Release //如果条件变量是Release，则直接运行功能模块返回运行结果 Console.WriteLine(&amp;ldquo;运行功能模块，返回输出结果&amp;rdquo;); Console.Read(); #endif } } } C#中的指针 指针是一个无符号整数。是以当前系统寻址范围为取值范围的整数，CLR支持三种指针类型：受托管指针，非托管指针，非托管函数指针，受托管指针存储在堆上的托管块的引用，一个非托管指针就是传统意义上的指针，要放在unsafe中使用，C#中指针并不继承自Object
+String 是CLR的类型名称。而string是C#的关键字。其实C#编译时。。会增下如下代码： using string=System.String
+Array 到ArrayList的转换 1.使用ArrayList.Adapter(ArrayName) 可以直接得到ArrayList 2.使用遍历逐个添加到ArrayList里。 反向的话直接使用(Array[])ArrayListName.ToArray(typeof(Array));即可
+checked和unchecked语句用于控制整形算术运算和显示转换的溢出检查上下文。checked关键字用于对整型算术运算和转换显式启用溢出检查。因为默认情况下。如果表达式产生的值超过了类型的范围。则常数表达式将会导致编译时错误。而非常数表达式则在运行时计算并将引发异常。
+Asp.Net 中的Request对象主要功能是从客户端得到数据信息。他的属性比较多。比如UserLanguage，TotalBytes，Path，ApplicationPath
+ViewState是其的一个重要特性。用于把生成页面要用的状态值保存到一个隐藏域里。而不是用cookie/内存
+SOAP是Web Service应用的基础协议。他是一种轻量的简单的。基于xml的协议。被设计成在wEb上交换结构化的和固有的信息。 WSDL是一种用于描述web服务和说明如何与Web服务通信的XML语言。WSDL是一种符合XML语法规范的语言。它的设计完全基于Soap协议的实现。当一个WEb Service 服务器期望为使用者提供服务说明时，WSDL语言是最好的选择之一。
+&amp;nbsp;
+对企业的一些认识 
+千万不要说自己未来的打算是做到管理层，首先对管理层的定义不清楚。职务不清楚。所以保险的答案是我会努力钻研技术。使得能够达到业内的专业人士。深刻理解公司和行业
+我是为了找一份长期性的工作。我不喜欢频繁的跳槽我希望在这个利于发展自己的事业。深入学习。向专业人士请教。那。该我想问这个职务是长期的吗？
+不要把公司想像成慈善机构。工作的运作方面应该是尽可能快的实现盈利。树立品牌，赢得客户。我的工作就是完成企业的良性运作。
+如果被问到是否需要考虑看分数。应该说用人单位确实需要全面考量。也要考虑应聘者的工作积极性/服从性。实际经验/对开发的理解诶。这些也许比分数更有价值。</description>
+    </item>
+    
+    <item>
+      <title>C#模拟手工洗牌(附测试)</title>
+      <link>https://leizhiyuan.github.io/2012/11/25/c#%E6%A8%A1%E6%8B%9F%E6%89%8B%E5%B7%A5%E6%B4%97%E7%89%8C%E9%99%84%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Sun, 25 Nov 2012 09:24:20 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/25/c#%E6%A8%A1%E6%8B%9F%E6%89%8B%E5%B7%A5%E6%B4%97%E7%89%8C%E9%99%84%E6%B5%8B%E8%AF%95/</guid>
+      <description>洗牌大家都知道，代码实现最广泛的一种就是产生两个随机数，然后交换这两个随机数为下标的牌，但是这种的洗牌并不能保证同概率，你可以参考本文做一些测试，本文代码没啥可说的。我写出了非常详细的注释
+ps:刚开始写那个随机数的时候，我随便给了个种子2012.。结果你懂的。。意外意外。这个全局的result数组让我很疼，代码有什么可以改进的，欢迎留言指出。不胜感激。 /*Author:Bystander *Blog:http://leaver.me Date:2012/11/24/ using System;
+class Program { static int[,] result; static void Main() { //初始牌的顺序，我只测试10张牌的情况 char[] _arr = { &amp;lsquo;A&amp;rsquo;, &amp;lsquo;B&amp;rsquo;, &amp;lsquo;C&amp;rsquo;, &amp;rsquo;D&amp;rsquo;, &amp;lsquo;E&amp;rsquo;, &amp;lsquo;F&amp;rsquo;, &amp;lsquo;G&amp;rsquo;, &amp;lsquo;H&amp;rsquo;, &amp;lsquo;I&amp;rsquo;, &amp;lsquo;J&amp;rsquo; }; result = new int[_arr.Length, _arr.Length]; //进行1000次，来统计结果的数字.
+for (int i = 0; i &amp;amp;lt; 10000; i++) { ShuffleArray_Manual(_arr); SumCount(_arr); } int j = 0; foreach (int i in result) { if (j % result.GetLength(1) == 0) { Console.WriteLine(); } Console.</description>
+    </item>
+    
+    <item>
+      <title>解决win8无法上网的问题</title>
+      <link>https://leizhiyuan.github.io/2012/11/21/%E8%A7%A3%E5%86%B3win8%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 21 Nov 2012 16:29:20 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/11/21/%E8%A7%A3%E5%86%B3win8%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>昨天晚上@虎振兴同学装了win8.。结果悲剧了。症状为连接宽带可以连接上。上qq也正常。但是。只要打开网页。就会自动断网。再连接就会提示651错误了。网上大多说是驱动不兼容。但是解决的方法大部分是不对的。下面结合网上的给大家说一说。。
+网卡驱动目测是都是美满公司，也就是Marvell 的Yukon系列网卡驱动的问题。首先下载一个旧版本的驱动（32位下载/64位下载） 然后按下图操作，第一步是打开计算机-管理。。各种姿势只要打开了计算机管理就可以了。  在这里稍微记一下这个名字。Marvell Yukon 88exxxxx PCI-E Fast Ethernet..  找到网络适配器，右键更新驱动程序。    注意记下兼容的网卡。名字和第二步的差不多的那个，点击从磁盘安装，选择下载后驱动的解压的安装文件，如图  到这一步以后，点击打开，可能会出现一个驱动列表。这是时候选择一个和兼容列表名字一样的。88e这部分不一样。如果找不到，也可以找类似的，比如途中给出的后两位是39.我装的是40也没问题。这个是驱动的历史版本。然后就可以了 
+最后。提醒各位童鞋。win8整体还是很不错的。不过呢。对于我来说。metro界面和正常的界面的傻傻分不清楚的模式。令我很是蛋疼。。所以暂时没有考虑换到win8.。。</description>
+    </item>
+    
+    <item>
+      <title>模拟Office2010文件菜单的TabControl模板</title>
+      <link>https://leizhiyuan.github.io/2012/10/17/%E6%A8%A1%E6%8B%9Foffice2010%E6%96%87%E4%BB%B6%E8%8F%9C%E5%8D%95%E7%9A%84tabcontrol%E6%A8%A1%E6%9D%BF/</link>
+      <pubDate>Wed, 17 Oct 2012 10:00:24 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/17/%E6%A8%A1%E6%8B%9Foffice2010%E6%96%87%E4%BB%B6%E8%8F%9C%E5%8D%95%E7%9A%84tabcontrol%E6%A8%A1%E6%9D%BF/</guid>
+      <description>这是Office2010中的文件菜单点开后的效果。本文我将以强大的WPF来实现类似的效果。希望你能有所收获。而不是只拷贝/粘贴代码而已。
+&amp;nbsp;
+开始之前。先把TabControl找个地方放着。 &amp;lt;Window x:Class=&amp;ldquo;TestClient.MainWindow&amp;rdquo;
+xmlns=&amp;#34;http://schemas.microsoft.com/winfx/2006/xaml/presentation&amp;#34; xmlns:x=&amp;#34;http://schemas.microsoft.com/winfx/2006/xaml&amp;#34; Title=&amp;#34;MainWindow&amp;#34; Height=&amp;#34;350&amp;#34; Width=&amp;#34;525&amp;#34;&amp;amp;gt; &amp;amp;lt;TabControl Name=&amp;#34;tabSteps&amp;#34;&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Info&amp;#34; IsSelected=&amp;#34;True&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Info content&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Recent&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Recent content tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;New&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;New content tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Print&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Print content tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Save &amp;amp;amp;amp; Send&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Save &amp;amp;amp;amp; send content tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;TabItem Header=&amp;#34;Help&amp;#34;&amp;amp;gt; &amp;amp;lt;TextBlock&amp;amp;gt;Help tab&amp;amp;lt;/TextBlock&amp;amp;gt; &amp;amp;lt;/TabItem&amp;amp;gt; &amp;amp;lt;/TabControl&amp;amp;gt; &amp;lt;/Window&amp;gt; &amp;nbsp;
+然后会大概是这个效果
+
+为了改变TabControl的显示效果。我们使用模板机制，我们把模板写进一个资源字典里。这样就可以重用了。添加一个资源字典的步骤如下
+右键点击工程-添加-资源字典
+然后在资源字典里添加一些代码。 &amp;lt;ControlTemplate x:Key=&amp;ldquo;OfficeTabControl&amp;rdquo; TargetType=&amp;ldquo;{x:Type TabControl}&amp;rdquo;&amp;gt;
+&amp;amp;lt;Grid&amp;amp;gt; &amp;amp;lt;Grid.ColumnDefinitions&amp;amp;gt; &amp;amp;lt;ColumnDefinition Width=&amp;#34;160&amp;#34; /&amp;amp;gt; &amp;amp;lt;ColumnDefinition/&amp;amp;gt; &amp;amp;lt;/Grid.</description>
+    </item>
+    
+    <item>
+      <title>JavaCC入门教程及相关资源</title>
+      <link>https://leizhiyuan.github.io/2012/09/27/javacc%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B%E5%8F%8A%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90/</link>
+      <pubDate>Thu, 27 Sep 2012 15:55:32 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/27/javacc%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B%E5%8F%8A%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90/</guid>
+      <description>今天下午翻译了一篇简单的文章后。就去看JavaCC的东西了。。然后就找到了一篇入门教程
+然后之前我是找到了一篇翻译过来的的某熊的战略储备基地
+从头到尾读了一遍英文的。感觉还是英文的写的要好一些。建议对照着翻译看英文。JavaCC也就那么回事。。
+同时在在这目测百慕大群岛的什么工程与应用科学学院找到了一些其他的文档。其中一篇是JavaCC-FAQ很好。基本上有关JavaCC的问题都有解释。
+在FAQ里，看到了一个关于JJTree的介绍，写的不错。建议看看。
+还有一个是国外某学校的编译原理课程的ppt下载，好象是以JavaCC作为工具的。还没认真看。
+还有一篇JavaCC 研究与应用 ，写的平常。不过是中文版的。
+最后。千万不要忘了官方文档。也包括你下载的JavaCC里面的Demo。。</description>
+    </item>
+    
+    <item>
+      <title>WPF毛玻璃效果Demo和一个问题</title>
+      <link>https://leizhiyuan.github.io/2012/09/24/wpf%E6%AF%9B%E7%8E%BB%E7%92%83%E6%95%88%E6%9E%9Cdemo%E5%92%8C%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 24 Sep 2012 08:04:25 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/24/wpf%E6%AF%9B%E7%8E%BB%E7%92%83%E6%95%88%E6%9E%9Cdemo%E5%92%8C%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/</guid>
+      <description>那天看到WPF书上讲的毛玻璃效果，就去找了下效果。。忘了例子是从哪发现得了。。先看下效果，
+ 但是这不是重点，作者给出的代码有一个设计时错误。。错误提示为： 无法将类型为“Microsoft.Expression.Platform.WPF.InstanceBuilders.WindowInstance”的对象强制转换为类型“System.Windows.Window”，，
+　中文搜了一下。没有发现有人解决过。目测。。。然后又拿英文搜了下。几经辗转。。终于是解决了。。原文在Unable to cast XAML error。其实就是将原作者这个函数修改如下的
+public static void OnIsEnabledChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args) {
+if ((bool)args.NewValue == true) { Window wnd = obj as Window; if (wnd != null) wnd.Loaded += new RoutedEventHandler(wnd_Loaded); } }&amp;lt;/pre&amp;gt;  　也就是验证了一下转换是否成功。
+下载：修改后的RGSamples</description>
+    </item>
+    
+    <item>
+      <title>一个可定制的WPF任务对话框</title>
+      <link>https://leizhiyuan.github.io/2012/09/24/%E4%B8%80%E4%B8%AA%E5%8F%AF%E5%AE%9A%E5%88%B6%E7%9A%84wpf%E4%BB%BB%E5%8A%A1%E5%AF%B9%E8%AF%9D%E6%A1%86/</link>
+      <pubDate>Mon, 24 Sep 2012 08:03:17 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/24/%E4%B8%80%E4%B8%AA%E5%8F%AF%E5%AE%9A%E5%88%B6%E7%9A%84wpf%E4%BB%BB%E5%8A%A1%E5%AF%B9%E8%AF%9D%E6%A1%86/</guid>
+      <description>今天实在看WPF揭秘的时候看到TaskDialog这个控件的。然后就去找了一下开源的代码。在codeproject上发现了这个，非常给力。。另外codeproject改版后很漂亮哦。 
+介绍： 这是用WPF实现Vista上TaskDialog效果的代码。
+Messagbox消息框 通过调用重写的静态Show方法。TaskDialog就会表现的像一个Messagebox。他有四个文本类型的属性：Header（头部）, Content（内容）, Detail（更多）, 和 Footer（底部），其实Detail是一个折叠的区域， 而Header和Footer还有一个icon属性（HeaderIcon和FooterIcon），除此之外，Header还有Background（背景）和Foreground（前景）属性
+// TaskDialog.Show方法签名 public static TaskDialogResult Show( string title, string header, string content, string detail, string footer, TaskDialogButton button, TaskDialogResult defaultResult, TaskDialogIcon headerIcon, TaskDialogIcon footerIcon, Brush headerBackground, Brush headerForeground) // TaskDialog.Show 方法的一个例子 TaskDialog.Show(&#34;Task Dialog 测试&#34;, &#34;消息框的标题文字&#34;, &#34;消息框的内容部分. &#34; + &#34; 可以自适应内容.&#34;, &#34;消息框的细节部分 &#34; + &#34;可以自适应内容&#34;, &#34;消息框的底部.&#34;, TaskDialogButton.Ok, TaskDialogResult.None, TaskDialogIcon.Information, TaskDialogIcon.Shield, Brushes.White, Brushes.Navy); 定制TaskDialog 使用静态的Show方法。Header, Content, Detail, 和Footer 就限制了只能传递字符串作为值了。 为了定义这个对话框，你先创建TaskDialog类的一个对象，然后分别设置一下各个属性，最后调用Show方法就可以了</description>
+    </item>
+    
+    <item>
+      <title>《商务智能与数据挖掘-谢邦昌》第二章读书笔记</title>
+      <link>https://leizhiyuan.github.io/2012/09/20/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Thu, 20 Sep 2012 08:47:36 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/20/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>2.数据仓库
+　数据仓库名字上来看是很好理解的。他与传统的数据库的不同在于。传统的数据库是未经整理后的一大堆数据集。而数据仓库是从数据库中萃取出来。经过整理，规划，建构而成的一个有系统的数据库的子集合。
+2.1数据仓库特点：
+　数据仓库的四个特点。
+　1.面向主题（Subject Orient）。数据建立的着重点就是在于以重要的主题组件作为核心。作为建构的方向。数据需求者只要把谣言觉得相关主题数据，从数据库中攫取，整合之后就可以做研究之用。
+　2.整合性（Integrated）各应用系统的数据需经过整合。以便利执行相关分析操作
+　3.长期性（Time Variance） 为了执行趋势的分析。数据仓库系统需保留1-10年的历史数据。这与数据库为日常性的数据有所不同。
+　4.稳定性（Non-Volatile）数据库可以被随时修改，但数据仓库基本上不会大动。只有内部人员会定期修改。但频率不会太多。也不允许用户做更新的动作。
+　由于以上的几个特点。数据仓库必须通过一连串的程序才可建立。而不是说即买即用。。
+2.2数据仓库架构
+　数据源-&amp;gt;整体数据仓库-&amp;gt;部门性数据仓库-&amp;gt;查询工具-&amp;gt;终端用户
+　数据仓库的建设过程：
+　专业顾问通过与企业进行需求访谈，建立数据仓库的model，然后将企业内各种数据整合到数据库中，并建立前端分析数据的工具以及管理工具，这样的过程即为建立数据仓库的基本过程。
+　1.设计（Design） 即数据仓库的数据Model设计，这部分是最重要的，若Model设计的不够周全或布里希那个，不管之后的报表设计如何精美，也可能跑出错误的信息。这也是需要有经验的专业顾问建立数据仓库的一个重要原因。
+　2.整合（Integrate）即数据的整合转换过程，包含数据解释（Data Extraction） ，数据转换（Data Transformation）数据清理（Data Cleaning），数据加载（Data Loading）将各种来源的数据整理，转换并加载数据仓库中，程序编写较为繁杂，自动化处理困难，经常需要人工参与操作，大约占掉该项目60-70%的时间和人力。
+　3.可视化（Visualize）即前端呈现给用户看的形式，例如数据挖掘（Data Mining） 即OLAP工具，用以呈现分析过的数据形式。
+　4.调度（Administration）为管理的工具。
+2.3建立数据仓库的原因和目的
+　提高企业的竞争能力，降低成本，提高客户满意度。创造利润。</description>
+    </item>
+    
+    <item>
+      <title>通过Windows应用进行服务寄宿示例代码</title>
+      <link>https://leizhiyuan.github.io/2012/09/09/%E9%80%9A%E8%BF%87windows%E5%BA%94%E7%94%A8%E8%BF%9B%E8%A1%8C%E6%9C%8D%E5%8A%A1%E5%AF%84%E5%AE%BF%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/</link>
+      <pubDate>Sun, 09 Sep 2012 19:28:44 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/09/%E9%80%9A%E8%BF%87windows%E5%BA%94%E7%94%A8%E8%BF%9B%E8%A1%8C%E6%9C%8D%E5%8A%A1%E5%AF%84%E5%AE%BF%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/</guid>
+      <description>此程序部分源码来自《WCF技术剖析》。。但是。这本书上讲的非常不清楚。有些很小的地方没讲。。导致出现很多问题。。。比如ListView需要先添加列。默认的config需要删除。等等。。
+最终是成功了。 
+源码下载：Lazy.FormDemo</description>
+    </item>
+    
+    <item>
+      <title>WCF读书笔记(3)</title>
+      <link>https://leizhiyuan.github.io/2012/09/08/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/</link>
+      <pubDate>Sat, 08 Sep 2012 08:07:37 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/08/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/</guid>
+      <description>WCF的四大行为
+　契约行为（Contract Behavior），操作行为（Operation Behavior），服务行为（Service Behavior），终结点行为（Endpoint Behavior）。
+　如果把WCF看做是消息处理，对象激活与操作执行的管道，那么我们可以通过相应的行为来改变这个管道中某个环节的工作方式。比如加个密啊。什么的。
+单向模式（One-Way）
+　单向模式不需要服务器执行后返回一个回复，多用于不要求服务执行后返回一个回复，并且能够容忍日志记录的失败，只有返回类型为void的才允许设置为true，同理，ref和out参数作为另一种类型的输出。也是不允许的。
+WCF的三种异步操作
+　1.异步信道调用：客户端可以通过代理对象进行异步调用信道。
+　2.One-Way消息交换：单向的消息交换一旦抵达传输层，马上返回，从而实现异步
+　3.异步服务实现：服务端在具体实现服务操作的时候。采用异步调用的方式。
+序列化：
+　XMLSerializer序列化对象时，必须是公有，可读可写的属性，才能序列化。
+WCF的四大契约
+　服务契约（Service Contract），数据契约（Data Contract），消息契约（Message Contract），错误契约（Fault Contract）
+信道：
+　信道是为了便利WCF中客户端和服务的通信来设置的。ServiceHost为每个断点创建一个信道侦听器，侦听器产生通信通道，代理则产生一个信道发生器，发生器产生客户端的信道，两种信道相互兼容并且能有效处理之间的信息。
+　实际上，通信信道是有一个分层的信道栈组成-栈中的每一个信道都在消息处理过程中负责实施一个特定动作，信道栈包含一个传输信道，一个消息编码信道，和任意数量的消息处理信道，绑定则将决定了哪些信道留在信道栈中。当行为穿过信道栈时，消息处理方式将会有所改变。。</description>
+    </item>
+    
+    <item>
+      <title>WCF双工通信示例</title>
+      <link>https://leizhiyuan.github.io/2012/09/07/wcf%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Fri, 07 Sep 2012 22:22:30 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/07/wcf%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1%E7%A4%BA%E4%BE%8B/</guid>
+      <description>这两天在看WCF的书籍。就参考书上的代码写了这个例子。不得不说。书上有些错误的地方。。运行明显报错。改了一下。顺利通过。
+　先运行Hosting。然后运行Client。可以看到效果。不过不知道为什么会有如下的一个提示：
+　目标程序集不包含服务类型。可能需要调整此程序集的代码访问安全策略。
+　点击确定后并不影响程序运行。。但是也是个问题。。找了一下解决方法。都没有解决。。可能是我新建契约服务的时候，删掉了默认的IService配置。
+//update:此问题解决了。是因为默认的app.config太多。对于典型的四层结构。需要删除契约和服务中的app.config。。
+　暂时先放着吧。
+　运行截图：
+　
+　示例代码下载：Lazy.Duplex</description>
+    </item>
+    
+    <item>
+      <title>WCF读书笔记(2)</title>
+      <link>https://leizhiyuan.github.io/2012/09/06/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B02/</link>
+      <pubDate>Thu, 06 Sep 2012 22:09:48 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/06/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B02/</guid>
+      <description>信道形状（Channel Shape）
+　用来表述不同的消息交换模式对消息交换双方信道（信息交换的管道）的不同要求，有什么IOutputChannel IReplyChannel IDuplexChannel之类的。。
+　对于IReplyChannel，服务器返回一个RequestContext类型，作为请求和回复之间的一道桥梁，可以获取也可以返回消息。
+会话信道（Session Channel）
+　从状态保持的角度，信道可以分为两种类型，Datagram Channel和Session Channel，前者不和客户端绑定，后者可以识别客户端。
+　对于WCF的信道层来说，信道管理器在客户端和服务端扮演不同的角色。服务端的信道管理器用于监听来自客户端的请求，而客户端的信道仅仅是单纯创建用于请求发送和回复接收的信道，因此服务端的消息管理器又称为信道监听器（Channel Listener），客户端的信道管理器则称之为信道工厂（Channel Factory）
+绑定元素（Binding Element）
+　构成一个绑定对象的元素，绑定实现了通信的所有细节，通过创建信道栈实现对消息的交换，系统绑定是指服务于某种类型场景的绑定元素的有序集合。 包括什么BaseHttpBinding之类的。
+　一个程序集包括元数据，中间语言代码，和资源。程序集已经加载，将一直保存在内存中，直到应用程序域卸载。最好摒弃添加服务引用的服务调用方式，而是直接将包含服务契约的程序集部署到客户端。客户端以直接创建代理的方式进行调用。
+　WCF可以看成是适配器，是CLR类型和XML两个不同世界的纽带。
+　依赖倒置原则：即抽象不应该依赖细节，细节应该依赖于抽象；即要针对接口编程，不要对实现编程。高层模块不应该依赖低层模块。两个都应该依赖抽象。
+　契约关心的是我能做到。而不在于我如何做到。
+封送（Marshaling）
+　解决跨应用程序域对象访问的问题，需要采用一种特别的机制，那就是封送。分为按值封送和按引用封送
+　按值封送实现了跨应用程序域的数据共享
+　按引用封送则实现了跨应用程序域的远程调用。
+　如果一个程序员频繁的使用复制粘贴编程。那就意味着设计需要重构</description>
+    </item>
+    
+    <item>
+      <title>WCF读书笔记(1)</title>
+      <link>https://leizhiyuan.github.io/2012/09/05/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B01/</link>
+      <pubDate>Wed, 05 Sep 2012 19:29:14 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/05/wcf%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B01/</guid>
+      <description>信道的分类：Transport Channel 信道
+　1.Message Encording Channel　2.Protocol Channel
+信道管理器（Channel Manager）,信道管理器用于信道栈的创建和生命周期的管理
+　1.ChannelListener　2.ChannelFactory
+WCF服务调用的两种典型方式
+　1.是借助代码生成工具svcUtil.exe导入元数据生成客户端代码和配置，添加服务引用采用的就是这种方式，工具会创建一个继承自Client的服务代理类型。
+　2.是通过ChannelFactory直接创建服务代理对象进行服务调用。
+　如果客户端已经进行了终结点的配置
+　那么通过信道工厂进行调用的代码大致如下：　using(Channel&amp;lt;IService&amp;gt; channelFactory=new ChannelFactory&amp;lt;IService&amp;gt;(&#34;Service&#34;))　{　IService ise=channelFactory.CreateChannel();　using(ise as IDisposable)　{ ise.MethodName(); }　} 　WCF处理的是跨应用程序域，跨机器，跨网络的通信，所以WCF大多数时间进行网络传俗这样的IO操作，IO绑定的操作是采用异步编程（APM【Asynchronous Programming Model】）
+消息交换模式MEP（Message Exchange Pattern）
+　MEP定义了参与者进行消息交换的模板，代表一系列的模板，他们定了消息的发送者和接收者，相互进行消息传递的次序，比较典型的三种
+　1.Datagram 数据包模式，嘴尖的SEND/FORGET模式也叫One-Way模式，基于从一个源到另一个或多个目的地的单向消息传输，并不期待回复
+　消息报的发送可以分成三个模式，分别是单目的地模式，多投模式，广播模式。 依次接受方更强大。。
+　2.Request/Reply模式
+　使用最多的一种模式，请求期待回复。采用同步通信方式，但也可用于异步通信
+　3.Duplex 双工模式
+　双方可以互发消息，实现服务器回调客户端。订阅/发布是其中一种典型的实例，TCP可以提供原生的双工通信，WCF通过WSDualHttpBinding实现了基于Http的双工通信，实际上是采用两个HTTP通道实现</description>
+    </item>
+    
+    <item>
+      <title>超时时间已到，但是尚未从池中获取连接</title>
+      <link>https://leizhiyuan.github.io/2012/09/03/%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E5%B7%B2%E5%88%B0%E4%BD%86%E6%98%AF%E5%B0%9A%E6%9C%AA%E4%BB%8E%E6%B1%A0%E4%B8%AD%E8%8E%B7%E5%8F%96%E8%BF%9E%E6%8E%A5/</link>
+      <pubDate>Mon, 03 Sep 2012 08:47:31 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/09/03/%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E5%B7%B2%E5%88%B0%E4%BD%86%E6%98%AF%E5%B0%9A%E6%9C%AA%E4%BB%8E%E6%B1%A0%E4%B8%AD%E8%8E%B7%E5%8F%96%E8%BF%9E%E6%8E%A5/</guid>
+      <description>前段时间数据库的时候，出现这个问题。一般是读到20多万条的时候。会出现这个问题。
+　找了一下。主要是这两个问题：
+　一、看所有open的连接是否都close了。
+　二、如果访问量很大，加上Max Pool Size=512这一句，当然这是要以损失系统性能为代价的！
+　我查了一下。数据库连接所有的open都关闭了。 max pool size也确实加上了。但是。问题依旧。。
+　哦，还有的说在数据库连接字串中添加Connect Timeout=500，也就是设置连接超时更长一些。问题依旧。。
+　后来看到一篇文章中说：
+　DataReader是独占连接 的，每个DataReader都要占用一个连接。当然这个情况是偶尔出现的，所以会很长时间出现一次，因为只有同时有超过连接池最大连接数量的并发操作才 会发生。而且你加大并发数量只能暂时缓解问题。
+　文中建议用使用dataset来读取。然后我就把读取数据中使用DataReader的地方全部用DataAdapter和DataSet来获取数据库数据，因为DataSet非独占。会将数据保存在内存中，一次连接后释放，问题解决。
+　记录一下。</description>
+    </item>
+    
+    <item>
+      <title>SqlServer 2008开启远程连接</title>
+      <link>https://leizhiyuan.github.io/2012/08/20/sqlserver-2008%E5%BC%80%E5%90%AF%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/</link>
+      <pubDate>Mon, 20 Aug 2012 02:48:22 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/08/20/sqlserver-2008%E5%BC%80%E5%90%AF%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/</guid>
+      <description>对于需要外部访问数据库的操作，需要开启sql server的远程连接。没经验的我等Google之。。大部分操作按照SQL Server 2008 R2如何开启数据库的远程连接来操作
+　但是。有一些很小的细节需要注意。我的数据库是Sql Server 2008 Express版。这个是VS自带的。为了管理方便，可以安装SQL Server® 2008 Management Studio Express 安装过程不多说。安装完成后，直接打开
+　
+　服务器名称默认是空的。。“.”好像是不行的，这时候点击右边箭头。更多，本地和远程服务器。在远程服务器里可以找到。点击就可以了。
+　我按照文章改完。sa还是登不上。。然后又试了一些
+　
+　如上图右键sa，属性，常规里设置sa密码。不要太简单。状态里的登录选项设为启用。ok。。我碰上的问题就这几个。</description>
+    </item>
+    
+    <item>
+      <title>未能加载文件或程序集“App_Web_xxxx”</title>
+      <link>https://leizhiyuan.github.io/2012/07/14/%E6%9C%AA%E8%83%BD%E5%8A%A0%E8%BD%BD%E6%96%87%E4%BB%B6%E6%88%96%E7%A8%8B%E5%BA%8F%E9%9B%86app_web_xxxx/</link>
+      <pubDate>Sat, 14 Jul 2012 23:18:13 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/07/14/%E6%9C%AA%E8%83%BD%E5%8A%A0%E8%BD%BD%E6%96%87%E4%BB%B6%E6%88%96%E7%A8%8B%E5%BA%8F%E9%9B%86app_web_xxxx/</guid>
+      <description>今天在用WCF写服务的时候，服务一直连不上，直接查看svc文件，发现如下错误 未能加载文件或程序集“&amp;rsquo;AppWeb*, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null&amp;rdquo;,*是一个随机字符串。
+解决方法中：
+　在web.config里配置成这样子： &amp;lt;compilation debug=&amp;ldquo;true&amp;rdquo; batch=&amp;ldquo;false&amp;rdquo;&amp;gt; 就好了。中午和下午一直在搞javascript连接WCF的demo，总算是晚上搞定了，，还是老样子，，最大的体会就是很多东西就是看着简单，写起来会有各种各样的问题，比如这次，即使照着微软的官方文档来，也会有错误。动手才是王道，不管做什么。这几天忙完了，写篇文章出来。
+　最后分享一下微软官方的WCF与Ajax开发实践系列课程，我只能说WCF这东西没有哪一本书比微软官方的技术培训讲的更好了，非常建议学习。
+　武汉最近下雨了，天气挺凉爽，过几天准备回家吧。。</description>
+    </item>
+    
+    <item>
+      <title>C#中的Array和ArrayList</title>
+      <link>https://leizhiyuan.github.io/2012/07/11/c#%E4%B8%AD%E7%9A%84array%E5%92%8Carraylist/</link>
+      <pubDate>Wed, 11 Jul 2012 12:51:03 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/07/11/c#%E4%B8%AD%E7%9A%84array%E5%92%8Carraylist/</guid>
+      <description> 数组是最基础的数据结构。ArrayList可以看作是Array的复杂版本。下面比较两者的异同
+比较：  相同点：  Array和ArrayList均实现了相同的接口，因此具有许多相同的操作方法，例如对自身进行枚举，能够以foreach语句遍历。 Array和ArrayList创建的对象均保存在托管堆中。
+ 不同点：   Array只能存储同构对象，当然，声明为Object类型的数组除外，因为任何类型都可以隐式转换成Object类型。ArrayList可以存储异构对象，这是因为本质上ArrayList内部维护着一个object[] items类型的字段，在应用ArrayList时，应该考虑装箱和拆箱所带来的性能损失。一般情况下，Array的性能高于ArrayList。 Array可以是一维的，也可以是多维的，而ArrayList只能是一维的。 Array的容量是固定的。一旦声明，不可更改，而ArrayList容量动态增加，当添加元素超过初始容量时，ArrayList会根据需要重新分配。而且可以通过TrimToSize删除空项来压缩体积。其实，除了Array外，其他集合类都是可以动态增加的。 Array的下限可以设置，而ArrayList下限只能是0. Array只有简单的方法来获取或设置元素值，不能随意增加或删除数组元素，而ArrayList提供了更多的方法来操作元素，可以方便的插入或删除指定位置上的元素。一般可以用ArrayList代替Array. tip：List泛型类对应于ArrayList。    </description>
+    </item>
+    
+    <item>
+      <title>C#中的字符串驻留</title>
+      <link>https://leizhiyuan.github.io/2012/07/08/c#%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%A9%BB%E7%95%99/</link>
+      <pubDate>Sun, 08 Jul 2012 20:57:11 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/07/08/c#%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%A9%BB%E7%95%99/</guid>
+      <description>字符串string可以理解为char[]，他是一个引用类型。
+字符串创建  操作上类似于int，char等类型，直接进行赋值，string str=&amp;ldquo;bystander&amp;rdquo;;虽然string 是个类，但是如果你天真的使用 string str=new string(&amp;ldquo;bystander&amp;rdquo;); 来构造，会导致一个编译错误。因为System.String只提供了数个接受Char*，Char[]类型参数的构造函数。 所以只能像下面这样使用， Char[] cs={&amp;lsquo;b&amp;rsquo;,&amp;lsquo;y&amp;rsquo;,&amp;lsquo;e&amp;rsquo;}; String str=new String(cs); 看出来了吧，很麻烦的。所以一般还是使用第一种。
+ 字符串恒定性  恒定性(Immutability)，是指字符串一经创建，就不可改变，这是String最为重要的特性之一。具体来说，就是字符串一旦创建，就会在托管堆上分配一块连续的内存空间，我们对其的任何改变都不会影响到原有的String对象，而是重新创建的新的String对象。类似Insert，Substring，ToUpper都只是创建出了新的临时的字符串，会成为下次垃圾回收的目标。 好处：
+ 保证了对String对象的任何操作不会改变源字符串。 恒定性还意味着操作字符串不会出现线程同步问题 恒定性一定程度上，成就了字符串驻留。   字符串驻留  CLR维护一个表来存放字符串，该表叫做拘留表（或驻留池），他包含程序上以编程方式声明或创建的每一个唯一的字符串的引用，因此具有特定值的实例在系统中只有一个。如果将同一个字符串分配给多个变量，那么CLR就会向拘留池检索相同引用，并分配给变量。
+通过下面这个例子来说明： class StringInterning { public static void Main() { string strA = &amp;ldquo;bystander&amp;rdquo;; string strB = &amp;ldquo;bystander&amp;rdquo;; Console.WriteLine(ReferenceEquals(strA,strB)); string strC = &amp;ldquo;by&amp;rdquo;; string strD = strC+&amp;ldquo;stander&amp;rdquo;; Console.WriteLine(ReferenceEquals(strA,strD)); strD=String.Intern(strD); Console.WriteLine(ReferenceEquals(strA,strD)); } } 猜猜答案是什么。。 正确答案是：True，False，True 为什么不是我们通常认为的那样呢。这就是因为字符串驻留了
+缘起  String类型的特性恒定性，对字符串的任何操作都只会创建新的字符串，这会导致性能下降，而String又用的很频繁，为此，CLR使用字符串驻留来解决这一问题。为此，CLR内部维护一个哈希表，来管理其创建的大部分string对象。其中Key为string本身，Value为分配给对应的string的内存地址。
+ 细节  string strA = &amp;ldquo;bystander&amp;rdquo;; CLR初始化时，创建一个空的哈希表，当JIT编译方法的时候，会首先在哈希表中查找每一个字符串常量，显然找不到任何&amp;rdquo;bystander&amp;rdquo;变量，因此会在托管堆中创建一个新的string对系那个strA，并更新哈希表，Key被赋值为&amp;rdquo;bystander&amp;rdquo;,Value被赋值为strA的引用.</description>
+    </item>
+    
+    <item>
+      <title>C#中XML和二进制的序列化</title>
+      <link>https://leizhiyuan.github.io/2012/07/07/c#%E4%B8%ADxml%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96/</link>
+      <pubDate>Sat, 07 Jul 2012 18:30:23 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/07/07/c#%E4%B8%ADxml%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96/</guid>
+      <description>看书的时候，看到的。然后感觉书上的写的不清楚，于是自己写了一下。还真的有问题。 要进行序列化和反序列化，首先要定义一个可以序列化的类，方法是在类的声明前加上特性 [Serializable] 定义了一个简单的用户类，需要注意的是私有字段是不能序列化的，只有公有字段和公有属性才可以。如下
+[Serializable] //特性，可以序列化 public class UserData { public string Name; public int Age; private string sex; public string Sex { set{sex=value;} get{return sex;} } public UserData() { } public UserData(string name, int age, string sex) { Name = name; Age = age; Sex = sex; } } 注意，书上有个例子没有给出默认的构造函数，实际测试时如果没有默认构造函数，是不能执行xml序列化的。注意。 然后就导入需要的命名空间。 需要导入 using System.IO; using System.Runtime.Serialization.Formatters.Binary; using System.Xml.Serialization; 分贝对应文件操作，二进制序列化和xml序列化 为了方便，我封装了四个静态函数，用于实现序列化和反序列化。 //封装二进制序列化方法 public static void BinarySerialize(UserData user) { FileStream fs = new FileStream(&#34;</description>
+    </item>
+    
+    <item>
+      <title>CSV批量导入解决</title>
+      <link>https://leizhiyuan.github.io/2012/07/06/csv%E6%89%B9%E9%87%8F%E5%AF%BC%E5%85%A5%E8%A7%A3%E5%86%B3/</link>
+      <pubDate>Fri, 06 Jul 2012 18:28:21 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/07/06/csv%E6%89%B9%E9%87%8F%E5%AF%BC%E5%85%A5%E8%A7%A3%E5%86%B3/</guid>
+      <description>最近的一个事就是那个诡异的CSV导入，后来决定用最笨的方法。就是readline，然后确实是可以正常识别了。思路就是一行行读入，然后构造sql语句，保存为sql文件，然后去批量执行sql文件。其实在codeproject找到了一些类似的工具，都有不如意的地方，但是时间关系还没能自己去定制，这件事完成后，就去完善一下大牛们的工具。
+　因为是多个csv文件，每个文件对应于我们想建的一个表，实际是大约2000个csv文件，每个文件大约4000行数据，构造成对应的sql语句比较简单，需要注意的就是如果sql server表中的字段和关键字重名，那么需要加[]，比如我们有个字段是open，那么实际sql语句中使用的时候，比如
+CREATE TABLE ( [open] decimal not null, ) 　简单的读写以后我们构造了2000个sql文件，然后我们需要执行这些sql文件。。必然需要写个代码来批量执行了。。为此，我先用C#生成一个批处理文件，然后来执行
+void GetBat(string InputPath,string OutFile) { DirectoryInfo di = new DirectoryInfo(InputPath); FileInfo[] fi = di.GetFiles(); // Create an array representing the files in the current directory StringBuilder strtemp = new StringBuilder(); foreach (FileInfo fiTemp in fi) { string temp = &#34;osql -S \&#34;127.0.0.1\&#34; -U \&#34;sa\&#34; -P \&#34;broker\&#34; -d \&#34;test_money\&#34; -i \&#34;&#34;; temp += fiTemp.FullName.ToString() + &#34;\&#34;\n&#34;; strtemp.Append(temp); } FileStream fs = new FileStream(OutFile, FileMode.</description>
+    </item>
+    
+    <item>
+      <title>C#调用MatLab实现N阶幻方</title>
+      <link>https://leizhiyuan.github.io/2012/07/02/c#%E8%B0%83%E7%94%A8matlab%E5%AE%9E%E7%8E%B0n%E9%98%B6%E5%B9%BB%E6%96%B9/</link>
+      <pubDate>Mon, 02 Jul 2012 18:39:43 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/07/02/c#%E8%B0%83%E7%94%A8matlab%E5%AE%9E%E7%8E%B0n%E9%98%B6%E5%B9%BB%E6%96%B9/</guid>
+      <description>MatLab的计算能力太强大了。最近需要通过C#来调用MatLab来进行一些计算，可是MatLab没用过。安装文件在我硬盘里躺了整整一年。
+　我们希望的是由外部程序调用MatLab函数。所以。希望可以完全脱离MATLAB环境，实现软件的快速开发。为此需要先介绍一下MCR。
+MCR简介 　MCR的全称是MATLAB Compiler Runtime，即MATLAB编译器运行时。是一个由MATLAB共享类库构成的执行引擎，他能够使MATLAB文件在没有MATLAB的机器上运行。这一点和.NET Framework相对于.NET程序一样，即为程序的运行提供了底层支持。当发布程序的时候，需要将MCR也打包进来，这样没有MATLAB的机器上也能执行，MCR随MATLAB软件一同发布，可以在MATLAB中输入命令“mcr”或者“mcrinstaller”获取其保存路径：
+&amp;gt;&amp;gt; mcr The WIN32 MCR Installer, version 7.15, is: D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\win32\MCRInstaller.exe MCR installers for other platforms are located in: D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\&amp;lt;ARCH&amp;gt; &amp;lt;ARCH&amp;gt; is the value of COMPUTER(&#39;arch&#39;) on the target machine. Full list of available MCR installers: D:\Program Files\MATLAB\R2011a\toolbox\compiler\deploy\win32\MCRInstaller.exe For more information, read your local MCR Installer help. Or see the online documentation at MathWorks&#39; web site. (Page may load slowly.</description>
+    </item>
+    
+    <item>
+      <title>C#中的静态与非静态</title>
+      <link>https://leizhiyuan.github.io/2012/07/02/c#%E4%B8%AD%E7%9A%84%E9%9D%99%E6%80%81%E4%B8%8E%E9%9D%9E%E9%9D%99%E6%80%81/</link>
+      <pubDate>Mon, 02 Jul 2012 05:30:02 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/07/02/c#%E4%B8%AD%E7%9A%84%E9%9D%99%E6%80%81%E4%B8%8E%E9%9D%9E%E9%9D%99%E6%80%81/</guid>
+      <description> 为什么要分静态和非静态 在面向对象的世界里，大部分的情况都是实例特征主宰天下，类相当于一个类型模板，而对象则是类特征的拷贝，并且独立于其他对象来操作这些特征，但是在某些情况下，需要某些特征被所有的对象共公有，因此有必要实现一种基于类的特征，而不是基于实例对象的特征机制，这就是静态特征。
+1.静态类和非静态类  一个类如果包含静态成员和静态方法，那么该类就可以定义为静态类，定义方法是在类定义前加上static，比如
+static class MyClass { //define the class } 比较：   静态类只能包含静态成员和静态方法，否则会抛出编译错误，而非静态类既可以包含非静态成员和非静态方法，还可以包含静态成员和静态方法。但不能作用于静态只读字段。 静态类不可实例化，非静态类可以实例化，不管是静态类还是非静态类，对静态成员和静态方法的调用都必须通过类来实现访问。 相对于非静态类来说，静态类有一些特点值得应用，比如System.Console这个典型的静态类。 如果一个类只包含静态成员和静态方法，就应该将该类标记为static，并提供私有的构造函数来避免用户实例创建对象，这也是MonoState模式的体现。    2.静态构造函数和实例构造函数  静态构造函数，只能用于初始化类中的静态成员，包括静态字段和静态属性，静态构造函数不能带参数，不能有访问修饰符也不能被手工调用，通过是在.net运行库第一次调用类成员之前执行。其中，实例构造函数中也是可以初始化静态成员的。
+比较   静态构造函数，可以和无参的构造函数共存。虽然参数列表相同，但是二者的执行顺序不同，静态构造函数在运行库加载类时执行，而实例构造函数在实例创建时执行。 静态构造函数，只能对静态成员进行初始化操作，不能作用于非静态成员，而实例构造函数二者都可以，当然如前面所说，对静态只读字段就不可以了。 静态构造函数只被执行一次，而且.net运行库也不知道什么时候会被执行，而实例构造函数可以在多次实例创建时被执行多次。 一个类只能有一个静态构造函数，但是可以有多个实例构造函数。 一般来说，简单的静态成员可以在声明时就进行初始化，而复杂的静态成员则选择在静态构造函数中进行初始化较佳。    3.静态成员和实例成员  静态成员主要包括静态字段和静态属性，静态成员可以实现在类中能够被所有实例对象共享的数据。例如一个缴费登记系统中，消费总额作为所以消费的综合，静态成员来实现就有很好。没有不必要的数据冗余。
+比较   静态成员包括静态字段和静态属性，静态字段一般实现为private，而静态属性一般为public，以体现类的封装原则。 静态成员和类关联，不依赖对象存在，只能由类访问，而不能由对象访问，实例成员和具体的对象关联，只能由对象访问，不能由类访问。 静态成员属于类所有，不论创建多少个实例对象，静态成员在内存中只有一份，实例成员属于对象实例所有，每个都有其对应的内存区域。    4.静态方法和实例方法  类似于静态成员共享数据段，静态方法共享代码段，静态方法以static标识。
+比较   性能上，静态方法和实例方法差别不大，所有方法，不管是静态的还是非静态的，都是在JIT加载类时分配内存，不同的是静态方法以类名引用，而静态方法以对象引用，创建实例时，不会再为类的方法分配内存，所有的实例对象公用一个类的方法代码，因此，静态方法和实例方法的调用，区别仅在于实例方法需要当前对象指针指向该方法，而静态方法可以直接调用，性能上差异微乎其微。 静态方法只能访问静态成员和静态方法，可以间接通过创建实例对象来访问实例成员和实例方法，而实例方法可以直接全部。。 静态方法只能由类来访问，实例方法只能由对象来访问。 静态方法中不能使用this关键字，否则编译错误，而实例方法中可以引用。 静态方法不能被标记为virtual，abstract或是override，静态方法可以被派生类访问，但是不能被覆写。 Main方法是静态的，因此Main方法不能直接访问Main所在类的实例方法和成员。 鉴于线程处理的安全性，应该避免提供改变静态状态的静态方法，因为，如果多线程同时访问该段代码，可能造成线程处理错误，因此，静态状态必须是线程安全的。 静态方法适合系统中边缘性的非业务需要，例如通用的工具类。    </description>
+    </item>
+    
+    <item>
+      <title>C＃中的is和as</title>
+      <link>https://leizhiyuan.github.io/2012/07/01/c%E4%B8%AD%E7%9A%84is%E5%92%8Cas/</link>
+      <pubDate>Sun, 01 Jul 2012 05:52:09 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/07/01/c%E4%B8%AD%E7%9A%84is%E5%92%8Cas/</guid>
+      <description>is和as都是用作类型转换的，类型转换包括显示转换和隐式转换，在.NET中类型转换的基本规则如下：
+基本规则   任何类型都可以安全的转换为其基类类型，可以由隐式转换来完成； 任何类型转换为其派生类型时，必须进行显示转换，转换的规则是：（类型名）对象名； 使用GetType可以取得任何对象的精确类型； 基本类型可以使用Covert类实现类型转换； 除了string以外的其他类型都有Parse方法，用于将字符串类型转换为对应的基本类型； 值类型和引用类型的转换机制称为装箱（boxing）和拆箱（unboxing）。 is和as操作符，是C#中用于类型转换的，提供了对类型兼容性的判断，从而使得类型转换控制在安全的范畴，提供了灵活的类型转换控制。   is的模式如下：   检查对象类型的兼容性，并返回结果，true或者false； 不会抛出异常； 如果对象为null，则返回值永远为false。 使用很简单，用于条件判断中.   举例： object o=new object(); if(o is ISSsample) { //转换 ISSample a =(ISSample)o; } &amp;nbsp;
+as的模式如下：   检查对象类型的兼容性，并返回转换结果，如果不兼容就返回null； 不会抛出异常； 如果结果判断为空，则强制执行类型转换将抛出NullReferenceException异常。 as必须和引用类型一起使用   举例： object o =new object(); ASSample a=o as ASSample; if(a!=null) //do some work &amp;nbsp;
+参考：http://www.cnblogs.com/anytao/archive/2007/04/07/must_net_01.html</description>
+    </item>
+    
+    <item>
+      <title>各种内存卡介绍</title>
+      <link>https://leizhiyuan.github.io/2012/06/30/%E5%90%84%E7%A7%8D%E5%86%85%E5%AD%98%E5%8D%A1%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Sat, 30 Jun 2012 10:50:19 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/30/%E5%90%84%E7%A7%8D%E5%86%85%E5%AD%98%E5%8D%A1%E4%BB%8B%E7%BB%8D/</guid>
+      <description>闪存卡（Flash Card）是利用闪存（Flash Memory）技术达到存储电子信息的存储器，一般应用在数码相机，掌上电脑，MP3等小型数码产品中作为存储介质，所以样子小巧，有如一张卡片，所以称之为闪存卡。 根据不同的生产厂商和不同的应用，闪存卡大概有Compact Flash（CF卡）、MultiMediaCard（MMC卡）、Secure Digital（SD卡）、Memory Stick（记忆棒）等。
+SD卡  SD卡全称为Secure Digital卡，SD卡标准的面世相对而言比CF要晚，根据MMC为基础所开发的Secure Digital（SD），其改进主要是在增添了版权保护的功能，提高了传输速度和增加了写保护机制等，其主要引脚的定义与MMC卡并没有太大的区别。SD具有较高的兼容性，较小的体积和不错的数据传输速度，成为了当今的时尚数码相机和部分可拍照手机的标准配置。SD接口是当今世界上被采用得最多的闪存卡接口，市面上主流的PDA，数码相机，MP3的闪存卡，烧录卡接口大多为SD卡，也使SD卡取代了CF卡成为了当今最常见得存储卡。如图： 
+ MiniSD  MiniSD是SD卡的一大改进，体积只有21.5x20x1.4mm，比普通SD卡足足节省了60%的空间，通过转接卡还能保证MiniSD在正常的SD插槽上的使用。如图： 
+ Micro SD(TF卡)  TF卡又称T-Flash卡，也叫Micro SD卡,体积只有11×15×1mm，面积为MiniSD的一半 
+ MMC卡  MMC卡全称为Multi Media Card，由SanDisk与Siemens AG/InfineonTechnologies AG所联合开发，且于1997年11月发表，Size：24mm x 32mm x 1.4mm，重量2g。MMC卡的兼容性方面不及SD卡的好，数据传输速度受到硬件的限制，不适合作高速的数据传输。如图： 
+ RSMMC  RSMMC是Reduced-Size MMC的缩写，小型化的MMC卡，传说专门为智能手机设置。改良后的产品叫做MMCmobile 
+ 什么是CF卡？  CF格式由来已久，被SanDisk公司在1994年首次制造出来。CF卡的全称是Compact Flash，Compact意指“小型的，轻便的”，CF大小为43mm x 36mm x 3.3mm，50 Pins。如图 
+ MS卡  Memory Stick，索尼推出的存储产品。貌似是独树一帜，不多介绍。 参考：
+ http://www.allmemorycards.com/sd.htm
+http://baike.baidu.com/view/26952.htm
+http://nds.cngba.com/nds_bd/2007122122100.shtml</description>
+    </item>
+    
+    <item>
+      <title>C#中的Class和Struct</title>
+      <link>https://leizhiyuan.github.io/2012/06/29/c#%E4%B8%AD%E7%9A%84class%E5%92%8Cstruct/</link>
+      <pubDate>Fri, 29 Jun 2012 10:03:35 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/29/c#%E4%B8%AD%E7%9A%84class%E5%92%8Cstruct/</guid>
+      <description>什么是class? 　class（类）是面向对象编程的基本概念，是一种自定义数据结构类型，通常包含字段、属性、方法、属性、构造函数、索引器、操作符等。.NET中，所有的类都最终继承自System.Object类，因此是一种引用类型，也就是说，new一个类的实例时，对象保存了该实例实际数据的引用地址，而对象的值保存在托管堆（managed heap）中。
+什么是struct? 　struct（结构）是一种值类型，用于将一组相关的信息变量组织为一个单一的变量实体 。所有的结构都继承自System.ValueType类，因此是一种值类型，也就是说，struct实例分配在线程的堆栈（stack）上，它本身存储了值，而不包含指向该值的指针。所以在使用struct时，我们可以将其当作int、char这样的基本类型类对待。
+比较： 　相同点：语法类似。
+　不同点：
+  class是引用类型，继承自System.Object类；struct是值类型，继承自System.ValueType类，因此不具多态性。但是注意，System.ValueType是个引用类型。 从职能观点来看，class更多表现为行为；而struct常用于存储数据。 class支持继承，可以继承自类和接口；而struct没有继承性，struct不能从class继承，也不能作为class的基类，但struct支持接口继承 class可以声明无参构造函数，可以声明析构函数；_而struct只能声明带参数构造函数_，且不能声明析构函数。因此，struct没有自定义的默认无参构造函数，默认无参构造器只是简单地把所有值初始化为它们的0等价值 实例化时，_class要使用new关键字；而struct可以不使用new关键字_，如果不以new来实例化struct，则其所有的字段将处于未分配状态，直到所有字段完成初始化，否则引用未赋值的字段会导致编译错误。 class可以是抽象类（abstract），可以声明抽象函数；而struct不能为抽象，也不能声明抽象函数。 class可以声明protected成员、virtual成员、sealed成员和override成员；而struct不可以，struct可以重载System.Object的3个虚方法，Equals()、ToString()和GetHashTable()。 class的对象复制分为浅拷贝和深拷贝，必须经过特别的方法来完成复制；而struct创建的对象复制简单，可以直接以等号连接即可。 class实例由垃圾回收机制来保证内存的回收处理；而struct变量使用完后立即自动解除内存分配。 作为参数传递时，class变量是以按址方式传递；而struct变量是以按值方式传递的。   　我们可以简单的理解，class是一个可以动的机器，有行为，有多态，有继承；而struct就是个零件箱，组合了不同结构的零件。其实，class和struct最本质的区别就在于class是引用类型，内存分配于托管堆；而struct是值类型，内存分配于线程的堆栈上。由此差异，导致了上述所有的不同点，虽然在某些方面struct有性能方面的优势，但是在面向对象编程里，基本是class横行的天下。
+　那么，既然class几乎可以完全替代struct来实现所有的功能，那么struct还有存在的必要吗？答案是，至少在以下情况下，鉴于性能上的考虑，我们应该考虑使用struct来代替class：　&amp;gt; * 实现一个主要用于存储数据的结构时，可以考虑struct。 &amp;gt; * struct变量占有堆栈的空间，因此只适用于数据量相对小的场合。 &amp;gt; * 结构数组具有更高的效率。 &amp;gt; * 提供某些和非托管代码通信的兼容性。</description>
+    </item>
+    
+    <item>
+      <title>C#中的const和readonly</title>
+      <link>https://leizhiyuan.github.io/2012/06/28/c#%E4%B8%AD%E7%9A%84const%E5%92%8Creadonly/</link>
+      <pubDate>Thu, 28 Jun 2012 17:29:13 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/28/c#%E4%B8%AD%E7%9A%84const%E5%92%8Creadonly/</guid>
+      <description>本文来自《你必须知道的.NET》这本书，是我看书过程中的笔记整理。
+　不变的量是程序设计中的平衡剂，是系统中恒定不变的量，在.NET中提供哦你了两种方式来实现，const和readonly。其中，const是静态常量，readonly是动态常量。
+ const，readonly和static readonly定义的常量，一旦初始值指定，（包括在构造函数内指定初始值），将不可更改，可读不可写。 const必须在声明的时候指定初始值，而readonly和static readonly在在声明时可以指定，也可以不指定初始值，同时也可以在构造函数中指定初始值，如果同时在声明时和构造函数中指定了初始值，以构造函数内指定的值为准。 const和static readonly定义的常量是静态的，只能由类型来访问，不能和static同时使用，否则可能出现编译错误，而readonly定义的常量是非静态的，只能由实例对象来访问。可以显式使用static定义静态成员 static readonly常量，如果在构造函数内指定初始值，那么必须是在静态无参构造函数中。不同的构造函数可以为readonly常量实现不同的初始值。 const可以用于定义局部常量和字段常量，而readonly和static readonly不能定义局部变量，只能定义字段常量，实际上，readonly应该被称之为只读字段，因此局限于定义字段，而const才是常量，可以定义字段和局部量。 const常量编译后保存在模块的元数据中，无需在托管堆中分配内存，并且const常量只能是百年机器能够识别的基元类型，比如Int32，string等，而readonly需要分配独立的存储空间，并且可以是任意类型。 const只能应用在值类型和string类型上，其他引用类型常量只能定义为null，否则以new为const引用类型常量赋值，编译器会引发“只能用null对引用类型（字符串除外）的常量进行初始化”错误提示，原因是构造函数初始化是在运行时，而非编译时，readonly只读字段，可以是任意类型，但是对于引用类型字段来说，readonly不能限制对该对象实例成员的访问控制。 总结：尽可能以只读属性来实现对类型读写特性的控制，而不是只读字段，但是在某些情况下，只读字段更简化些。  　const是编译时常量，readonly是运行时常量，const较高效，readonly更灵活，在应用上，推荐以static readonly代替const，以平衡const在灵活性上的不足，同时克服编译器优化const性能时，所带来的程序集引用不一致问题。
+&amp;nbsp;
+&amp;nbsp;
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>WPF实现不规则窗体</title>
+      <link>https://leizhiyuan.github.io/2012/06/23/wpf%E5%AE%9E%E7%8E%B0%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E4%BD%93/</link>
+      <pubDate>Sat, 23 Jun 2012 06:22:49 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/23/wpf%E5%AE%9E%E7%8E%B0%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E4%BD%93/</guid>
+      <description>这几天在想C# winform程序界面实在太单一，而我C#实现不规则窗体中也说了，如果用背景这种东西来做的话，效果很差，抗锯齿能力基本为0，所以我当时在博客园提问，然后园友有了很给力的回答，比如WPF来做，或者第三方插件，或者深入底层改写ONPaint函数的，今天没事，恰好看到了一篇文章讲这个的，于是，就做一个简单的Demo出来，华丽的效果有木有，先看效果图
+ 在win 7下使用win+Tab切换效果也很华丽。就不演示了。
+做起来还算比较简单，首先使用Microsoft Expression Design 4 设计一个界面，破解版什么的太多了，，软件界面和ps挺像，不过功能弱很多，自己操作操作就好了，我说一个问题，就是我当时想画一个空心的圆，也就是一个圆环，ps里大家都知道，直接选区相减就可以了，但是这个死活没找到，基本上最后这个界面所有的地方被找了一遍，猜了猜，才发现了，
+具体操作如下，首先汇出一个圆形，然后在圆里面再绘出一个圆形，这时候选中第二次的这个小圆，点击屏幕右侧的那个箭头会出现高级选项，
+
+然后选择混合模式为橡皮擦，就会擦去这个小圆，于是就只剩下一个圆环了。
+
+画好以后，选择文件-&amp;gt;导出，按如下设置， 
+&amp;nbsp;
+会得到一个xaml文件，一会用
+然后新建wpf项目，然后在解决方案资源管理器视图右键点击项目 导入现有项，把上一步的xaml文件导入
+然后需要在app.xaml文件中进行设置，具体在&amp;lt;Application.Resources&amp;gt;标签内添加如下代码，中间那个文件名看情况而定。 &amp;lt;ResourceDictionary&amp;gt; &amp;lt;ResourceDictionary.MergedDictionaries&amp;gt; &amp;lt;ResourceDictionary Source=&amp;ldquo;bystander.xaml&amp;rdquo;/&amp;gt; &amp;lt;/ResourceDictionary.MergedDictionaries&amp;gt; &amp;lt;/ResourceDictionary&amp;gt; &amp;nbsp;
+然后打开“MainWindow.xaml”文件的设计视图，点击窗体边缘以选中窗体，在属性面板中更改AllowsTransparency及WindowStyle属性。 AllowsTransparency 指示窗体是否支持透明。选中 WindowStyle指示窗体边框样式，设为 None 为无边框。
+然后呢在 MainWindow.xaml文件中添加如下代码， Background=&amp;ldquo;{StaticResource back}&amp;rdquo; MouseDown=&amp;ldquo;Window_MouseDown&amp;rdquo;&amp;gt; 最终代码是： &amp;lt;Window x:Class=&amp;ldquo;WpfDemo.MainWindow&amp;rdquo; xmlns=&amp;ldquo;http://schemas.microsoft.com/winfx/2006/xaml/presentation&amp;quot; xmlns:x=&amp;ldquo;http://schemas.microsoft.com/winfx/2006/xaml&amp;quot; Title=&amp;ldquo;MainWindow&amp;rdquo; Height=&amp;ldquo;350&amp;rdquo; Width=&amp;ldquo;525&amp;rdquo; AllowsTransparency=&amp;ldquo;True&amp;rdquo; WindowStyle=&amp;ldquo;None&amp;rdquo; Background=&amp;ldquo;{StaticResource back}&amp;rdquo; MouseDown=&amp;ldquo;Window_MouseDown&amp;rdquo;&amp;gt; &amp;lt;/Window&amp;gt; 其中background那个是固定的，而MouseDown是为了给窗体写可以拖动的函数，函数名为Window_MouseDown你也可以自己制定
+然后对着那个函数名点右键，如下图
+
+导航到事件处理程序，然后在打开的函数里写上 if(e.ChangedButton==MouseButton.Left) this.DragMove(); 拖动功能就实现了。
+至于添加关闭按钮的，我就不写了，很简单，代码里都有。可以参考源文件。
+工程源码下载：WPFDemo
+参考：
+http://www.cnblogs.com/SkyD/archive/2008/07/13/1242044.html
+http://www.cnblogs.com/yinyao/archive/2011/05/23/2054056.html</description>
+    </item>
+    
+    <item>
+      <title>C#WinForm实现不规则窗体</title>
+      <link>https://leizhiyuan.github.io/2012/06/21/c#winform%E5%AE%9E%E7%8E%B0%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E4%BD%93/</link>
+      <pubDate>Thu, 21 Jun 2012 09:26:34 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/21/c#winform%E5%AE%9E%E7%8E%B0%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E4%BD%93/</guid>
+      <description>这个纯属娱乐，因为其实用的不是太多，因为非主流，非标准的界面不符合用户的体验，不符合可用性功能的某一条HE规则。
+为了完成这个效果，首先需要自己动手画个你需要的界面出来，界面边缘需要是一种可以很好区别的颜色，比如纯蓝色，因为实现不规则窗体是让C#使边缘颜色透明化来实现的，所以需要唯一识别。因为我用的图是一张灰色的图，我然后圈了一个蓝色的边缘。
+刚开始的图；
+
+然后新建windows应用程序。创建windows窗体并设置窗体基本属性。 （1）将 FormBorderStyle 属性设置为 None。 （2）将窗体的 BackgroundImage 属性设置为先前创建的位图文件。不必将文件添加到项目系统中；这将在指定该文件作为背景图像时自动完成。 （3）将 TransparencyKey 属性设置为位图文件的背景色，本例中为蓝色。（此属性告诉应用程序窗体中的哪些部分需要设置为透明。 ） 上面两个步骤已经完成了不规则窗体自身显示效果的制作。
+有人说在24位色以下的环境中可以显示正常，但在24位色以上时黄色背景不能消失，所以上述不能胜任24位色以上环境。但我看到了一种解决方法，那就是先将背景图片添加到资源文件，然后在窗体构造时为窗体设置背景图片：
+&amp;nbsp; private void Form1_Load(object sender, EventArgs e){
+Bitmap bmp = Properties.Resources.form2; bmp.MakeTransparent(Color.Blue); // bmp.MakeTransparent(Color.FromArgb(2,2,2));如果rgb则是这样用 this.BackColor = Color.Blue; this.BackgroundImage = bmp; this.TransparencyKey = Color.Blue;
+} &amp;nbsp;
+实测是可以的。
+然后就是为窗体添加移动、关闭、最大最小化的事件。代码直接给出 private bool isMouseDown = false; //记录鼠标是否被按下 private Point position; //记录鼠标位置
+private void Form1_MouseDown(object sender, MouseEventArgs e) { if (e.Button == MouseButtons.Left) { int x = -e.</description>
+    </item>
+    
+    <item>
+      <title>GET和POST有什么区别？及为什么网上的多数答案都是错的。</title>
+      <link>https://leizhiyuan.github.io/2012/06/19/get%E5%92%8Cpost%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BD%91%E4%B8%8A%E7%9A%84%E5%A4%9A%E6%95%B0%E7%AD%94%E6%A1%88%E9%83%BD%E6%98%AF%E9%94%99%E7%9A%84/</link>
+      <pubDate>Tue, 19 Jun 2012 18:04:40 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/19/get%E5%92%8Cpost%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BD%91%E4%B8%8A%E7%9A%84%E5%A4%9A%E6%95%B0%E7%AD%94%E6%A1%88%E9%83%BD%E6%98%AF%E9%94%99%E7%9A%84/</guid>
+      <description>今天突然看到很多好的技术文章，转载收藏备用分享。
+如果有人问你，GET和POST，有什么区别？你会如何回答？
+我的经历 前几天有人问我这个问题。我说GET是用于获取数据的，POST，一般用于将数据发给服务器之用。
+这个答案好像并不是他想要的。于是他继续追问有没有别的区别？我说这就是个名字而已，如果服务器支持，他完全可以把GET改个名字叫GET2。他反问道，那就是单纯的名字上的区别喽？我想了想，我觉得如果说再具体的区别，只能去看RFC文档了，还要取决于服务器（指Apache，IIS）的具体实现。但我不得不承认，我的确没有仔细看过HTTP的RFC文档。于是我说，我对HTTP协议不太熟悉。这个问题也就结束了。
+最普遍的答案 回来之后寻思了很久，他到底是想问我什么？我一直就觉得GET和POST没有什么除了语义之外的区别，自打我开始学习Web编程开始就是这么理解的。
+可能很多人都已经猜到了，他要的答案是：
+1. GET使用URL或Cookie传参。而POST将数据放在BODY中。
+2. GET的URL会有长度上的限制，则POST的数据则可以非常大。
+3. POST比GET安全，因为数据在地址栏上不可见。
+但是很不幸，这些区别全是错误的，更不幸的是，这个答案还是Google搜索的头版头条，然而我根本没想着这些是答案，因为在我看来他们都是错的。我来一一解释一下。
+GET和POST与数据如何传递没有关系 GET和POST是由HTTP协议定义的。在HTTP协议中，Method和Data（URL， Body， Header）是正交的两个概念，也就是说，使用哪个Method与应用层的数据如何传输是没有相互关系的。
+HTTP没有要求，如果Method是POST数据就要放在BODY中。也没有要求，如果Method是GET，数据（参数）就一定要放在URL中而不能放在BODY中。
+那么，网上流传甚广的这个说法是从何而来的呢？我在HTML标准中，找到了相似的描述。这和网上流传的说法一致。但是这只是HTML标准对HTTP协议的用法的约定。怎么能当成GET和POST的区别呢？
+而且，现代的Web Server都是支持GET中包含BODY这样的请求。虽然这种请求不可能从浏览器发出，但是现在的Web Server又不是只给浏览器用，已经完全地超出了HTML服务器的范畴了。
+知道这个有什么用？我不想解释了，有时候就得自己痛一次才记得住。
+HTTP协议对GET和POST都没有对长度的限制 HTTP协议明确地指出了，HTTP头和Body都没有长度的要求。而对于URL长度上的限制，有两方面的原因造成：
+1. 浏览器。据说早期的浏览器会对URL长度做限制。据说IE对URL长度会限制在2048个字符内（流传很广，而且无数同事都表示认同）。但我自己试了一下，我构造了90K的URL通过IE9访问live.com，是正常的。网上的东西，哪怕是Wikipedia上的，也不能信。
+2. 服务器。URL长了，对服务器处理也是一种负担。原本一个会话就没有多少数据，现在如果有人恶意地构造几个几M大小的URL，并不停地访问你的服务器。服务器的最大并发数显然会下降。另一种攻击方式是，把告诉服务器Content-Length是一个很大的数，然后只给服务器发一点儿数据，嘿嘿，服务器你就傻等着去吧。哪怕你有超时设置，这种故意的次次访问超时也能让服务器吃不了兜着走。有鉴于此，多数服务器出于安全啦、稳定啦方面的考虑，会给URL长度加限制。但是这个限制是针对所有HTTP请求的，与GET、POST没有关系。
+安全不安全和GET、POST没有关系 我觉得这真是中国特色。我讲个小段子，大家应该可以体会出这个说法多么的可笑。
+觉得POST数据比GET数据安全的人会说
+ “防君子不防小人；中国小白多，能防小白用户就行了。”
+_ “哼，”_我不以为然，_“那你怎么不说，URL参数都Encode过了，或是Base64一下，小白也看不懂啊。”_
+那人反驳道，_“Encode太简单了，聪明点儿的小白很容易就可以Decode_并修改掉。”
+我笑道，_“五十步笑百步耳，再聪明点儿的小白还会截包并重发呢，Opera就有这功能。”_
+那人阴险地祭出神器——最终解释权，说，“这个不算小白。”
+我日啊。
+最后一点儿感想 我之前一直做Windows桌面应用，对Web开发无甚了解，直到一年多前转做服务器端开发，才开始接触到HTTP。（注意，我说的是HTTP，不是HTML。服务器开放接口是基于REST理念设计的，使用的协议是HTTP，但是传输的内容不是HTML。这不是Web Server，而是一个Web Service）
+所以我对于GET和POST的理解，是纯粹地来源于HTTP协议。他们只有一点根本区别，简单点儿说，一个用于获取数据，一个用于修改数据。具体的请参考RFC文档。
+如果一个人一开始就做Web开发，很可能把HTML对HTTP协议的使用方式，当成HTTP协议的唯一的合理使用方式。从而犯了以偏概全的错误。
+可能有人会觉得我钻牛角尖。我只是不喜欢模棱两可，不喜欢边界不清、概念不明，不喜欢“拿来主义”，也不喜欢被其它喜欢钻牛角尖的人奚落得无地自容。
+“知之为知之，不知为不知，是知也。”
+原文链接：http://www.cnblogs.com/nankezhishi/archive/2012/06/09/2542968.html</description>
+    </item>
+    
+    <item>
+      <title>MySQL ERROR 1005: Can&#39;t create table  (errno: 150)解决办法</title>
+      <link>https://leizhiyuan.github.io/2012/06/10/mysql-error-1005-cant-create-table--errno-150%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+      <pubDate>Sun, 10 Jun 2012 20:02:31 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/10/mysql-error-1005-cant-create-table--errno-150%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+      <description>最近在做数据库大作业，采用mysql建立数据库的时候出现了这个情况，查了一下，解决了。
+出现问题的大致可能情况
+1、外键的引用类型不一样，如主键是int外键是char
+2、找不到主表中引用的列
+3、主键和外键的字符编码不一致，也可能存储引擎不一样
+对于第一个问题，检查一下自己的主外键记录数据类型是否一样，改了就行了，对于第二个问题，同样的道理，确定你主表中有对应的列。对于第三个问题 create table pw_test( uid int unsigned not null, primary key (uid), foreign key (uid) references pw_other(uid) on delete cascade on update cascade )ENGINE = MYISAM; &amp;nbsp;
+括号外面的语句设置了引擎。实战过程中通过。中间的外键设置了delete 和update约束。uid引用了pw_other表中的uid键 记下语法，出现问题的时候就可以用了。</description>
+    </item>
+    
+    <item>
+      <title>属性文法</title>
+      <link>https://leizhiyuan.github.io/2012/06/08/%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95/</link>
+      <pubDate>Fri, 08 Jun 2012 21:31:13 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/08/%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95/</guid>
+      <description>我们知道，许多编译程序采用属性文法和语法制导翻译方法对语义处理工作进行比较规范和抽象的描述。
+　而一个属性文法包含一个上下文无关文法和一系列文法规则，语义规则是指：对于文法的每个产生式都配备了一组属性的计算规则
+　语义规则附在文法的每个产生式上，而语法制导翻译是指在语法分析过程中，完成附加在所使用的产生式上的语义规则描述的动作。
+　·语法制导：基于语法分析中用到的文法产生式
+　·翻译：完成语义分析的各项功能，不仅指生成中间代码
+　形式上讲，一个属性文法是一个三元组，A＝（G，V，F），其中G是一个上下文无关文法；V是有穷的属性集，每个属性与文法的一个终结符或非终结符关联，属性加工的过程即是语义处理的过程。F是关于属性的属性断言或一组属性的计算规则（称为语义规则）。断言或语义规则与一个规则式关联，只引用该规则式左端或右端的终结符或非终结符关联的属性。形式化的东西看看就好，后面给出具体例子分析。
+　既然称之为属性文法，那么什么属性呢。这些属性代表与文法符号相关信息，比如它的类型、值、代码序列、符号表内容等等。属性与变量一样，可以进行计算和传递。可以类比我们平时写代码时候一些成员变量。。属性又分为综合属性和继承属性。
+　n在一个属性文法中，对应于每个产生式A→a都有一套与之相关联的语义规则，每条规则的形式为：
+　b:=f(c1,c2,…,ck)，只有在已知 c1-ck 值的基础上，才能计算属性值 b， 称属性 b 依赖于属性 c1-ck，至于c1-ck依赖于哪个，就得看由c1-ck在左侧的规则了。也就是看下面的规则了。
+　这里，f是一个函数，而且或者
+　1. b是A的一个综合属性并且c1,c2,…,ck是产生式右边文法符号的属性，或者
+　2. b是产生式右边某个文法符号的一个继承属性并且c1,c2,…,ck 是A或产生式右边任何文法符号的属性。 属性b依赖于属性c1,c2,…,ck。
+　属性文法中常用记号N·t表示与非终结符号N相关联的属性t。
+　注意：¨终结符只有综合属性，由词法分析器提供
+　¨非终结符既可有综合属性也可有继承属性，文法开始符号的所有继承属性作为属性计算前的初始值
+　¨在语法树中，一个结点的综合属性的值由其子结点的属性值确定。一个结点的继承属性由此结点的父结点和/或兄弟结点的某些属性确定
+　根据包含的属性类型，属性文法分为：S-属性文法和L-属性文法
+　S-属性文法是仅包括综合属性的属性文法；L -属性文法是包括综合属性和继承属性的属性文法。
+　给出一个简单的实例说明上面的内容：
+　考虑非终结符A，B和C，其中，A有一个继承属性a和一个综合属性b，B有综合属性c，C有继承属性d。产生式A→BC可能有规则
+　C.d:=B.c+1
+　A.b:=A.a+B.c
+　而属性A.a和B.c在其它地方计算
+　为什么是这样的，因为此时A就是A，B是X1，C是X2，对于d来说，他是产生式右部C的一个属性，c是右部B的属性，属性d依赖于属性c，和1，所以它是C的继承属性，对于c来说，他是产生式右部B的一个属性，但是c不依赖于d，而是d依赖于c所以c属性类型无法确定，对于b，他是A的一个属性，并且a是A的属性，c是产生式右部的属性，所以b是A的综合属性，而对于a，因为不能确定a属性依赖于那个属性，所以。无法得知。从上面我可以得出一个规律，对于一个属性规则来说，一条规则只能确定其左侧的属性类型，而右侧的属性需要由一个由他在左侧的规则来确定。比如，可以看到上面的规则中，c和a都不能确定，就是因为在规则右侧。
+　此部分可能理解不够深刻，如有错误欢迎指正。
+　参考：
+　http://jpkc.hdu.edu.cn/computer/byyl/online/5-2.htm
+　http://metc.gdut.edu.cn/compile/nandian/n-8.htm </description>
+    </item>
+    
+    <item>
+      <title>你为什么会说是？-[影响力]</title>
+      <link>https://leizhiyuan.github.io/2012/06/07/%E4%BD%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%AF%B4%E6%98%AF-%E5%BD%B1%E5%93%8D%E5%8A%9B/</link>
+      <pubDate>Thu, 07 Jun 2012 10:58:49 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/07/%E4%BD%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%AF%B4%E6%98%AF-%E5%BD%B1%E5%93%8D%E5%8A%9B/</guid>
+      <description>今天早上把这本书读完了，短短的300页，绝对是今年读到的又一本经典之作，书摘什么的因为是读的纸质版，所以没有写什么笔记，但是还是简单的总结下书中的内容。顺带谈谈自己的感受。
+　就像昨天文章中提到的，这本书讲的不是成功学，而是心理学，讲我们在生活中为什么有时候会受到他人，或者是一些定律的影响，不知不觉中做了后来后悔的事情。或者是明明已经后悔了，却无法反悔。
+　影响力的几个武器；
+　第1种武器：互惠
+　互惠原理认为，我们应该尽量以相同的方式来回报他人为我们所作的一切。接受往往和偿还联系在一起，尽管互惠原理经常带给人们以负债感，但是总体而言，我们从中得利的时候还是占多数的，相比而言还是划算的。从而，相信并服从这个原理成为人们日常生活中一个十分重要的准则，而违背它则要付出严重的代价。人们普遍对那种只求索取不知偿还的人感到不信任，并尽量远离避免与之接触。往深里讲，互惠原理是人类社会形成的一大助力，是群体协作的默认基础。 在商业上最经典的案例则体现在商场里的“免费试用”中。很多人觉得，如果从那个笑容可掬的小姐手中接受了可以免费品尝的食物，就不好意思把杯子一还转身离开，总得买点什么吧，即时他们对那种商品并不是那么感兴趣。
+　第2种武器：承诺与一致
+　一旦我们做出了一个决定，或选择了一种立场，就会有发自内心以及来自外部的压力来迫使我们与此保持一致。在这种压力下，我们总是希望以实际行动来证明我们以前的决定是正确的。我们要让自己相信，自己作出了明智的抉择，而且毫无疑问地，自我感觉良好。
+　一个例子是安利公司就要求每个销售人员都要定下一个销售目标，而且不是光说说而已，必须得写下来。书面声明之所以特别有效，原因之一是它能使目标和方向都更明确，更重要的是，它能够轻易地公之于众。一旦个人公开选择某种立场之后，马上就会有一种维持这种立场的压力，因为他想在别人眼里显得前后一致。我承认我非常讨厌这家公司，有个笑话是这样的，十年后，我们不经意间再次相遇，她低声问我：“这些年过得好吗？她对你好吧。”我很伤感，说：“我还没结婚，一直等你。”她眼圈红了红，说：“你晚上7点来宾馆找我吧。”七夕夜，月如钩，我手捧鲜花，提前半小时来到宾馆，她迎我进去，招呼我坐下，幽幽问道：“你听说过安利吗？”
+　要想戒烟或者减肥成功，这种方法是非常有效的。给自己在乎的人说自己一定要减肥成功，并且勇敢说出来，这种压力会迫使你减肥成功
+　第3种武器：社会认同
+　有点像是从众，但不完全是，社会认同原理指出，我们进行是非判断的标准之一就是看别人是怎么想的，尤其是当我们要决定什么是正确的行为的时候。如果我们看到别人在某种场合做某件事情，我们就会断定这样做是有道理的。一个很有趣的实验可以证实这一点，站在一条繁忙的人行道上，选定天空中的某一快空白，盯着看上1分钟，在这段时间里你的身边大概不会发生什么事情；第二天，你带上四五个朋友到同一地点一起往上看，不出1分钟，就会有大群路人停下来，把脖子伸得长长的，跟你们几个一起往天上看；即使是那些没有加入你们的行人，也无法阻抗那种至少往上瞄一眼的压力。
+　在形势模糊不清的时候，每个人都希望看一看别人正在做什么，从而致使一个极为重要的现象的出现――“多元无知”。这个可以很好的解释小悦悦事件，因为路人多了以后，前一个的人的行为影响了后一个人，大家都在看别人在做什么，并且人多了以后，每个人的责任感被分散，因此，施救的概率降下来了，我不是要辩护什么，而是反对喜欢扣标签的人，这件事并不能说明社会道德什么下降及其厉害，虽然有下降，这件事只是很典型的一个社会心理学实例罢了。
+　书中做出指出，如果你遇到了危难，很可能出现人很多，但没人施救。。　本书作者的建议是，当你遇到突发灾难时，直接从人群中挑出一个人来，注视着他，指着他，直接对他说：“你，蓝夹克的先生，我需要帮助，请叫一辆救护车来”，总之，在紧急状态中需要帮助时，最有效的策略是减少周围人对你的处境和他们和责任的不确定性，尽量把你所需要的帮助表达精确。不要让旁观者自己去下结论，因为社会认同原理和多元无知效应很可能使他们对你的处境作出错误的诊断，在人群中尤其如此。 这样说了以后，被指定的那个人有了一种责任感，进行施救，其他人会因为确定了状况加入救助的行列。
+　第4种武器： 喜好
+　一句话就是：人们总是比较愿意答应自己认识和喜爱的人提出的请求 ，产生喜好的来源主要有外表的吸引力，这个不多解释，美女得到的帮助在陌生的时候必其他人要多，相似性，指对和自己相似的人，比如外貌，衣着，爱好的相同都会产生；称赞，是指人们会奉承话通常来之不拒，并对奉承者产生好感，接触和合作，指一般经历了一起合作的人之间会产生明显的好感，一个有意思的例子是人们对和他们一起吃饭的人好感尤其强烈；关联，指人们会爱屋及乌，比如中国古代的近朱者赤，近墨者黑，表示的有点这个意思，人们会把你交往的人的品质关联到你自己身上，也会把你传递的消息关联上你的身上，如果你经常传递不好的消息，，你懂的。
+　要对付这么多赢取我们好感的手段，不是一件容易的事。一个有效的方法是，将注意力集中在效果而不是原因上。当我们在和那些老练的推销员打交道时，我们只需要注意一件事，我们是不是过于迅速地对这个人产生了过多的好感。一旦答案为“是”的时候，我们就该反击了。不过这个只针对于商业上的，在真实的社交中，我还是很相信一见钟情，相见恨晚的。嘻嘻。
+　第5种武器：权威
+　密歇根大学的心理学教授Mligram (1974)主持了一个实验，结果表明，具有独立思考能力的成年人也会为了服从权威的命令而做出一些完全丧失理智的事情。这可以解释那些利用各种假头衔，衣着（比如警服）来骗人的人。如何克服，两步，第一步，问自己对方是不是会真的专家，第二步问自己他是不是会为自己考虑，同时还要提防有些专家通过抛出一些自己的小缺点来增强”诚实“，表明自己的可信度。这里面有个说法是我以前在社会心理学里看到的，讲到一个演讲的成功与否很大程度上取决于权威的权威，和主题没什么太大关系，这可以解释为什么有时候听专家演讲觉得跟没听似的。。
+　第6种武器：短缺
+　短缺原理在现实生活中最常见的运用就是商家所策划的“限量版”商品。不管数量有限的信息是真的还是伪造的，商家的用意都是让顾客相信某种东西不可多得，从而立刻觉得它身价百倍。与数量有限技巧相对应得是“截止时间”策略，也就是对顾客获得推销从业者提供得商品的机会加上时间限制，所谓的“最后三天，清仓甩卖”即源于此。我家附近的最后三天已经for循环了N次了。。。
+　最后作者也认为世界还是很复杂的，有时候被影响影响也无伤大雅，因为事情太多，不可能完全兼顾，但是对于一些很重要的事情还是要注意避免这类影响。我在读的过程中，也就是书的前半段，讲到利用对比原理和喜好原理来审问犯人，一个好警察一个坏警察，来套取犯人的口供，这在法律上是许可的 ，可我却有些不好的感受，对犯人来说，他受到了心理学的影响，他以为那个警察真的关心他，他以为这个好警察真的好，可是事实上，这只是一种策略罢了，这是多么残忍的一件事啊，所以，昨天我想到了一个词，叫做反心理学，我也不知道具体想表达什么意思，可能当时想的就是避免受到这类心理学应用的影响，不被残忍对待吧。</description>
+    </item>
+    
+    <item>
+      <title>LR(1)项目集规范簇的构造</title>
+      <link>https://leizhiyuan.github.io/2012/06/02/lr1%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E7%B0%87%E7%9A%84%E6%9E%84%E9%80%A0/</link>
+      <pubDate>Sat, 02 Jun 2012 03:50:48 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/02/lr1%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E7%B0%87%E7%9A%84%E6%9E%84%E9%80%A0/</guid>
+      <description>首先我们知道LR(0)的项目的形式是[A→α·β ]这样的.而在LR(1)中的项目形式是[A→α·β ，a ]，其中A→α·β 为LR(0)项目，称为心，a为终结符或#，称为向前搜索符。对归约项目[A→α·,a]，仅当前输入符号是a时，才能用A→α进行归约。一会将会看到具体的例子。
+　课本上给出的规则是：我将要对照着规则来说明，这里要强调一下，&amp;rdquo;,&amp;lsquo;在这里是分隔符。不是终结符。他是一个标志，
+　以S′→·S，#属于初始项目集中，把&amp;rsquo;#&amp;lsquo;号作为向前搜索符，表示活前缀为γ(若γ是有关S产生式的某一右部)要归约成S时，必须面临输入符为&amp;rsquo;#&amp;lsquo;号才行。因此对初始项目S′→·S，# 求闭包后再用转换函数逐步求出整个文法的LR(1)项目集族。具体构造步骤如下：
+　(1) 构造LR(1)项目集的闭包函数。
+　a) I 的任何项目都属于CLOSURE(I) b) 若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。 c) 重复b)直到CLOSURE(I)不再增大为止。
+　(2) 转换函数的构造
+　LR(1)转换函数的构造与LR(0)的相似，GO(I,X)＝CLOSURE(J)　其中I是LR(1)的项目集，X是文法符号： J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}
+　例如下列文法G′为：
+　(0) S′→S (1) S→aAd　(2) S→bAc　(3) S→aec (4) S→bed (5) A→e　构造他的LR(1)项目集规范簇。
+　以I0=CLOSURE（S′→·S，#）开始。运算。若有项目[A→α·Bβ,a ]属于CLOSURE(I)，B→γ是文法中的产生式，β∈V*，b∈FIRST(βa)， 则[B→·γ,b]也属于CLOSURE(I)中。此时，我们可以把S看成B，#看成a，然后需要求FIRST集合，此时没有β，a为#，所以FIRST（#）中只有一个b=#，而S有四个产生式。所有四个产生式加上#都是在I0中，最终求得的I0项目集为
+　{　S′→·S,#　S→·aAd,#　S→·bAc,#　S→·aec,#　S→·bed,#　}
+　然后使用GO函数来构造I1，从J={任何形如[A→αX·β,a]的项目 | [A→α·Xβ,a]∈I}我们可以知道I1的核（最初的产生式）就是这里的J，然后呢。X是I（也就是我们的I0）中的·后面的符号，也就是输入符。。可以看到在I0中，X可以为S，a，b，我们先以I1=GO(I0,S)=CLOSURE( S′→S·,# )，注意，·号已经前进了。因为J是I输入进一的项目，求I1，发现·后面没符号了，所以闭包就是他自己了。最终求得的I1的项目集为：
+　{S′→S·,# }
+　我们上一步是用的I1=GO(I0,S)来求得，我们求I2的时候使用GO（I0，a）来求，此时X就是a了。然后我们吧I0中符合的项目中的·后移一位得到J然后对J求闭包，就是I2了。此处J=S→a·Ad,# 和S→a·ec,#</description>
+    </item>
+    
+    <item>
+      <title>Think-Aloud 可用性测试介绍</title>
+      <link>https://leizhiyuan.github.io/2012/05/29/think-aloud-%E5%8F%AF%E7%94%A8%E6%80%A7%E6%B5%8B%E8%AF%95%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Tue, 29 May 2012 09:10:22 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/29/think-aloud-%E5%8F%AF%E7%94%A8%E6%80%A7%E6%B5%8B%E8%AF%95%E4%BB%8B%E7%BB%8D/</guid>
+      <description>中文是指出声思考：出声思考。可用性测试中常用也很有用的一个数据收集方法，来改善产品。要求被测试者把在测试过程中即时的把自己的想法大声说出来。比如，你说我不知道干什么，这个好像有点问题，等等。然后有人来记录。
+SSD4给出的具体步骤翻译添加解释如下：
+ Define the study&amp;rsquo;s framework, 定义该测试报告的框架。比如系统准备解决什么问题，适合什么类型的用户，希望评估首次使用还是其他什么，希望最终的目标是什么，比如希望90%的用户可以初次顺利使用。 Choose what to observe, 选择打算观察测试者的什么行为，比如用户如何打开，先干了什么 Prepare for the think-aloud usability test, 为测试做准备，比如模拟真实情景，写个流程。开个会，招募实验人员。 Introduce the participants to the observation procedure, 给实验人员介绍步骤。抚慰一下他们的情绪。告诉他们目的，并且希望他们think aloud。 Conduct the observation, 进行观察 Analyze the observation, 分析观察结果 。 Find possible redesigns, 找到可能需要进行重新设计的地方 Write a report. 写个总结报告出来。完成 这不也就这样嘛。  </description>
+    </item>
+    
+    <item>
+      <title>UAR报告的简单说明</title>
+      <link>https://leizhiyuan.github.io/2012/05/29/uar%E6%8A%A5%E5%91%8A%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/</link>
+      <pubDate>Tue, 29 May 2012 08:15:43 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/29/uar%E6%8A%A5%E5%91%8A%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/</guid>
+      <description>UAR报告由以下几个部分构成。就这个例子简单说一下。 Example UAR — Time Zone ListBox Is Not Good //标题  #### **UAR Identifier //问题编号，从1开始，每个问题都这样的格式来说明，就构成了UAR报告** HE18—Problem //后面这个problem表示有问题，也可以是Good，表示这部分很好。没问题。 #### **Succinct description: //简短的描述** Time Zone pull-down ListBox provides too much irrelevant information. #### **Evidence for the aspect: //违反了哪条规则，共有十条规则。** Heuristic: Aesthetics and minimalist design **Interface aspect: ** The pull-down ListBox has 50 lines of information—in very small font. There are many competing items of information to visually search, the vast majority of which are irrelevant to any one user&#39;s particular task of finding a single desired time zone &amp;nbsp; [!</description>
+    </item>
+    
+    <item>
+      <title>VS2010 编译安装boost库</title>
+      <link>https://leizhiyuan.github.io/2012/05/24/vs2010-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85boost%E5%BA%93/</link>
+      <pubDate>Thu, 24 May 2012 11:39:55 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/24/vs2010-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85boost%E5%BA%93/</guid>
+      <description>实践是最好的办法。。学习C++，想试试线程，然后打算用boost库，结果boost库编译差点吓到我。。没看到比较完整的安装教程。。一直耽搁。今天动手。完成了。方法记录如下： 1.下载boost 从boost官网( http://www.boost.org )上下载最新的boost版本，现在最新是1.49版本，解压到自定义目录(我解压到了D:/program files,最终的目录结构是D:\Program Files\boost_1_49_0)
+2.编译安装
+在D:\Program Files\boost_1_49_0的目录下，有一个bootstrap.bat文件，直接双击运行。就会在同目录生成b2.exe；bjam.exe两个文件。
+3.设定编译环境 修改user-config.jam (D:\Program Files\boost_1_49_0\tools\build\v2\user-config.jam) 的MSVC configuration
+MSVC configuration Configure msvc (default version, searched for in standard locations and PATH). using msvc ; 在上面这段的下面直接添加如下的文字。 using msvc : 10.0 : :/wd4819/D_CRT_SECURE_NO_DEPRECATE/D_SCL_SECURE_NO_DEPRECATE/D_SECURE_SCL=0 ; 保存关闭。
+4.开始编译 点击开始-&amp;gt;所有程序-&amp;gt;“Microsoft Visual Studio 2010”，指向“Visual Studio tools(工具)”，然后单击“Visual Studio 2010 command prompt（命令提示）” 使用cd切换到D:\Program Files\boost_1_49_0目录。这个就不说了 然后输入如下的代码： b2 toolset=msvc-10.0 architecture=x86 instruction-set=i686 address-model=32 link=static variant=debug,release threading=multi runtime-link=shared &amp;ndash;without-python &amp;ndash;without-mpi &amp;ndash;without-wave &amp;ndash;without-graph &amp;ndash;without-math &amp;ndash;without-serialization stage &amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; 独立引用，为什么？</title>
+      <link>https://leizhiyuan.github.io/2012/05/23/c---%E7%8B%AC%E7%AB%8B%E5%BC%95%E7%94%A8%E4%B8%BA%E4%BB%80%E4%B9%88/</link>
+      <pubDate>Wed, 23 May 2012 07:25:04 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/23/c---%E7%8B%AC%E7%AB%8B%E5%BC%95%E7%94%A8%E4%B8%BA%E4%BB%80%E4%B9%88/</guid>
+      <description>问题：
+I read in some good C++ tutorial that independent references do exist, and act like aliasing. 我读了一些好的C++文章，发现独立引用确实存在，并且很像别名。 But&amp;hellip; I wonder what it is made for. 但是，，，我想知道他适用于什么情况。 Why should one want to use aliasing.Besides, some piece of code that is not clear to me: 为什么有人想使用别名呢，另外，下面这段代码我不太清楚。 int a; int &amp;amp;ref = a; // independent reference int b = 19; ref = b; cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt; &amp;ldquo; &amp;rdquo; &amp;lt;&amp;lt; ref &amp;lt;&amp;lt; &amp;ldquo;\n&amp;rdquo;; ref&amp;ndash;; cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt; &amp;ldquo; &amp;rdquo; &amp;lt;&amp;lt; ref &amp;lt;&amp;lt; &amp;ldquo;\n&amp;rdquo;;</description>
+    </item>
+    
+    <item>
+      <title>c &amp; c&#43;&#43;中sizeof返回值不同?</title>
+      <link>https://leizhiyuan.github.io/2012/05/22/c--c--%E4%B8%ADsizeof%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%8D%E5%90%8C/</link>
+      <pubDate>Tue, 22 May 2012 11:28:27 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/22/c--c--%E4%B8%ADsizeof%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%8D%E5%90%8C/</guid>
+      <description>问题: A character array is defined globally and a structure with same name is defined within a function. 一个字符数组被定义为全局变量，一个相同名字的结构体被定义在一个函数内部。
+Why sizeof operator returns different values for c &amp;amp; c++ ? 为什么sizeof操作符对于C和C++返回了不同的值呢？ char S[13]; void fun() { struct S { int v; }; int v1 = sizeof(S); } // returns 4 in C++ and 13 in C 答案： Because in C++, the struct you defined is named S, while in C, 因为在C++中，你定义的结构体的名称是S，而在C中，</description>
+    </item>
+    
+    <item>
+      <title>快速排序算法</title>
+      <link>https://leizhiyuan.github.io/2012/05/19/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Sat, 19 May 2012 09:04:40 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/19/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
+      <description>#include  using namespace std; //化分区间,找到最后元素的排序位置。并返回分隔的点（即最后一数据排序的位置）。 //划分的区间是[nBegin, nEnd). pData是保存数据的指针 int Partition(int* pData, int nBeging, int nEnd) { int i = nBeging - 1; //分隔符号，最后nD保存在这里 --nEnd; int nD = pData[nEnd]; //比较的数据。 int nTemp; // 交换用的临时数据 //遍历数据比较，找到nD的位置，这里注意，比较结果是, //i的左边是小于等于nD的，i的右边是大于nD的 for (int j = nBeging; j = nEnd -1) //如果区域不存在或只有一个数据则不递归排序 { return 1; } //这里因为分割的时候，分割点处的数据就是排序中他的位置。 //也就是说他的左边的数据都小于等于他，他右边的数据都大于他。 //所以他不在递归调用的数据中。 int i = Partition(pData, nBeging, nEnd); //找到分割点 QuickSortRecursion(pData, nBeging, i); //递归左边的排序 QuickSortRecursion(pData, i + 1, nEnd); //递归右边的排序 return 1; } //快速排序 int QuickSort(int* pData, int nLen) { //递归调用，快速排序。 QuickSortRecursion(pData, 0, nLen); return 1; } int main() { int nData[10] = {5,9,3,2,1,6,20,45,88,75}; //测试数据 QuickSort(nData, 10); //调用快速排序 for (int i = 0; i </description>
+    </item>
+    
+    <item>
+      <title>对象数组的Xml序列化和反序列化</title>
+      <link>https://leizhiyuan.github.io/2012/05/18/%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84%E7%9A%84xml%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</link>
+      <pubDate>Fri, 18 May 2012 09:38:27 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/18/%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84%E7%9A%84xml%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</guid>
+      <description>使用Serialization来进行序列化和反序列化，因此需要引入System.Xml.Serialization；命名空间。
+为什么要做序列化和反序列化？ .Net程序执行时，对象都驻留在内存中；内存中的对象如果需要传递给其他系统使用；或者在关机时需要保存下来以便下次再次启动程序使用就需要序列化和反序列化。
+本文的原始例子在参考文中，但是参考文中没有给出反序列化的例子，且xml文件不清晰。于是修改了代码，同时实现对象数组序列化和反序列化。
+using System; using System.Collections.Generic; using System.Linq; using System.Text; using System.Xml.Serialization; using System.IO; namespace UseXmlSerialization { class Program { static void Main(string[] args) { //声明一个猫对象 var cWhite = new Cat { Color = &#34;White&#34;, Speed = 10, Saying = &#34;I am a good WHITE cat&#34; }; var cBlack = new Cat { Color = &#34;Black&#34;, Speed = 10, Saying = &#34;I am a good BLACK cat&#34; }; CatCollection cc = new CatCollection { Cats = new Cat[] { cWhite, cBlack } }; //序列化这个对象 XmlSerializer serializer = new XmlSerializer(typeof(CatCollection)); StringWriter sw = new StringWriter(); serializer.</description>
+    </item>
+    
+    <item>
+      <title>修改Windows系统软件默认安装路径</title>
+      <link>https://leizhiyuan.github.io/2012/05/17/%E4%BF%AE%E6%94%B9windows%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E9%BB%98%E8%AE%A4%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/</link>
+      <pubDate>Thu, 17 May 2012 06:02:51 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/17/%E4%BF%AE%E6%94%B9windows%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E9%BB%98%E8%AE%A4%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/</guid>
+      <description>作为一个完全不能容忍windows默认程序都往C:\Program Files\目录里安装的人。每次安装软件的时候，都得手动一个个改到D:\Program Files里。安装软件多了。就hold不住了。
+　其实可以通过注册表使得所有安装程序默认安装到其他盘的。将下列内容保存到一个文本文件里，命名为Mo.reg。然后运行即可。以后安装的程序就会默认安装到D盘的Program Files目录了。你也可以根据需要自行修改
+　　Windows Registry Editor Version 5.00
+　;修改Windows系统软件默认安装路径
+　[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion]
+　&amp;rdquo;ProgramFilesDir&amp;rdquo;=&amp;ldquo;D:\Program Files&amp;rdquo;
+　 效果如下图，安装程序已经默认到D盘了 
+update:已知后遗症，我在这样实践了以后，发现vs2010的.net framework 4将会丢失。也就是说就不能新建.net framework 4项目了，具体不明，可能是我当初把VS一部分安装到D盘的缘故，应该可以通过重新安装vs解决，如果你不想折腾。把注册表改回去就可以了。</description>
+    </item>
+    
+    <item>
+      <title>一个简单实例的LR分析过程</title>
+      <link>https://leizhiyuan.github.io/2012/05/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B%E7%9A%84lr%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Mon, 14 May 2012 11:38:49 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B%E7%9A%84lr%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B/</guid>
+      <description>经过前面两篇文章。已经讲清楚了LR语法分析中最重要的分析表的构造过程。先补充一个小问题，就是LR(0)项目的分类
+　根据圆点所在的位置和圆点后是终结符还是非终结符或为空把项目分为以下几种：
+　移进项目： 形如 A→α .a β ，a是终结符, a ,b∈V* 以下同 待约项目：A→α .B β , 其中B是非终结符　归约项目：A→α . 表明产生式已分析完成。　接受项目：形如 S’→S .　特别的。A→ε的LR(0)项目只有A→ • 是归约项目
+　因为LR分析表的构造前面两篇文章已经讲的很清楚了，所以这个题目重要是解释一下如何使用分析表来构造，分析表的构造也许你得自己参考前面两篇文章来构造了。题目来自网络。
+　好，下面看题目，已知文法G[S]：
+　(1) S → aAcBe (2) A → b　(3) A → Ab　(4) B → d
+　写出对输入串 abbcde#的LR分析 过程。
+　在分析的时候，因为我们的手工分析，所以还需要一个表来记录我们的步骤。否则记不住啊。该表共需7列。行数不定。做到哪是哪。
+　步骤 符号栈 输入符号栈 动作 状态栈 ACTION GOTO 
+　其中，步骤就是从1向下递增。符号栈用来保存运算中的结果，初始为#，输入符号栈保存输入串，初始值为给定的。动作里面就是用来注释是进行移进，还是规约。状态栈就是保持LR分析表的那个状态了。Action 和Goto同理
+　通过前两篇文章的步骤，此题可以构造出如下的一张LR分析表</description>
+    </item>
+    
+    <item>
+      <title>LR(0)和SLR分析表的构造</title>
+      <link>https://leizhiyuan.github.io/2012/05/13/lr0%E5%92%8Cslr%E5%88%86%E6%9E%90%E8%A1%A8%E7%9A%84%E6%9E%84%E9%80%A0/</link>
+      <pubDate>Sun, 13 May 2012 10:45:13 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/13/lr0%E5%92%8Cslr%E5%88%86%E6%9E%90%E8%A1%A8%E7%9A%84%E6%9E%84%E9%80%A0/</guid>
+      <description>上篇文章中，我已经说到了，LR(0)分析表是LR(0)分析器的重要组成部分，它是总控程序分析动作的依据，他是由LR(0)项目集规范族来进行构造的。他的结构主要有两个部分ACTION 和GOTO
+　先看看指导原则，可以直接跳过，看例题的时候可以返回来对照参考。
+　假设已构造出LR(0)项目集规范族为：C={I0,I1, … , In}，其中Ik为项目集的名字，k为状态名，令包含S′→·S项目的集合Ik的下标k为分析器的初始状态。那么分析表的ACTION表和GOTO表构造步骤为：
+　① 若项目A→α·aβ属于Ik且转换函数GO(Ik,a)= Ij，当a为终结符时则置ACTION[k,a]为Sj。　② 若项目A→α· 属于Ik，则对任何终结符a 和&amp;rsquo;#&amp;lsquo;号置ACTION[k,a]和ACTION[k,#]为&amp;rdquo;rj&amp;rdquo;，j为在文法G′中某产生式A→α的序号。 ③ 若GO(Ik,A)＝Ij，则置GOTO[k,A]为&amp;rdquo;j&amp;rdquo;，其中A为非终结符。　④ 若项目S′→S·属于Ik，则置ACTION[k,#]为&amp;rdquo;acc&amp;rdquo;，表示接受。 ⑤ 凡不能用上述方法填入的分析表的元素，均应填上&amp;rdquo;报错标志&amp;rdquo;。为了表的清晰我们仅用空白表示错误标志。
+　上篇文章的例题是这样的：LR（0）项目集规范簇也已经算出来了，共有6个I，从I0-I5，最终构造的LR(0)的分析表共7行，包括标题行，也就是ACTION和GOTO，然后是状态行，状态行和ACTION的交处分割成三列，分别是终结符号，和#终结符。也就是分割多少列取决于终结符的数目，GOTO列是非终结符，分割多少列也取决于非终结符的数目。，然后就是具体的6个状态了，画出表的结构后，如下，先不用管表的内容怎么写。
+　
+　然后对照构造原则来填写表，这时你会发现要一个个从那么多的GO函数和I项目组中找对应的式子实在太难了，看不清楚，这时候，我们用GO函数把LR(0)项目集规范族连成一个识别该文法所产生的活前缀的DFA，有点像流程图了，首先把各个I项目画出来，然后需要把他们的关系表示出来，关系由GO函数确定，比如I5=GO(I2, S)，则在I2和I5之间画一个箭头，由I2指向I5，线上写上S，由括号里的第二个值确定，此题构造的DFA如下图，很简单吧。
+　
+　然后我们正式开始吧。第一条指导规则说到， 若项目A→α·aβ属于Ik且转换函数GO(Ik,a)= Ij，当a为终结符时则置ACTION[k,a]为Sj，我们先考察对于I0，发现S-&amp;gt;·aS属于I0，且GO(I0,a)=I1,所有我们ACTION[0,a]置为S1.同理S-&amp;gt;·bS属于I0，GO(I0,b)=I2，所以ACTION[0,b]置为S2。
+　再来看第二条规则，若项目A→α· 属于Ik，则对任何终结符a 和&amp;rsquo;#&amp;lsquo;号置ACTION[k,a]和ACTION[k,#]为&amp;rdquo;rj&amp;rdquo;，j为在文法G′中某产生式A→α的序号，也就是说这里的j可不是I项目的标号，而是增广文法
+　(0)S’→S　(1)S→aS　(2)S→bS (3)S→a
+　的标号，从0-3啦。我们考察I1，发现S→·aS属于I1，且GO(I1,a)=I1，所以应该置1和a的交的格子为S1，但是此时运用第二条规则会发现S-&amp;gt;a·也属于I1，则又应该置ACTION[1,a]为=r3，ACTION[1,#]为r3，这样就发生了冲突。这是因为大多数文法不能满足LR(0)文法的条件，对于此冲突，我们不能确定看到S-&amp;gt;a的时候是规约还是移进，有些文法是可以直接构造的，为此，此处不能够早LR(0)分析表了，我们构造经过改进后得到了一种新的SLR(1)文法，并没有什么太大差别，主要就是解决冲突。
+　解决冲突的指导原则如下：
+　* 假设一个LR（0）项目集规范族中有如下项目集合：
+　{X → α.bβ，A → γ.，B → δ.}
+　即存在移进-归约冲突和归约-归约冲突
+　* 如果FOLLOW（A）∩ FOLLOW（B）∩ {b} =ф，则可以如下来解决冲突（假设当前符号是 a ）：　1、若 a = b，则移进 2、若 a∈ FOLLOW（A），则用产生式 A → γ归约　3、若 a∈ FOLLOW（B），则用产生式 B → δ归约　4、否则，报错</description>
+    </item>
+    
+    <item>
+      <title>LR(0)项目集规范族的构造</title>
+      <link>https://leizhiyuan.github.io/2012/05/12/lr0%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E6%97%8F%E7%9A%84%E6%9E%84%E9%80%A0/</link>
+      <pubDate>Sat, 12 May 2012 10:38:38 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/12/lr0%E9%A1%B9%E7%9B%AE%E9%9B%86%E8%A7%84%E8%8C%83%E6%97%8F%E7%9A%84%E6%9E%84%E9%80%A0/</guid>
+      <description>此文略长。我也没想到这写起来这么多，但对构造过程绝对清楚，一步步慢慢看吧。
+　LR的第一个L和LL的第一个L含义相同，即从左到右扫描句子 ，第二个R表示Right most最右推导。
+　在通常的描述中，后面还有一个括号里面的数字如，LR(0)、LR(1)这样，括号里面的数字表示用于决策所需的后续token分词数。
+　首先看一下LR分析器的模型图
+　
+　可惜看出，LR分析器最关键的部分就是 LR分析表了，而LR分析表的构建是由已构造出的LR(0)项目集规范族来进行构造的。LR分析法貌似是不要求掌握的，而且这部分比我想象的还要复杂，今天看了好多。才勉强搞清楚这个项目集规范族的构造，但是用来锻炼思维确实不错啊。
+　项目集，那么字面上看就是项目的集合了，项目是什么呢。这个也确实不好说，书上是说在文法G中每个产生式的右部适当位置添加一个圆点构成LR(0)项目，举个例子吧。
+　比如对于
+　A-&amp;gt;xyz
+　这条产生式可以构造的LR(0)项目就有4个
+　A-&amp;gt;.xyz A-&amp;gt;x.yz A-&amp;gt;xy.z A-&amp;gt;xyz.
+　这样很清楚了吧，就是用.分割。这个分割产生的四个项目在进行真正的语法分析的时候对应不同的操作，比如规约还是移位。这里不讨论。重点是项目集规范族的构造，
+　在知道了LR(0)项目后，可以来看看项目集规范族的定义，
+　对于构成识别一个文法活前缀的DFA项目集(状态)的全体我们称之为这个文法的LR(0)项目集规范族。至于什么是活前缀呢，定义如下
+　对于任一文法G[S]，若S’经过任意次推导得到αAω，继续经过一次推导得到![]}/images/6b23dd171a1f672514a2dbb29175df032a1f63d4.gif)αβω，若γ是αβ的前缀，则称γ是G的一个活前缀。
+　现在知道了LR(0)项目，了解了活前缀，和项目集规范族的定义，还须引入LR(0)项目集的闭包函数CLOSURE和状态转换函数GO两个概念，先给出数学上的定义，如果你觉得麻烦可以跳过，后面会给出一道例题。
+　① 闭包函数CLOSURE(I)的定义如下：
+　a）I的项目均在CLOSURE(I)中。
+　b）若A→α·Bβ属于CLOSURE(I)，则每一形如B→·γ的项目也属于CLOSURE(I)。
+　c）重复b)直到不出现新的项目为止。即CLOSURE(I)不再扩大。
+　② 转换函数GO(I，X)的定义：
+　GO(I，X)＝CLOSURE(J)
+　其中：I为包含某一项目的状态，就是前面我们说的那四个了。，X为一文法符号，X∈(VN∪VT)，J＝{任何形如A→αX·β的项目| A→α·Xβ属于I}。
+　这样就可以使用闭包函数和转换函数构造文法G′的LR(0)项目集规范族，其步骤如下：
+　a）置项目S′→·S为初态集的核，然后对核求闭包，CLOSURE({S′→·S}）得到初态的项目集。 b）对初态集或其它所构造的项目集应用转换函数GO(I，X)=CLOSURE(J)，求出新状态J的项目集。 c）重复b）直到不出现新的项目为止。
+　开始拿个例题来说明，定义没例题看起来看难了。
+　例题：对于下列文法，S→aS|bS|a，构造该文法的LR(0)项目集规范族
+　思路就是利用闭包函数CLOSURE和转换函数GO来构造。通过计算函数CLOSURE和GO得到文法的LR(0)项目集规范族，而GO函数则把LR(0)项目集规范族连成一个识别该文法所产生的活前缀的DFA。DFA大家都知道，有穷自动机。
+　(1)将文法G(S)拓广为G(S’)也就是该文法的增广文法，目的是使语法分析器知道何时应该停止并接受该串，也就是说当使用S&amp;rsquo;-&amp;gt;S进行规约的时候，就结束。
+　(0)S’→S (1)S→aS　(2)S→bS　(3)S→a</description>
+    </item>
+    
+    <item>
+      <title>《乌合之众》笔记下部</title>
+      <link>https://leizhiyuan.github.io/2012/05/11/%E4%B9%8C%E5%90%88%E4%B9%8B%E4%BC%97%E7%AC%94%E8%AE%B0%E4%B8%8B%E9%83%A8/</link>
+      <pubDate>Fri, 11 May 2012 09:20:58 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/11/%E4%B9%8C%E5%90%88%E4%B9%8B%E4%BC%97%E7%AC%94%E8%AE%B0%E4%B8%8B%E9%83%A8/</guid>
+      <description>看完了下部，本书绝对是群体心理学的经典。没有废话，180多页的小册子讲的非常非常好。 执政府和帝国的具体工作就是用新的名称把过去大多数的制度重新包装一遍，用新名词代替那些能够让群众想起不利形象的名称。因为新鲜能够防止这种联想。
+　统治者的艺术，就像律师的艺术，首先在于驾驭辞藻的学问。
+　推动各民族演化的主要因素，永远不是真理，而是谬误。
+　社会主义的谬误，群众从来不渴求真理，他们需要对他们有诱惑力的谬误，凡是能供应幻觉的，都是他们的主人，使他们幻灭的。都将成为牺牲品。
+　尽管存在着理性，文明的动力仍然是各种感情&amp;ndash;譬如尊严，自我牺牲，宗教信仰，爱国主义以及对荣誉的爱
+　只要有一些生物聚集在一起，不管是人还是动物，都会本能的让自己处在一个头领的统治之下。
+　头脑敏锐，深谋远虑的人往往不能成为群体领袖，因为他们这种品质会让人犹疑不决，而那些有毛病的，兴奋的人则可能。
+　在群体的灵魂中，占上风的，不是对自由的追求，而是当奴才的欲望。
+　领袖的动员手段：断言，重复和感染。
+　传染的威力很大，不但能迫使个人接受某些意见，而且能让他接受一些感情模式。
+　名望是某个人，某本著作，或是某种观念对我们头脑的支配力。会麻痹我们的批判能力。让我们充满惊奇和敬畏。名望的特点就是阻止我们看到事物的本来面目。
+　用一时的意见影响群众的头脑不难，想让一种信念在其中长久扎根却极为不易。
+　一种信念开始衰亡的确切时刻很容易辨认-他的价值开始受到质疑。不过即使已经摇摇欲坠，根据他建立的制度依然会保持其力量，消失的十分缓慢
+　需要一种普遍信念来支持一个国家。实干家一心要让这种普遍接受的信仰变成现实，立法者一心想把他付诸实行，哲学家，艺术家和文人全都醉心于如何以各种不同的方式表现他。
+　今天的社会主义信念虽然有明显的破绽，但并没有阻止他赢得群众。他的力量的增长只能到他获得胜利，掌权的那一天为止。
+　报纸媒体不断把对联意见带给人们，由于受到对立意见的暗示作用的破坏，结果任何意见都难以普及，他们全都成了过眼烟云。一种意见还没来得及被足够多的人接受。就已经寿终正寝。
+　报业既然成了仅仅提供信息的部门，也就放弃了让人接受某种观念或学说的努力。
+　如果有什么事情能够推迟一种文明的毁灭的话，那就是极不稳定的群众意见，以及他们对一切普遍信仰的麻木不仁。
+　两类群体：异质性，街头，议会。同质性，派别，身份
+　杰出律师的主要用心在于，打动陪审团的感情，不需要太多论证，留心他们，得出自己的结论，确定那些人赞同，转向不赞同的人。
+　选民群体属于异质性群体，他们极少推理，没有批判精神，轻信，易怒而且头脑简单。
+　选民的心理和其他群体一样：既不更好，也不更差。
+　文明是少数智力超常的人的产物，他们构成了金字塔的顶点，随着金字塔各个层次加宽，智力越来越少，如果一个伟大的文明仅仅以人多势众自夸的低劣成员的选票。是无法让人放心的。
+　领袖的影响力只在很小的程度上是因为他们提出的论据，而在很大程度上来自他们的名望，一旦他们不知道什么原因威信扫地，他们的影响力也将随之消失。
+　在政治集会中，才华横溢者无任何作用。伟大的民众领袖头脑的狭隘令人瞠目
+　演讲者演说的成功与否很大程度上也取决于自己的名望。
+　由法律专家制定的法律是最好的法律，因为他是个人的产物，只有当一系列修正案把他们变成集体努力的产物的时候，才可能产生灾难性的后果。
+　表面自由的增加，必然伴随着真正自由的减少。
+　各国被一种谬见所蒙蔽，就是认为保障自由与平等的最好办法就是制定法律，结果使人变成奴才。
+　人们似乎热爱自由，其实只是痛恨主子 -托克维尔。</description>
+    </item>
+    
+    <item>
+      <title>《乌合之众》笔记上部</title>
+      <link>https://leizhiyuan.github.io/2012/05/10/%E4%B9%8C%E5%90%88%E4%B9%8B%E4%BC%97%E7%AC%94%E8%AE%B0%E4%B8%8A%E9%83%A8/</link>
+      <pubDate>Thu, 10 May 2012 20:50:18 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/10/%E4%B9%8C%E5%90%88%E4%B9%8B%E4%BC%97%E7%AC%94%E8%AE%B0%E4%B8%8A%E9%83%A8/</guid>
+      <description>今天本来是打算写篇关于LR型语法分析的总结的。结果因为各种原因错过了。可能我还是有轻微的拖延症吧。但是还是非常给力的。今天在读这本书-乌合之众-大众心理研究，本来就想着也就不到200页的书，几个小时就看完了，结果真正看了以后，一阵惊叹啊。信息量很大，现在才看到84页。不过笔记已经写了2000字了。为了避免文章太长。先分享这两千字。明天看完了后半部分，再分享。
+　群体的无意识行为代替了个人的有意识行为，是目前这个时代的主要特征之一。
+　社会组织就像一切生命有机体一样复杂，我们还不具备强迫他们在突然之间发生深刻变革的智力。
+　对于一个民族有致命危险的，莫过于他热衷于重大的变革。无论这些变革从理论上来说多么的出色。如果它能够使民族气质即刻产生变化，才能说他是有用的，只有时间才具备这样的力量，
+　如果有关某种形态的知识只有少数有学问的人才能掌握，那他也没有多少意义了。
+　造成文明洗心革面的唯一重要的变化，是影响到思想，观念和信仰的变化，令人难忘的历史事件，不过是人类思想不露痕迹的变化所造成的可见后果而已。
+　群体的力量会成为唯一无可匹敌的力量，我们要进入的时代，就是一个群体的时代。
+　群体不善推理，却急于采取行动，他们目前的组织赋予他们巨大的力量。
+　科学为我们许诺的是真理，从未许诺过和平或幸福，他对我们的感情无动于衷，对我们的哀怨不闻不问。
+　历史告诉我们，当文明赖以建立的道德因素失去威力时，他的最终解体总是有无意识的野蛮群体完成的，
+　创造和领导着文明的，历来就是少数知识贵族而不是群体，群体只具有强大的破坏力。
+　不管情况如何，我们注定要屈从于群体的势力，这是因为群体的目光短浅，使得有可能让他守规矩的所有障碍已经被一一清除。
+　一个心理群体表现出来的最惊人的特点是：不论他们是谁，他们变成了一个群体这个事实，使他们获得了一种集体信息，这是他们的感情，思想和行为变得与他们独自一人时颇为不同，
+　群体一般只有很普通的品质，他削弱了个人的优秀品质，这一事实解释了为何他不能完成需要高智力的工作，群体中累加在一起的只有愚蠢而不是天生的智慧。
+　从数量上来看，群体的个人会感觉到一种势不可挡的力量，使他敢于发泄出自己本能的欲望。而独自一人时，则必须克制欲望，因为他觉得：群体是个无名氏，不许承担责任。
+　还有就是群体的传染性，每种感情和行动都有传染性，其程度足以使个人随时准备为群体利益牺牲他的个人利益。这与人的天性相对立，如果不是群体的一员，很少具备这样的能力
+　长时间融入群体行动的个人，不就会发现，或许是因为在群体发挥催眠影响的作用下，自己进入一种特殊状态，类似于被催眠，变成了受人支配的无意识的努力，有意识的人格消失的无影无踪，意识和辨别力也不复存在。
+　1989年8月4日，的晚上，法国的贵族一时激情澎湃，毅然投票放弃了自己跌特权。所以说，群体有时候也是英雄群体。
+　群体容易被暗示，会随时听命于一切暗示。失去了批判能力。
+　不要相信童言无忌，儿童一直就在撒谎。
+　群体情绪的简单和夸张所造成的结果是，他全然不知怀疑和不确定性为何物，他就像女人一样，一下子就会陷入极端，怀疑一说出口，立刻就会变成不容辩驳的证据。
+　群体只知道简单而极端的感情;提供给他们的各种意见，想法和信念，他们或者全盘接受，或者一概拒绝，将其视为绝对真理或绝对谬论。
+　群体中只要有人在他们之间山东，他们随时都会付诸行动，群体对强权俯首帖耳，却很少为仁慈心肠所动，他们认为那不过是软弱可欺的另一种形式。他们的同情心从而不听命于作风温和的主子，而是只向眼里欺压他们的暴君低头。他们总是为这种人塑其最壮观的雕像。
+　群体强烈的守着无意识因素的支配，因此很容易屈从于世俗的等级制，难免会十分保守，对他们撒手不管，很快他们就会对混乱感到厌倦，本能的变成奴才。
+　观念只有采取简单明了的形式，才能被群体所接受，因此它必须经过一番彻底的改造，才能变得通俗易懂。
+　就观念来说，群体总是落后于博学之士和哲学家好几代人。
+　群体形象化的想象力不但强大而活跃，并且非常敏感。历史上，表相总比真相起着更重要的作用，不现实的因素总比现实的因素更加重要。
+　不管刺激群体想象力的是什么，采取的形式都应该具有鲜明形象。没有任何多余的解释。比如死亡人数。
+　如果一个民族使自己的习俗变得过于牢固，他便不会再发生变化，于是就像中国一样，变得没有改进能力。在这种情况下，暴力革命也没有多少用处，因此由此造成的结果，或者是打碎的锁链被重新拼接在一起，让整个过去原封不动的再现，或者是对被打碎的事务撒手不管，衰败很快被无政府状态所取代。因此对于一个民族来说，理想的状态是保留过去的制度，用一种不易察觉的方式一点点的加以改进。
+　群体具有保守主义精神，即使被狂暴的反叛最终也只会造成一些嘴皮子上的变化。
+　各民族是受着自己的性格支配的，凡是与这种性格不合的模式，都不过是借来的外套，一种暂时的伪装。
+　教育既不会使人变得更加道德，也不会使人更幸福，他既不能改变他的本能，也不能改变他的热情。。。害处远大于好处。
+　掌握一些派不上用场的知识，是让人造反的不二法门
+　生活中取得成功的条件是判断力，经验，开拓精神，和个性。非课本能带来。
+　大学毕业，一个充分发展的人诞生，但筋疲力尽，成家立业，落入生活的俗套，只要落入这种俗套，他就会把自己封闭在狭隘的职业中，工作还算本分，但仅此而已，这就是平庸的生活。
+　因为各种词语和套话的力量而死去的人，只要用他们的尸骨，就能建造一座比古老的齐奥普斯更高的金字塔。</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;回调函数</title>
+      <link>https://leizhiyuan.github.io/2012/05/09/c--%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Wed, 09 May 2012 21:04:37 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/09/c--%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/</guid>
+      <description>回调函数就是一个通过函数指针调用的函数。如果你把函数的指针(地址)作为参数传递给另一个函数，当这个指针被用为调用它所指向的函数时，我们就说这是回调函数。
+　也就是说，回调函数它首先是一个函数，然后有一个指针指向它（该指针称为函数指针），在别的代码块中，通过这个函数指针调用了这个函数，仅此而已。
+　下面给出一个例子，我写出了比较详细的注释。希望足够清晰。这个例子说明了，回调函数可以把调用者和被调用者分开，对于调用者来说，只需要知道自己要调用一个函数，该函数有一个string类型的参数，至于具体调用哪个，被调用的函数到底怎么执行，怎么解释该参数，是完全不用关心的。 #include 
+#include 
+using namespace std;
+typedef void (*PF)(string s); //定义一个名为PF的函数指针，该指针指向一类函数，该类函数有一个string类型的参数，返回值为void。
+void funcOne(string s) //回调函数1
+{
+cout &amp;lt;&amp;lt; s+&amp;rdquo; One&amp;rdquo;&amp;lt;&amp;lt; endl;
+}
+void funcTwo(string s) //回调函数2 {
+cout &amp;lt;&amp;lt; s+&amp;rdquo; Two&amp;rdquo;&amp;lt;&amp;lt; endl;
+}
+void caller( PF pf, string s) //调用函数
+{
+cout &amp;lt;&amp;lt; &amp;ldquo;I am Caller Function&amp;rdquo; &amp;lt;&amp;lt; endl;
+pf(s);
+}
+int main()
+{
+string str = &amp;ldquo;Test CallBack Function&amp;rdquo;;
+PF pf1 = funcOne; //实例化一个函数指针，指向func函数</description>
+    </item>
+    
+    <item>
+      <title>图片压缩工具源码（C#）</title>
+      <link>https://leizhiyuan.github.io/2012/05/04/%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7%E6%BA%90%E7%A0%81c/</link>
+      <pubDate>Fri, 04 May 2012 08:17:30 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/04/%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7%E6%BA%90%E7%A0%81c/</guid>
+      <description>以前在用一个破解版的图片压缩工具。今天早上想想自己也试着做一个吧。查了一些资料。参考了一些代码。总算是写出来了。其实关键代码很简单。主要还是画界面，处理边界。。 看下效果图  处理图像的关键代码是这样的： bmp = new Bitmap(width, height); //创建一张空白画布 grap = Graphics.FromImage(bmp); //以该画布创建一个绘图对象 //平滑的高品质，抗锯齿 grap.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality; //HighQualityBicubic 是质量最好的绘图模式 grap.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic; grap.DrawImage(img, new Rectangle(0, 0, width, height)); //用选中的原图在画布上绘图 bmp.Save(topath, System.Drawing.Imaging.ImageFormat.Jpeg); //对图像压缩后保存 
+另外一个就是空间的tip功能，vs2010中貌似已经不支持直接使用属性来设置tip了。所以用到了ToolTip类，使用方法如下，你也可以先导入库，然后简写，ToolTip对象可以给窗体的控件设置提示。主要是第二句话，第一个参数是控件名，第二个参数是提示文本，最好将这两句放入窗体的Load方法中 ToolTip toolTip = new System.Windows.Forms.ToolTip(); toolTip.SetToolTip(this.lboxPicPath, &amp;ldquo;双击可删除不需要的图片&amp;rdquo;);  
+还有一些边界，比如只接受数字数字之类的，我在代码里给出了详细的说明。实用工具的效果自行测试。对大图片效果最好。
+源码下载：图片压缩工具源码</description>
+    </item>
+    
+    <item>
+      <title>操作系统知识点汇总(上)</title>
+      <link>https://leizhiyuan.github.io/2012/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB%E4%B8%8A/</link>
+      <pubDate>Wed, 18 Apr 2012 14:56:32 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB%E4%B8%8A/</guid>
+      <description>这两天为了考试看完了操作系统习题与解析 写了一些笔记，然后今天整理成电子版，，我去。写完发现2500字了都.唉，苦啊。。顺序没有过多整理。也能加深印象，太长了，还是分成两篇。此为上 
+操作系统的发展与形成：1.手工操作阶段，2.脱机输入输出阶段，3.批处理技术，4.多道程序设计技术。
+操作系统的基本类型：1.批处理，2.分时，3.实时。
+操作系统的特征：并发，共享，虚拟性，不确定性
+实时操作系统必须在规定时间内处理完来自外部的事件。。
+现代操作系统的两个基本特征是并发和共享
+内部命令是由系统定义的，常驻内存的处理程序的集合。
+操作系统的结构层次： 裸机-》cpu调度-》内存管理-》设备管理-》文件管理-》作业管理-》命令管理-》用户
+程序顺序执行的特征。顺序性。封闭性，可再现性。
+程序并发执行的特征：间断性，失去封闭性，不可再现性。
+进程的几个基本状态：就绪，执行，阻塞。
+引入进程的目的是使多道程序并发执行，以改善资源利用率，及提高系统吞吐量，而引入线程，则是为了减少并发执行所付出的时空开销，具有更好的并发性。
+每个进程中，访问临界资源的那段程序称之为临界区。
+进程互斥的准则；1.空闲放进，2.忙则等待，3.有限等待，4.让权等待
+管程：局部于管程的共享变量说明了对该数据结构进行操作的一组过程，以及局部与管程的数据设置初始值。
+P，V操作是低级进程通信原语。原语是对进程进行管理和控制的。进程不是指令的集合。
+创建原语的主要工作：向系统申请一个空闲PCB，并为创建进程分配必要的资源，然后初始化PCB，并插入到就绪队列。返回进程的标识号
+一个进程会唤醒，指的是进入就绪状态。
+资源分配的基本单位是进程，CPU分配的基本单位是线程。
+进程的基本特征：
+ 动态性：进程的实质是程序的一次执行过程，进程是动态产生，动态消亡的。 并发性：任何进程都可以同其他进程一起并发执行 独立性：进程是一个能独立运行的基本单位，同时也是系统分配资源和调度的独立单位； 异步性：由于进程间的相互制约，使进程具有执行的间断性，即进程按各自独立的、不可预知的速度向前推进 结构特征：进程由程序、数据和进程控制块三部分组成。  进程之间的关系：同步和互斥
+m个进程访问临界资源，信号量的变化在1- （1-m）之间
+进程是由一个具有一定功能的程序关于某个数据集合的一次运行活动。
+调度的类型： 1.作业调度（也叫；宏观，高级，长程），是从外存调到内存然后进入竞争执行 2.进程调度（也叫：微观，低级，短程），取就绪状态的进程进入执行阶段 3.交换调度（也叫：中级，中程）是将外存中具备执行条件的进程调入内存或者相反
+调度的两种方法：1.剥夺方式，2.非剥夺方式
+进程调度的算法：1.先来先服务，2.最高优先权，3.时间片轮转，4.多级反馈。具体的课本上有。也可以看此文
+死锁的原因：1.资源不足。2.推进顺序不当
+形成死锁的必要条件：1.互斥，2.不剥夺。3.部分分配。4.环路等待。
+并非所有不安全状态就为死锁。但反之成立
+银行家算法其实很简单。就是规范化比较麻烦。看维基百科吧。
+破坏资源互斥这个条件来避免死锁是不现实的。
+资源的按序分配 这种算法资源按某种规则系统中的所有资源统一编号（例如打印机为1、磁带机为2、磁盘为3、等等），申请时必须以上升的次序。系统要求申请进程： 1、对它所必须使用的而且属于同一类的所有资源，必须一次申请完； 2、在申请不同类资源时，必须按各类设备的编号依次申请。 这样申请的时候要么没有。要么全部分配，破坏了循环等待的条件
+调度算法中程序的相应比=1+等待时间/估计运行时间 操作系统提供给程序员的接口是系统调用 作业生存期的四个状态：1.提交。2.后备，3.开始，3.完成
+转载请注明：http://leaver.me/archives/317.html</description>
+    </item>
+    
+  </channel>
+</rss>

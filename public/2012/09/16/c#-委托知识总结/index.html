@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>C# 委托知识总结</title>
+  <meta property="og:title" content="C# 委托知识总结" />
+  <meta name="twitter:title" content="C# 委托知识总结" />
+  <meta name="description" content="如果你足够强大，你就不会把幸福押在别人身上，你会自己创造幸福或者给别人带来幸福。而变得强大的途径就是学习，就是读书，学一切东西，读任何想读的书。 爱你让我变得更强。。 继续读一些专业文章了。不保证都是原创，但是保证每篇技术文章的质量。也会注明来源，标准就是浅显易懂。但不简单。
+原文来自：贺臣感谢原作者的好文章。 1.什么是委托，为什么要使用委托
+我正在埋头苦写程序，突然想喝水，但是又不想自己去掉杯水而打断自己的思路，于是我就想让女朋友去给我倒水。她去给我倒水，首先我得让她知道我想让她干什么，通知她之后我可以继续写自己的程序，而倒水的工作就交给了她。这样的过程就相当于一个委托。
+在程序过程中，当程序正在处理某个事件的时候，我需要另外的程序代码去辅助处理一些事情，于是委托另一个程序模块去处理，而委托就可以达到这种目的，我可以利用委托通知另外的程序模块，该去调用哪个函数方法。委托其实就起到了这样一个作用，将函数签名传递到了另一个函数中。或许这样讲还是有些模糊，看看后面的具体实例。
+2.委托的定义 delegate int Add(int num1,int num2);
+delegate void ConvertNum(string result);  上面是定义两个委托的例子，其实很简单。声明一个委托使用delegate关键字，上面分别是定义的带返回值的委托和不带返回值的委托，
+两个委托都有传递参数，当然也可以不传递参数。其实委托也是一个类，委托派生为System.MulticastDelegate,而System.MulticastDelegate
+又继承System.Delegate,如果你知道这个也就明白委托其实是一个特殊的类。 委托的简单实用例子 public delegate string TeaDelegate(string spText);
+public class DelegateSource { public void TestDelegate() { Operator op = new Operator(); TeaDelegate tea = new TeaDelegate(op.GetTea); Console.WriteLine(&#34;去给我倒杯水&#34;); Console.WriteLine(); string result=tea(&#34;去给我倒杯水&#34;); Thread.Sleep(5000); Console.WriteLine(result); Console.WriteLine(); } } public class Operator { /// &lt;summary&gt; /// 确定是否还有水 /// &lt;/summary&gt; private bool flag = true; public string GetTea(string spText) { if (spText == &#34;去给我倒杯水&#34;) { if (flag) { return &#34;老公,茶来了&#34;; } else { return &#34;老公,没有水了&#34;; } } return &#34;等待.">
+  <meta property="og:description" content="如果你足够强大，你就不会把幸福押在别人身上，你会自己创造幸福或者给别人带来幸福。而变得强大的途径就是学习，就是读书，学一切东西，读任何想读的书。 爱你让我变得更强。。 继续读一些专业文章了。不保证都是原创，但是保证每篇技术文章的质量。也会注明来源，标准就是浅显易懂。但不简单。
+原文来自：贺臣感谢原作者的好文章。 1.什么是委托，为什么要使用委托
+我正在埋头苦写程序，突然想喝水，但是又不想自己去掉杯水而打断自己的思路，于是我就想让女朋友去给我倒水。她去给我倒水，首先我得让她知道我想让她干什么，通知她之后我可以继续写自己的程序，而倒水的工作就交给了她。这样的过程就相当于一个委托。
+在程序过程中，当程序正在处理某个事件的时候，我需要另外的程序代码去辅助处理一些事情，于是委托另一个程序模块去处理，而委托就可以达到这种目的，我可以利用委托通知另外的程序模块，该去调用哪个函数方法。委托其实就起到了这样一个作用，将函数签名传递到了另一个函数中。或许这样讲还是有些模糊，看看后面的具体实例。
+2.委托的定义 delegate int Add(int num1,int num2);
+delegate void ConvertNum(string result);  上面是定义两个委托的例子，其实很简单。声明一个委托使用delegate关键字，上面分别是定义的带返回值的委托和不带返回值的委托，
+两个委托都有传递参数，当然也可以不传递参数。其实委托也是一个类，委托派生为System.MulticastDelegate,而System.MulticastDelegate
+又继承System.Delegate,如果你知道这个也就明白委托其实是一个特殊的类。 委托的简单实用例子 public delegate string TeaDelegate(string spText);
+public class DelegateSource { public void TestDelegate() { Operator op = new Operator(); TeaDelegate tea = new TeaDelegate(op.GetTea); Console.WriteLine(&#34;去给我倒杯水&#34;); Console.WriteLine(); string result=tea(&#34;去给我倒杯水&#34;); Thread.Sleep(5000); Console.WriteLine(result); Console.WriteLine(); } } public class Operator { /// &lt;summary&gt; /// 确定是否还有水 /// &lt;/summary&gt; private bool flag = true; public string GetTea(string spText) { if (spText == &#34;去给我倒杯水&#34;) { if (flag) { return &#34;老公,茶来了&#34;; } else { return &#34;老公,没有水了&#34;; } } return &#34;等待.">
+  <meta name="twitter:description" content="如果你足够强大，你就不会把幸福押在别人身上，你会自己创造幸福或者给别人带来幸福。而变得强大的途径就是学习，就是读书，学一切东西，读任何想读的书。 爱你让我变得更强。。 继续读一些专业文章了。不保证都是原创，但是保证每篇技术文章的质量。也会注明来源，标准就是浅显易懂。但不简单。
+原文来自：贺臣感谢原作者的好文章。 1.什么是委托，为什么要使用委托
+我正在埋头苦写程序，突然想喝水，但是又不想自己去掉杯 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/09/16/c" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/09/16/c" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>C# 委托知识总结</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 16, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 4 minutes (705 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>如果你足够强大，你就不会把幸福押在别人身上，你会自己创造幸福或者给别人带来幸福。而变得强大的途径就是学习，就是读书，学一切东西，读任何想读的书。  爱你让我变得更强。。
+继续读一些专业文章了。不保证都是原创，但是保证每篇技术文章的质量。也会注明来源，标准就是浅显易懂。但不简单。</p>
+
+<p>原文来自：<a href="http://www.cnblogs.com/qingyuan/archive/2010/05/11/1732415.html">贺臣</a>感谢原作者的好文章。
+1.什么是委托，为什么要使用委托</p>
+
+<p>我正在埋头苦写程序，突然想喝水，但是又不想自己去掉杯水而打断自己的思路，于是我就想让女朋友去给我倒水。她去给我倒水，首先我得让她知道我想让她干什么，通知她之后我可以继续写自己的程序，而倒水的工作就交给了她。这样的过程就相当于一个委托。</p>
+
+<p>在程序过程中，当程序正在处理某个事件的时候，我需要另外的程序代码去辅助处理一些事情，于是委托另一个程序模块去处理，而委托就可以达到这种目的，我可以利用委托通知另外的程序模块，该去调用哪个函数方法。委托其实就起到了这样一个作用，将函数签名传递到了另一个函数中。或许这样讲还是有些模糊，看看后面的具体实例。</p>
+
+<p>2.委托的定义
+<pre class="lang:c# decode:true " >
+delegate int Add(int num1,int num2);</p>
+
+<p>delegate void ConvertNum(string result);
+</pre>
+上面是定义两个委托的例子，其实很简单。声明一个委托使用delegate关键字，上面分别是定义的带返回值的委托和不带返回值的委托，</p>
+
+<p>两个委托都有传递参数，当然也可以不传递参数。其实委托也是一个类，委托派生为System.MulticastDelegate,而System.MulticastDelegate</p>
+
+<p>又继承System.Delegate,如果你知道这个也就明白委托其实是一个特殊的类。
+委托的简单实用例子
+<pre class="lang:c# decode:true " >
+public delegate string TeaDelegate(string spText);</p>
+<div class="highlight"><pre class="chroma"> public class DelegateSource
+ {
+     public void TestDelegate()
+     {
+         Operator op = new Operator();
+         TeaDelegate tea = new TeaDelegate(op.GetTea);
+         Console.WriteLine(&#34;去给我倒杯水&#34;);
+         Console.WriteLine();
+         string result=tea(&#34;去给我倒杯水&#34;);
+         Thread.Sleep(5000);
+         Console.WriteLine(result);
+         Console.WriteLine();
+     }
+ }
+
+ public class Operator
+ {
+     /// &lt;summary&gt;
+     /// 确定是否还有水
+     /// &lt;/summary&gt;
+     private bool flag = true;
+
+     public string GetTea(string spText)
+     {
+         if (spText == &#34;去给我倒杯水&#34;)
+         {
+             if (flag)
+             {
+                 return &#34;老公,茶来了&#34;;
+             }
+             else
+             {
+                 return &#34;老公,没有水了&#34;;
+             }
+         }
+         return &#34;等待.......&#34;;
+     }
+ }&lt;/pre&gt;</pre></div>
+<p>输出结果
+<img src="/images/" alt="" /></p>
+
+<p>上面使用最普通的一种方式来定义了一个委托的使用，这个例子虽然很简单，但是能够很形象的描述委托的使用。</p>
+
+<p>3.委托的三种形式</p>
+
+<p>(1).推断
+推断委托例子
+<pre class="lang:c# decode:true " >
+public delegate string TeaDelegate(string spText);</p>
+<div class="highlight"><pre class="chroma"> public class DelegateSource
+ {
+     public void TestDelegate()
+     {
+         Operator op = new Operator();
+         TeaDelegate tea = op.GetTea;
+         Console.WriteLine(&#34;去给我倒杯水&#34;);
+         Console.WriteLine();
+         string result=tea(&#34;去给我倒杯水&#34;);
+         Thread.Sleep(5000);
+         Console.WriteLine(result);
+         Console.WriteLine();
+     }
+ }
+
+ public class Operator
+ {
+     /// &lt;summary&gt;
+     /// 确定是否还有水
+     /// &lt;/summary&gt;
+     private bool flag = true;
+
+     public string GetTea(string spText)
+     {
+         if (spText == &#34;去给我倒杯水&#34;)
+         {
+             if (flag)
+             {
+                 return &#34;老公,茶来了&#34;;
+             }
+             else
+             {
+                 return &#34;老公,没有水了&#34;;
+             }
+         }
+         return &#34;等待.......&#34;;
+     }
+ }</pre></div>
+<p></pre></p>
+
+<p>在委托定义的例子中我们看到委托的使用方法是在委托实例化的时候指定的[new DelegateName(FunctionName)],这里可能表述不是太但是代码应该看得白了。 而委托的推断，并没有new 委托这个步骤，而是直接将Function 指定给委托。</p>
+
+<p>(2).匿名函数
+匿名委托例子
+<pre class="lang:c# decode:true " >
+public delegate string TeaDelegate(string spText);</p>
+<div class="highlight"><pre class="chroma"> public class DelegateSource
+ {
+     public void TestDelegate()
+     {
+         Operator op = new Operator();
+         bool flag = true;
+         TeaDelegate tea = delegate(string spText)
+         {
+             if (spText == &#34;去给我倒杯水&#34;)
+             {
+                 if (flag)
+                 {
+                     return &#34;老公,茶来了&#34;;
+                 }
+                 else
+                 {
+                     return &#34;老公,没有水了&#34;;
+                 }
+             }
+             return &#34;等待.......&#34;;
+         };
+
+         Console.WriteLine(&#34;去给我倒杯水&#34;);
+         Console.WriteLine();
+         string result=tea(&#34;去给我倒杯水&#34;);
+         Thread.Sleep(5000);
+         Console.WriteLine(result);
+         Console.WriteLine();
+     }
+ }&lt;/pre&gt;</pre></div>
+<p>至于匿名委托，给人的感觉更为直接了，都不用显示的指定方法名，因为根本没有方法，而是指定的匿名方法。匿名方法在.NET 中提高了</p>
+
+<p>代码的可读性和优雅性。对于更多操作较少的方法直接写为匿名函数，这样会大大提高代码的可读性。这里有两个值得注意的地方: 第一,不能使用</p>
+
+<p>跳转语句跳转到该匿名方法外,第二 不能使用ref,out修饰的参数</p>
+
+<p>(3).多播委托
+多播委托例子
+<pre class="lang:c# decode:true " >public delegate string TeaDelegate(string spText);</p>
+<div class="highlight"><pre class="chroma"> public class DelegateSource
+ {
+     public void TestDelegate()
+     {
+         Operator op = new Operator();
+
+         TeaDelegate tea1 = op.GetTea;
+         TeaDelegate tea2 = op.Speak;
+         TeaDelegate tea = tea1 + tea2;
+
+         Console.WriteLine(&#34;去给我倒杯水&#34;);
+         Console.WriteLine();
+         string result=tea(&#34;去给我倒杯水&#34;);
+         Thread.Sleep(5000);
+         Console.WriteLine(result);
+         Console.WriteLine();
+     }
+ }
+
+ public class Operator
+ {
+     /// &lt;summary&gt;
+     /// 确定是否还有水
+     /// &lt;/summary&gt;
+     private bool flag = true;
+
+     public string GetTea(string spText)
+     {
+         if (spText == &#34;去给我倒杯水&#34;)
+         {
+             if (flag)
+             {
+                 return &#34;老公,茶来了&#34;;
+             }
+             else
+             {
+                 return &#34;老公,没有水了&#34;;
+             }
+         }
+         return &#34;等待.......&#34;;
+     }
+
+     public string Speak(string spText)
+     {
+         Console.WriteLine(&#34;\n去把我的设计图稿拿来&#34;);
+         return null;
+     }
+ }&lt;/pre&gt;</pre></div>
+<p>还是上面的那个实例，我不尽想让女朋友去给我掉杯水，还让她帮我将程序设计图稿拿过来。这个时候做的就不是一件事了，而是多件。</p>
+
+<p>程序中也有很多这种情况，于是我们需要多播委托，在一个委托上指定多个执行方法，这是在程序中可以行的。上面提到了，委托直接继承于</p>
+
+<p>System.MulticastDelegate，正是因为这个类可以实现多播委托。如果调用多播委托，就可以按顺序连续调用多个方法。为此，委托的签名就必须返回void；否则，就只能得到委托调用的最后一个方法的结果。所以在上面的这段代码中是得不到结果的</p>
+
+<p>&nbsp;</p>
+
+<p>4.事件</p>
+
+<p>使用C#编程，无论是WinForm,WebForm 给人很难忘得就是它的控件，而他们的控件库使用方式都是使用使用事件驱动模式，而事件驱动模式却少不了委托。话不多说，看代码能够更清好的理解事件和委托之间的联系.
+事件的使用
+<pre class="lang:c# decode:true " >public delegate void MyDelegate(string name);</p>
+<div class="highlight"><pre class="chroma"> public class EventSource
+ {
+     public event MyDelegate Event_Delegate;
+
+     public void SetCustomer(string name)
+     {
+         Console.WriteLine(&#34;事件发生.....\n&#34;);
+         Console.WriteLine(&#34;hi! &#34;+name);
+     }
+
+     public void TestEvent()
+     {
+         EventSource source = new EventSource();
+         Console.WriteLine(&#34;订阅事件.....\n&#34;);
+         source.Event_Delegate += new MyDelegate(source.SetCustomer);
+         Console.WriteLine(&#34;触发事件.....\n&#34;);
+         source.Event_Delegate(&#34;hechen&#34;);
+         Console.WriteLine(&#34;..................&#34;);
+     }
+ }&lt;/pre&gt;</pre></div>
+<p>&nbsp;</p>
+
+<p>上面的代码中我们定义了一个委托,然后定义了一个类EventSource，这个类中声明了一个事件。定义一个事件使用event 关键字,定义一</p>
+
+<p>个event必须指定这个event传递消息的委托,在触发事件之前必需订阅事件，我们使用+= new 语法来订阅一个事件,也就相当于实例化一个事件。</p>
+
+<p>当我们触发事件的时候，就会调用相应的方法去处理。</p>
+
+<p>5. 泛型委托</p>
+
+<p>委托是类型安全的引用,泛型委托就和我们常用的泛型类一样，这个类在使用的时候才能确定类型.通过泛型委托，我们可以在委托传递参数</p>
+
+<p>之后知道它的类型.在.NET中有一个很典型的泛型委托：
+<pre class="lang:c# decode:true " >
+public delegate voie EventHandler&lt;TEventArgs&gt;(object sender,TEventArgs e) where TEventArgs:EventArgs.
+</pre>
+这是一个非常有特色的泛型委托，可能我们用的比较少，但是作用是不能忽视的。 我们看看三个非常具有代表性的泛型委托.现在.NET4.0已经出来了，但是泛型委托.NET2.0就出来了，Linq 大家用的那叫一个甜，</p>
+
+<p>为啥 函数式编程风格，匿名方法，Lamda表达式表达式使用是如此的魅力。但是大家仔细观察过没有，Linq 中的方法有几个经常出现的参数：
+<pre class="lang:c# decode:true " >
+Action&lt;T&gt;,Predicate&lt;T&gt;，Func&lt;T, Result&gt;
+</pre>
+Func&lt;T, E&gt;：封装一个具有一个参数并返回 E 参数指定的类型值的方法,T 是这个委托封装方法的参数类型，E是方法的返回值类型。当然Func&lt;T, Result&gt; 只是其中的一种情况,这个委托还有其他的几种情况:Func&lt;T&gt; 这个是方法没有参数,返回值类型是T;Func&lt;T1,T2,Result&gt; 这个方法有两个参数,类型分别为T1,T2，返回值是Result,还有Func&lt;T1,T2,T3,Result&gt;，Func&lt;T1,T2,T3,T4,Result&gt; 这几中情况，具体情况就不介绍了.我们还可以通过扩展类型，扩展为更多的参数.
+Func 委托的使用
+<pre class="lang:c# decode:true " >public void TestFunc()
+         {
+             TEventSource eventSource=new TEventSource();
+             Func<string, string> func = eventSource.GetTea;
+             string result = func(&ldquo;茶&rdquo;);
+             Console.WriteLine(result);
+         }</p>
+<div class="highlight"><pre class="chroma">     public string GetTea(string context)
+     {
+         if (context == &#34;茶&#34;)
+         {
+             return &#34;茶来了&#34;;
+         }
+         else
+         {
+             return &#34;设计稿子来了&#34;;
+         }
+     }&lt;/pre&gt;</pre></div>
+<p>Action&lt;T&gt;:封装一个方法，该方法只采用一个参数并且不返回值,包括Action&lt;T&gt;,Action&lt;T1,T2&gt;,Action&lt;T1,T2,T3&gt;,Action&lt;T1,T2,T3,T4&gt; 这几种情况,也可以通过扩展方法去扩展参数的个数 。
+Action 委托使用例子
+<pre class="lang:c# decode:true " >public void TestAction()
+         {
+             TEventSource eventSource = new TEventSource();
+             Action<string> action = eventSource.Speak;
+             action(&ldquo;Action<T> 泛型委托&rdquo;);
+         }</p>
+<div class="highlight"><pre class="chroma">     public void Speak(string context)
+     {
+         Console.WriteLine(context);
+     }&lt;/pre&gt;</pre></div>
+<p>&nbsp;</p>
+
+<p>Predicate&lt;T&gt;:表示定义一组条件并确定指定对象是否符合这些条件的方法。该委托返回的是一个bool类型的值,如果比较满足条件</p>
+
+<p>返回true,否则返回false.其实上面的Func 委托可以包含这个委托.不过这个委托和上面的两个不一样，它只有一种类型
+Predicate 委托使用例子<pre class="lang:c# decode:true " >public void TestPredicate()
+         {
+             TEventSource eventSource = new TEventSource();
+             Predicate<int> predicate = eventSource.IsRigth;
+             Console.WriteLine(predicate(0));
+         }</p>
+<div class="highlight"><pre class="chroma">     public bool IsRigth(int value)
+     {
+         if (value == 0)
+         {
+             return true;
+         }
+         else
+         {
+             return false;
+         }
+     }&lt;/pre&gt;</pre></div>
+<p>6.异步委托</p>
+
+<p>投票技术: 委托其实相当于一个线程,使用投票技术是使用异步委托的一种实现方式.Delegate类提供了方法BeginInvoke()，可以传送委托类型定义的输入参数，其返回类型为IAsyncResult。IAsyncResult的IsCompleted属性可以判断委托任务是否完成
+异步委托投票技术
+<pre class="lang:c# decode:true " >public delegate int DelegateVote(int data, int ms);
+     /// <summary>
+     /// 使用投票操作完成委托任务
+     /// </summary>
+     public class VoteDelegate
+     {
+         /// <summary>
+         /// 休眠特定时间执行操作
+         /// </summary>
+         /// <param name="data"></param>
+         /// <param name="ms"></param>
+         /// <returns></returns>
+         public static int TakeWork(int data, int ms)
+         {
+             Console.WriteLine(&ldquo;开始调用TakeWork方法&rdquo;);
+             Thread.Sleep(ms);
+             Console.WriteLine(&ldquo;结束调用TakeWork方法&rdquo;);
+             return data + 10;
+         }</p>
+<div class="highlight"><pre class="chroma">     public void TestDelegate()
+     {
+         DelegateVote voteDel = TakeWork;
+         IAsyncResult result = voteDel.BeginInvoke(1,5000,null,null);
+         while (result.IsCompleted == false)
+         {
+             Console.WriteLine(&#34;等待......&#34;);
+             Thread.Sleep(500);
+         }
+         int value = voteDel.EndInvoke(result);
+         Console.WriteLine(&#34;委托调用结果:  &#34;+value);
+     }
+ }&lt;/pre&gt;</pre></div>
+<p>等待句柄:等待句柄是使用AsyncWaitHandle属性访问，返回一个WaitHandle类型的对象，它可以等待委托线程完成其任务。在这个参数中可以设置最大的等待时间。
+异步委托等待句柄
+<pre class="lang:c# decode:true " > public delegate string WaitDelegate(string content);</p>
+<div class="highlight"><pre class="chroma"> public class WaitHandlerDelegate
+ {
+     public void TestWaitHander()
+     {
+         WaitDelegate del = GetTea;
+         IAsyncResult ar = del.BeginInvoke(&#34;hechen&#34;, null, null);
+         while (true)
+         {
+             Console.Write(&#34;.&#34;);
+             if (ar.AsyncWaitHandle.WaitOne(50, false))
+             {
+                 break;
+             }
+         }
+         string result=del.EndInvoke(ar);
+         Console.WriteLine(result);
+
+     }
+
+     public static string GetTea(string content)
+     {
+         return &#34;茶来了  &#34;+content;
+     }
+ }&lt;/pre&gt;</pre></div>
+<p>异步回调:这个方式和投票技术有点类似，不过在投票方式中BeginInvoke()方法第三个参数指定了一个方法签名,而这个方法参数接收IAsyncResult 类型的参数。
+异步委托回调函数
+<pre class="lang:c# decode:true " >public delegate string AsyDelegate(string content);</p>
+<div class="highlight"><pre class="chroma"> public class AsyncresultDelegate
+ {
+     public void TestAsync()
+     {
+         AsyDelegate del = GetTea;
+         del.BeginInvoke(&#34;hechen&#34;, delegate(IAsyncResult ar) {
+             Thread.Sleep(5000);
+             string result = del.EndInvoke(ar);
+             Console.WriteLine(result);
+         }, null);
+         for (int i = 0; i &lt; 100; i++)
+         {
+             Console.WriteLine(&#34;等待.....&#34;);
+             Thread.Sleep(1000);
+         }
+     }
+
+     public static string GetTea(string content)
+     {
+         return &#34;茶来了  &#34; + content;
+     }
+ }&lt;/pre&gt;</pre></div>
+<p>&nbsp;</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/09/09/%E9%80%9A%E8%BF%87windows%E5%BA%94%E7%94%A8%E8%BF%9B%E8%A1%8C%E6%9C%8D%E5%8A%A1%E5%AF%84%E5%AE%BF%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/" data-toggle="tooltip" data-placement="top" title="通过Windows应用进行服务寄宿示例代码">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/09/17/eclipse%E5%AE%89%E8%A3%85javacc/" data-toggle="tooltip" data-placement="top" title="Eclipse安装JavaCC">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

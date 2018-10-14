@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>智能 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E6%99%BA%E8%83%BD/</link>
+    <description>Recent content in 智能 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 02 Jun 2012 07:58:25 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E6%99%BA%E8%83%BD/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Turing机、人工智能以及我们的世界</title>
+      <link>https://leizhiyuan.github.io/2012/06/02/turing%E6%9C%BA%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BB%A5%E5%8F%8A%E6%88%91%E4%BB%AC%E7%9A%84%E4%B8%96%E7%95%8C/</link>
+      <pubDate>Sat, 02 Jun 2012 07:58:25 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/06/02/turing%E6%9C%BA%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BB%A5%E5%8F%8A%E6%88%91%E4%BB%AC%E7%9A%84%E4%B8%96%E7%95%8C/</guid>
+      <description>matrix67大牛太帅了。这篇文章给我很大的震撼，他传递的信息远不止计算机世界。强烈推荐，精彩的部分做了引用，事实上，全都很精彩啊。
+　昨天终于读完了《The Annotated Turing》一书，第一次完整地阅读了 Turing 最经典的那篇论文，理解了 Turing 机提出的动机和由此带来的一系列结论。不过，这本书的最大价值，则是让我开始重新认识和思考这个世界。在这里，我想把我以前积累的哲学观点和最近一些新的思考记下来，与大家一同分享。《The Annotated Turing》一书中的一些学术内容，留待以后几篇日志与大家分享。今年是 Alan Turing 诞辰 100 周年，图灵公司将推出这本书的中译本《图灵的秘密》，现在正在紧张的编辑排版中，不久之后就能和大家见面。
+　1928 年， David Hilbert 提出了一个著名的问题：是否存在一系列有限的步骤，它能判定任意一个给定的数学命题的真假？这个问题就叫做 Entscheidungsproblem ，德语“判定性问题”的意思。大家普遍认为，这样的一套步骤是不存在的，也就是说我们没有一种判断一个数学命题是否为真的通用方法。为了证明这一点，真正的难题是将问题形式化：什么叫做“一系列有限的步骤”？当然，现在大家知道，这里所说的“有限的步骤”指的就是由条件语句、循环语句等元素搭建而成的一个机械过程，也就是我们常说的“算法”。不过，在没有计算机的时代，人们只能模模糊糊地体会“一个机械过程”的意思。 1936 年，Alan Turing 在著名的论文《On computable numbers, with an application to the Entscheidungsproblem》中提出了一种假想的机器，第一次给了“机械过程”一个确凿的含义。
+　Turing 提出的机器非常简单。假设有一张无穷向右延伸的纸条，从左至右分成一个一个的小格子。每一个小格子里都可以填写一个字符（通常是单个数字或者字母）。纸条下方有一个用来标识“当前格子”的箭头，在机器运行过程中，箭头的位置会不断移动，颜色也会不断变化。不妨假设初始时所有格子都是空白，箭头的颜色是红色，并且指向左起第一个格子。为了让机器实现不同的功能，我们需要给它制定一大堆指令。每条指令都是由五个参数构成，格式非常单一，只能形如“如果当前箭头是红色，箭头所在格子写的是字符 A ，则把这个格子里的字符改为 B ，箭头变为绿色并且向右移动一格”，其中最后箭头的移动只能是“左移一格”、“右移一格”、“不动”中的一个。
+　精心设计不同的指令集合，我们就能得到功能不同的 Turing 机。你可以设计一个生成自然数序列的 Turing 机，或者是计算根号 2 的 Turing 机，甚至是打印圆周率的 Turing 机。 Turing 本人甚至在论文中实现了这么一种特殊的 Turing 机叫做通用 Turing 机，它可以模拟别的 Turing 机的运行。具体地说，如果把任意一个 Turing 机的指令集用 Turing 自己提出的一种规范方式编码并预存在纸条上，那么通用 Turing 机就能够根据纸条上已有的信息，在纸条的空白处模拟那台 Turing 机的运作，输出那台 Turing 机应该输出的东西。</description>
+    </item>
+    
+  </channel>
+</rss>

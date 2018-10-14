@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>WPF绘制圆角多边形</title>
+  <meta property="og:title" content="WPF绘制圆角多边形" />
+  <meta name="twitter:title" content="WPF绘制圆角多边形" />
+  <meta name="description" content="介绍
+最近，我发现我需要个圆角多边形。而且是需要在运行时从用户界面来绘制。WPF有多边形。但是不支持圆角。我搜索了一下。也没找到可行的现成例子。于是就自己做吧。本文描述了圆角多边形的实现，也包括如何用在你的项目里。在Demo里面的RoundedCornersPolygon 类是完整的实现。
+下载的Demo包括两部分
+1. 通过XAML绘制圆角多边形
+
+2. 运行时创建圆角多边形
+
+背景 多边形可以被认为是沿着一个给定半径的圆的边缘和一些指定点/边。所构成的点的集合。
+ 在WPF中。你可以给Polygon对象的Points属性添加一系列的点来制作多边形。
+XAML方式 &lt;Canvas&gt; &lt;Polygon Points=&ldquo;10,50 180,50 180,150 10,150&rdquo; StrokeThickness=&ldquo;1&rdquo; Stroke=&ldquo;Black&rdquo; /&gt; &lt;/Canvas&gt; C#方式 var cnv = new Canvas(); var polygon = new Polygon {StrokeThickness = 1, Fill = Brushes.Black}; polygon.Points.Add(new Point(10, 50)); polygon.Points.Add(new Point(180, 50)); polygon.Points.Add(new Point(180, 150)); polygon.Points.Add(new Point(10, 150)); cnv.Children.Add(polygon); this.Content = cnv; &nbsp;
+上面两个例子会输出下面的矩形
+
+使用代码 我写的RoundedCornersPolygon 类和普通的多边形类很相似。但是有更多的属性来控制圆角。首先。看一个例子。展示一下圆角矩形类的使用
+XAML方式 &lt;Canvas&gt; &lt;CustomRoundedCornersPolygon:RoundedCornersPolygon Points=&ldquo;10,50 180,50 180,150 10,150&rdquo; StrokeThickness=&ldquo;1&rdquo; Stroke=&ldquo;Black&rdquo; ArcRoundness=&ldquo;25&rdquo; UseAnglePercentage=&ldquo;False&rdquo; IsClosed=&ldquo;True&rdquo;/&gt; &lt;Canvas&gt; C#方式 var cnv = new Canvas();">
+  <meta property="og:description" content="介绍
+最近，我发现我需要个圆角多边形。而且是需要在运行时从用户界面来绘制。WPF有多边形。但是不支持圆角。我搜索了一下。也没找到可行的现成例子。于是就自己做吧。本文描述了圆角多边形的实现，也包括如何用在你的项目里。在Demo里面的RoundedCornersPolygon 类是完整的实现。
+下载的Demo包括两部分
+1. 通过XAML绘制圆角多边形
+
+2. 运行时创建圆角多边形
+
+背景 多边形可以被认为是沿着一个给定半径的圆的边缘和一些指定点/边。所构成的点的集合。
+ 在WPF中。你可以给Polygon对象的Points属性添加一系列的点来制作多边形。
+XAML方式 &lt;Canvas&gt; &lt;Polygon Points=&ldquo;10,50 180,50 180,150 10,150&rdquo; StrokeThickness=&ldquo;1&rdquo; Stroke=&ldquo;Black&rdquo; /&gt; &lt;/Canvas&gt; C#方式 var cnv = new Canvas(); var polygon = new Polygon {StrokeThickness = 1, Fill = Brushes.Black}; polygon.Points.Add(new Point(10, 50)); polygon.Points.Add(new Point(180, 50)); polygon.Points.Add(new Point(180, 150)); polygon.Points.Add(new Point(10, 150)); cnv.Children.Add(polygon); this.Content = cnv; &nbsp;
+上面两个例子会输出下面的矩形
+
+使用代码 我写的RoundedCornersPolygon 类和普通的多边形类很相似。但是有更多的属性来控制圆角。首先。看一个例子。展示一下圆角矩形类的使用
+XAML方式 &lt;Canvas&gt; &lt;CustomRoundedCornersPolygon:RoundedCornersPolygon Points=&ldquo;10,50 180,50 180,150 10,150&rdquo; StrokeThickness=&ldquo;1&rdquo; Stroke=&ldquo;Black&rdquo; ArcRoundness=&ldquo;25&rdquo; UseAnglePercentage=&ldquo;False&rdquo; IsClosed=&ldquo;True&rdquo;/&gt; &lt;Canvas&gt; C#方式 var cnv = new Canvas();">
+  <meta name="twitter:description" content="介绍
+最近，我发现我需要个圆角多边形。而且是需要在运行时从用户界面来绘制。WPF有多边形。但是不支持圆角。我搜索了一下。也没找到可行的现成例子。于是就自己做吧。本文描述了圆角多边形的实现，也包括如何用在你的项目里。在Demo里面的RoundedCornersPolygon 类是完整的实现。
+下载的Demo包括两部分
+1. 通过XAML绘制圆角多边形
+
+2. 运行时创建圆角多边形
+
+背景 多边形可以 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/10/13/wpf%E7%BB%98%E5%88%B6%E5%9C%86%E8%A7%92%E5%A4%9A%E8%BE%B9%E5%BD%A2/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/10/13/wpf%E7%BB%98%E5%88%B6%E5%9C%86%E8%A7%92%E5%A4%9A%E8%BE%B9%E5%BD%A2/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>WPF绘制圆角多边形</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 13, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 3 minutes (498 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><strong>介绍</strong></p>
+
+<p>最近，我发现我需要个圆角多边形。而且是需要在运行时从用户界面来绘制。WPF有多边形。但是不支持圆角。我搜索了一下。也没找到可行的现成例子。于是就自己做吧。本文描述了圆角多边形的实现，也包括如何用在你的项目里。在Demo里面的RoundedCornersPolygon 类是完整的实现。</p>
+
+<p>下载的Demo包括两部分</p>
+
+<p>1. 通过XAML绘制圆角多边形</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/28036_o.png"><img src="/images/83dd3b37c81d0d4e1a82e80ba69d00411930ce52.png" alt="" title="1" /></a></p>
+
+<p>2. 运行时创建圆角多边形</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/28037_o.png"><img src="/images/864fccf9677ea6ce52dad56c85cf7389108c6874.png" alt="" title="2" /></a></p>
+
+<p><strong>背景</strong>
+多边形可以被认为是沿着一个给定半径的圆的边缘和一些指定点/边。所构成的点的集合。</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/28038_o.gif"><img src="/images/82969618833250386b07a5177dc8c454da0530e1.gif" alt="" title="3" /></a>
+在WPF中。你可以给Polygon对象的Points属性添加一系列的点来制作多边形。</p>
+
+<p>XAML方式
+<pre class="lang:default decode:true">&lt;Canvas&gt;
+    &lt;Polygon Points=&ldquo;10,50 180,50 180,150 10,150&rdquo;
+       StrokeThickness=&ldquo;1&rdquo; Stroke=&ldquo;Black&rdquo; /&gt;
+&lt;/Canvas&gt;</pre>
+C#方式
+<pre class="lang:default decode:true">var cnv = new Canvas();
+var polygon = new Polygon {StrokeThickness = 1, Fill = Brushes.Black};
+polygon.Points.Add(new Point(10, 50));
+polygon.Points.Add(new Point(180, 50));
+polygon.Points.Add(new Point(180, 150));
+polygon.Points.Add(new Point(10, 150));
+cnv.Children.Add(polygon);
+this.Content = cnv;</pre>
+&nbsp;</p>
+
+<p>上面两个例子会输出下面的矩形</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/28039_o.png"><img src="/images/787268128d45598cff769b9209e41652a66775ae.png" alt="" title="4" /></a></p>
+
+<p><strong>使用代码</strong>
+我写的RoundedCornersPolygon 类和普通的多边形类很相似。但是有更多的属性来控制圆角。首先。看一个例子。展示一下圆角矩形类的使用</p>
+
+<p>XAML方式
+<pre class="lang:default decode:true">&lt;Canvas&gt;
+    &lt;CustomRoundedCornersPolygon:RoundedCornersPolygon Points=&ldquo;10,50 180,50 180,150 10,150&rdquo;
+               StrokeThickness=&ldquo;1&rdquo; Stroke=&ldquo;Black&rdquo; ArcRoundness=&ldquo;25&rdquo;
+               UseAnglePercentage=&ldquo;False&rdquo; IsClosed=&ldquo;True&rdquo;/&gt;
+&lt;Canvas&gt;</pre>
+C#方式
+<pre class="lang:default decode:true">var cnv = new Canvas();<br />
+var roundedPolygon = new RoundedCornersPolygon
+{
+    Stroke = Brushes.Black, StrokeThickness = 1,
+    ArcRoundness = 25, UseAnglePercentage = false, IsClosed = true
+};
+roundedPolygon.Points.Add(new Point(10, 50));
+roundedPolygon.Points.Add(new Point(180, 50));
+roundedPolygon.Points.Add(new Point(180, 150));
+roundedPolygon.Points.Add(new Point(10, 150));
+cnv.Children.Add(roundedPolygon);
+this.Content = cnv;</pre>
+输出如下：</p>
+
+<p><a href="http://leaverimage.b0.upaiyun.com/28040_o.png"><img src="/images/fb11bced67d29f74ff4e539a8008871934d74c04.png" alt="" title="5" /></a></p>
+
+<p>多边形有四个主要属性
+ArcRoundness 属性指定了从距离LineSegment终点多远的距离开始弯曲，通常和UseRoundnessPercentage 一起使用。UseRoundnessPercentage属性指定了ArcRoundness 值是百分比还是一个固定的值。</p>
+
+<p>举个例子。ArcRoundness 被设置成10，而且UseRoundnessPercentage 被设置成false，那么弯曲将会在距离线段终点10的地方开始。而如果UseRoundnessPercentage 被设置成ture。则会是从线段终点10%的地方开始弯曲。
+<pre class="lang:default decode:true">/// &lt;summary&gt;
+/// Gets or sets a value that specifies the arc roundness.
+/// &lt;/summary&gt;
+public double ArcRoundness { get; set; }</p>
+
+<p>/// &lt;summary&gt;<br />
+/// Gets or sets a value that specifies if the ArcRoundness property
+/// value will be used as a percentage of the connecting segment or not.
+/// &lt;/summary&gt;
+public bool UseRoundnessPercentage { get; set; }</pre>
+IsClosed 指定多边形的最后一个点是否和第一个点闭合。为了成为一个多边形。一般应该被设置为true
+<pre class="lang:default decode:true">/// &lt;summary&gt;
+/// Gets or sets a value that specifies if the polygon will be closed or not.
+/// &lt;/summary&gt;
+public bool IsClosed { get; set; }</pre>
+&nbsp;</p>
+
+<p>Points属性则代表了多边形点的集合。
+<pre class="lang:default decode:true">/// &lt;summary&gt;
+/// Gets or sets a collection that contains the points of the polygon.
+/// &lt;/summary&gt;
+public PointCollection Points{ get; set; }</pre>
+&nbsp;</p>
+
+<p><strong>如何实现</strong>
+控件实现了Shape 类，被用来画多边形的形状是一个Path对象。我们会往Path对象里添加LineSegment 和QuadraticBezierSegment 对象。QuadraticBezierSegment 对象表示一个贝塞尔曲线。由三个点定义。更多的信息请查看</p>
+
+<p>对于一个普通的多边形，只有LineSegment是必须的，但是为了设计圆角多边形。就需要贝塞尔曲线了。每一次一个点被添加/一个属性被修改。形状会重绘。做圆角的关键方式就是ConnectLinePoints 方法。
+<pre class="lang:default decode:true">/// &lt;summary&gt;
+/// 使用公共点连接两条线段,
+/// 通过3个点的指定来绘制弯曲部分
+/// &lt;/summary&gt;
+/// &lt;param name=&ldquo;pathFigure&rdquo;&gt;&lt;/param&gt;
+/// &lt;param name=&ldquo;p1&rdquo;&gt;第一条线段的第一个点&lt;/param&gt;
+/// &lt;param name=&ldquo;p2&rdquo;&gt;第二个点，也是公共点&lt;/param&gt;
+/// &lt;param name=&ldquo;p3&rdquo;&gt;第二条线段的第二个点&lt;/param&gt;
+/// &lt;param name=&ldquo;roundness&rdquo;&gt;角的弧度&lt;/param&gt;
+/// &lt;param name=&ldquo;usePercentage&rdquo;&gt;标志值（百分比还是真值） &lt;/param&gt;
+private static void ConnectLinePoints(PathFigure pathFigure, Point p1,
+                                      Point p2, Point p3,
+                                      double roundness, bool usePercentage)
+{
+      //第一条线段上弯曲部分开始的位置点.
+      Point backPoint;
+      //第二条线段上弯曲部分结束的位置点
+      Point nextPoint;
+      if (usePercentage)
+      {
+          backPoint = GetPointAtDistancePercent(p1, p2, roundness, false);
+          nextPoint = GetPointAtDistancePercent(p2, p3, roundness, true);
+      }
+      else
+      {
+          backPoint = GetPointAtDistance(p1, p2, roundness, false);
+          nextPoint = GetPointAtDistance(p2, p3, roundness, true);
+      }</p>
+<div class="highlight"><pre class="chroma">  int lastSegmentIndex = pathFigure.Segments.Count - 1;
+  //设置第一条线段的终点.
+  ((LineSegment)(pathFigure.Segments[lastSegmentIndex])).Point = backPoint;
+
+  //创建并添加弯曲部分
+  var curve = new QuadraticBezierSegment { Point1 = p2, Point2 = nextPoint };
+  pathFigure.Segments.Add(curve);
+
+  /创建并添加新线段。
+  var line = new LineSegment { Point = p3 };
+  pathFigure.Segments.Add(line);</pre></div>
+<p>}</pre>
+&nbsp;</p>
+
+<p>还有两个方法计算弯曲部分开始的点GetPointAtDistance 和GetPointAtDistancePercent，第一个是以值计算，第二个是以百分比计算。
+<pre class="lang:default decode:true">/// &lt;summary&gt;
+///得到由两个点定义的线段上，给定距离的点
+/// &lt;/summary&gt;
+/// &lt;param name=&ldquo;p1&rdquo;&gt;第一条线段的第一个点&lt;/param&gt;
+/// &lt;param name=&ldquo;p2&rdquo;&gt;第一条线段的第二个点&lt;/param&gt;
+/// &lt;param name=&ldquo;distance&rdquo;&gt;点的距离&lt;/param&gt;
+/// &lt;param name=&ldquo;firstPoint&rdquo;&gt;标志值（百分比还是真值）&lt;/param&gt;
+/// &lt;returns&gt;计算结果点&lt;/returns&gt;
+private static Point GetPointAtDistance(Point p1, Point p2,
+                     double distance, bool firstPoint)
+{
+     double totalDistance = Math.Sqrt(Math.Pow((p2.X - p1.X), 2) +
+                            Math.Pow((p2.Y - p1.Y), 2));
+     double rap = firstPoint ? distance / totalDistance :
+                   (totalDistance - distance) / totalDistance;
+     return new Point(p1.X + (rap * (p2.X - p1.X)), p1.Y + (rap * (p2.Y - p1.Y)));
+}</p>
+
+<p>private static Point GetPointAtDistancePercent(Point p1, Point p2,
+                     double distancePercent, bool firstPoint)
+{
+     double rap = firstPoint ? distancePercent / 100 : (100 - distancePercent) / 100;
+     return new Point(p1.X + (rap * (p2.X - p1.X)), p1.Y + (rap * (p2.Y - p1.Y)));
+}</pre>
+&nbsp;</p>
+
+<p><strong>结论</strong>
+依然有很多细节应该完善的。但这仅仅是圆角多边形的一个尝试。比如。在其他情况。每个角应该有不同晚景的圆角，WPF使得一切皆有可能。本文的目的是创建一个大家可以用的圆角多边形，他们可以扩展来满足他们的需求。</p>
+
+<p><strong>Demo下载</strong></p>
+
+<p>[downloadicon href=<a href="http://pan.baidu.com/share/link?shareid=82217&amp;uk=1493685990]圆角多边形[/downloadicon">http://pan.baidu.com/share/link?shareid=82217&amp;uk=1493685990]圆角多边形[/downloadicon</a>]</p>
+
+<p><strong>许可</strong>
+本文包括源代码和文件在CPOL下授权。</p>
+
+<p>原文地址：<a href="http://www.codeproject.com/Articles/128705/WPF-rounded-corners-polygon">WPF-rounded-corners-polygon</a></p>
+
+<p>著作权声明：本文由<a href="http://leaver.me/">http://leaver.me</a> 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/wpf/">WPF</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/10/12/%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%95%99%E4%BD%A0%E5%88%B6%E4%BD%9Cwpf%E5%9C%86%E5%BD%A2%E7%8E%BB%E7%92%83%E6%8C%89%E9%92%AE/" data-toggle="tooltip" data-placement="top" title="一步步教你制作WPF圆形玻璃按钮">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/10/14/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAwpf%E7%94%A8%E6%88%B7%E6%8E%A7%E4%BB%B6%E5%9C%A8wpf%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8/" data-toggle="tooltip" data-placement="top" title="如何创建WPF用户控件&amp;在WPF项目中使用">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wordpress on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/wordpress/</link>
+    <description>Recent content in Wordpress on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 13 Jan 2015 23:21:04 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/wordpress/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>hexo建立博客过程中的问题</title>
+      <link>https://leizhiyuan.github.io/2015/01/13/hexo%E5%BB%BA%E7%AB%8B%E5%8D%9A%E5%AE%A2%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Tue, 13 Jan 2015 23:21:04 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2015/01/13/hexo%E5%BB%BA%E7%AB%8B%E5%8D%9A%E5%AE%A2%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>最近博客越来越慢了.然后一直也有markdown写文章的想法.于是花了点时间把博客迁到了hexo+github+gitcafe的组合上. ##安装Git## 下载 msysgit 并执行即可完成安装。 ##安装Node.js## 在 Windows 环境下安装 Node.js 非常简单，仅须下载安装文件并执行即可完成安装。 ##安装hexo## 利用 npm 命令即可安装。（在任意位置点击鼠标右键，选择Git bash）
+npm install -g hexo
+安装完成后,找个目录,比如d:/blog下面.右键,git bash,然后执行 hexo init 这样就会自动生成所有的目录结构了然后在安装一下依赖包: npm install 然后执行 hexo generate 用来根据md文件生成对应的html文件.执行 hexo server 则启动本地服务器.打开 127.0.0.1:4000端口查看
+本地查看没啥问题.就需要部署到git上了.先配置一下. 在d:/blog下面的_config.xml中配置远程git的服务器.现在已经支持同时部署到github和gitcafe.在末尾添加
+deploy: type: git repo: github: git@github.com:yourname/yourname.github.io.git,master gitcafe: git@gitcafe.com:yourname/yourname.git,gitcafe-pages 其中的yourname就是你的名字
+然后执行 hexo deploy 即可.让输入啥就输入啥. 下面是命令的简写 hexo g == hexo generate hexo d == hexo deploy hexo s == hexo server hexo n == hexo new</description>
+    </item>
+    
+    <item>
+      <title>wordpress 实现404个性跳转页面</title>
+      <link>https://leizhiyuan.github.io/2012/04/28/wordpress-%E5%AE%9E%E7%8E%B0404%E4%B8%AA%E6%80%A7%E8%B7%B3%E8%BD%AC%E9%A1%B5%E9%9D%A2/</link>
+      <pubDate>Sat, 28 Apr 2012 09:53:51 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/28/wordpress-%E5%AE%9E%E7%8E%B0404%E4%B8%AA%E6%80%A7%E8%B7%B3%E8%BD%AC%E9%A1%B5%E9%9D%A2/</guid>
+      <description>这个就不多说了，直接贴代码，使用方法就是把这些代码全部拷贝进你的404.php这个文件。后台点击外观-编辑-选择404.php，开始编辑，
+完成后然后就可以自己测试下效果了，你也可以先访问http://leaver.me/test404查看效果 &amp;lt;title&amp;gt;404&amp;lt;/title&amp;gt; &amp;lt;style type=&amp;ldquo;text/css&amp;rdquo;&amp;gt; body{ margin:0; padding:0; font:14px/1.6 Arial,Sans-serif; background:#fff url(img/body.png) repeat-x; } a:link,a:visited{ color:#007ab7; text-decoration:none; } h1{ position:relative; z-index:2; width:540px; height:0; margin:110px auto 15px; padding:230px 0 0; overflow:hidden; xxxxborder:1px solid; background-image: url(http://leaverimage.b0.upaiyun.com/20346_o.jpg); background-repeat: no-repeat; } h2{ position:absolute; top:17px; left:187px; margin:0; font-size:0; text-indent:-999px; -moz-user-select:none; -webkit-user-select:none; user-select:none; cursor:default; width: 534px; } h2 em{ display:block; font:italic bold 200px/120px &amp;ldquo;Times New Roman&amp;rdquo;,Times,Serif; text-indent:0; letter-spacing:-5px; color:rgba(216,226,244,0.3); } .link a{margin-right:1em;} .link,.texts{ width:540px; margin:0 auto 15px; color:#505050; } .</description>
+    </item>
+    
+    <item>
+      <title>外部图片使用灯箱效果</title>
+      <link>https://leizhiyuan.github.io/2012/04/12/%E5%A4%96%E9%83%A8%E5%9B%BE%E7%89%87%E4%BD%BF%E7%94%A8%E7%81%AF%E7%AE%B1%E6%95%88%E6%9E%9C/</link>
+      <pubDate>Thu, 12 Apr 2012 23:11:07 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/12/%E5%A4%96%E9%83%A8%E5%9B%BE%E7%89%87%E4%BD%BF%E7%94%A8%E7%81%AF%E7%AE%B1%E6%95%88%E6%9E%9C/</guid>
+      <description>我当前使用的这个主题如我前面所说，是支持灯箱效果的，如果你不知道什么是灯箱效果，点击文章中的图片就知道了，而我因为使用的是图床，主机提供的。和我的网站不在一个地方。。所以点击没反应。。想了想。其实很简单。。 那就是切换到HTML编辑页面，点击img按钮。。添加了一幅图片，然后把图片的标签选中，也就是整个img标签。包括开始和结束。然后，点击link按钮。给图片加上一个超链接。当然地址就写图片的地址了。这样点击图片的时候就会有灯箱效果了。。 效果点击下图即可
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>wordpress使用NextGEN Gallery 图片展示重复解决</title>
+      <link>https://leizhiyuan.github.io/2012/04/12/wordpress%E4%BD%BF%E7%94%A8nextgen-gallery-%E5%9B%BE%E7%89%87%E5%B1%95%E7%A4%BA%E9%87%8D%E5%A4%8D%E8%A7%A3%E5%86%B3/</link>
+      <pubDate>Thu, 12 Apr 2012 07:35:43 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/04/12/wordpress%E4%BD%BF%E7%94%A8nextgen-gallery-%E5%9B%BE%E7%89%87%E5%B1%95%E7%A4%BA%E9%87%8D%E5%A4%8D%E8%A7%A3%E5%86%B3/</guid>
+      <description>&lt;p&gt;博客刚刚建立，找了一个比较漂亮的主题，白色的。也就是&lt;a href=&#34;http://devpress.com/shop/origin/&#34;&gt;Origin&lt;/a&gt;这个。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://leaverimage.b0.upaiyun.com/20340_o.png&#34;&gt;&lt;img src=&#34;https://leizhiyuan.github.io/images/&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;然后呢。为了有一个好的图片展示效果，也就是我首页的相册页面。我使用了被大家广泛好评的NextGEN Gallery，在一切完成后，我发现浏览图片的时候会出现重复的效果&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

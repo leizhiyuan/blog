@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>生产力 on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/%E7%94%9F%E4%BA%A7%E5%8A%9B/</link>
+    <description>Recent content in 生产力 on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 14 Aug 2016 17:33:52 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/%E7%94%9F%E4%BA%A7%E5%8A%9B/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>修改mac单应用创建线程的限制</title>
+      <link>https://leizhiyuan.github.io/2016/08/14/%E4%BF%AE%E6%94%B9mac%E5%8D%95%E5%BA%94%E7%94%A8%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%99%90%E5%88%B6/</link>
+      <pubDate>Sun, 14 Aug 2016 17:33:52 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/08/14/%E4%BF%AE%E6%94%B9mac%E5%8D%95%E5%BA%94%E7%94%A8%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%99%90%E5%88%B6/</guid>
+      <description>最近遇到一个问题,公司的 java 服务端应用,启动后,通过 jstack pid |grep nid -c,可以看到大概创建了2044个线程,然后此时应用就会报错,提示无法创建更多线程, jvm 开始抛错. 查看 mac 的内存,发现还是够的.因为一般认为可创建的线程数=(总内存-其他占用的内存)/线程大小,所以内存够的情况下,应该是能创建的.
+google 一圈,发现mac 对单线程创建的线程是有限制的.理由应该是为了保持系统稳定性.主要有两个参数
+sysctl kern.num_threads 这个可以看一下,说明了系统能够创建的总共的线程,单个应用能够创建的线程是sysctl kern.num_taskthreads,第二个参数就是导致我们创建不出来更多线程的原因, 因为2044+一些 gc 的线程,基本上刚刚达到这个极限.
+那么要么改程序,要么改参数.改程序这是不可能的..因为只有 mac 会有这个问题..该参数尝试通过sudo sysctl -w kern.num_taskthreads=4096,修改,会发现提示是只读属性.google 了一圈,无解.
+最终意外解决..
+参考这里开启性能模式
+ nvram boot-args sudo nvram boot-args=&amp;quot;serverperfmode=1 $(nvram boot-args 2&amp;gt;/dev/null | cut -f 2-)&amp;quot; 重启  如果想要恢复的话: sudo nvram boot-args=&amp;quot;$(nvram boot-args 2&amp;gt;/dev/null | sed -e $&#39;s/boot-args\t//;s/serverperfmode=1//&#39;)&amp;quot;
+当时各种搜索,加打apple 支持电话.无解.搜索意外看到这个说明,说开启之后,可以支持更多服务应用之类的.猜测应该会改这个值..果然..改完之后,直接重启,这个限制会变成5000..完美解决..理论上,应该通过继续修改这个参数 是可以自定义这个值的.不过还没尝试.</description>
+    </item>
+    
+    <item>
+      <title>homebrew缓慢解决方案</title>
+      <link>https://leizhiyuan.github.io/2016/08/07/homebrew%E7%BC%93%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
+      <pubDate>Sun, 07 Aug 2016 17:29:55 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/08/07/homebrew%E7%BC%93%E6%85%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
+      <description>mac 下使用 homebrew 作为包管理工具是非常好的. brew 用来安装非 gui 界面的程序. cask 用来安装 gui 界面的程序.但是这两个是使用的源在国外.所以你懂得..
+1.替换 homebrew 默认源
+cd /usr/local git remote set-url origin git://mirrors.ustc.edu.cn/brew.git 这里注意记一下以前的默认源.防止以后想换回来..
+默认源是 https://github.com/Homebrew/brew
+2.替换homebrew bottles默认源
+echo &amp;#39;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles&amp;#39; &amp;gt;&amp;gt; ~/.bashrc 这里的.bashrc根据自己的情况替换.我是 zsh,就写到.zshrc 文件.</description>
+    </item>
+    
+    <item>
+      <title>mac使用全局代理</title>
+      <link>https://leizhiyuan.github.io/2016/08/07/mac%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Sun, 07 Aug 2016 17:18:51 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/08/07/mac%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</guid>
+      <description>自从入了 hexo 的坑.这玩意折腾的我不要不要的.各种诡异的问题,不过也顺便搞了搞其他的东西.看了很多相关的代理设置方案.最终沿用 windows 下的策略.最简单高效.
+mac 下的 ss 代理是只能设置浏览器代理的.对于一些不走 http 代理的.比如终端.或者其他软件.那么就需要将 ss 代理指定给其他软件或者终端使用.
+1.有一个 ss 代理 2.安装proxifier,直接 brew cask install proxifier 3.安装好之后,添加Proxies 里面,把 ssh 的信息添加进入 4.添加 Rules, 我为了简单..直接将default 设置成走代理.这样,就啥也不用管了.等 hexo deploy 结束.再关闭proxifier 就行了.
+实际使用中.可以先开全局代理.然后知道哪个程序走了代理.需要走代理.然后单独设置即可.软件很好使用.
+不得不说, wall 越来越令人难受与不安.</description>
+    </item>
+    
+    <item>
+      <title>sourceTree设置使用svn</title>
+      <link>https://leizhiyuan.github.io/2016/08/06/sourcetree%E8%AE%BE%E7%BD%AE%E4%BD%BF%E7%94%A8svn/</link>
+      <pubDate>Sat, 06 Aug 2016 09:28:01 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/08/06/sourcetree%E8%AE%BE%E7%BD%AE%E4%BD%BF%E7%94%A8svn/</guid>
+      <description>mac 下面不想安装多个 GUI 的 svn 客户端.所以使用 sourceTree 来做.
+sourceTree 对于 svn 只能从远程 url 拷贝.不能从本地来.所以在 gui 页面进行添加
+但是会发现报错
+Can&amp;#39;t locate SVN/Core.pm in @INC (you may need to install the SVN::Core module) (@INC contains: 网上搜了一下.原因是 Perl 升级后 版本路径不对.于是执行
+sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.18/darwin-thread-multi-2level/SVN /System/Library/Perl/Extras/5.18/SVN sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.18/darwin-thread-multi-2level/auto/SVN/ /System/Library/Perl/Extras/5.18/auto/SVN 这里就是创建两个软连接.以便 sourceTree 识别.这里注意.如果你装了 Xcode 的 CommandLineTools, 而不是完整的 Xcode. 那么你的目录是没有这个原始文件的所以需要执行的
+sudo ln -s /Library/Developer/CommandLineTools/Library/Perl/5.18/darwin-thread-multi-2level/SVN /System/Library/Perl/Extras/5.18/SVN sudo ln -s /Library/Developer/CommandLineTools/Library/Perl/5.18/darwin-thread-multi-2level/auto/SVN/ /System/Library/Perl/Extras/5.18/auto/SVN 但是执行的时候还是会报错.因为新版本的 mac系统.已经不允许在 System 目录写文件了.除非关闭安全选项.这就得不偿失了.
+但是从stackexchange说法看.</description>
+    </item>
+    
+  </channel>
+</rss>

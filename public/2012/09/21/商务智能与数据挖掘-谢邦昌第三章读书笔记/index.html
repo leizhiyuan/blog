@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>《商务智能与数据挖掘-谢邦昌》第三章读书笔记</title>
+  <meta property="og:title" content="《商务智能与数据挖掘-谢邦昌》第三章读书笔记" />
+  <meta name="twitter:title" content="《商务智能与数据挖掘-谢邦昌》第三章读书笔记" />
+  <meta name="description" content="3.数据挖掘
+3.1定义
+　数据挖掘是指找寻隐藏在数据中的信息，如趋势。特征及相关性的过程。也就是从数据中发掘信息或知识（Knowledge Discovery in Database）。也有人称之为数据考古学。。记住，它不是一个无所不能的软件或是一种技术，他是一种结合数种专业技术的应用。数据挖掘工具从数据中发掘出个各种假设。但是并不帮你查证。确认这些假设。也不帮你判断这些假设是否有价值。
+3.2数据挖掘的功能
+　1.分类（Classification），按照分析对象的属性进行分门别类加以定义。建立类组（Class）。例如划分银行信用申请者的风险属性，使用的技术有决策树（Decision Tree），记忆基础推理（memory-based reasoning）
+　2.估计（Estimation），根据既有连续性数值的相关属性数据。以获知某一属性未知值。。例如按照信用申请者的教育程度，行为估计其的信用卡缴费量。使用的技术包括相关分析，回归分析及神经网络算法。
+　3.预测（Prediction）根据对象属性的过去观察值来估计该属性未来值。比如根据顾客过去刷卡消费量来预测其未来刷卡消费量。使用的技术包括回归分析，时间序列分析，神经网络。
+　4.关联分组（Affinity Grouping）从所有对象决定哪些相关对象放在一起销售。比如那个啤酒和尿不湿。。在客户营销系统上，此功能用来确定交叉销售。。
+　5.聚类（Clustering)，将异质总体中区分为特征相近的同质类组。目的是将组和组之间的差异辨识出来。并对个别组内相似样本进行挑选。
+3.3数据挖掘的步骤
+　1.理解数据和数据所代表的含义（Data Understanding）
+　2.获取相关知识和技术（Domain Knowledge Acquisition）
+　3.整合和检查数据（Integration and Checking）
+　4.去除错误或不一致的数据（Data Cleaning)
+　5.建模与假设（Model and Hypothesis Development）
+　6.数据挖掘运行（Running)
+　7.测试与验证所挖掘的数据（Testing and Verification）
+　8.解释与使用数据（Interpretation and Use）
+3.4数据挖掘建模的标准CRISP-DM
+　CRISP-DM模型强调完整的数据挖掘过程，不能只针对数据整理、数据呈现、数据分析以及构建模型，还需要对企业的需求问题进行了解，同时，后期对模型进行评价和模型的延伸应用，也是一个完整的数据挖掘过程不可或缺的要素。
+　CRISP-DM分为六个阶段（phase）和四个层次（level），分别简介如下：
+　1. 商业理解（Business Understanding）
+　本阶段主要的工作是要针对企业问题以及企业需求进行了解确认，针对不同的需求做深入的了解，将其转换成数据挖掘的问题，并拟定初步构想。在此阶段中，需要与企业进行讨论，以确定分析者可以对于问题有非常清楚的了解，只有这样才可以正确地针对问题拟定分析过程。
+　2. 数据理解（Data Understanding）
+　这部分包含建立数据库与分析数据。在此阶段必须收集初步数据，然后了解数据的内涵与特性，选择要进行数据挖掘所必须的数据，然后进行数据整理及评估数据的质量，必要时再将分属不同数据库的数据加以合并及整合。数据库建立完成后再进行数据分析，找出影响预测最大的数据。
+　3. 数据预处理（Data Preparation）">
+  <meta property="og:description" content="3.数据挖掘
+3.1定义
+　数据挖掘是指找寻隐藏在数据中的信息，如趋势。特征及相关性的过程。也就是从数据中发掘信息或知识（Knowledge Discovery in Database）。也有人称之为数据考古学。。记住，它不是一个无所不能的软件或是一种技术，他是一种结合数种专业技术的应用。数据挖掘工具从数据中发掘出个各种假设。但是并不帮你查证。确认这些假设。也不帮你判断这些假设是否有价值。
+3.2数据挖掘的功能
+　1.分类（Classification），按照分析对象的属性进行分门别类加以定义。建立类组（Class）。例如划分银行信用申请者的风险属性，使用的技术有决策树（Decision Tree），记忆基础推理（memory-based reasoning）
+　2.估计（Estimation），根据既有连续性数值的相关属性数据。以获知某一属性未知值。。例如按照信用申请者的教育程度，行为估计其的信用卡缴费量。使用的技术包括相关分析，回归分析及神经网络算法。
+　3.预测（Prediction）根据对象属性的过去观察值来估计该属性未来值。比如根据顾客过去刷卡消费量来预测其未来刷卡消费量。使用的技术包括回归分析，时间序列分析，神经网络。
+　4.关联分组（Affinity Grouping）从所有对象决定哪些相关对象放在一起销售。比如那个啤酒和尿不湿。。在客户营销系统上，此功能用来确定交叉销售。。
+　5.聚类（Clustering)，将异质总体中区分为特征相近的同质类组。目的是将组和组之间的差异辨识出来。并对个别组内相似样本进行挑选。
+3.3数据挖掘的步骤
+　1.理解数据和数据所代表的含义（Data Understanding）
+　2.获取相关知识和技术（Domain Knowledge Acquisition）
+　3.整合和检查数据（Integration and Checking）
+　4.去除错误或不一致的数据（Data Cleaning)
+　5.建模与假设（Model and Hypothesis Development）
+　6.数据挖掘运行（Running)
+　7.测试与验证所挖掘的数据（Testing and Verification）
+　8.解释与使用数据（Interpretation and Use）
+3.4数据挖掘建模的标准CRISP-DM
+　CRISP-DM模型强调完整的数据挖掘过程，不能只针对数据整理、数据呈现、数据分析以及构建模型，还需要对企业的需求问题进行了解，同时，后期对模型进行评价和模型的延伸应用，也是一个完整的数据挖掘过程不可或缺的要素。
+　CRISP-DM分为六个阶段（phase）和四个层次（level），分别简介如下：
+　1. 商业理解（Business Understanding）
+　本阶段主要的工作是要针对企业问题以及企业需求进行了解确认，针对不同的需求做深入的了解，将其转换成数据挖掘的问题，并拟定初步构想。在此阶段中，需要与企业进行讨论，以确定分析者可以对于问题有非常清楚的了解，只有这样才可以正确地针对问题拟定分析过程。
+　2. 数据理解（Data Understanding）
+　这部分包含建立数据库与分析数据。在此阶段必须收集初步数据，然后了解数据的内涵与特性，选择要进行数据挖掘所必须的数据，然后进行数据整理及评估数据的质量，必要时再将分属不同数据库的数据加以合并及整合。数据库建立完成后再进行数据分析，找出影响预测最大的数据。
+　3. 数据预处理（Data Preparation）">
+  <meta name="twitter:description" content="3.数据挖掘
+3.1定义
+　数据挖掘是指找寻隐藏在数据中的信息，如趋势。特征及相关性的过程。也就是从数据中发掘信息或知识（Knowledge Discovery in Database）。也有人称之为数据考古学。。记住，它不是一个无所不能的软件或是一种技术，他是一种结合数种专业技术的应用。数据挖掘工具从数据中发掘出个各种假设。但是并不帮你查证。确认这些假设。也不帮你判断这些假设是否有价值。
+3.2 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/09/21/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%B8%89%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/09/21/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%B8%89%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>《商务智能与数据挖掘-谢邦昌》第三章读书笔记</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on September 21, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (67 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><strong>3.数据挖掘</strong></p>
+
+<p><strong>3.1定义</strong></p>
+
+<p>　　数据挖掘是指找寻隐藏在数据中的信息，如趋势。特征及相关性的过程。也就是从数据中发掘信息或知识（Knowledge Discovery in Database）。也有人称之为数据考古学。。记住，它不是一个无所不能的软件或是一种技术，他是一种结合数种专业技术的应用。数据挖掘工具从数据中发掘出个各种假设。但是并不帮你查证。确认这些假设。也不帮你判断这些假设是否有价值。</p>
+
+<p><strong>3.2数据挖掘的功能</strong></p>
+
+<p>　　1.分类（Classification），按照分析对象的属性进行分门别类加以定义。建立类组（Class）。例如划分银行信用申请者的风险属性，使用的技术有决策树（Decision Tree），记忆基础推理（memory-based reasoning）</p>
+
+<p>　　2.估计（Estimation），根据既有连续性数值的相关属性数据。以获知某一属性未知值。。例如按照信用申请者的教育程度，行为估计其的信用卡缴费量。使用的技术包括相关分析，回归分析及神经网络算法。</p>
+
+<p>　　3.预测（Prediction）根据对象属性的过去观察值来估计该属性未来值。比如根据顾客过去刷卡消费量来预测其未来刷卡消费量。使用的技术包括回归分析，时间序列分析，神经网络。</p>
+
+<p>　　4.关联分组（Affinity Grouping）从所有对象决定哪些相关对象放在一起销售。比如那个啤酒和尿不湿。。在客户营销系统上，此功能用来确定交叉销售。。</p>
+
+<p>　　5.聚类（Clustering)，将异质总体中区分为特征相近的同质类组。目的是将组和组之间的差异辨识出来。并对个别组内相似样本进行挑选。</p>
+
+<p><strong>3.3数据挖掘的步骤</strong></p>
+
+<p>　　1.理解数据和数据所代表的含义（Data Understanding）</p>
+
+<p>　　2.获取相关知识和技术（Domain Knowledge Acquisition）</p>
+
+<p>　　3.整合和检查数据（Integration and Checking）</p>
+
+<p>　　4.去除错误或不一致的数据（Data Cleaning)</p>
+
+<p>　　5.建模与假设（Model and Hypothesis Development）</p>
+
+<p>　　6.数据挖掘运行（Running)</p>
+
+<p>　　7.测试与验证所挖掘的数据（Testing and Verification）</p>
+
+<p>　　8.解释与使用数据（Interpretation and Use）</p>
+
+<p><strong>3.4数据挖掘建模的标准CRISP-DM</strong></p>
+
+<p>　　CRISP-DM模型强调完整的数据挖掘过程，不能只针对数据整理、数据呈现、数据分析以及构建模型，还需要对企业的需求问题进行了解，同时，后期对模型进行评价和模型的延伸应用，也是一个完整的数据挖掘过程不可或缺的要素。</p>
+
+<p>　　CRISP-DM分为六个阶段（phase）和四个层次（level），分别简介如下：</p>
+
+<p>　　1. 商业理解（Business Understanding）</p>
+
+<p>　　本阶段主要的工作是要针对企业问题以及企业需求进行了解确认，针对不同的需求做深入的了解，将其转换成数据挖掘的问题，并拟定初步构想。在此阶段中，需要与企业进行讨论，以确定分析者可以对于问题有非常清楚的了解，只有这样才可以正确地针对问题拟定分析过程。</p>
+
+<p>　　2. 数据理解（Data Understanding）</p>
+
+<p>　　这部分包含建立数据库与分析数据。在此阶段必须收集初步数据，然后了解数据的内涵与特性，选择要进行数据挖掘所必须的数据，然后进行数据整理及评估数据的质量，必要时再将分属不同数据库的数据加以合并及整合。数据库建立完成后再进行数据分析，找出影响预测最大的数据。</p>
+
+<p>　　3. 数据预处理（Data Preparation）</p>
+
+<p>　　此步骤和第二步数据理解是数据处理的核心，这是建立模型之前的最后一步数据准备工作。数据预处理任务很可能要执行多次，并且没有任何规定的顺序。</p>
+
+<p>　　4. 建立模型（Modeling）</p>
+
+<p>　　针对已预处理过的数据加以分析，配合各种技术方法加以应用，针对既有数据建构出模型，替企业解决问题；面对同一种问题，会有多种可以使用的分析技术，但是每一种分析技术却对数据有些限制及要求，因此需要回到数据前置处理的阶段，来重新转换需要的变量数据加以分析。</p>
+
+<p>　　5. 评价和解释（Evaluation）</p>
+
+<p>　　从数据分析的观点看，在开始进入这个阶段时已经建立了看似是高质量的模型，但在实际应用中，随着应用数据的不同，模型的准确率肯定会变化。这里，一个关键的目的是确定是否有某些重要的商业问题还没有充分地考虑。在这个阶段的结尾，应该获得对数据挖掘结果的判定。</p>
+
+<p>　　6. 实施（Deployment）</p>
+
+<p>　　一般而言，创建模型完成并不意味着项目结束。模型建立并经验证之后，可以有两种主要的使用方法。一种是提供给决策人员做参考，由他察看和分析这个模型之后提出行动方案建议；另一种是把此模型应用到不同的数据集上。此外，在应用了模型之后，当然还要不断监控它的效果。</p>
+
+<p>　　四个层次分别为阶段（phase）、一般任务（generic task）、专项任务（specialized task）、流程实例（process instance）。每个阶段由若干一般任务组成，每个一般任务又实施若干专项任务，每个专项任务由若干流程实例来完成。其中，上两层独立于具体数据挖掘方法，即是一般数据挖掘项目均需实施的步骤（What to do？），这两层的任务将结合具体数据挖掘项目的“上下文”（context）映像到下两层的具体任务和过程。所谓项目的“上下文”是指项目开发中密切相关、需要综合考虑的一些关键问题，如应用领域、数据挖掘问题类型、技术难点、工具及其提供的技术等。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/09/20/%E5%95%86%E5%8A%A1%E6%99%BA%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-%E8%B0%A2%E9%82%A6%E6%98%8C%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="《商务智能与数据挖掘-谢邦昌》第二章读书笔记">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/09/22/html%E8%A7%A3%E6%9E%90%E5%B7%A5%E5%85%B7-htmlagilitypack/" data-toggle="tooltip" data-placement="top" title="Html解析工具-HtmlAgilityPack">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

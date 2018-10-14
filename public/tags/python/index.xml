@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/python/</link>
+    <description>Recent content in Python on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 25 Mar 2016 19:51:07 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ansible简单使用</title>
+      <link>https://leizhiyuan.github.io/2016/03/25/ansible%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Fri, 25 Mar 2016 19:51:07 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2016/03/25/ansible%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</guid>
+      <description>由于线下机器太多.有没有日志平台,所以查询日志比较麻烦.发现了ansible,按照官方文档(ubuntu)
+$ sudo apt-get install software-properties-common $ sudo apt-add-repository ppa:ansible/ansible $ sudo apt-get update $ sudo apt-get install ansible 一步步执行,第二步执行的时候,可能会报错
+sudo: add-apt-repository: command not found 这时候.先执行
+$ sudo add-apt-repository ppa:git-core/ppa $ sudo apt-get update 然后接着执行上面的第二步就行了..
+安装完成后,配置集群
+cat /etc/ansible/hosts[servergroup1] 192.168.1.1 ansible_ssh_user=root ansible_ssh_pass=root [servergroup2] 192.168.2.1 ansible_ssh_user=root ansible_ssh_pass=root 后面的账号和密码,如果你使用ssh key登陆的话就不需要了.但是如果有很多机器,需要加到known_hosts就太多了. 这时候可以参考Batch_key 这个脚本.稍微修改一下,就能批量生成了
+然后就是执行命令了
+ansible常见用法为ansible host-pattern -m 模块 -a 命令，host-pattern类似于简化的正则表达式，而模块可以通过ansible-doc -l命令来查询。下面是一些常用模块的使用方法：
+安装软件：ansible servergroup1 -m apt -a &#39;name=gcc state=present&#39; 或者ansible local -m yum -a &amp;quot;name=nmap state=installed&amp;quot;</description>
+    </item>
+    
+    <item>
+      <title>Python学习资源</title>
+      <link>https://leizhiyuan.github.io/2014/07/26/python%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/</link>
+      <pubDate>Sat, 26 Jul 2014 16:19:18 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2014/07/26/python%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/</guid>
+      <description>最近突然觉得需要学习一个轻便的语言，每次写个小工具啥的还要打开eclipse，很是不方便。于是学习了一下python，看看官方文档基本就可以上手了，剩下的就是多用了，个人用python写了个调用websevice的东西，suds这个库3.x已经不维护了，坑爹，需要使用http://pypi.python.org/pypi/suds-jurko 这个库代替，主要是为了批量测试mock的连通性的，
+另外是python3.x和python2.x差异是在很大，我选了3&amp;hellip;, 刚学习的人还是建议从2.x开始吧，否则很多源代码你下载回来基本运行不了。
+本文是我在学习过程中看到的不错的文档，希望有所帮助。
+先看官方文档，英文版觉得有难度看下中文版：Python3.4 入门指南
+然后写写代码，小例子看看Python快速教程
+遇到问题，可以去看看：stackoverflow python 百问
+刚开始，你可能不知道module，package，这些都傻，先看看这篇文章python模块
+如果你比较纳闷那个命名中的双下划线，但下划线都啥意思，看看单下划线和双下划线区别
+之后，你可能想看看一个系统的组织，那么看看python最佳实践指南全版
+如果你觉得上面的太多，看看中文的摘要版
+后来我看到一个yield，不太明白，于是我看到了Python yield 使用浅析，只能说写的真是好，就是迭代器生成的
+想看看正则？看看python正则表达式指南，非常全面
+我只是想发个http请求，如果你用了python3.x，报错，Import error: No module name urllib，那么看看urllib这个坑，你可能要看看，你没有看错，他们合并了。。
+Dive into Python 中文也看看，不要在意细节。
+最后好像看看Expert Python Programming，因为我没看。</description>
+    </item>
+    
+  </channel>
+</rss>

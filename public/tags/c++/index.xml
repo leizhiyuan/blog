@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C&#43;&#43; on bystander&#39;s blog</title>
+    <link>https://leizhiyuan.github.io/tags/c&#43;&#43;/</link>
+    <description>Recent content in C&#43;&#43; on bystander&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 02 Jun 2013 15:44:22 +0000</lastBuildDate>
+    
+	<atom:link href="https://leizhiyuan.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>阿里巴巴5月5日综合算法题详解</title>
+      <link>https://leizhiyuan.github.io/2013/06/02/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B45%E6%9C%885%E6%97%A5%E7%BB%BC%E5%90%88%E7%AE%97%E6%B3%95%E9%A2%98%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Sun, 02 Jun 2013 15:44:22 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/06/02/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B45%E6%9C%885%E6%97%A5%E7%BB%BC%E5%90%88%E7%AE%97%E6%B3%95%E9%A2%98%E8%AF%A6%E8%A7%A3/</guid>
+      <description>之前参加了阿里的笔试和电面，让后天那个敏感的日子去参加现场面，就去看了一下那天笔试的最后一道综合题，看着网上清一色最后一道题不知道从哪转的答案，不忍直视，一看代码就是错的，最直接的就是求中位数连奇偶性都不判断，直接处以2..这，另外当在无法整除的情况下，数据结果错误。
+&amp;nbsp;
+这道题的大意是：有一个淘宝商户，在某城市有n个仓库，每个仓库的储货量不同，现在要通过货物运输，将每次仓库的储货量变成一致的，n个仓库之间的运输线路围城一个圈，即1-&amp;gt;2-&amp;gt;3-&amp;gt;4-&amp;gt;&amp;hellip;-&amp;gt;n-&amp;gt;1-&amp;gt;&amp;hellip;，货物只能通过连接的仓库运输，设计最小的运送成本（运货量*路程）达到淘宝商户的要求，并写出代码。
+解题思路：
+假设n个仓库的初始储货量分别为warehouse[1],warehouse[2],&amp;hellip;,warehouse[n] 计算平均储货量 average = （warehouse[1]+warehouse[2]+&amp;hellip;+warehouse[n])/n 就算出来了最终的结果中，每个仓库应该有的存量 首先，从仓库1向仓库n运送k； 然后，从1到n-1，依次向下运送某一特定值，使得每一个仓库的余量都为average，剩下的问题就是求总代价的最小值了。
+设第0步从1仓库向n仓库（注意因为是圆圈，所以路径长度是1）运出k存量，k可以为负，如果为负数，意味着从n向1运输|k|存量，然后从循环，从（1到n-1）,从i仓库向i+1仓库运输，运输的量需要保证i仓库在运输完毕后等于average
+ 第0步（从仓库1向仓库n运送k）:花费代价为 |k|， 第1步（确保仓库1的余量为average）：需要花费代价为 |warehouse[1]-average-k| 也就是从1向2伙从2向1运输 第2步（确保仓库2的余量为average）：代价为 |warehouse[2]+warehouse[1]-average-k-average|=|warehouse[1]+warehouse[2]-2*average-k| &amp;hellip; n-1.第n-1步：代价为 |warehouse[1]+warehouse[2]+&amp;hellip;+warehouse[n-1]-(n-1)*average-k| 此时，仓库n剩下的货物量： (warehouse[n]+k)+warehouse[1]+warehouse[2]+&amp;hellip;+warehouse[n-1]-(n-1)*average-k=(warehouse[1]+warehouse[2]+&amp;hellip;+warehouse[n])-(n-1)*average=average 刚好也满足，其实这里不用推导，因为平均值是算好的，所以最胡一定是刚好完成的。  总的代价为： |k|+|warehouse[1]-average-k|+|warehouse[1]+a[2]-2*average-k|+&amp;hellip;+|warehouse[1]+warehouse[2]+&amp;hellip;+warehouse[n-1]-(n-1)*average-k| 不妨令sum[i] = warehouse[1]+warehouse[2]+&amp;hellip;+warehouse[i]-i*average 则，总代价可表示为：|k|+|sum[1]-k|+|sum[2]-k|+&amp;hellip;+|sum[n-1]-k| 这个式子可以看成在水平数轴上寻找一个点k，使得点k到点0,sum[1],sum[2],sum[3],&amp;hellip;,sum[n-1]的距离之和最小，显然k应该取这n个数的中位数。至此问题解决。
+给出详细注释代码：
+&amp;nbsp; #include &amp;ldquo;stdafx.h&amp;rdquo; #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; #include&amp;lt;string&amp;gt;
+using namespace std;
+const int X = 100000; double sum[X],warehouse[X]; int n;
+double Abs(double x) { return max(x,-x); }
+int _tmain(int argc, _TCHAR* argv[]) { while(true) { double total = 0; double mid=0; cout&amp;lt;&amp;lt;&amp;ldquo;请输入仓库数目：&amp;rdquo;; cin&amp;gt;&amp;gt;n; //读入n个仓库的值，并计算总数 for(int i=1;i&amp;lt;=n;i++) { cout&amp;lt;&amp;lt;&amp;ldquo;请输入第&amp;rdquo;&amp;lt;&amp;lt;i&amp;lt;&amp;lt;&amp;ldquo;个仓库的存量：&amp;rdquo;; cin&amp;gt;&amp;gt;warehouse[i]; total += warehouse[i]; } //计算每个仓库应该最终存储的值 double average = total/n; //计算sum数组 for(int i=1;i&amp;lt;n;i++) sum[i] = warehouse[i]+sum[i-1]-average; //排序后打算去中位数 //sort采用半开半闭区间，所以排序为0～n-1 sort(sum,sum+n); //这个可以自己举个数字就知道了 if(n%2!</description>
+    </item>
+    
+    <item>
+      <title>邻接表实现无向图(C&#43;&#43;)</title>
+      <link>https://leizhiyuan.github.io/2013/05/31/%E9%82%BB%E6%8E%A5%E8%A1%A8%E5%AE%9E%E7%8E%B0%E6%97%A0%E5%90%91%E5%9B%BEc--/</link>
+      <pubDate>Fri, 31 May 2013 15:05:29 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/05/31/%E9%82%BB%E6%8E%A5%E8%A1%A8%E5%AE%9E%E7%8E%B0%E6%97%A0%E5%90%91%E5%9B%BEc--/</guid>
+      <description>很早以前写的代码了，贴出来做个备份吧。用向量来存储一条邻接链表，存储可连通值。实现了判断是否连通，添加边，添加顶点的功能。
+UnDirectGraph.h #pragma once
+#include &amp;ldquo;stdafx.h&amp;rdquo; #include &amp;lt;vector&amp;gt; using namespace std; class UnDirectGraph { private: int vCount; vector&amp;lt;int&amp;gt; *adj; public: int GetVCount(); UnDirectGraph(int vCount); void AddEdge(int v,int w); vector&amp;lt;int&amp;gt; &amp;amp;Vadj(int v); bool IsConnected(int v,int w); }; UnDirectGraph.cpp #pragma once
+#include &amp;ldquo;stdafx.h&amp;rdquo; #include &amp;ldquo;UnDirectGraph.h&amp;rdquo; using namespace std; UnDirectGraph::UnDirectGraph(int _vCount) { this-&amp;gt;vCount=_vCount; adj=new vector&amp;lt;int&amp;gt;[vCount];
+for (int i=0;i&amp;amp;lt;vCount;i++) { adj[i].clear(); } } void UnDirectGraph::AddEdge(int v,int w) { adj[v].push_back(w); adj[w].push_back(v); }
+vector&amp;lt;int&amp;gt;&amp;amp; UnDirectGraph::Vadj(int v) { return adj[v]; }</description>
+    </item>
+    
+    <item>
+      <title>求整数1-N范围和为N的所有组合</title>
+      <link>https://leizhiyuan.github.io/2013/05/27/%E6%B1%82%E6%95%B4%E6%95%B01-n%E8%8C%83%E5%9B%B4%E5%92%8C%E4%B8%BAn%E7%9A%84%E6%89%80%E6%9C%89%E7%BB%84%E5%90%88/</link>
+      <pubDate>Mon, 27 May 2013 10:55:49 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/05/27/%E6%B1%82%E6%95%B4%E6%95%B01-n%E8%8C%83%E5%9B%B4%E5%92%8C%E4%B8%BAn%E7%9A%84%E6%89%80%E6%9C%89%E7%BB%84%E5%90%88/</guid>
+      <description>看到的一道题，给出答案
+问题：找出整数1~N范围和为N的所有集合，集合里的数不允许重复。
+解答：递归吧
+代码如下： #include &amp;ldquo;stdafx.h&amp;rdquo; #include &amp;lt;iostream&amp;gt; using namespace std;
+void PrintResult(int *log,int index) { for (int i = 0; i &amp;lt;index; ++i) { cout&amp;lt;&amp;lt;log[i]&amp;lt;&amp;lt;&amp;rdquo; &amp;ldquo;; } cout&amp;lt;&amp;lt;endl; }
+void CalCombination(int* log,int startNum,int N,int &amp;amp;index) { if (N==0) { PrintResult(log,index); }
+else { for (int i = startNum; i &amp;amp;lt;= N; ++i) { log[index++]=i; CalCombination(log,i+1,N-i,index); } } index--; }
+int _tmain(int argc, _TCHAR* argv[]) { cout&amp;lt;&amp;lt;&amp;ldquo;请输入N:&amp;ldquo;; int N=20; cin&amp;gt;&amp;gt;N; int *log=new int[N]; int index=0; CalCombination(log,1,N,index); } 要是允许重复，也简单，将递归中的这句话改为： CalCombination(log,i,N-i,index); 同理，还可以解决类似给定一个数组，让求和为N的元素组合，只需要现将元素排个序，然后思路相同。</description>
+    </item>
+    
+    <item>
+      <title>引用和指针(C&#43;&#43;)</title>
+      <link>https://leizhiyuan.github.io/2013/05/22/%E5%BC%95%E7%94%A8%E5%92%8C%E6%8C%87%E9%92%88c--/</link>
+      <pubDate>Wed, 22 May 2013 16:16:24 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/05/22/%E5%BC%95%E7%94%A8%E5%92%8C%E6%8C%87%E9%92%88c--/</guid>
+      <description>今天在整理收藏夹的时候，又看到了这两篇非常不错的文章，关于指针和引用的，我就不翻译了，文章很简单，不过把其中我觉得很有意思的两部分结合我的理解希望说的更清楚,假定你读这篇文章之前已经知道指针，但是不是很清楚其中的部分。
+首先是关于指针的一个直观的一个认识. #include &amp;lt;iostream&amp;gt;
+int main() { using namespace std;
+// 声明并初始化指针. unsigned short int * pPointer = 0; // 定义一个unsigned short int 变量 值为35698 unsigned short int twoInt = 35698; // 定义一个unsigned short int 变量 值为 77 unsigned short int oneInt = 77; // 使用&amp;amp;操作符将twoInt的地址赋给指针 pPointer = &amp;amp;twoInt; // pPointer 现在的值就是twoInt的地址了
+// 打印 cout &amp;lt;&amp;lt; &amp;ldquo;pPointer的内存地址:\t\t&amp;rdquo; &amp;lt;&amp;lt; &amp;amp;pPointer &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; &amp;ldquo;oneInt的内存地址:\t&amp;rdquo; &amp;lt;&amp;lt; &amp;amp;oneInt &amp;lt;&amp;lt; &amp;ldquo;\t整数值:\t&amp;rdquo; &amp;lt;&amp;lt; oneInt &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; &amp;ldquo;twoInt的内存地址:\t&amp;rdquo; &amp;lt;&amp;lt; &amp;amp;twoInt &amp;lt;&amp;lt; &amp;ldquo;\t整数值:\t&amp;rdquo; &amp;lt;&amp;lt; twoInt &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; &amp;ldquo;pPointer所指向的地址(也就是pPoint的值):\t&amp;rdquo; &amp;lt;&amp;lt; pPointer &amp;lt;&amp;lt; &amp;ldquo;\t整数值:\t&amp;rdquo; &amp;lt;&amp;lt; *pPointer &amp;lt;&amp;lt; endl;</description>
+    </item>
+    
+    <item>
+      <title>倒水问题求解(C&#43;&#43;)</title>
+      <link>https://leizhiyuan.github.io/2013/05/15/%E5%80%92%E6%B0%B4%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3c--/</link>
+      <pubDate>Wed, 15 May 2013 18:37:24 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/05/15/%E5%80%92%E6%B0%B4%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3c--/</guid>
+      <description>明天要去参加微软面试，不求顺利，但求体验。
+这个题目答题的意思是:
+给你一个容量为A升的桶和一个容量为B升的桶，水不限使用，要求精确得到Q升水.请说明步骤
+当数字比较小的时候,我们可以通过大脑穷举来得到结果,但这里有两个问题,当数字很大的时候怎么解?题目给定的数据是否有解?
+首先判断是否有解?
+题目可以理解为,x为用A的次数,y为用B的次数,Q为目标值
+Q = A * x + B * y Q =目标值.
+Q必须是 Gcd(A,B)(也就是A,B的最大公约数)的倍数,否则无解,如果 Gcd(A,B) == 1, 任何Q都是可解的
+最简单的方法就是把A的水不断的向B中倒(B向A中倒也行),知道得到最终结果,如果桶满了,就清空该桶.举个例子
+A = 3, B = 4 并且 Q = 2 重复得从 A-&amp;gt;B
+A B ###### 0 0 4 0 1 3 1 0 0 1 4 1 2 3 &amp;lt;-A桶中得到2了
+试试从 B-&amp;gt;A
+A B ##### 0 0 0 3 3 0 3 3 4 2 &amp;lt;- B中也得到了2 但是注意,从 B-&amp;gt;A 比从 A-&amp;gt;B快哦</description>
+    </item>
+    
+    <item>
+      <title>一道笔试指针题目详解</title>
+      <link>https://leizhiyuan.github.io/2013/04/17/%E4%B8%80%E9%81%93%E7%AC%94%E8%AF%95%E6%8C%87%E9%92%88%E9%A2%98%E7%9B%AE%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Wed, 17 Apr 2013 08:34:39 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/04/17/%E4%B8%80%E9%81%93%E7%AC%94%E8%AF%95%E6%8C%87%E9%92%88%E9%A2%98%E7%9B%AE%E8%AF%A6%E8%A7%A3/</guid>
+      <description>看到本题是在搜狗某年的笔试题上,看也没人给出非常详细的讲解,直接给出了答案,我来尝试写一写,
+貌似本题来源自&amp;lt;The C Puzzle Book&amp;gt; ，搜狗也只是换了一下字符串，直接看题吧 #include &amp;lt;stdio.h&amp;gt; char *c[]={&amp;ldquo;ENTNG&amp;rdquo;, &amp;ldquo;NST&amp;rdquo;,&amp;ldquo;AMAZI&amp;rdquo;,&amp;ldquo;FIRBE&amp;rdquo;}; char** cp[]={c+3, c+2, c+1, c}; char *cpp= cp; int main() { printf(&amp;ldquo;%s&amp;rdquo;,++cpp); printf(&amp;ldquo;%s &amp;ldquo;,&amp;ndash;++cpp+3); printf(&amp;ldquo;%s&amp;rdquo;,*cpp[-2]+3); printf(&amp;ldquo;%s&amp;rdquo;,cpp[-1][-1]+1); } &amp;lt;span style=&amp;quot;font-family: Georgia, &#39;Times New Roman&#39;, &#39;Bitstream Charter&#39;, Times, serif; font-size: 13px; line-height: 19px;&amp;quot;&amp;gt;请写出程序的执行结果....&amp;lt;/span&amp;gt;
+首先从左到右看： char *c[]= { &amp;ldquo;ENTNG&amp;rdquo;, &amp;ldquo;NST&amp;rdquo;, &amp;ldquo;AMAZI&amp;rdquo;, &amp;ldquo;FIRBE&amp;rdquo; }; *c[] 是一个字符，因此，c[]是指向该字符，c就是一个数组（数组的内容为指向字符的指针），c已经被初始化了. char** cp[]={c+3, c+2, c+1, c}; 再看第二行，**cp[]是一个字符，*cp[]就是一个指针，指向该字符，cp[]就是一个指针，指向该指针，而cp就成为了指针数组，内容是指向字符的指针的指针。并且通过c的元素进行了初始化 char cpp= cp; 第三行，cpp是一个字符，**cpp指向该字符，*cpp指向该指针，cpp就指向该字符的指针的指针.
+然后我画一张图表示初始的情况看看
+
+然后对于下面的输出语句，通过操作符优先级使用括号来区分一下： ((++cpp)); 这个嘛，就是把cpp后移(注意cpp已经改变了)然后就指向了cp[1]，然后两次取其值即可得到AMAZI
+推导过程如下：
+ ++cpp -&amp;gt; cp[1] // cp[1] -&amp;gt; c+2 ++cpp = &amp;amp;cp[1] // &amp;amp;(c+2) *++cpp = *(&amp;amp;c+2) // c[2] **++cpp = &amp;amp;c[2] 然后看第二个 ((&amp;ndash;(*(++cpp))))+3; 加括号后如上，cpp再加一，就指向了cp[2],取一次值（也就是号）就变成了c[1],然后&amp;ndash;c[1]就指向了c[0],取值就成了c[0]的地址，然后地址+3，就是NG了 ((cpp[-2]))+3; 上面，cpp指向cp[2]了，然后呢，cpp[-2] 相当于*(cpp-2)，间接引用cp[2]，这样cpp[-2]就指向了cp[0]了，然后，就是FIRBE了,加3就是BE了</description>
+    </item>
+    
+    <item>
+      <title>模板优先级队列及堆排序(C&#43;&#43;实现)</title>
+      <link>https://leizhiyuan.github.io/2013/04/16/%E6%A8%A1%E6%9D%BF%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%8F%8A%E5%A0%86%E6%8E%92%E5%BA%8Fc--%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Tue, 16 Apr 2013 08:42:58 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/04/16/%E6%A8%A1%E6%9D%BF%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%8F%8A%E5%A0%86%E6%8E%92%E5%BA%8Fc--%E5%AE%9E%E7%8E%B0/</guid>
+      <description>模板优先级队列，数组实现，再熟悉一下常用算法，同时简单的堆排序应用
+写了一个是队列自增长，另一个为了演示我还添加了一个叫做FillPq的方法，这个方法可以使用一个数组直接填充到优先级队列里，此时，优先级队列并不优先，然后进行下滤调整，之后建堆完成，输出即可 #include &amp;ldquo;stdafx.h&amp;rdquo;
+template&amp;lt; class T&amp;gt; class PriorityQueue { private: T *pq; int N; int capacity; public: PriorityQueue(void); ~PriorityQueue(void); void Insert(T x); T DelTop(); void Swim(int k); void Sink(int k); bool Less(int i,int j); void Swap(int i,int j); bool Resize(); void FillPq(T arr[],int size); };
+template&amp;lt; class T&amp;gt; void PriorityQueue&amp;lt;T&amp;gt;::FillPq( T arr[],int size ) { N=size; capacity=2*size; for (int i=0;i&amp;lt;size;i++) { pq[i+1]=arr[i]; } }
+template&amp;lt; class T&amp;gt; PriorityQueue&amp;lt;T&amp;gt;::PriorityQueue(void) { pq=new T[10]; N=0; capacity=10; }</description>
+    </item>
+    
+    <item>
+      <title>模板栈以及中缀表达式求值(C&#43;&#43;实现)</title>
+      <link>https://leizhiyuan.github.io/2013/04/11/%E6%A8%A1%E6%9D%BF%E6%A0%88%E4%BB%A5%E5%8F%8A%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BCc--%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Thu, 11 Apr 2013 18:50:25 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/04/11/%E6%A8%A1%E6%9D%BF%E6%A0%88%E4%BB%A5%E5%8F%8A%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BCc--%E5%AE%9E%E7%8E%B0/</guid>
+      <description>栈直接用链表实现，这个比较简单，不多说，不过C++写程序，IDE的错误检测不是很给力。
+至于给定一个中缀表达式，如何不转换成后缀表达式，直接求值，方法就是使用两个栈，一个操作符栈，一个操作数栈，然后从左到右扫描表达式，我这里中缀表达式计算实现的很简单，不完整，大家可以扩展。栈的实现是我想写的，思路如下：
+1.如何是操作数，压入操作数栈
+2.如果是操作符，压入操作符栈
+3.如果是左括号，直接忽略
+4.如果是有括号，弹出操作符栈栈顶元素，然后弹出操作数栈两个元素，进行操作以后结果压入操作数栈
+&amp;nbsp;
+看个图就好了
+
+&amp;nbsp;
+最后给出栈顶实现代码 #include &amp;ldquo;stdafx.h&amp;rdquo; #pragma region Node定义
+template &amp;lt;class T&amp;gt; class Node { template&amp;lt;class T&amp;gt; friend class Stack; private: T m_data; Node *pNextNode; public: Node(); Node(T d); };
+template &amp;lt;class T&amp;gt; Node&amp;lt;T&amp;gt;::Node() { m_data=default(T); pNextNode=NULL; } template &amp;lt;class T&amp;gt; Node&amp;lt;T&amp;gt;::Node(T d) { m_data=d; pNextNode=NULL; } #pragma endregion
+#pragma region Stack定义
+template &amp;lt;class T&amp;gt; class Stack {
+private: Node&amp;lt;T&amp;gt; *m_pTopNode; int m_nNodeCount; public: Stack(); ~Stack(); bool IsEmpty(); bool Push(T e); T Pop(); int Size(); };</description>
+    </item>
+    
+    <item>
+      <title>并查集(C&#43;&#43;实现)</title>
+      <link>https://leizhiyuan.github.io/2013/04/11/%E5%B9%B6%E6%9F%A5%E9%9B%86c--%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Thu, 11 Apr 2013 08:45:38 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/04/11/%E5%B9%B6%E6%9F%A5%E9%9B%86c--%E5%AE%9E%E7%8E%B0/</guid>
+      <description>并查集这个很有意思，并查集是一种树型的数据结构，用于处理一些不相交集合（Disjoint Sets）的合并及查询问题。昨天看书看到了，然后用C++简单实现了下。在Dijkstra算法中，用来判断两个顶点是否在同一个集合里。
+里面定义了两个类，都是并查集，一个是QuickFind，查找很快，一个是QuickUnion，合并较快。写了一些注释，有一些优化的提示.看代码吧，有什么问题指出来吧。
+QuickFind的实现 #include &amp;ldquo;QuickFind.h&amp;rdquo;
+QuickFind::QuickFind(int N) { size=N; id=new int[N]; for(int i=0;i&amp;lt;N;i++) { id[i]=i; } }
+bool QuickFind::Find(int p,int q) { return id[p]==id[q]; }
+void QuickFind::Unite(int p,int q) { int pid=id[p]; for(int i=0;i&amp;lt;size;i++) if(id[i]==pid) id[i]=id[q];
+} QuickFind::~QuickFind(void) { delete []id; } QuickUnion的实现 #include &amp;ldquo;QuickUnion.h&amp;rdquo;
+QuickUnion::QuickUnion(int N) { size=N; id=new int[N]; for(int i=0;i&amp;lt;N;i++) { id[i]=i; } } int QuickUnion::root(int i) { while (i!=id[i]) { //id[i]=id[id[i]]; 若添加这句话则为压缩路径 i=id[i]; } return i; } bool QuickUnion::Find(int p,int q) { return root(p)==root(q); }</description>
+    </item>
+    
+    <item>
+      <title>和
+浅析</title>
+      <link>https://leizhiyuan.github.io/2013/04/05/%E5%92%8C%E6%B5%85%E6%9E%90/</link>
+      <pubDate>Fri, 05 Apr 2013 13:29:04 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/04/05/%E5%92%8C%E6%B5%85%E6%9E%90/</guid>
+      <description>这两个转义字符最初学习C++的时候看到了,当时没多想，后来某一天突然想起来，回车不就是换行吗？这不是多此一举吗？今天又看到，索性查了下相关资料，整理一下，留作记录.
+关于“回车”（carriage return）和“换行”（line feed）这两个概念的来历和区别。
+在计算机还没有出现之前，有一种叫做电传打字机（Teletype Model 33）的玩意，每秒钟可以打10个字符。但是它有一个问题，就是打完一行换行的时候，要用去0.2秒，正好可以打两个字符。要是在这0.2秒里面，又有新的字符传过来，那么这个字符将丢失。
+于是，研制人员想了个办法解决这个问题，就是在每行后面加两个表示结束的字符。一个叫做“回车”，告诉打字机把打印头定位在左边界；另一个叫做“换行”，告诉打字机把纸向下移一行（这句的意思是把纸向上拉，然后打印头就定位到了下一行），可以想象一下，这个打印头只能在一个固定的水平线上左右移动，而不能上下移动，我们通过移动纸来完成打印下一行。
+不明白的我在youtube上找到一个这种打字机的演示视频，为了方便读者观看，我提供一个下载地址。
+后来，计算机发明了，这两个概念也就被般到了计算机上。那时，存储器很贵，一些科学家认为在每行结尾加两个字符太浪费了，加一个就可以。于是，就出现了分歧。
+Unix系统里，每行结尾只有&amp;rdquo;&amp;lt;换行&amp;gt;&amp;ldquo;，即&amp;rdquo;\n&amp;rdquo;；
+Windows系统里面，每行结尾是&amp;rdquo;&amp;lt;换行&amp;gt;&amp;lt;回车&amp;gt;&amp;ldquo;，即&amp;rdquo;\n\r&amp;rdquo;；
+Mac系统里，每行结尾是&amp;rdquo;&amp;lt;回车&amp;gt;&amp;ldquo;，不过mac基于unix，所以换行也应该是可以的。
+一个直接后果是，Unix/Mac系统下的文件在Windows里打开的话，所有文字会变成一行；而Windows里的文件在Unix/Mac下打开的话，在每行的结尾可能会多出一个^M符号。这个如果你在windows下使用vim也会发现这个情况
+用C++来说明
+如： int main() { cout &amp;lt;&amp;lt; &amp;ldquo;leaver.me&amp;rdquo; &amp;lt;&amp;lt; &amp;ldquo;\r&amp;rdquo; &amp;lt;&amp;lt; &amp;ldquo;bystander&amp;rdquo; ; return 0; } &amp;nbsp;
+最后只显示 bystander 而 leaver.me 背覆盖了
+\n 是换行，系统会将其替换成回车＋换行 把光标 先移到 行首 然后换到下一行 也就是 下一行的行首拉 int main() { cout &amp;lt;&amp;lt; &amp;ldquo;leaver.me&amp;rdquo; &amp;lt;&amp;lt; &amp;ldquo;\n&amp;rdquo; &amp;lt;&amp;lt; &amp;ldquo;bystander&amp;rdquo; ; return 0; } 则 显示
+leaver.me
+bystander
+一句话，这看起来是一个历史遗留问题&amp;hellip;&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>[藏]关于B树的一篇文章</title>
+      <link>https://leizhiyuan.github.io/2013/04/01/%E8%97%8F%E5%85%B3%E4%BA%8Eb%E6%A0%91%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</link>
+      <pubDate>Mon, 01 Apr 2013 18:12:37 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2013/04/01/%E8%97%8F%E5%85%B3%E4%BA%8Eb%E6%A0%91%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</guid>
+      <description>很多人对B树的理解有很多错误，我看的最多的就是有人混淆二叉树（Binary Tree）和B树（B-Tree）,二叉树是不用简称，也就是BT的，而特殊一点的二叉搜索树才会用BST(Binary Search Tree),至于B-树和B树，这两个其实一样的，英文都是(B-Tree)，注意看中间的-号，这个是国内翻译的问题.所以大家不要被误导.
+Rudolf Bayer 和 Ed McCreight 于1972年，在Boeing Research Labs 工作时发明了B 树，但是他们没有解释B 代表什么意义（如果有的话）.Douglas Comer 解释说: 两位作者从来都没解释过B树的原始意义。我个人觉得很有可能是他的名字，程序员对其作品的一种情结吧.
+这篇文章来自国外,是某大学的CS课程在线的,由于有时候无法访问，我直接提供PDF版,对其构造过程非常清晰.非常非常好的B树教程,图示很多,就不翻译了,强烈推荐阅读！
+&amp;nbsp;
+下载：B树讲解
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>简单扩展方法增强代码可读性</title>
+      <link>https://leizhiyuan.github.io/2012/10/04/%E7%AE%80%E5%8D%95%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E5%A2%9E%E5%BC%BA%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7/</link>
+      <pubDate>Thu, 04 Oct 2012 09:03:48 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/04/%E7%AE%80%E5%8D%95%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E5%A2%9E%E5%BC%BA%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7/</guid>
+      <description>本文技术含量不高，但是思路可以借鉴。。
+介绍
+当你处理计时器，时间间隔，或是其他关于日期的计算的时候。你必然会使用TimeSpan类。
+我觉得写出下面的代码可读性并不好。。 // 1个表示5小时的时间间隔 var theTimespan = new TimeSpan(0, 5, 0, 0, 0); 而下面的代码就要好一些 //一个表示5小时的时间间隔 var theTimespan = 5.Hours();  扩展方法
+使用这些扩展了int类的方法。可以使得创建TimeSpan可读性更好 public static TimeSpan Days(this int value) { return new TimeSpan(value, 0, 0, 0, 0); }
+public static TimeSpan Years(this int value) { var dt = DateTime.Now.AddYears(value); return (dt - DateTime.Now).Duration(); }
+public static TimeSpan Hours(this int value) { return new TimeSpan(0, value, 0, 0, 0); }</description>
+    </item>
+    
+    <item>
+      <title>11个高效的VS调试技巧</title>
+      <link>https://leizhiyuan.github.io/2012/10/03/11%E4%B8%AA%E9%AB%98%E6%95%88%E7%9A%84vs%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Wed, 03 Oct 2012 10:45:15 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/10/03/11%E4%B8%AA%E9%AB%98%E6%95%88%E7%9A%84vs%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/</guid>
+      <description>介绍
+调试是软件开发周期中的一个很重要的部分，有时很有挑战性，有时候则让程序员迷惑，有时候让程序员发疯，但是。可以肯定的是，对于任何不是太那个微不足道的程序来说，调试是不可避免的。近年来，调试工具的发展已经使得很多调试任务简单省时了。
+本文总结了十个调试技巧，当你使用VS的时候可以节省你很多时间。
+1. 悬停鼠标查看表达式
+
+调试有时候很有挑战性，当你步入一个函数想看看哪块出错的时候，查看调用栈来想想值是从哪来的。另一些情况下，则需要添加一些监视表达式，或者查看局部变量列表，这通常还是花费一些时间的，但是。如果你把你鼠标指向你感兴趣的一个变量。你会发现事情简单多了。而且，类和结构体可以通过单击展开。这样。你就可以方便快捷的找到你想查看的变量了。
+2. 实时改变值  调试器不仅仅是一个分析程序崩溃或是异常结果的工具了，许多bug都可以通过步入新写的函数，检查函数是否如期望的那样运行来预防。有时候你可能会好奇“如果条件为真函数会正确运行吗”大多数情况下，根本不需要改变代码重启挑起，仅仅把鼠标悬停到一个变量上，双击值然后输入一个新值就可以了。。
+3．设置下一条语句  一个典型的调试情况就是通过单步跟踪分析为什么一个函数调用失败了。当你发现一个函数调用的另一个函数返回错误的时候你会怎么做？重启调试？有更好的方法。拖动这个黄色的语句标识到你想下一步执行的语句前就可以了。比如你刚才失败的那块，然后步入。简单，不是吗？
+4.编辑然后继续  调试一个复杂的程序，或是一个插件的时候，在一个被调用很多次的函数处发现一个错误。但是不想浪费时间停下来，重新编译然后重新调试。没问题，仅仅在该处改正代码然后继续单步就可以。VS会修正程序然后继续调试不需要重启
+注意，编辑然后继续有大量的已知限制，首先，64位代码是不行的。如果他如果为你的C#程序工作。就去工程设置的生成选项，然后目标平台为x86.不要担心。发布版的目标平台和调试的时候是分开的。可以被设置为任何平台。。
+第二．编辑然后继续改变在一个方法里应该是局部的。。如果你改变了方法签名，添加一些新方法或是类。你就不得不重启程序了。或者撤销改变来继续。改变方法也包含lambda表达式隐式修改的自动生成的代理类，因此也不能继续。
+5.方便的监视窗口  大概现代的调试器都有一个监视窗口，无论如何。VS允许你简单的添加或移除变量。单击空行，输入你的表达式按下回车，或者是在不需要的表达式上按下Delete键就可以删除了。 而且。从监视窗口你不仅仅可以看到“正常”的变量。你可以输入$handles 来追踪你的程序打开了多少句柄（可以方便的修复内存泄漏） ，输入$err 可以看到上一个函数的错误码，然后使用工具-错误信息可以看到更详细的描述，或者输入@eax（64位是@rax）来查看包含函数返回值的寄存器。
+6.带注释的反汇编  使用交互式的反汇编模式可以使得优化程序的关键部分变得很容易，VS给出对应你代码每一行的汇编指令，并且运行单步运行。同时，可以在任何位置设置断点。而且，表达式的查看和修改也像在C++代码里一样
+7.带有栈的线程窗口  调试多线程的程序是痛苦的。。或者也可以是很有趣的。取决于你的调试器。VS2010真正优美的特性是线程窗口的栈视图，通过窗口的调用栈你可以方便的总览线程。
+8.条件断点  如果你尝试通过断点再现一个罕见的事件，该情况引发了一些严重的错误。你可以添加条件断点。定义一个断点的条件，然后如果条件不成立，VS会忽略该断点
+9.内存窗口  有些bug由不正确的结构体定义引起，忽略的对齐属性等等。查看内存中的内容可以定位然后修复bug。VS提供了一个放百年的内存窗口，可以把值以8/16/32/64位的形式展示。还有浮点值。也允许实时改变他们。就像在文本编辑器里一样。
+10.转到定义  这个特性不是直接关于调试的，而是关于浏览大项目的。如果你尝试找到一些不是你自己写的代码中的错误，快速知道“这个类型是什么”或者“这个函数是干嘛的”，可以节省很多时间，VS通过一个转到定义命令方便了你。
+11.命令窗口  第十一的技巧chaau已经建议过了。确实可以节省很多时间，VS支持命令窗口，可以通过，视图-其他窗口-命令窗口来启动。一旦激活，你可以输入不同的命令来自动化调试。举个例子。你可以通过如下命令 简单的模拟MFC COleDateTime 变量。 ? dt.Format(&amp;ldquo;%Y-%m-%d %H:%M:%S&amp;rdquo;) 许可 本文包括源代码和文件在CPOL下授权。
+&amp;nbsp;
+原文地址：10plus-powerful-debugging-tricks-with-Visual-Studi
+著作权声明：本文由http://leaver.me 翻译，欢迎转载分享。请尊重作者劳动，转载时保留该声明和作者博客链接，谢谢！</description>
+    </item>
+    
+    <item>
+      <title>VS2010 编译安装boost库</title>
+      <link>https://leizhiyuan.github.io/2012/05/24/vs2010-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85boost%E5%BA%93/</link>
+      <pubDate>Thu, 24 May 2012 11:39:55 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/24/vs2010-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85boost%E5%BA%93/</guid>
+      <description>实践是最好的办法。。学习C++，想试试线程，然后打算用boost库，结果boost库编译差点吓到我。。没看到比较完整的安装教程。。一直耽搁。今天动手。完成了。方法记录如下： 1.下载boost 从boost官网( http://www.boost.org )上下载最新的boost版本，现在最新是1.49版本，解压到自定义目录(我解压到了D:/program files,最终的目录结构是D:\Program Files\boost_1_49_0)
+2.编译安装
+在D:\Program Files\boost_1_49_0的目录下，有一个bootstrap.bat文件，直接双击运行。就会在同目录生成b2.exe；bjam.exe两个文件。
+3.设定编译环境 修改user-config.jam (D:\Program Files\boost_1_49_0\tools\build\v2\user-config.jam) 的MSVC configuration
+MSVC configuration Configure msvc (default version, searched for in standard locations and PATH). using msvc ; 在上面这段的下面直接添加如下的文字。 using msvc : 10.0 : :/wd4819/D_CRT_SECURE_NO_DEPRECATE/D_SCL_SECURE_NO_DEPRECATE/D_SECURE_SCL=0 ; 保存关闭。
+4.开始编译 点击开始-&amp;gt;所有程序-&amp;gt;“Microsoft Visual Studio 2010”，指向“Visual Studio tools(工具)”，然后单击“Visual Studio 2010 command prompt（命令提示）” 使用cd切换到D:\Program Files\boost_1_49_0目录。这个就不说了 然后输入如下的代码： b2 toolset=msvc-10.0 architecture=x86 instruction-set=i686 address-model=32 link=static variant=debug,release threading=multi runtime-link=shared &amp;ndash;without-python &amp;ndash;without-mpi &amp;ndash;without-wave &amp;ndash;without-graph &amp;ndash;without-math &amp;ndash;without-serialization stage &amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>快速排序算法</title>
+      <link>https://leizhiyuan.github.io/2012/05/19/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Sat, 19 May 2012 09:04:40 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/19/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
+      <description>#include  using namespace std; //化分区间,找到最后元素的排序位置。并返回分隔的点（即最后一数据排序的位置）。 //划分的区间是[nBegin, nEnd). pData是保存数据的指针 int Partition(int* pData, int nBeging, int nEnd) { int i = nBeging - 1; //分隔符号，最后nD保存在这里 --nEnd; int nD = pData[nEnd]; //比较的数据。 int nTemp; // 交换用的临时数据 //遍历数据比较，找到nD的位置，这里注意，比较结果是, //i的左边是小于等于nD的，i的右边是大于nD的 for (int j = nBeging; j = nEnd -1) //如果区域不存在或只有一个数据则不递归排序 { return 1; } //这里因为分割的时候，分割点处的数据就是排序中他的位置。 //也就是说他的左边的数据都小于等于他，他右边的数据都大于他。 //所以他不在递归调用的数据中。 int i = Partition(pData, nBeging, nEnd); //找到分割点 QuickSortRecursion(pData, nBeging, i); //递归左边的排序 QuickSortRecursion(pData, i + 1, nEnd); //递归右边的排序 return 1; } //快速排序 int QuickSort(int* pData, int nLen) { //递归调用，快速排序。 QuickSortRecursion(pData, 0, nLen); return 1; } int main() { int nData[10] = {5,9,3,2,1,6,20,45,88,75}; //测试数据 QuickSort(nData, 10); //调用快速排序 for (int i = 0; i </description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;回调函数</title>
+      <link>https://leizhiyuan.github.io/2012/05/09/c--%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Wed, 09 May 2012 21:04:37 +0000</pubDate>
+      
+      <guid>https://leizhiyuan.github.io/2012/05/09/c--%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/</guid>
+      <description>回调函数就是一个通过函数指针调用的函数。如果你把函数的指针(地址)作为参数传递给另一个函数，当这个指针被用为调用它所指向的函数时，我们就说这是回调函数。
+　也就是说，回调函数它首先是一个函数，然后有一个指针指向它（该指针称为函数指针），在别的代码块中，通过这个函数指针调用了这个函数，仅此而已。
+　下面给出一个例子，我写出了比较详细的注释。希望足够清晰。这个例子说明了，回调函数可以把调用者和被调用者分开，对于调用者来说，只需要知道自己要调用一个函数，该函数有一个string类型的参数，至于具体调用哪个，被调用的函数到底怎么执行，怎么解释该参数，是完全不用关心的。 #include 
+#include 
+using namespace std;
+typedef void (*PF)(string s); //定义一个名为PF的函数指针，该指针指向一类函数，该类函数有一个string类型的参数，返回值为void。
+void funcOne(string s) //回调函数1
+{
+cout &amp;lt;&amp;lt; s+&amp;rdquo; One&amp;rdquo;&amp;lt;&amp;lt; endl;
+}
+void funcTwo(string s) //回调函数2 {
+cout &amp;lt;&amp;lt; s+&amp;rdquo; Two&amp;rdquo;&amp;lt;&amp;lt; endl;
+}
+void caller( PF pf, string s) //调用函数
+{
+cout &amp;lt;&amp;lt; &amp;ldquo;I am Caller Function&amp;rdquo; &amp;lt;&amp;lt; endl;
+pf(s);
+}
+int main()
+{
+string str = &amp;ldquo;Test CallBack Function&amp;rdquo;;
+PF pf1 = funcOne; //实例化一个函数指针，指向func函数</description>
+    </item>
+    
+  </channel>
+</rss>

