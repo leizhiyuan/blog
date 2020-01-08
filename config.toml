@@ -8,7 +8,7 @@ pygmentsUseClasses = true
 pygmentsCodeFences = true
 pygmentsCodefencesGuessSyntax = true
 disqusShortname = "leaverme"
-googleAnalytics = "30961201"
+googleAnalytics = "UA-30961201-3"
 summaryLength = 140
 
 [Params]
