@@ -4,7 +4,8 @@ date: 2015-09-05 07:30:13
 tags:
  - 中间件
  - 学习
-categories: 学习笔记
+categories: 
+  - 学习笔记
 ---
 在[kafka快速上手](http://leaver.me/2015/09/03/kafka%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/),和[kafka中的partition和offset](http://leaver.me/2015/09/04/kafka%E4%B8%AD%E7%9A%84partition%E5%92%8Coffset/)中,已经解释了kafka的一些原理,和完成了一个简单的生产消费的实践,如第一篇所说,kafka是一个分布式环境下的消息组件,那么,按照我们前面的简单上手,如果kafka的应用进程被杀或者kafka的机器宕机,那么kafka消息组件就无法使用了,或者zookeeper宕机了,那么kafka也无法使用了.
 

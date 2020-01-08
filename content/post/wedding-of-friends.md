@@ -4,7 +4,8 @@ date: 2019-10-06T06:29:11+08:00
 tags:
   - 生活
   - 家庭
-categories: 生活记录
+categories: 
+  - 生活记录
 draft: false
 ---
 

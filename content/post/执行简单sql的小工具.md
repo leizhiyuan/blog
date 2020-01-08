@@ -4,7 +4,8 @@ date: 2015-07-12 19:36:22
 tags:
  - 学习
  - 工具
-categories: 学习笔记
+categories: 
+  - 学习笔记
 ---
 
 工作过程中,有时候需要在本地执行一些简单的sql,但是不想下载太大的mysql这类客户端.恰好看到[https://code.google.com/p/java-ascii-table/](https://code.google.com/p/java-ascii-table/ "java-ascii-table"),完美辅助,于是写个了简单的工具.应该是支持sqlserver,oracle,和mysql的.mysql的测试了.其他的没有测试.还要继续完善.已经放在了[github](https://github.com/leizhiyuan/sqlclient "sqlclient@github")上.

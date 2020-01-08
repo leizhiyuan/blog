@@ -5,7 +5,8 @@ tags:
  - java 
  - 学习 
  - 序列化 
-categories: 学习笔记
+categories: 
+  - 学习笔记
 ---
 
 最近由于一些需求,要搞一下python,于是周末搞了搞.要连接服务器,进行一些服务器的操作,于是安装这个Paramiko包,

@@ -5,7 +5,8 @@ tags:
  - java 
  - 学习 
  - 序列化 
-categories: 学习笔记
+categories: 
+  - 学习笔记
 ---
 
 最近在工作中,遇到一个问题,项目中某处使用了json-lib的2.4-jdk15版本.问题最终简化为

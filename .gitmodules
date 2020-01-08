@@ -1,3 +1,6 @@
 [submodule "themes/beautifulhugo"]
 	path = themes/beautifulhugo
 	url = https://github.com/halogenica/beautifulhugo.git
+[submodule "themes/maupassant"]
+	path = themes/maupassant
+	url = https://github.com/rujews/maupassant-hugo.git

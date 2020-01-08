@@ -4,7 +4,8 @@ date: 2015-09-04 00:01:21
 tags:
  - 中间件
  - 学习
-categories: 学习笔记
+categories: 
+  - 学习笔记
 ---
 
 在[kafka快速上手](http://leaver.me/2015/09/03/kafka%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/)中,留下的问题是关于partition和offset,这篇文章主要解释这个.

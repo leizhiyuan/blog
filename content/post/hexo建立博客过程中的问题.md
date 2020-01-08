@@ -3,7 +3,8 @@ title: hexo建立博客过程中的问题
 date: 2015-01-13 23:21:04
 tags: 
   - wordpress
-categories: 学习笔记
+categories: 
+  - 学习笔记
 ---
 
 最近博客越来越慢了.然后一直也有markdown写文章的想法.于是花了点时间把博客迁到了hexo+github+gitcafe的组合上.

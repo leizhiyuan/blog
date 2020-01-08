@@ -5,7 +5,8 @@ tags:
  - java 
  - 学习 
  - 并发
-categories: 学习笔记
+categories: 
+  - 学习笔记
 ---
 
 zookeeper是用来管理分布式环境的系统主要用来服务发现,配置管理,同步.大致原理是zookeeper 自身集群的每个节点都维护这一个目录树,内容相同,每个节点的数据一致性由zookeeper自身的算法来解决.下篇尝试.zookeeper本篇主要说明如果部署zookeeper的分布式环境.

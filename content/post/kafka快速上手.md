@@ -4,7 +4,8 @@ date: 2015-09-03 22:29:57
 tags:
  - 中间件
  - 学习
-categories: 学习笔记
+categories: 
+  - 学习笔记
 ---
 
 ## 简单介绍 ##

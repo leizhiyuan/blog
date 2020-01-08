@@ -2,7 +2,8 @@
 title: "深入理解Raft协议"
 date: 2019-12-30T14:42:42+08:00
 draft: false
-categories: ["学习笔记"]
+categories: 
+  - 学习笔记
 tags: ["分布式","理论"]
 ---
 

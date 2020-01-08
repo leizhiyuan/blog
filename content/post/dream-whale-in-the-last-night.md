@@ -2,7 +2,8 @@
 title: "梦见鲸鱼的那一夜"
 date: 2019-09-14T13:18:41+08:00
 draft: false
-categories: ["生活记录"]
+categories: 
+  - 生活记录
 tags: ["生活","家庭"]
 ---
 

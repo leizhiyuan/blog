@@ -4,7 +4,8 @@ date: 2015-09-08 00:04:31
 tags:
  - 中间件
  - 学习
-categories: 学习笔记
+categories: 
+  - 学习笔记
 ---
 在[kafka快速上手](http://leaver.me/2015/09/03/kafka%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/),主要是使用kafka提供的测试来做了一下简单测试,实际开发中的使用可能才是我们要关系的.启动zk和kafka,新建topic的过程都不变.
 

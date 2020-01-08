@@ -2,7 +2,8 @@
 title: "Principle Note"
 date: 2019-09-29T06:04:31+08:00
 draft: false
-categories: ["读书笔记"]
+categories: 
+  - 读书笔记
 tags: ["读书","工作"]
 ---
 
