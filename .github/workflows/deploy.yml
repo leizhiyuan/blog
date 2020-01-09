@@ -1,4 +1,4 @@
-name: CI #自动化的名称
+name: Deploy Blog #自动化的名称
 on:
   push: # push的时候触发
     branches: # 那些分支需要触发
