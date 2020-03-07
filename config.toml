@@ -1,7 +1,7 @@
 baseURL = "http://leaver.me/"
 languageCode = "zh-CN"
 title = "bystander's blog"
-theme = "maupassant"
+theme = "jane"
 metaDataFormat = "yaml"
 pygmentsStyle = "trac"
 pygmentsUseClasses = true
@@ -10,79 +10,57 @@ pygmentsCodefencesGuessSyntax = true
 disqusShortname = "leaverme"
 googleAnalytics = "UA-30961201-3"
 summaryLength = 140
+defaultContentLanguage = "zh-cn" 
 
-[Params]
-  subtitle = "寻找窄门"
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+[params]
+  homeFullContent = false
+  rssFullContent = true
+  description = "寻找窄门"
   logo = "images/author.jpg"
   favicon = "images/favicon.ico"
-  dateFormat = "January 2, 2006"
-  commit = false
-  rss = true
-  comments = true
-  readingTime = true
-  useHLJS = true
-  socialShare = false
-  localSearch = true
+  dateFormatToUse = "2006-01-02"
+  moreMeta = true
+  since = "2012"
+  toc = true 
+  photoswipe = true
 
-  [[Params.links]]
-    title = "C++爱好者博客"
-    name = "C++爱好者博客"
-    url = "https://www.cppfans.org/"
-
-  [[Params.links]]
-    title = "KL，每天进步一点点"
-    name = "KL，每天进步一点点"
-    url = "http://www.kailing.pub"
-
+[params.social]
+    g-github = "https://github.com/leizhiyuan"
 
 [permalinks]
   post = "/:year/:month/:day/:title/"
-
-#[[Params.bigimg]]
-#  src = "img/triangle.jpg"
-#  desc = "Triangle"
-#[[Params.bigimg]]
-#  src = "img/sphere.jpg"
-#  desc = "Sphere"
-#  # position: see values of CSS background-position.
-#  position = "center top"
-#[[Params.bigimg]]
-#  src = "img/hexagon.jpg"
-#  desc = "Hexagon"
-
-[Author]
+[author]
   name = "bystander"
   website = "leaver.me"
-  #email = "youremail@domain.com"
-  #facebook = "username"
-  #googleplus = "+username" # or xxxxxxxxxxxxxxxxxxxxx
   github = "leizhiyuan"
-  #gitlab = "username"
-  #bitbucket = "username"
-  #twitter = "username"
-  #reddit = "username"
-  #linkedin = "username"
-  #xing = "username"
-  #stackoverflow = "users/XXXXXXX/username"
-  #snapchat = "username"
-  #instagram = "username"
-  #youtube = "user/username" # or channel/channelname
-  #soundcloud = "username"
-  #spotify = "username"
-  #bandcamp = "username"
-  #itchio = "username"
-  #vk = "username"
-  #paypal = "username"
-  #telegram = "username"
 [menu]
-  [[menu.main]]
-      identifier = "categories"
+[[menu.main]] 
+      name = "主页"
+      weight = 10
+      identifier = "home"
+      url = "/"
+[[menu.main]]
+      name = "归档"
+      weight = 20
+      identifier = "archives"
+      url = "/post/"      
+[[menu.main]]
+      name = "标签"
+      weight = 30
+      identifier = "tags"
+      url = "/tags/"
+[[menu.main]]
       name = "目录"
-      url = "/categories"
-      weight = 2
-
-  [[menu.main]]
-      identifier = "about"
+      weight = 40
+      identifier = "categories"
+      url = "/categories/"
+[[menu.main]]
       name = "关于我"
+      weight = 50
+      identifier = "about"
       url = "/about/"
-      weight = 5
