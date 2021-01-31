@@ -8,18 +8,18 @@ jobs:
     runs-on: ubuntu-latest # 镜像市场
     steps:
       - name: checkout # 步骤的名称
-        uses: actions/checkout@v1.2.0 #软件市场的名称
+        uses: actions/checkout@v2 #软件市场的名称
         with: # 参数
           submodules: true
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2.3.2
+        uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.62.2'
+          hugo-version: '0.79.1'
           extended: true
       - name: Build
         run: hugo --minify
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v2.5.1
+        uses: peaceiris/actions-gh-pages@v3
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           EXTERNAL_REPOSITORY: leizhiyuan/leizhiyuan.github.io
