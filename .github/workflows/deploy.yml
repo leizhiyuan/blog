@@ -21,7 +21,7 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./public
           EXTERNAL_REPOSITORY: leizhiyuan/leizhiyuan.github.io
           PUBLISH_BRANCH: master
