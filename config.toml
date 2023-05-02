@@ -1,4 +1,4 @@
-baseURL = "http://leaver.me/"
+baseURL = "http://blog.leaver.me/"
 languageCode = "zh-CN"
 title = "bystander's blog"
 theme = "jane"
@@ -36,7 +36,7 @@ defaultContentLanguage = "zh-cn"
   post = "/:year/:month/:day/:title/"
 [author]
   name = "bystander"
-  website = "leaver.me"
+  website = "blog.leaver.me"
   github = "leizhiyuan"
 [menu]
 [[menu.main]] 
