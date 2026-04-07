@@ -44,6 +44,10 @@ googleAnalytics = "G-EGT73FHC0P"
     name = "github"
     url = "https://github.com/leizhiyuan"
 
+  [[params.socialIcons]]
+    name = "rss"
+    url = "index.xml"
+
 [permalinks]
   post = "/:year/:month/:day/:title/"
 
