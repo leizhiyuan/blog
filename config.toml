@@ -61,6 +61,10 @@ googleAnalytics = "G-EGT73FHC0P"
     url = "https://github.com/leizhiyuan"
 
   [[params.socialIcons]]
+    name = "x"
+    url = "https://x.com/bystander520"
+
+  [[params.socialIcons]]
     name = "rss"
     url = "rss.xml"
 
