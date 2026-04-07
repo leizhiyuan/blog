@@ -4,7 +4,6 @@ title = "bystander's blog"
 theme = "PaperMod"
 summaryLength = 140
 defaultContentLanguage = "zh-cn"
-disqusShortname = "leaverme"
 googleAnalytics = "G-EGT73FHC0P"
 
 [outputFormats]
@@ -38,7 +37,20 @@ googleAnalytics = "G-EGT73FHC0P"
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   ShowToc = true
+  comments = true
   favicon = "images/favicon.ico"
+
+  [params.giscus]
+    repo = "leizhiyuan/blog"
+    repoID = "MDEwOlJlcG9zaXRvcnkyOTE2NDY4NA=="
+    category = "Announcements"
+    categoryID = "DIC_kwDOAb0EjM4C6SbO"
+    mapping = "pathname"
+    reactionsEnabled = "1"
+    emitMetadata = "0"
+    inputPosition = "top"
+    theme = "preferred_color_scheme"
+    lang = "zh-CN"
 
   [params.homeInfoParams]
     Title = "bystander's blog"

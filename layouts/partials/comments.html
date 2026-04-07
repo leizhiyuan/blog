@@ -1,0 +1,17 @@
+{{- if .Site.Params.giscus }}
+{{- $giscus := .Site.Params.giscus }}
+<script src="https://giscus.app/client.js"
+    data-repo="{{ $giscus.repo }}"
+    data-repo-id="{{ $giscus.repoID }}"
+    data-category="{{ $giscus.category }}"
+    data-category-id="{{ $giscus.categoryID }}"
+    data-mapping="{{ $giscus.mapping }}"
+    data-reactions-enabled="{{ $giscus.reactionsEnabled }}"
+    data-emit-metadata="{{ $giscus.emitMetadata }}"
+    data-input-position="{{ $giscus.inputPosition }}"
+    data-theme="{{ $giscus.theme }}"
+    data-lang="{{ $giscus.lang }}"
+    crossorigin="anonymous"
+    async>
+</script>
+{{- end }}
