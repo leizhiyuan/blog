@@ -1,0 +1,132 @@
+{{ $icons := partial "icons.html" . }}
+
+<div class="mobile-header">
+  <div id="mobile-navbar" class="mobile-navbar">
+    <div id="mobile-navbar-icon" class="mobile-navbar-icon">
+      {{ partial "icons/icon" (dict
+      "path" "icons/header/menu.svg"
+      "className" "icon--menu"
+      ) }}
+    </div>
+    <div class="mobile-navbar-logo">
+      <a href="{{ `/` | relLangURL }}" class="logo">
+        {{- if .Site.Params.logoTitle -}}
+        {{ .Site.Params.logoTitle | safeHTML }}
+        {{- else -}}
+        {{ .Site.Title }}
+        {{- end -}}
+      </a>
+    </div>
+  </div>
+
+  <div id="mobile-menu-close-modal" class="mobile-menu-close-modal"></div>
+  <nav id="mobile-menu" class="mobile-menu">
+    <ul class="mobile-menu-list">
+      {{ range .Site.Menus.main -}}
+
+      <li class="mobile-menu-item">
+        {{ if .HasChildren }}
+        <!-- drop down navigation MENU -->
+        <div class="mobile-menu-parent">
+          <span class="mobile-submenu-open"></span>
+          <a href="{{ .URL | absLangURL | safeURL }}">
+            {{ .Name }}
+          </a>
+        </div>
+        <ul class="mobile-submenu-list">
+          {{ range .Children }}
+          <li>
+            <a href="{{ .URL | absLangURL | safeURL }}">{{ .Name }}</a>
+          </li>
+          {{ end }}
+        </ul>
+        {{ else }}
+        <!-- normal MENU -->
+        {{ if hasPrefix .URL "http" }}
+        <a class="menu-item-link" href="{{ .URL | absLangURL | safeURL }}" rel="noopener" target="_blank">
+          {{ .Name }}
+          {{/* icon new window */}}
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/external-link.svg"
+          "className" "icon--external-link"
+          ) }}
+        </a>
+        {{ else }}
+        <a class="menu-item-link" href="{{ .URL | absLangURL | safeURL }}">{{ .Name }}</a>
+        {{ end }}
+        {{ end }}
+      </li>
+
+      {{- end }}
+      {{ if and (gt (len .Site.Home.AllTranslations) 1) (.Site.Params.showMenuLanguageChooser | default false ) }}
+      {{- $.Scratch.Set "language" .Language -}}
+      <li class="mobile-menu-item">
+        <!-- drop down navigation MENU -->
+        <div class="mobile-menu-parent mobile-menu-item-lang">
+          <span class="mobile-submenu-open"></span>
+          <a href="#">
+            {{/* icon globe */}}
+            {{ partial "icons/icon" (dict
+            "path" "icons/header/languages.svg"
+            "className" "icon--languages"
+            ) }}
+            {{ .Site.Language.LanguageName }}
+          </a>
+        </div>
+        <ul class="mobile-submenu-list">
+          {{ range .Site.Home.AllTranslations }}
+          <li>
+            {{ if eq ($.Scratch.Get "language") .Language }}
+            <a href="{{ .Permalink }}"><strong>{{ .Language.LanguageName }}</strong></a>
+            {{ else }}
+            <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+            {{ end }}
+          </li>
+          {{ end }}
+        </ul>
+      </li>
+      {{- end }}
+
+      {{ if .Site.Params.search.google.enable }}
+      <li class="mobile-menu-item">
+        <a id="openSearchMobile" class="mobile-menu-item-link menu-item-search" href="#">
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/search.svg"
+          "className" "icon--search"
+          ) }}
+        </a>
+      </li>
+      {{ end }}
+
+      <li class="mobile-menu-item">
+        <a class="theme-toggle menu-item-link" href="javascript:void(0);">
+
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/sun.svg"
+          "className" "theme-icon-light"
+          ) }}
+
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/moon.svg"
+          "className" "theme-icon-dark"
+          ) }}
+
+        </a>
+      </li>
+
+      <li class="mobile-menu-item">
+        {{ with .Site.GetPage "home" -}}
+        {{- with .OutputFormats.Get "RSS" -}}
+        <a class="menu-item-link" href="{{ .Permalink }}" rel="noopener {{ .Rel }}" type="{{ .MediaType.Type }}"
+          title="rss" target="_blank">
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/rss.svg"
+          "className" "icon--rss"
+          ) }}
+        </a>
+        {{ end -}}
+        {{ end }}
+      </li>
+    </ul>
+  </nav>
+</div>

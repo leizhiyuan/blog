@@ -9,17 +9,20 @@ enableEmoji = true
 mainSections = ["post"]
 
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
-paginate = 5                                              # 首页每页显示的文章数
+
+[pagination]
+  pagerSize = 5
+
 rssLimit = 20             # Limit Entry Count to Rss file # 限制 Rss 文章输出数量
 disqusShortname = "xianmin12"      # disqus_shortname
 googleAnalytics = "G-4SFSR6JRVT"      # G-********
-copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
+copyright = ""            # default: params.author.name ↓ # 默认为下面配置的params.author.name ↓
 enableGitInfo = true # use git commit log to generate lastmod record # 可根据 Git 中的提交生成最近更新记录。
 # uglyURLs = true
 
 # language support en / zh-cn / other... translations present in i18n/
 defaultContentLanguage = "en"  # Default language to use (if you setup multilingual support)
-[langusges]
+[languages]
 [languages.en]
   title = "Jane - A simple theme for Hugo"
   languageName = "English"
@@ -41,6 +44,12 @@ defaultContentLanguage = "en"  # Default language to use (if you setup multiling
   identifier = "docs"
   pageref = "/categories/docs/"
 
+[[languages.en.menu.main]]
+  name = "Demo"
+  weight = 12
+  identifier = "demo"
+  pageref = "/categories/demo/"
+
 # docs submenu
 #[[languages.en.menu.main]]
 #  name = "Jane Theme Preview"
@@ -58,11 +67,6 @@ defaultContentLanguage = "en"  # Default language to use (if you setup multiling
   weight = 30
   identifier = "tags"
   pageref = "/tags/"
-[[languages.en.menu.main]]
-  name = "Categories"
-  weight = 40
-  identifier = "categories"
-  pageref = "/categories/"
 [[languages.en.menu.main]]
   name = "external-link"
   weight = 50
@@ -84,19 +88,9 @@ defaultContentLanguage = "en"  # Default language to use (if you setup multiling
   identifier = "tags"
   pageref = "zh-cn/tags/"
 [[languages.zh-cn.menu.main]]
-  name = "分类"
-  weight = 40
-  identifier = "categories"
-  pageref = "zh-cn/categories/"
-[[languages.zh-cn.menu.main]]
   name = "外部链接"
   weight = 50
   url = "https://gohugo.io"
-
-
-[author]
-  name = "Jane"      # essential                     # 必需
-  url = "/about"        # optional                      # 可选
 
 [sitemap]                 # essential                     # 必需
   changefreq = "weekly"
@@ -107,11 +101,14 @@ defaultContentLanguage = "en"  # Default language to use (if you setup multiling
 [params]
   debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
   since = "2017"            # Site creation time          # 站点建立时间
-  homeFullContent = false   # if false, show post summaries on home page. Othewise show full content.
+  homeFullContent = false   # if false, show post summaries on home page. Otherwise show full content.
   rssFullContent = true     # if false, Rss feed instead of the summary
 
+  author.name = "Jane"      # essential                     # 必需
+  author.url = "/about"        # optional                      # 可选
+
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
-  logoTitle = "Jane"        # default: the title value    # 默认值: 上面设置的title值
+  logoTitle = "Hugo-Theme-Jane"        # default: the title value    # 默认值: 上面设置的title值
   keywords = ["Hugo", "theme","jane"]
   description = "Hugo theme jane example site."
 
@@ -153,13 +150,9 @@ defaultContentLanguage = "en"  # Default language to use (if you setup multiling
   customCSS = []            # if ['custom.css'], load '/static/css/custom.css' file
   customJS = []             # if ['custom.js'], load '/static/js/custom.js' file
 
-  # enable 'fork me on github', https://blog.github.com/2008-12-19-github-ribbons/
-  forkMeOnGithub = "https://github.com/xianmin/hugo-theme-jane"
 
   [params.publicCDN]        # load these files from public cdn                          # 启用公共CDN，需自行定义
     enable = false
-    jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>'
-    slideout = '<script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>'
 
   [params.utteranc]         # utteranc is a comment system based on GitHub issues. see https://utteranc.es
     enable = false
@@ -200,27 +193,31 @@ defaultContentLanguage = "en"  # Default language to use (if you setup multiling
 
   [params.social]                                         # 社交链接
     a-email = "mailto:your@email.com"
-    b-stack-overflow = "http://en.xianmin.org/hugo-theme-jane/"
-    c-twitter = "http://en.xianmin.org/hugo-theme-jane/"
-    d-facebook = "http://en.xianmin.org/hugo-theme-jane/"
-    e-linkedin = "http://en.xianmin.org/hugo-theme-jane/"
-    f-google = "http://en.xianmin.org/hugo-theme-jane/"
-    g-github = "http://en.xianmin.org/hugo-theme-jane/"
-    h-weibo = "http://en.xianmin.org/hugo-theme-jane/"
-    i-zhihu = "http://en.xianmin.org/hugo-theme-jane/"
-    j-douban = "http://en.xianmin.org/hugo-theme-jane/"
-    k-pocket = "http://en.xianmin.org/hugo-theme-jane/"
-    l-tumblr = "http://en.xianmin.org/hugo-theme-jane/"
-    m-instagram = "http://en.xianmin.org/hugo-theme-jane/"
-    n-gitlab = "http://en.xianmin.org/hugo-theme-jane/"
-    o-goodreads = "http://en.xianmin.org/hugo-theme-jane/"
-    p-coding = "http://en.xianmin.org/hugo-theme-jane/"
-    q-bilibili = "http://en.xianmin.org/hugo-theme-jane/"
-    r-codeforces = "http://en.xianmin.org/hugo-theme-jane/"
-    s-mastodon = "http://en.xianmin.org/hugo-theme-jane/"
+    b-stackoverflow = "http://localhost:1313/1"
+    c-twitter = "http://localhost:1313/2"
+    d-facebook = "http://localhost:1313/3"
+    e-linkedin = "http://localhost:1313"
+    f-google = "http://localhost:1313"
+    g-github = "http://localhost:1313"
+    h-weibo = "http://localhost:1313"
+    i-zhihu = "http://localhost:1313"
+    j-douban = "http://localhost:1313"
+    k-pocket = "http://localhost:1313"
+    l-tumblr = "http://localhost:1313"
+    m-instagram = "http://localhost:1313"
+    n-gitlab = "http://localhost:1313"
+    o-goodreads = "http://localhost:1313"
+    p-coding = "http://localhost:1313"
+    q-bilibili = "http://localhost:1313"
+    r-codeforces = "http://localhost:1313"
+    s-mastodon = "http://localhost:1313"
+    t-youtube = "http://localhost:1313"
+    u-twitch = "http://localhost:1313"
 
 # Highlight options. See https://gohugo.io/content-management/syntax-highlighting/
 [markup]
+  [markup.goldmark.renderer]
+    unsafe = true
   [markup.highlight]
     anchorLineNos = true
     codeFences = true

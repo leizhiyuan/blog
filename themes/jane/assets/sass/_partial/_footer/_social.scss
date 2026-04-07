@@ -3,25 +3,28 @@
 // =============================
 
 // donot use social-links keyword,Otherwise it will be intercepted by Adblock.
-.icon-links {
+.social-icon-links {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   padding: 0 1em;
+  gap: 0.3em;
 
-  .iconfont {
-    font-size: $social-icon-font-size;
+  .social-icon-link {
+    color: var(--pico-contrast);
+    font-size: 1.7em;
+    padding: 0 0.1em;
 
     & + .iconfont {
-      margin-left: $social-link-margin-left;
+      margin-left: 0.5em;
     }
 
     &:hover {
-      color: $theme-color;
+      color: var(--pico-primary);
 
       svg {
-        fill: $theme-color;
+        fill: var(--pico-primary);
       }
     }
   }

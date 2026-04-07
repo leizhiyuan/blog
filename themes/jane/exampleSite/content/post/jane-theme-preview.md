@@ -7,7 +7,7 @@ tags: ["preview", "shortcodes", "tag-6"]
 categories: ["docs", "shortcodes", "index"]
 author: "Typora"
 
-weight: 1
+weight: 2
 
 # You can also close(false) or open(true) something for this content.
 # P.S. comment can only be closed
@@ -58,9 +58,9 @@ Markdown uses email-style > characters for block quoting. They are presented as:
 
 > This is a blockquote with two paragraphs. This is first paragraph.
 >
-> This is second pragraph.Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+> This is second paragraph. Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
 >
-> This is another blockquote with one paragraph. There is three empty line to seperate two blockquote.
+> This is another blockquote with one paragraph. There is three empty line to separate two blockquote.
 >
 > 这是一段中文测试。
 >
@@ -204,7 +204,7 @@ This is another footnote[^another-footnote].
 
 Mouse on the ‘footnote’ superscript to see content of the footnote.
 
-## Horizontal Rules
+## Horizontal Rules  Horizontal Rules Horizontal Rules Horizontal Rules Horizontal Rules Horizontal Rules Horizontal Rules
 
 Input `***` or `---` on a blank line and press `return` will draw a horizontal line.
 
@@ -271,7 +271,7 @@ Typora allows you to insert urls as links, wrapped by `<`brackets`>`.
 
 `<i@typora.io>` becomes <i@typora.io>.
 
-Typora will aslo auto link standard URLs. e.g: www.google.com.
+Typora will also auto link standard URLs. e.g: www.google.com.
 
 ## Images
 

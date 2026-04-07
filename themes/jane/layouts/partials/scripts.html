@@ -1,30 +1,14 @@
 <!-- js -->
-{{ if .Site.Params.bootcdn -}}
-  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://cdn.bootcss.com/slideout/1.0.1/slideout.min.js" crossorigin="anonymous"></script>
-{{- else if .Site.Params.publicCDN.enable -}}
-  {{ .Site.Params.publicCDN.jquery | safeHTML }}
-  {{ .Site.Params.publicCDN.slideout | safeHTML }}
-{{- else -}}
-  <script type="text/javascript" src="{{ "lib/jquery/jquery-3.2.1.min.js" | relURL }}"></script>
-  <script type="text/javascript" src="{{ "lib/slideout/slideout-1.0.1.min.js" | relURL }}"></script>
-{{- end }}
 
 <!-- Jane theme main js -->
-{{ $jsTemplate := resources.Get "js/main.js" }}
-{{ $secureJS := $jsTemplate | resources.ExecuteAsTemplate "js/main.js" . | fingerprint }}
+{{ $jsMain := resources.Get "js/main.js" | js.Build }}
+{{ $secureJS := $jsMain | resources.ExecuteAsTemplate "js/main.js" . | fingerprint }}
 <script type="text/javascript" src="{{ $secureJS.RelPermalink }}" integrity="{{ $secureJS.Data.Integrity }}" crossorigin="anonymous"></script>
 <!-- End -->
 
 <!-- Mathjax -->
 {{- if and (or .Params.mathjax (and .Site.Params.mathjax (ne .Params.mathjax false))) (or .IsPage .IsHome) }}
-  <script type="text/javascript">
-    window.MathJax = {
-      showProcessingMessages: false,
-      messageStyle: 'none'
-    };
-  </script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+  {{ partialCached "mathjax.html" . }}
 {{- end }}
 <!-- End -->
 
@@ -63,7 +47,7 @@
   (function() {
     if (window.location.hostname === 'localhost') return;
     var hm = document.createElement("script"); hm.async = true;
-	hm.src = "//tajs.qq.com/stats?sId={{.}}";
+    hm.src = "//tajs.qq.com/stats?sId={{.}}";
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
@@ -105,19 +89,18 @@
 <!-- Load PhotoSwipe js if the load-photoswipe shortcode has been used -->
 {{ if or .Site.Params.photoswipe .Site.Params.fancybox }}
   {{ if .Site.Params.bootcdn }}
-    <script src="{{ "/js/load-photoswipe.js" | relURL }}"></script>
+    <script src="{{ "js/load-photoswipe.js" | relURL }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc="
       crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk="
       crossorigin="anonymous"></script>
   {{ else if .Site.Params.publicCDN.enable }}
-    <script type="text/javascript" src="{{ "/js/load-photoswipe.js" | relURL }}"></script>
-	{{ .Site.Params.publicCDN.photoswipe | safeHTML }}
+    <script type="text/javascript" src="{{ "js/load-photoswipe.js" | relURL }}"></script>
+    {{ .Site.Params.publicCDN.photoswipe | safeHTML }}
     {{ .Site.Params.publicCDN.photoswipeUI | safeHTML }}
   {{ else }}
-    <script type="text/javascript" src="{{ "/js/load-photoswipe.js" | relURL }}"></script>
-    <script type="text/javascript" src="{{ "/lib/photoswipe/photoswipe.min.js" | relURL}}"></script>
-    <script type="text/javascript" src="{{ "/lib/photoswipe/photoswipe-ui-default.min.js" | relURL}}"></script>
+    <script type="text/javascript" src="{{ "lib/photoswipe/photoswipe.min.js" | relURL}}"></script>
+    <script type="text/javascript" src="{{ "lib/photoswipe/photoswipe-ui-default.min.js" | relURL}}"></script>
   {{ end }}
 {{ end }}
 
@@ -239,7 +222,7 @@
 {{ end }}
 
 {{ if .Site.Params.commentCount.disqus.enable }}
-  <script id="dsq-count-scr" src="//{{ .Site.DisqusShortname }}.disqus.com/count.js" async></script>
+  <script id="dsq-count-scr" src="//{{ .Site.Config.Services.Disqus.Shortname }}.disqus.com/count.js" async></script>
 {{ end }}
 
 {{ if and .Site.Params.remark42Url (or .Page.IsPage .IsHome) }}
@@ -247,11 +230,13 @@
   var remark_config = {
     host: '{{ .Site.Params.remark42Url }}',
     site_id: '{{ .Site.Params.remark42SiteId | default "remark" }}',
+    theme: document.documentElement.getAttribute('data-theme') || 'light',
     components: [
-{{- if .Page.IsPage }}
-	    'embed',
-{{- else if and .Site.Params.commentCount.remark42.enable .IsHome }}
-	    'counter',
+{{- if not .IsHome }}
+    'embed',
+{{- end }}
+{{- if .Site.Params.commentCount.remark42.enable }}
+    'counter',
 {{- end }}
     ],
   }
@@ -261,24 +246,85 @@
 
 {{ if .Site.Params.search.google.enable }}
   <script>
-    $("#openSearch, #openSearchMobile").click(function(){
-      $(".modal-dialog").addClass("visible");
-    });
+  /*
+   * Modal
+   *
+   * Pico.css - https://picocss.com
+   * Copyright 2019-2024 - Licensed under MIT
+   */
 
-    $("#closeSearch").click(function(){
-      $(".modal-dialog").removeClass("visible");
-    });
+  // Config
+  const isOpenClass = "modal-is-open";
+  const openingClass = "modal-is-opening";
+  const closingClass = "modal-is-closing";
+  const scrollbarWidthCssVar = "--pico-scrollbar-width";
+  const animationDuration = 400; // ms
+  let visibleModal = null;
 
-    $(document).click(function(event) {
-    //if you click on anything except the modal itself or the "open modal" link, close the modal
-      if (!$(event.target).closest(".modal-content, #openSearch, #openSearchMobile").length) {
-        $("body").find(".modal-dialog").removeClass("visible");
-      }
-    });
+  // Toggle modal
+  const toggleModal = (event) => {
+    event.preventDefault();
+    const modal = document.getElementById(event.currentTarget.dataset.target);
+    if (!modal) return;
+    modal && (modal.open ? closeModal(modal) : openModal(modal));
+  };
+
+  // Open modal
+  const openModal = (modal) => {
+    const { documentElement: html } = document;
+    const scrollbarWidth = getScrollbarWidth();
+    if (scrollbarWidth) {
+      html.style.setProperty(scrollbarWidthCssVar, `${scrollbarWidth}px`);
+    }
+    html.classList.add(isOpenClass, openingClass);
+    setTimeout(() => {
+      visibleModal = modal;
+      html.classList.remove(openingClass);
+    }, animationDuration);
+    modal.showModal();
+  };
+
+  // Close modal
+  const closeModal = (modal) => {
+    visibleModal = null;
+    const { documentElement: html } = document;
+    html.classList.add(closingClass);
+    setTimeout(() => {
+      html.classList.remove(closingClass, isOpenClass);
+      html.style.removeProperty(scrollbarWidthCssVar);
+      modal.close();
+    }, animationDuration);
+  };
+
+  // Close with a click outside
+  document.addEventListener("click", (event) => {
+    if (visibleModal === null) return;
+    const modalContent = visibleModal.querySelector("article");
+    const isClickInside = modalContent.contains(event.target);
+    !isClickInside && closeModal(visibleModal);
+  });
+
+  // Close with Esc key
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && visibleModal) {
+      closeModal(visibleModal);
+    }
+  });
+
+  // Get scrollbar width
+  const getScrollbarWidth = () => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    return scrollbarWidth;
+  };
+
+  // Is scrollbar visible
+  const isScrollbarVisible = () => {
+    return document.body.scrollHeight > screen.height;
+  };
   </script>
 {{ end }}
 
 <!-- custom js -->
 {{ range .Site.Params.customJS }}
-  <script src="{{ "/js/" | relURL }}{{ . }}"></script>
+  <script src="{{ "js/" | relURL }}{{ . }}"></script>
 {{ end }}

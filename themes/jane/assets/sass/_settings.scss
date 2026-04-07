@@ -1,0 +1,40 @@
+/**========================================================================
+ *                      JANE THEME STYLE SETTINGS
+ *========================================================================**/
+
+/**------------------------------------------------------------------------
+ *                            Theme Color
+ * use picocss theme color, see: https://picocss.com/docs/version-picker .
+ * Values: 'red', 'pink', 'fuchsia', 'purple', 'violet', 'indigo', 'blue', 'azure', 'cyan',
+ * 'jade', 'green', 'lime', 'yellow', 'amber', 'pumpkin', 'orange', 'sand', 'grey', 'zinc', 'slate'
+ *------------------------------------------------------------------------**/
+$jane-theme-color: 'azure';
+
+/**------------------------------------------------------------------------
+ *                            Article Max Width
+ *------------------------------------------------------------------------**/
+$article-max-width: 40em;
+
+/**------------------------------------------------------------------------
+ *                            Site Header Height
+ *------------------------------------------------------------------------**/
+$desktop-header-height: 4rem;
+$mobile-header-height: 3rem;
+
+/**------------------------------------------------------------------------
+ *                            Font Settings
+ *------------------------------------------------------------------------**/
+
+// example import from google fonts
+$logo-font-family: 'Comic Sans MS', -apple-system, 'Open Sans', 'Segoe UI', 'Helvetica', Arial, sans-serif;
+
+$title-font-family: -apple-system, 'Open Sans', 'Segoe UI', 'Helvetica', Arial, sans-serif;
+
+$global-font-family: -apple-system,'Open Sans', 'Segoe UI', 'Helvetica', Arial, sans-serif;
+$global-font-size: 18px;
+$global-mobile-font-size: 15px;
+
+/**------------------------------------------------------------------------
+ *                            Other Settings
+ *------------------------------------------------------------------------**/
+$mobile-breakpoint: 768px;

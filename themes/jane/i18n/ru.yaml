@@ -13,6 +13,12 @@
 - id: category
   translation: "Категория: "
 
+- id: authors
+  translation: Авторы
+
+- id: author_item
+  translation: "Автор: "
+
 # posts
 - id: prev
   translation: Пред.
@@ -42,7 +48,7 @@
   translation: Wechat
 
 - id: seeMarkDown
-  translation: Версия в Markdown »
+  translation: Текст в Markdown »
 
 - id: loadDisqus
   translation: Показать комментарии Disqus
@@ -59,7 +65,7 @@
   translation: Автор
 
 - id: lastMod
-  translation: LastMod
+  translation: Последнее обновление
 
 - id: markdown
   translation: Markdown
@@ -81,26 +87,8 @@
 - id: morePost
   translation: "Больше записей >>>"
 
-- id: read_en
-  translation: Read in English
-
-- id: read_es
-  translation: Leer en español
-
-- id: read_zh-cn
-  translation: 中文阅读
-
-- id: read_zh-tw
-  translation: 中文閱讀
-
-- id: read_pt
-  translation: Leia em português
-
-- id: read_fr
-  translation: Lire en français
-
-- id: read_de
-  translation: Lese in Deutsch
-
 - id: language
   translation: Язык
+
+- id: comments
+  translation: комментариев

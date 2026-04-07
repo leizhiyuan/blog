@@ -13,6 +13,12 @@
 - id: category
   translation: "Catégory: "
 
+- id: authors
+  translation: Authors
+
+- id: author_item
+  translation: "Author: "
+
 # posts
 - id: prev
   translation: Prec
@@ -81,26 +87,8 @@
 - id: morePost
   translation: "Plus d'articles >>>"
 
-- id: read_ru
-  translation: Читать на русском
-
-- id: read_es
-  translation: Leer en español
-
-- id: read_zh-cn
-  translation: 中文阅读
-
-- id: read_zh-tw
-  translation: 中文閱讀
-
-- id: read_pt
-  translation: Leia em português
-
-- id: read_en
-  translation: Read in english
-
-- id: read_de
-  translation: Lese in Deutsch
-
 - id: language
   translation: Langage
+
+- id: comments
+  translation: Comments

@@ -1,0 +1,122 @@
+{{ $icons := partial "icons.html" . }}
+<div class="desktop-header">
+  <div class="desktop-header-logo">
+    <a href="{{ `/` | relLangURL }}" class="logo">
+      {{ if .Site.Params.logoTitle }}
+      {{ .Site.Params.logoTitle | safeHTML }}
+      {{ else }}
+      {{ .Site.Title }}
+      {{ end }}
+    </a>
+  </div>
+
+  <nav class="desktop-navbar">
+    <ul id="menu" class="menu">
+      {{ $currentPage := . }}
+      {{ range .Site.Menus.main }}
+      <li class="menu-item{{ if $currentPage.IsMenuCurrent `main` . }} active{{end}}">
+        {{ if .HasChildren }}
+        <!-- drop down navigation MENU -->
+        <a class="menu-item-link menu-parent" href="{{ .URL | absLangURL | safeURL }}">
+          {{ .Name }}
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/chevron-down.svg"
+          "className" "icon--chevron-down"
+          ) }}
+        </a>
+        <ul class="submenu">
+          {{ range .Children }}
+          <li class="submenu-item">
+            <a href="{{ .URL | absLangURL | safeURL }}">{{ .Name }}</a>
+          </li>
+          {{ end }}
+        </ul>
+
+        {{ else }}
+        <!-- normal MENU -->
+        {{ if hasPrefix .URL "http" }}
+        <a class="menu-item-link" href="{{ .URL | absLangURL | safeURL }}" rel="noopener" target="_blank">
+          {{ .Name }}
+          {{/* icon new window */}}
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/external-link.svg"
+          "className" "icon--external-link"
+          ) }}
+        </a>
+        {{ else }}
+        <a class="menu-item-link" href="{{ .URL | absLangURL | safeURL }}">{{ .Name }}</a>
+        {{ end }}
+
+        {{ end }}
+
+      </li>
+      {{ end }}
+
+      {{/* language chooser */}}
+      {{ if and (gt (len .Site.Home.AllTranslations) 1) (.Site.Params.showMenuLanguageChooser | default false ) }}
+      {{- $.Scratch.Set "language" .Language -}}
+      <li class="menu-item">
+        <!-- drop down navigation MENU -->
+        <a class="menu-item-link menu-parent menu-item-lang" href="#">
+          {{/* icon globe */}}
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/languages.svg"
+          "className" "icon--languages"
+          ) }}
+          {{ .Site.Language.LanguageName }}
+        </a>
+        <ul class="submenu">
+          {{ range .Site.Home.AllTranslations }}
+          {{ if ne ($.Scratch.Get "language") .Language }}
+          <li class="submenu-item">
+            <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+          </li>
+          {{ end }}
+          {{ end }}
+        </ul>
+      </li>
+      {{ end }}
+
+      {{ if .Site.Params.search.google.enable }}
+      <li class="menu-item">
+        <a class="menu-item-link" data-target="search-modal" onclick="toggleModal(event)" href="#">
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/search.svg"
+          "className" "icon--search"
+          ) }}
+        </a>
+      </li>
+      {{ end }}
+
+      <li class="menu-item">
+        <a class="theme-toggle menu-item-link" href="javascript:void(0);">
+
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/sun.svg"
+          "className" "theme-icon-light"
+          ) }}
+
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/moon.svg"
+          "className" "theme-icon-dark"
+          ) }}
+
+        </a>
+      </li>
+
+      <li class="menu-item">
+        {{ with .Site.GetPage "home" -}}
+        {{- with .OutputFormats.Get "RSS" -}}
+        <a class="menu-item-link" href="{{ .Permalink }}" rel="noopener {{ .Rel }}" type="{{ .MediaType.Type }}"
+          title="rss" target="_blank">
+          {{ partial "icons/icon" (dict
+          "path" "icons/header/rss.svg"
+          "className" "icon--rss"
+          ) }}
+        </a>
+        {{ end -}}
+        {{ end }}
+      </li>
+    </ul>
+  </nav>
+</div>

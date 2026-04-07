@@ -9,9 +9,12 @@ paginate = 3              # Number of articles displayed on the homepage # 首�
 rssLimit = 20             # Limit Entry Count to Rss file # 限制 Rss 文章输出数量
 disqusShortname = ""      # disqus_shortname
 googleAnalytics = ""      # UA-XXXXXXXX-X
-copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
+copyright = ""            # default: params.author.name ↓ # 默认为下面配置的params.author.name ↓
 enableGitInfo = true      # use git commit log to generate lastmod record # 可根据 Git 中的提交生成最近更新记录。
 # uglyURLs = true         # more info: https://gohugo.io/content-management/urls/#ugly-urls
+
+[pagination]
+  pagerSize = 5           # Number of articles displayed on the homepage  # 首页每页显示的文章数
 
 # Enable author pages
 #[taxonomies]
@@ -23,10 +26,6 @@ enableGitInfo = true      # use git commit log to generate lastmod record # 可�
 defaultContentLanguage = "en"           # Default language to use
 [languages.en]
   languageCode = "en"
-
-[author]
-  name = "xianmin"        # essential                     # 必需
-  url = "/about"          # optional                      # 可选
 
 [sitemap]                 # essential                     # 必需
   changefreq = "weekly"
@@ -49,11 +48,6 @@ defaultContentLanguage = "en"           # Default language to use
   identifier = "tags"
   pageref = "/tags/"
 [[menu.main]]
-  name = "Categories"
-  weight = 40
-  identifier = "categories"
-  pageref = "/categories/"
-[[menu.main]]
   name = "external-link"
   weight = 50
   pageref = "https://gohugo.io"
@@ -62,9 +56,13 @@ defaultContentLanguage = "en"           # Default language to use
 [params]
   debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
   since = "2017"            # Site creation time          # 站点建立时间
-  homeFullContent = false   # if false, show post summaries on home page. Othewise show full content.
+  homeFullContent = false   # if false, show post summaries on home page. Otherwise show full content.
   rssFullContent = true     # if false, Rss feed instead of the summary
   mainSections = ["post"]
+
+  author.name = "Jane"      # essential                     # 必需
+  author.email = "me@example.com" # optional, for RSS             # 可选
+  author.url = "/about"        # optional                      # 可选
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
   logoTitle = "Jane"        # default: the title value    # 默认值: 上面设置的title值
@@ -115,9 +113,6 @@ defaultContentLanguage = "en"           # Default language to use
   customCSS = []            # if ['custom.css'], load '/static/css/custom.css' file
   customJS = []             # if ['custom.js'], load '/static/js/custom.js' file
 
-  # enable 'fork me on github', see https://blog.github.com/2008-12-19-github-ribbons/
-  # forkMeOnGithub = "https://github.com/xianmin/hugo-theme-jane"
-
   # add custom info on the footer.   # 添加备案信息
   # customFooter = "京ICP备10000000号-1"
 
@@ -130,8 +125,6 @@ defaultContentLanguage = "en"           # Default language to use
 
   [params.publicCDN]        # load these files from public cdn                          # 启用公共CDN，需自行定义
     enable = false
-    jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>'
-    slideout = '<script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>'
     gitmentJS = '<script src="https://cdn.jsdelivr.net/npm/gitment@0.0.3/dist/gitment.browser.min.js" crossorigin="anonymous"></script>'
     gitmentCSS = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitment@0.0.3/style/default.min.css" crossorigin="anonymous">'
     photoswipe = '<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.js" integrity="sha256-AC9ChpELidrhGHX23ZU53vmRdz3FhKaN9E28+BbcWBw=" crossorigin="anonymous"></script>'
@@ -243,7 +236,7 @@ defaultContentLanguage = "en"           # Default language to use
 
 
 # multilingual support example
-# [langusges]
+# [languages]
 # [languages.en]
 #   title = "Jane - A simple theme for Hugo"
 #   weight = 1
