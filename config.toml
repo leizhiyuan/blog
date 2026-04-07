@@ -2,15 +2,18 @@ baseURL = "http://blog.leaver.me/"
 languageCode = "zh-CN"
 title = "bystander's blog"
 theme = "jane"
-metaDataFormat = "yaml"
-pygmentsStyle = "trac"
-pygmentsUseClasses = true
-pygmentsCodeFences = true
-pygmentsCodefencesGuessSyntax = true
+
 disqusShortname = "leaverme"
-googleAnalytics = "UA-30961201-3"
+# TODO: Replace with GA4 measurement ID (G-XXXXXXXXXX)
+# googleAnalytics = "UA-30961201-3"
 summaryLength = 140
-defaultContentLanguage = "zh-cn" 
+defaultContentLanguage = "zh-cn"
+
+[markup]
+  [markup.highlight]
+    style = "trac"
+    noClasses = false
+    guessSyntax = true
 
 [sitemap]
   changefreq = "weekly"
