@@ -4,8 +4,7 @@ title = "bystander's blog"
 theme = "jane"
 
 disqusShortname = "leaverme"
-# TODO: Replace with GA4 measurement ID (G-XXXXXXXXXX)
-# googleAnalytics = "UA-30961201-3"
+googleAnalytics = "G-EGT73FHC0P"
 summaryLength = 140
 defaultContentLanguage = "zh-cn"
 
