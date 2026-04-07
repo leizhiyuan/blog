@@ -1,14 +1,19 @@
 baseURL = "http://blog.leaver.me/"
 languageCode = "zh-CN"
 title = "bystander's blog"
-theme = "jane"
-
-disqusShortname = "leaverme"
-googleAnalytics = "G-EGT73FHC0P"
+theme = "PaperMod"
 summaryLength = 140
 defaultContentLanguage = "zh-cn"
+disqusShortname = "leaverme"
+googleAnalytics = "G-EGT73FHC0P"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
 [markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
   [markup.highlight]
     style = "trac"
     noClasses = false
@@ -20,49 +25,56 @@ defaultContentLanguage = "zh-cn"
   filename = "sitemap.xml"
 
 [params]
-  homeFullContent = false
-  rssFullContent = true
+  env = "production"
   description = "寻找窄门"
-  logo = "images/author.jpg"
+  author = "bystander"
+  DateFormat = "2006-01-02"
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
   favicon = "images/favicon.ico"
-  dateFormatToUse = "2006-01-02"
-  moreMeta = true
-  since = "2012"
-  toc = true 
-  photoswipe = true
 
-[params.social]
-    g-github = "https://github.com/leizhiyuan"
+  [params.homeInfoParams]
+    Title = "bystander's blog"
+    Content = "寻找窄门"
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/leizhiyuan"
 
 [permalinks]
   post = "/:year/:month/:day/:title/"
-[author]
-  name = "bystander"
-  website = "blog.leaver.me"
-  github = "leizhiyuan"
+
 [menu]
-[[menu.main]] 
-      name = "主页"
-      weight = 10
-      identifier = "home"
-      url = "/"
 [[menu.main]]
-      name = "归档"
-      weight = 20
-      identifier = "archives"
-      url = "/post/"      
+  name = "主页"
+  weight = 10
+  identifier = "home"
+  url = "/"
 [[menu.main]]
-      name = "标签"
-      weight = 30
-      identifier = "tags"
-      url = "/tags/"
+  name = "归档"
+  weight = 20
+  identifier = "archives"
+  url = "/archives/"
 [[menu.main]]
-      name = "目录"
-      weight = 40
-      identifier = "categories"
-      url = "/categories/"
+  name = "标签"
+  weight = 30
+  identifier = "tags"
+  url = "/tags/"
 [[menu.main]]
-      name = "关于我"
-      weight = 50
-      identifier = "about"
-      url = "/about/"
+  name = "目录"
+  weight = 40
+  identifier = "categories"
+  url = "/categories/"
+[[menu.main]]
+  name = "搜索"
+  weight = 45
+  identifier = "search"
+  url = "/search/"
+[[menu.main]]
+  name = "关于我"
+  weight = 50
+  identifier = "about"
+  url = "/about/"
