@@ -7,6 +7,10 @@ defaultContentLanguage = "zh-cn"
 disqusShortname = "leaverme"
 googleAnalytics = "G-EGT73FHC0P"
 
+[outputFormats]
+  [outputFormats.RSS]
+    baseName = "rss"
+
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
@@ -46,7 +50,7 @@ googleAnalytics = "G-EGT73FHC0P"
 
   [[params.socialIcons]]
     name = "rss"
-    url = "index.xml"
+    url = "rss.xml"
 
 [permalinks]
   post = "/:year/:month/:day/:title/"
